@@ -16,7 +16,6 @@
             <interceptor name="jsonValidation"
                          class="org.apache.struts2.json.JSONValidationInterceptor" />
 
-            <!-- Sample JSON validation stack -->
             <interceptor-stack name="jsonValidationWorkflowStack">
                 <interceptor-ref name="basicStack" />
                 <interceptor-ref name="validation">
@@ -26,7 +25,6 @@
                 <interceptor-ref name="workflow" />
             </interceptor-stack>
         </interceptors>
-
     </package>
 
     <package name="defualt" extends="json-default">

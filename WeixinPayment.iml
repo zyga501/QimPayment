@@ -31,7 +31,16 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" scope="PROVIDED" name="Tomcat 7.0.65" level="application_server_libraries" />
-    <orderEntry type="library" name="Struts 2-2.3.20.1" level="project" />
+    <orderEntry type="library" exported="" scope="PROVIDED" name="Tomcat 7.0.65" level="application_server_libraries" />
+    <orderEntry type="library" exported="" name="Struts 2-2.3.20.1" level="project" />
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/web/WEB-INF/lib/mybatis-3.3.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
