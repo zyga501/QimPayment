@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/WeixinPayment.iml" filepath="$PROJECT_DIR$/WeixinPayment.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PaymentFramework.iml" filepath="$PROJECT_DIR$/PaymentFramework.iml" />
     </modules>
   </component>
 </project>

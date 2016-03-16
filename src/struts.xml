@@ -5,28 +5,5 @@
         "http://struts.apache.org/dtds/struts-2.3.dtd">
 
 <struts>
-    <constant name="struts.custom.i18n.resources" value="mui/resources"/>
-
-    <package name="json-default" extends="struts-default">
-        <result-types>
-            <result-type name="json" class="org.apache.struts2.json.JSONResult" />
-        </result-types>
-        <interceptors>
-            <interceptor name="json"
-                         class="org.apache.struts2.json.JSONInterceptor" />
-            <interceptor name="jsonValidation"
-                         class="org.apache.struts2.json.JSONValidationInterceptor" />
-            <interceptor-stack name="jsonValidationWorkflowStack">
-                <interceptor-ref name="basicStack" />
-                <interceptor-ref name="validation">
-                    <param name="excludeMethods">input,back,cancel</param>
-                </interceptor-ref>
-                <interceptor-ref name="jsonValidation" />
-                <interceptor-ref name="workflow" />
-            </interceptor-stack>
-        </interceptors>
-    </package>
-
-    <package name="defualt" extends="json-default">
-    </package>
+    <include file="com/weixin/struts-weixin.xml" />
 </struts>

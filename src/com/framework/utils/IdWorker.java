@@ -1,4 +1,4 @@
-package com.weixinpayment.utils;
+package com.framework.utils;
 
 public class IdWorker
 {

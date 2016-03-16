@@ -1,4 +1,4 @@
-package com.weixinpayment.utils;
+package com.framework.utils;
 
 import org.apache.http.HttpHost;
 import org.apache.http.client.HttpClient;

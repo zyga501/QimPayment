@@ -1,4 +1,4 @@
-package com.weixinpayment.utils;
+package com.framework.utils;
 
 import com.opensymphony.xwork2.util.LocalizedTextUtil;
 
