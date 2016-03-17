@@ -1,7 +1,6 @@
 package com.framework.utils;
 
 import org.apache.http.HttpHost;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.AuthSchemes;
 import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.client.config.RequestConfig;
@@ -24,14 +23,13 @@ import java.util.Arrays;
 
 public class HttpUtils {
     public static void main(String[] args) throws Exception {
-        RequestConfig config = RequestConfig.custom().setCookieSpec(CookieSpecs.STANDARD_STRICT).build();
-        CloseableHttpClient httpClient = HttpClients.custom().setDefaultRequestConfig(config).build();
+        CloseableHttpClient httpClient = HttpUtils.Instance();
         HttpGet httpGet = new HttpGet("https://github.com/VonChenPlus");
         CloseableHttpResponse response = httpClient.execute(httpGet);
         System.out.print(response.getStatusLine().toString());
     }
 
-    public static HttpClient Instance() { return httpClient_; }
+    public static CloseableHttpClient Instance() { return httpClient_; }
 
     static {
         try {
@@ -69,5 +67,5 @@ public class HttpUtils {
                 .setProxyPreferredAuthSchemes(Arrays.asList(AuthSchemes.BASIC)).build();
     }
 
-    private static HttpClient httpClient_;
+    private static CloseableHttpClient httpClient_;
 }
