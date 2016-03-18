@@ -1,26 +1,11 @@
 package com.weixin.api;
 
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.Map;
 
 public class MicroPay extends WeixinAPI {
     public static String MICROPAY_API = "https://api.mch.weixin.qq.com/pay/micropay";
 
-    public class MicroPayInfo extends CommonInfo {
-        SortedMap<String, String> convertToMap() {
-            SortedMap<String, String> fields = new TreeMap<String, String>();
-            fields.put("appid", appid);
-            fields.put("mch_id", mch_id);
-            fields.put("nonce_str", nonce_str);
-            fields.put("body", body);
-            fields.put("out_trade_no", "SK" + out_trade_no);//订单号
-            fields.put("total_fee", total_fee.toString());
-            fields.put("goods_tag", goods_tag);
-            fields.put("spbill_create_ip", spbill_create_ip);
-            fields.put("auth_code", auth_code);
-            fields.put("sub_mch_id", sub_mch_id);
-            return fields;
-        }
+    public class MicroPayData extends CommonData {
         String device_info; // 设备号 终端设备号(商户自定义，如门店编号)
         String body; // 商品描述 商品或支付单简要描述
         String detail; // 商品详情 商品名称明细列表
@@ -34,12 +19,12 @@ public class MicroPay extends WeixinAPI {
         String auth_code; // 授权码 扫码支付授权码，设备读取用户微信中的条码或者二维码信息
     }
 
-    public MicroPay(MicroPayInfo microPayInfo) {
+    public MicroPay(MicroPayData microPayInfo) {
         microPayInfo_ = microPayInfo;
     }
 
     @Override
-    protected SortedMap<String, String> buildRequestParameter() {
+    protected Map<String,Object> buildRequestParameter() {
         return microPayInfo_.convertToMap();
     }
 
@@ -48,5 +33,5 @@ public class MicroPay extends WeixinAPI {
         return MICROPAY_API;
     }
 
-    private MicroPayInfo microPayInfo_;
+    private MicroPayData microPayInfo_;
 }

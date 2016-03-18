@@ -5,6 +5,16 @@
     <title>Weixin</title>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery/1.9.1/jquery.min.js"></script>
     <script type="text/javascript">
+      function microPay() {
+        $.ajax({
+          type: 'post',
+          url: 'Pay!microPay',
+          dataType:"json",
+          data:$("form").serialize(),
+          success: function (data) {
+          }
+        })
+      }
     </script>
   </head>
   <body>
