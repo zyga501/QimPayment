@@ -5,9 +5,9 @@ import com.framework.utils.XMLParser;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.thoughtworks.xstream.io.xml.XmlFriendlyNameCoder;
+import com.weixin.api.RequestData.RequestData;
 import com.weixin.utils.Signature;
 import org.apache.http.HttpEntity;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.ConnectTimeoutException;
@@ -21,7 +21,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.util.Map;
-import java.util.SortedMap;
 
 public abstract class WeixinAPI {
     public Map<String,Object> responseResult() {
@@ -29,11 +28,11 @@ public abstract class WeixinAPI {
     }
 
     public boolean execute(String appsecret) throws IllegalAccessException, IOException,ParserConfigurationException, SAXException {
-        if (appsecret.isEmpty()) {
+        if (!requestData_.checkParameter() || appsecret.isEmpty()) {
             return false;
         }
 
-        Map<String,Object> requestParameter = buildRequestParameter();
+        Map<String,Object> requestParameter = requestData_.convertToMap();
         String sign = Signature.generateSign(requestParameter, appsecret);
         requestParameter.put("sign", sign);
 
@@ -78,9 +77,8 @@ public abstract class WeixinAPI {
         return true;
     }
 
-    protected abstract Map<String,Object> buildRequestParameter();
-
     protected abstract String getAPIUri();
 
+    protected RequestData requestData_;
     private Map<String,Object> responseResult_;
 }

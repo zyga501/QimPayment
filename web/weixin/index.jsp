@@ -21,6 +21,30 @@
     <form class="form form-horizontal" >
       <table>
         <tr>
+          <td>公众账号ID:</td>
+          <td>
+            <input type="text" id="appid" name="appid" value="wxbc6cb3102836e118"/>
+          </td>
+        </tr>
+        <tr>
+          <td>商户号:</td>
+          <td>
+            <input type="text" id="mch_id" name="mch_id" value="1241847602"/>
+          </td>
+        </tr>
+        <tr>
+          <td>子商户号:</td>
+          <td>
+            <input type="text" id="sub_mch_id" name="sub_mch_id" value="1294045001"/>
+          </td>
+        </tr>
+        <tr>
+          <td>APPSECRET:</td>
+          <td>
+            <input type="text" id="appsecret" name="appsecret" value="9778c54c04ff5d14f7f9c491badbc60b"/>
+          </td>
+        </tr>
+        <tr>
           <td>商品描述:</td>
           <td>
             <input type="text" id="productBody" name="productBody"/>
@@ -34,6 +58,11 @@
         <tr><td>价格:</td>
           <td>
             <input type="text" id="productFee" name="productFee"/>
+          </td>
+        </tr>
+        <tr><td>二维码:</td>
+          <td>
+            <input type="text" id="auth_code" name="auth_code"/>
           </td>
         </tr>
         <tr>
