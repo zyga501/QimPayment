@@ -23,25 +23,25 @@
         <tr>
           <td>公众账号ID:</td>
           <td>
-            <input type="text" id="appid" name="appid" value="wxbc6cb3102836e118"/>
+            <input type="text" id="appid" name="appid" value="wx0bfa8f7ec59b1f33"/>
           </td>
         </tr>
         <tr>
           <td>商户号:</td>
           <td>
-            <input type="text" id="mch_id" name="mch_id" value="1241847602"/>
+            <input type="text" id="mch_id" name="mch_id" value="1307537901"/>
           </td>
         </tr>
         <tr>
           <td>子商户号:</td>
           <td>
-            <input type="text" id="sub_mch_id" name="sub_mch_id" value="1294045001"/>
+            <input type="text" id="sub_mch_id" name="sub_mch_id" value="1319548401"/>
           </td>
         </tr>
         <tr>
           <td>APPSECRET:</td>
           <td>
-            <input type="text" id="appsecret" name="appsecret" value="9778c54c04ff5d14f7f9c491badbc60b"/>
+            <input type="text" id="appsecret" name="appsecret" value="1307537901DING1307537901DING1234"/>
           </td>
         </tr>
         <tr>
