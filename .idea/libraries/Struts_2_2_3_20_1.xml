@@ -19,6 +19,7 @@
       <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/commons-collections-3.1.jar!/" />
       <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/ezmorph-1.0.6.jar!/" />
       <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/json-lib-2.3-jdk15.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/commons-lang.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

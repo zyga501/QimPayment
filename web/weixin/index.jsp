@@ -24,12 +24,12 @@
           data:$("form").serialize(),
           success: function (data) {
             var json = eval("(" + data + ")");
-            alert(json.code_url);
             var qr = qrcode(10, 'Q');
             qr.addData(json.code_url);
             qr.make();
-            alert($("#scanPayCode"));
-            $("#scanPayCode").src = qr.toSource();
+            var dom=document.createElement('DIV');
+            dom.innerHTML = qr.createImgTag();
+            $("#scanPay_AuthCode")[0].appendChild(dom);
           }
         })
       }
@@ -81,7 +81,13 @@
         <tr><td>二维码:</td>
           <td>
             <input type="text" id="auth_code" name="auth_code"/>
-            <img id="scanPayCode" />
+          </td>
+        </tr>
+        <tr>
+          <td colspan=2>
+          <div  id="scanPay_AuthCode">
+          提交后成功后产生二维码
+          </div>
           </td>
         </tr>
         <tr>
