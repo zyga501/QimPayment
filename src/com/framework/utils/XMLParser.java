@@ -12,14 +12,15 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class XMLParser {
-    public static InputStream getStringStream(String sInputString) {
+    public static InputStream getStringStream(String sInputString) throws UnsupportedEncodingException {
         ByteArrayInputStream tInputStringStream = null;
         if (sInputString != null && !sInputString.trim().equals("")) {
-            tInputStringStream = new ByteArrayInputStream(sInputString.getBytes());
+            tInputStringStream = new ByteArrayInputStream(sInputString.getBytes("utf-8"));
         }
         return tInputStringStream;
     }
