@@ -68,7 +68,7 @@ public abstract class WeixinAPI {
             httpPost.abort();
         }
 
-        if (!Signature.checkIsSignValidFromResponseString(responseString, appsecret)) {
+        if (!Signature.checkResponseSignValid(responseString, appsecret)) {
             return false;
         }
 

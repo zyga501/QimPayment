@@ -55,20 +55,14 @@ public class Signature {
         return result;
     }
 
-    public static String getSignFromResponseString(String responseString, String key) throws IOException, SAXException, ParserConfigurationException {
-        Map<String,Object> map = XMLParser.convertMapFromXML(responseString);
-        map.put("sign","");
-        return Signature.generateSign(map, key);
-    }
-
-    public static boolean checkIsSignValidFromResponseString(String responseString, String key) throws ParserConfigurationException, IOException, SAXException {
+    public static boolean checkResponseSignValid(String responseString, String key) throws ParserConfigurationException, IOException, SAXException {
         Map<String,Object> map = XMLParser.convertMapFromXML(responseString);
 
         String signFromAPIResponse = map.get("sign").toString();
-        if(signFromAPIResponse=="" || signFromAPIResponse == null){
+        if(signFromAPIResponse=="" || signFromAPIResponse == null) {
             return false;
         }
-        map.put("sign","");
+        map.remove("sign");
         String signForAPIResponse = Signature.generateSign(map, key);
 
         if(!signForAPIResponse.equals(signFromAPIResponse)){
