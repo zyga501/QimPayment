@@ -4,6 +4,7 @@
   <head>
     <title>Weixin</title>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath()%>/js/qrcode.js"></script>
     <script type="text/javascript">
       function microPay() {
         $.ajax({
@@ -12,6 +13,23 @@
           dataType:"json",
           data:$("form").serialize(),
           success: function (data) {
+          }
+        })
+      }
+      function scanPay() {
+        $.ajax({
+          type: 'post',
+          url: 'Pay!scanPay',
+          dataType:"json",
+          data:$("form").serialize(),
+          success: function (data) {
+            var json = eval("(" + data + ")");
+            alert(json.code_url);
+            var qr = qrcode(10, 'Q');
+            qr.addData(json.code_url);
+            qr.make();
+            alert($("#scanPayCode"));
+            $("#scanPayCode").src = qr.toSource();
           }
         })
       }
@@ -63,11 +81,15 @@
         <tr><td>二维码:</td>
           <td>
             <input type="text" id="auth_code" name="auth_code"/>
+            <img id="scanPayCode" />
           </td>
         </tr>
         <tr>
           <td>
             <input type="button" onclick="microPay()" value="刷卡提交"/>
+          </td>
+          <td>
+            <input type="button" onclick="scanPay()" value="扫码支付"/>
           </td>
         </tr>
       </table>

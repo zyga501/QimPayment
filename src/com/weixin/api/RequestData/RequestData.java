@@ -1,12 +1,6 @@
 package com.weixin.api.RequestData;
 
-import com.framework.utils.ClassUtils;
 import com.framework.utils.StringUtils;
-
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class RequestData {
     public RequestData() {
@@ -14,10 +8,17 @@ public class RequestData {
     }
 
     public boolean checkParameter() {
-        return !appid.isEmpty()
-                && !mch_id.isEmpty()
-                && !sub_mch_id.isEmpty()
-                && !nonce_str.isEmpty();
+        try {
+            return !appid.isEmpty()
+                    && !mch_id.isEmpty()
+                    && !sub_mch_id.isEmpty()
+                    && !nonce_str.isEmpty();
+        }
+        catch (Exception exception) {
+
+        }
+
+        return false;
     }
 
     public String appid; // 公众账号ID 微信分配的公众账号ID

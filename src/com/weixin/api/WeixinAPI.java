@@ -23,10 +23,6 @@ import java.net.SocketTimeoutException;
 import java.util.Map;
 
 public abstract class WeixinAPI {
-    public Map<String,Object> responseResult() {
-        return responseResult_;
-    }
-
     public boolean execute(String appsecret) throws IllegalAccessException, IOException,ParserConfigurationException, SAXException {
         if (!requestData_.checkParameter() || appsecret.isEmpty()) {
             return false;
@@ -72,12 +68,12 @@ public abstract class WeixinAPI {
             return false;
         }
 
-        responseResult_ = XMLParser.convertMapFromXML(responseString);
-        return true;
+        Map<String,Object> responseResult = XMLParser.convertMapFromXML(responseString);
+        return handlerResponse(responseResult);
     }
 
     protected abstract String getAPIUri();
+    protected abstract boolean handlerResponse(Map<String,Object> responseResult);
 
     protected RequestData requestData_;
-    private Map<String,Object> responseResult_;
 }

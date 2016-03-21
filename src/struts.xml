@@ -25,9 +25,5 @@
         </interceptors>
     </package>
 
-    <package name="default" namespace="/" extends="json-default">
-        <action name="actionSupport" class="com.framework.action.AjaxActionSupport" method="{1}" />
-    </package>
-
     <include file="com/weixin/struts-weixin.xml" />
 </struts>

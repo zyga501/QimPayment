@@ -1,16 +1,30 @@
 package com.weixin.api.RequestData;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 public class MicroPayRequestData extends RequestData {
+    public MicroPayRequestData() throws UnknownHostException {
+        spbill_create_ip = InetAddress.getLocalHost().getHostAddress().toString();
+    }
+
     public boolean checkParameter() {
         if (!super.checkParameter()) {
             return false;
         }
 
-        return !body.isEmpty()
-                && !out_trade_no.isEmpty()
-                && total_fee >= 1
-                && !spbill_create_ip.isEmpty()
-                && !auth_code.isEmpty();
+        try {
+            return !body.isEmpty()
+                    && !out_trade_no.isEmpty()
+                    && total_fee >= 1
+                    && !spbill_create_ip.isEmpty()
+                    && !auth_code.isEmpty();
+        }
+        catch (Exception exception) {
+
+        }
+
+        return false;
     }
 
     public String body; // 商品描述 商品或支付单简要描述
