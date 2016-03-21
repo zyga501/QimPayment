@@ -32,9 +32,8 @@ public abstract class WeixinAPI {
             return false;
         }
 
-        Map<String,Object> requestParameter = requestData_.convertToMap();
-        String sign = Signature.generateSign(requestParameter, appsecret);
-        requestParameter.put("sign", sign);
+        String sign = Signature.generateSign(requestData_.convertToMap(), appsecret);
+        requestData_.sign = sign;
 
         String apiUri = getAPIUri();
         if (apiUri.isEmpty()) {
@@ -42,7 +41,7 @@ public abstract class WeixinAPI {
         }
 
         XStream xStreamForRequestPostData = new XStream(new DomDriver("UTF-8", new XmlFriendlyNameCoder("-_", "_")));
-        String postDataXML = xStreamForRequestPostData.toXML(requestParameter);
+        String postDataXML = xStreamForRequestPostData.toXML(requestData_);
 
         HttpPost httpPost = new HttpPost(apiUri);
         StringEntity postEntity = new StringEntity(postDataXML, "UTF-8");
