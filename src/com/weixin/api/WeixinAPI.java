@@ -32,7 +32,7 @@ public abstract class WeixinAPI {
             return false;
         }
 
-        String sign = Signature.generateSign(requestData_.convertToMap(), appsecret);
+        String sign = Signature.generateSign(requestData_, appsecret);
         requestData_.sign = sign;
 
         String apiUri = getAPIUri();

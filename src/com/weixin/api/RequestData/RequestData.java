@@ -13,26 +13,6 @@ public class RequestData {
         nonce_str = StringUtils.generateRandomString(32);
     }
 
-    public Map<String,Object> convertToMap() {
-        Map<String,Object> map = new HashMap<String, Object>();
-        ArrayList<Field> fields = new ArrayList<Field>();
-        ClassUtils.getBeanFields(this.getClass(), fields);
-        for (Field field : fields) {
-            Object obj;
-            try {
-                obj = field.get(this);
-                if(obj!=null){
-                    map.put(field.getName(), obj);
-                }
-            } catch (IllegalArgumentException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-        }
-        return map;
-    }
-
     public boolean checkParameter() {
         return !appid.isEmpty()
                 && !mch_id.isEmpty()

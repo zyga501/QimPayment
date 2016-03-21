@@ -1,5 +1,6 @@
 package com.weixin.utils;
 
+import com.framework.utils.ClassUtils;
 import com.framework.utils.MD5;
 import com.framework.utils.XMLParser;
 import org.xml.sax.SAXException;
@@ -15,7 +16,8 @@ public class Signature {
     public static String generateSign(Object o, String key) throws IllegalAccessException {
         ArrayList<String> list = new ArrayList<String>();
         Class cls = o.getClass();
-        Field[] fields = cls.getDeclaredFields();
+        ArrayList<Field> fields = new ArrayList<Field>();
+        ClassUtils.getBeanFields(cls, fields);
         for (Field f : fields) {
             f.setAccessible(true);
             if (f.get(o) != null && f.get(o) != "") {
