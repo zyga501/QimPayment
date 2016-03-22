@@ -29,7 +29,17 @@
             qr.make();
             var dom=document.createElement('DIV');
             dom.innerHTML = qr.createImgTag();
-            $("#scanPay_AuthCode")[0].appendChild(dom);
+            $("#QRCode")[0].appendChild(dom);
+          }
+        })
+      }
+      function brandWCPay() {
+        $.ajax({
+          type: 'post',
+          url: 'Pay!brandWCPay',
+          dataType:"json",
+          data:$("form").serialize(),
+          success: function (data) {
           }
         })
       }
@@ -78,16 +88,21 @@
             <input type="text" id="productFee" name="productFee"/>
           </td>
         </tr>
-        <tr><td>二维码:</td>
+        <tr><td>二维码字符串:</td>
           <td>
             <input type="text" id="auth_code" name="auth_code"/>
           </td>
         </tr>
         <tr>
-          <td colspan=2>
-          <div  id="scanPay_AuthCode">
-          提交后成功后产生二维码
+          <td>
+          <div  id="QRCode">
+          二维码
           </div>
+          </td>
+        </tr>
+        <tr><td>OpenID:</td>
+          <td>
+            <input type="text" id="openid" name="openid"/>
           </td>
         </tr>
         <tr>
@@ -96,6 +111,9 @@
           </td>
           <td>
             <input type="button" onclick="scanPay()" value="扫码支付"/>
+          </td>
+          <td>
+            <input type="button" onclick="brandWCPay()" value="公众号支付"/>
           </td>
         </tr>
       </table>

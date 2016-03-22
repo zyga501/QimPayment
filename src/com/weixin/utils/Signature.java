@@ -60,8 +60,8 @@ public class Signature {
     public static boolean checkResponseSignValid(String responseString, String key) throws ParserConfigurationException, IOException, SAXException {
         Map<String,Object> map = XMLParser.convertMapFromXML(responseString);
 
-        String signFromAPIResponse = map.get("sign").toString();
-        if(signFromAPIResponse=="" || signFromAPIResponse == null) {
+        String signFromAPIResponse = map.getOrDefault("sign", "").toString();
+        if(signFromAPIResponse=="") {
             return false;
         }
         map.remove("sign");

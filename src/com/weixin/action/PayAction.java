@@ -46,4 +46,23 @@ public class PayAction extends AjaxActionSupport {
         }
         return AjaxActionComplete(map);
     }
+
+    public String brandWCPay() throws IllegalAccessException, IOException,ParserConfigurationException, SAXException {
+        UnifiedOrderRequestData unifiedOrderRequestData = new UnifiedOrderRequestData();
+        unifiedOrderRequestData.appid = getParameter("appid").toString();
+        unifiedOrderRequestData.mch_id = getParameter("mch_id").toString();
+        unifiedOrderRequestData.sub_mch_id = getParameter("sub_mch_id").toString();
+        unifiedOrderRequestData.body = getParameter("productBody").toString();
+        unifiedOrderRequestData.out_trade_no = unifiedOrderRequestData.nonce_str;
+        unifiedOrderRequestData.total_fee = Integer.parseInt(getParameter("productFee").toString());
+        unifiedOrderRequestData.trade_type = "JSAPI";
+        unifiedOrderRequestData.openid = getParameter("openid").toString();
+        unifiedOrderRequestData.notify_url = getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + CallbackAction.BRANDWCPAYCALLBACK;
+        UnifiedOrder unifiedOrder = new UnifiedOrder(unifiedOrderRequestData);
+        Map map = new HashMap();
+        if (unifiedOrder.execute(getParameter("appsecret").toString())) {
+            map.put("prepay_id", unifiedOrder.getCodeUrl());
+        }
+        return AjaxActionComplete(map);
+    }
 }

@@ -22,10 +22,10 @@ public class UnifiedOrderRequestData extends RequestData {
                     && !trade_type.isEmpty();
             switch (trade_type) {
                 case "JSAPI": {
-                    if (!openid.isEmpty()) {
+                    if (openid != null && !openid.isEmpty()) {
                         parameterValid = parameterValid && true;
                     }
-                    else if (!sub_openid.isEmpty()) {
+                    else if (sub_openid != null && !sub_openid.isEmpty()) {
                         parameterValid = parameterValid && !sub_appid.isEmpty();
                     }
                     else {

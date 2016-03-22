@@ -12,8 +12,6 @@ import java.util.Map;
 
 public class AjaxActionSupport extends ActionSupport {
     private final static String AJAXACTIONCOMPLETED = "ajaxActionCompleted";
-    private String ajaxActionResult;
-    private Map parameterMap;
 
     public HttpServletResponse getResponse() {
         return (HttpServletResponse) ActionContext.getContext().get(ServletActionContext.HTTP_RESPONSE);
@@ -43,29 +41,32 @@ public class AjaxActionSupport extends ActionSupport {
     public void validate() {
         // lazyvalidate
         ActionContext context = ActionContext.getContext();
-        parameterMap = context.getParameters();
+        parameterMap_ = context.getParameters();
     }
 
     public Object getParameter(String paramterName) {
-        if (parameterMap == null || parameterMap.size() == 0) {
+        if (parameterMap_ == null || parameterMap_.size() == 0) {
             return null;
         }
 
-        if (parameterMap.containsKey(paramterName)) {
-            return ((Object[]) parameterMap.get(paramterName))[0];
+        if (parameterMap_.containsKey(paramterName)) {
+            return ((Object[]) parameterMap_.get(paramterName))[0];
         }
 
         return null;
     }
 
     public String getAjaxActionResult() {
-        return ajaxActionResult;
+        return ajaxActionResult_;
     }
     public String AjaxActionComplete() {
         return AJAXACTIONCOMPLETED;
     }
     public String AjaxActionComplete( Map resultMap) {
-        ajaxActionResult = JSONObject.fromObject(resultMap).toString();
+        ajaxActionResult_ = JSONObject.fromObject(resultMap).toString();
         return AJAXACTIONCOMPLETED;
     }
+
+    private String ajaxActionResult_;
+    private Map parameterMap_;
 }
