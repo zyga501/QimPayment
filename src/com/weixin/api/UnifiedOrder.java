@@ -6,7 +6,6 @@ import java.util.Map;
 
 public class UnifiedOrder extends WeixinAPI {
     public final static String UNIFIEDORDER_API = "https://api.mch.weixin.qq.com/pay/unifiedorder";
-    public final static String OPENID_URL = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN";
 
     public UnifiedOrder(UnifiedOrderRequestData unifiedOrderRequestData) {
         requestData_ = unifiedOrderRequestData;
