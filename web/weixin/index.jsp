@@ -33,20 +33,48 @@
           }
         })
       }
-      function brandWCPay() {
+      function prePay() {
         $.ajax({
           type: 'post',
-          url: 'Pay!brandWCPay',
+          url: '<%=request.getContextPath()%>/Pay!brandWCPay',
           dataType:"json",
           data:$("form").serialize(),
           success: function (data) {
+            var json = eval("(" + data + ")");
+            brandWCPay(json);
+          },
+          error: function () {
+            alert("生成订单失败，请检测网络或联系开发商！");
           }
         })
+      }
+      function brandWCPay(json) {
+        if (typeof (WeixinJSBridge) == "undefined") {
+          alert("请在微信客户端打开该网页");
+        }
+        else {
+          WeixinJSBridge.invoke(
+                  'getBrandWCPayRequest',
+                  {
+                    "appId" : json.appId,           //公众号名称，由商户传入
+                    "timeStamp" : json.timeStamp,  //时间戳，自1970年以来的秒数
+                    "nonceStr" : json.nonceStr,    //随机串
+                    "package" : json.package,      //统一下单返回
+                    "signType" : json.signType,    //微信签名方式
+                    "paySign" : json.paySign       //微信签名
+                  }
+                  , function(result) {
+                    if (result.err_msg == "get_brand_wcpay_request:ok") {
+                      alert("购买成功！");
+                    }
+                  });
+        }
       }
     </script>
   </head>
   <body>
     <form class="form form-horizontal" >
+      <input id="openid" name="openid" type="hidden" value="<%=request.getParameter("openid")%>" />
       <table>
         <tr>
           <td>公众账号ID:</td>
@@ -100,11 +128,6 @@
           </div>
           </td>
         </tr>
-        <tr><td>OpenID:</td>
-          <td>
-            <input type="text" id="openid" name="openid"/>
-          </td>
-        </tr>
         <tr>
           <td>
             <input type="button" onclick="microPay()" value="刷卡提交"/>
@@ -113,7 +136,7 @@
             <input type="button" onclick="scanPay()" value="扫码支付"/>
           </td>
           <td>
-            <input type="button" onclick="brandWCPay()" value="公众号支付"/>
+            <input type="button" onclick="prePay()" value="公众号支付"/>
           </td>
         </tr>
       </table>

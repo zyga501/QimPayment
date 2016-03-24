@@ -1,10 +1,12 @@
 package com.weixin.action;
 
 import com.framework.action.AjaxActionSupport;
+import com.framework.utils.StringUtils;
 import com.weixin.api.MicroPay;
 import com.weixin.api.RequestData.MicroPayRequestData;
 import com.weixin.api.RequestData.UnifiedOrderRequestData;
 import com.weixin.api.UnifiedOrder;
+import com.weixin.utils.Signature;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -60,8 +62,14 @@ public class PayAction extends AjaxActionSupport {
         unifiedOrderRequestData.notify_url = getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + CallbackAction.BRANDWCPAYCALLBACK;
         UnifiedOrder unifiedOrder = new UnifiedOrder(unifiedOrderRequestData);
         Map map = new HashMap();
-        if (unifiedOrder.execute(getParameter("appsecret").toString())) {
-            map.put("prepay_id", unifiedOrder.getCodeUrl());
+        String appsecret = getParameter("appsecret").toString();
+        if (unifiedOrder.execute(appsecret)) {
+            map.put("appId", unifiedOrderRequestData.appid);
+            map.put("timeStamp", String.valueOf(System.currentTimeMillis() / 1000));
+            map.put("nonceStr", StringUtils.generateRandomString(32));
+            map.put("package", "prepay_id=" + unifiedOrder.getCodeUrl());
+            map.put("signType", "MD5");
+            map.put("paySign", Signature.generateSign(map, appsecret));
         }
         return AjaxActionComplete(map);
     }
