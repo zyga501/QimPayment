@@ -36,14 +36,14 @@
       function prePay() {
         $.ajax({
           type: 'post',
-          url: '<%=request.getContextPath()%>/Pay!brandWCPay',
+          url: '<%=request.getContextPath()%>/weixin/Pay!brandWCPay',
           dataType:"json",
           data:$("form").serialize(),
           success: function (data) {
             var json = eval("(" + data + ")");
             brandWCPay(json);
           },
-          error: function () {
+          error: function (data) {
             alert("生成订单失败，请检测网络或联系开发商！");
           }
         })
@@ -53,6 +53,7 @@
           alert("请在微信客户端打开该网页");
         }
         else {
+          alert(json);
           WeixinJSBridge.invoke(
                   'getBrandWCPayRequest',
                   {
@@ -74,7 +75,7 @@
   </head>
   <body>
     <form class="form form-horizontal" >
-      <input id="openid" name="openid" type="hidden" value="<%=request.getParameter("openid")%>" />
+      <input id="openid" name="openid" type="hidden" value="<%=request.getParameter("code")%>" />
       <table>
         <tr>
           <td>公众账号ID:</td>

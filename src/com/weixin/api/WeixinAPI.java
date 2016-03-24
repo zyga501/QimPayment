@@ -38,7 +38,6 @@ public abstract class WeixinAPI {
 
         XStream xStreamForRequestPostData = new XStream(new DomDriver("UTF-8", new XmlFriendlyNameCoder("-_", "_")));
         String postDataXML = xStreamForRequestPostData.toXML(requestData_);
-
         HttpPost httpPost = new HttpPost(apiUri);
         StringEntity postEntity = new StringEntity(postDataXML, "UTF-8");
         httpPost.addHeader("Content-Type", "text/xml");
@@ -63,6 +62,8 @@ public abstract class WeixinAPI {
         finally {
             httpPost.abort();
         }
+
+        System.out.println(responseString);
 
         if (!Signature.checkResponseSignValid(responseString, appsecret)) {
             return false;
