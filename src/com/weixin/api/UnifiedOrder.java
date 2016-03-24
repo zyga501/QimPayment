@@ -33,6 +33,7 @@ public class UnifiedOrder extends WeixinAPI {
             }
             case "JSAPI": {
                 prepay_id = responseResult.get("prepay_id").toString();
+                break;
             }
         }
 

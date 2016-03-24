@@ -6,6 +6,7 @@ import com.weixin.api.MicroPay;
 import com.weixin.api.RequestData.MicroPayRequestData;
 import com.weixin.api.RequestData.UnifiedOrderRequestData;
 import com.weixin.api.UnifiedOrder;
+import com.weixin.utils.OAuth2;
 import com.weixin.utils.Signature;
 import org.xml.sax.SAXException;
 
@@ -49,25 +50,35 @@ public class PayAction extends AjaxActionSupport {
         return AjaxActionComplete(map);
     }
 
+    public void perPay() throws IOException {
+        String appid = getParameter("appid").toString();
+        String redirect_uri = getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + "index.jsp";
+        String perPayUri = String.format("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" +
+                "%s&redirect_uri=%s&response_type=code&scope=snsapi_base&state=%s#wechat_redirect",
+                appid, redirect_uri, appid);
+        System.out.println(perPayUri);
+        getResponse().sendRedirect(perPayUri);
+    }
+
     public String brandWCPay() throws IllegalAccessException, IOException,ParserConfigurationException, SAXException {
+        String appsecret = getParameter("appsecret").toString();
         UnifiedOrderRequestData unifiedOrderRequestData = new UnifiedOrderRequestData();
-        unifiedOrderRequestData.appid = getParameter("appid").toString();
+        unifiedOrderRequestData.appid = getParameter("state").toString();
         unifiedOrderRequestData.mch_id = getParameter("mch_id").toString();
         unifiedOrderRequestData.sub_mch_id = getParameter("sub_mch_id").toString();
         unifiedOrderRequestData.body = getParameter("productBody").toString();
         unifiedOrderRequestData.out_trade_no = unifiedOrderRequestData.nonce_str;
         unifiedOrderRequestData.total_fee = Integer.parseInt(getParameter("productFee").toString());
         unifiedOrderRequestData.trade_type = "JSAPI";
-        unifiedOrderRequestData.openid = getParameter("openid").toString();
+        unifiedOrderRequestData.openid = OAuth2.fetchOpenid(unifiedOrderRequestData.appid, appsecret, getParameter("code").toString());
         unifiedOrderRequestData.notify_url = getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + CallbackAction.BRANDWCPAYCALLBACK;
         UnifiedOrder unifiedOrder = new UnifiedOrder(unifiedOrderRequestData);
         Map map = new HashMap();
-        String appsecret = getParameter("appsecret").toString();
         if (unifiedOrder.execute(appsecret)) {
             map.put("appId", unifiedOrderRequestData.appid);
             map.put("timeStamp", String.valueOf(System.currentTimeMillis() / 1000));
             map.put("nonceStr", StringUtils.generateRandomString(32));
-            map.put("package", "prepay_id=" + unifiedOrder.getCodeUrl());
+            map.put("package", "prepay_id=" + unifiedOrder.getPrepayID());
             map.put("signType", "MD5");
             map.put("paySign", Signature.generateSign(map, appsecret));
         }
