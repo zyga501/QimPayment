@@ -16,6 +16,7 @@
           }
         })
       }
+
       function scanPay() {
         $.ajax({
           type: 'post',
@@ -64,6 +65,18 @@
           }
         })
       }
+
+      function microPay() {
+        $.ajax({
+          type: 'post',
+          url: 'Pay!refund',
+          dataType:"json",
+          data:$("form").serialize(),
+          success: function (data) {
+          }
+        })
+      }
+
     </script>
   </head>
   <body>
@@ -155,6 +168,9 @@
           </td>
           <td>
             <input type="button" onclick="brandWCPay()" value="公众号支付"/>
+          </td>
+          <td>
+            <input type="button" onclick="brandWCPay()" value="申请退款"/>
           </td>
         </tr>
       </table>
