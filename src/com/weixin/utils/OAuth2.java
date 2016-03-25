@@ -12,9 +12,9 @@ import java.io.IOException;
 
 public class OAuth2 {
     private final static String OPENID_API = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code";
-    public static String fetchOpenid(String appid, String secret , String code) throws IOException {
+    public static String fetchOpenid(String appid, String appSecret , String code) throws IOException {
         try {
-            String accessTokenUrl = String.format(OPENID_API, appid, secret, code);
+            String accessTokenUrl = String.format(OPENID_API, appid, appSecret, code);
             System.out.println(accessTokenUrl);
             CloseableHttpClient httpClient = HttpUtils.Instance();
             HttpGet httpGet = new HttpGet(accessTokenUrl);

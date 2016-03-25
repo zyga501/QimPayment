@@ -26,7 +26,7 @@ public class PayAction extends AjaxActionSupport {
         microPayRequestData.total_fee = Integer.parseInt(getParameter("productFee").toString());
         microPayRequestData.auth_code = getParameter("auth_code").toString();
         MicroPay microPay = new MicroPay(microPayRequestData);
-        microPay.execute(getParameter("appsecret").toString());
+        microPay.execute(getParameter("apikey").toString());
 
         return AjaxActionComplete();
     }
@@ -44,7 +44,7 @@ public class PayAction extends AjaxActionSupport {
         unifiedOrderRequestData.notify_url = getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + CallbackAction.SCANPAYCALLBACK;
         UnifiedOrder unifiedOrder = new UnifiedOrder(unifiedOrderRequestData);
         Map map = new HashMap();
-        if (unifiedOrder.execute(getParameter("appsecret").toString())) {
+        if (unifiedOrder.execute(getParameter("apikey").toString())) {
             map.put("code_url", unifiedOrder.getCodeUrl());
         }
         return AjaxActionComplete(map);
@@ -61,7 +61,7 @@ public class PayAction extends AjaxActionSupport {
     }
 
     public String brandWCPay() throws IllegalAccessException, IOException,ParserConfigurationException, SAXException {
-        String appsecret = getParameter("appsecret").toString();
+        String apikey = getParameter("apikey").toString();
         UnifiedOrderRequestData unifiedOrderRequestData = new UnifiedOrderRequestData();
         unifiedOrderRequestData.appid = getParameter("state").toString();
         unifiedOrderRequestData.mch_id = getParameter("mch_id").toString();
@@ -70,17 +70,17 @@ public class PayAction extends AjaxActionSupport {
         unifiedOrderRequestData.out_trade_no = unifiedOrderRequestData.nonce_str;
         unifiedOrderRequestData.total_fee = Integer.parseInt(getParameter("productFee").toString());
         unifiedOrderRequestData.trade_type = "JSAPI";
-        unifiedOrderRequestData.openid = OAuth2.fetchOpenid(unifiedOrderRequestData.appid, appsecret, getParameter("code").toString());
+        unifiedOrderRequestData.openid = OAuth2.fetchOpenid(unifiedOrderRequestData.appid, getParameter("appsecret").toString(), getParameter("code").toString());
         unifiedOrderRequestData.notify_url = getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + CallbackAction.BRANDWCPAYCALLBACK;
         UnifiedOrder unifiedOrder = new UnifiedOrder(unifiedOrderRequestData);
         Map map = new HashMap();
-        if (unifiedOrder.execute(appsecret)) {
+        if (unifiedOrder.execute(apikey)) {
             map.put("appId", unifiedOrderRequestData.appid);
             map.put("timeStamp", String.valueOf(System.currentTimeMillis() / 1000));
             map.put("nonceStr", StringUtils.generateRandomString(32));
             map.put("package", "prepay_id=" + unifiedOrder.getPrepayID());
             map.put("signType", "MD5");
-            map.put("paySign", Signature.generateSign(map, appsecret));
+            map.put("paySign", Signature.generateSign(map, apikey));
         }
         return AjaxActionComplete(map);
     }

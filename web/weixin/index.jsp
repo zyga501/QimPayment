@@ -90,9 +90,15 @@
           </td>
         </tr>
         <tr>
+          <td>APIKEY:</td>
+          <td>
+            <input type="text" id="apikey" name="apikey" value="1307537901DING1307537901DING1234"/>
+          </td>
+        </tr>
+        <tr>
           <td>APPSECRET:</td>
           <td>
-            <input type="text" id="appsecret" name="appsecret" value="1307537901DING1307537901DING1234"/>
+            <input type="text" id="appsecret" name="appsecret" value="9386215269d6eb50c14199089890050f"/>
           </td>
         </tr>
         <tr>
