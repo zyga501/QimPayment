@@ -15,15 +15,13 @@ public class OAuth2 {
     public static String fetchOpenid(String appid, String appSecret , String code) throws IOException {
         try {
             String accessTokenUrl = String.format(OPENID_API, appid, appSecret, code);
-            System.out.println(accessTokenUrl);
             CloseableHttpClient httpClient = HttpUtils.Instance();
             HttpGet httpGet = new HttpGet(accessTokenUrl);
             CloseableHttpResponse response = httpClient.execute(httpGet);
             HttpEntity entity = response.getEntity();
             String responseString = EntityUtils.toString(entity, "UTF-8");
             response.close();
-            System.out.println(responseString);
-            JSONObject jsonParse = JSONObject.fromObject(response.getEntity());
+            JSONObject jsonParse = JSONObject.fromObject(responseString);
             return jsonParse.get("openid").toString();
         }
         catch (Exception exception) {

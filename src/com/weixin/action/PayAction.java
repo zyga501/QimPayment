@@ -56,7 +56,6 @@ public class PayAction extends AjaxActionSupport {
         String perPayUri = String.format("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" +
                 "%s&redirect_uri=%s&response_type=code&scope=snsapi_base&state=%s#wechat_redirect",
                 appid, redirect_uri, appid);
-        System.out.println(perPayUri);
         getResponse().sendRedirect(perPayUri);
     }
 
