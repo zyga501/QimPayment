@@ -1,11 +1,14 @@
 package com.weixin.api.RequestData;
 
+import com.framework.utils.IdWorker;
+
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 public class UnifiedOrderRequestData extends RequestData {
     public UnifiedOrderRequestData() throws UnknownHostException {
         spbill_create_ip = InetAddress.getLocalHost().getHostAddress().toString();
+        out_trade_no = String.valueOf(new IdWorker(0).nextId());
     }
 
     public boolean checkParameter() {
@@ -45,10 +48,8 @@ public class UnifiedOrderRequestData extends RequestData {
             return parameterValid;
         }
         catch (Exception exception) {
-            System.out.print(exception.getMessage());
+            return false;
         }
-
-        return false;
     }
 
     public String body; // 商品描述 商品或支付单简要描述

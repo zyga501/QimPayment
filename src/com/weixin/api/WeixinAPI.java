@@ -25,6 +25,7 @@ import java.util.Map;
 public abstract class WeixinAPI {
     public boolean execute(String appsecret) throws IllegalAccessException, IOException,ParserConfigurationException, SAXException {
         if (!requestData_.checkParameter() || appsecret.isEmpty()) {
+            System.out.println("CheckParameter Failed!");
             return false;
         }
 
@@ -66,6 +67,7 @@ public abstract class WeixinAPI {
         System.out.println(responseString);
 
         if (!Signature.checkResponseSignValid(responseString, appsecret)) {
+            System.out.println("CheckResponseSignValid Failed!");
             return false;
         }
 

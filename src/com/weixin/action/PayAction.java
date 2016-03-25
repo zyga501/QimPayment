@@ -3,7 +3,9 @@ package com.weixin.action;
 import com.framework.action.AjaxActionSupport;
 import com.framework.utils.StringUtils;
 import com.weixin.api.MicroPay;
+import com.weixin.api.Refund;
 import com.weixin.api.RequestData.MicroPayRequestData;
+import com.weixin.api.RequestData.RefundRequestData;
 import com.weixin.api.RequestData.UnifiedOrderRequestData;
 import com.weixin.api.UnifiedOrder;
 import com.weixin.utils.OAuth2;
@@ -22,7 +24,6 @@ public class PayAction extends AjaxActionSupport {
         microPayRequestData.mch_id = getParameter("mch_id").toString();
         microPayRequestData.sub_mch_id = getParameter("sub_mch_id").toString();
         microPayRequestData.body = getParameter("productBody").toString();
-        microPayRequestData.out_trade_no = microPayRequestData.nonce_str;
         microPayRequestData.total_fee = Integer.parseInt(getParameter("productFee").toString());
         microPayRequestData.auth_code = getParameter("auth_code").toString();
         MicroPay microPay = new MicroPay(microPayRequestData);
@@ -37,12 +38,12 @@ public class PayAction extends AjaxActionSupport {
         unifiedOrderRequestData.mch_id = getParameter("mch_id").toString();
         unifiedOrderRequestData.sub_mch_id = getParameter("sub_mch_id").toString();
         unifiedOrderRequestData.body = getParameter("productBody").toString();
-        unifiedOrderRequestData.out_trade_no = unifiedOrderRequestData.nonce_str;
         unifiedOrderRequestData.total_fee = Integer.parseInt(getParameter("productFee").toString());
         unifiedOrderRequestData.product_id = getParameter("auth_code").toString();
         unifiedOrderRequestData.trade_type = "NATIVE";
         unifiedOrderRequestData.notify_url = getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + CallbackAction.SCANPAYCALLBACK;
         UnifiedOrder unifiedOrder = new UnifiedOrder(unifiedOrderRequestData);
+
         Map map = new HashMap();
         if (unifiedOrder.execute(getParameter("apikey").toString())) {
             map.put("code_url", unifiedOrder.getCodeUrl());
@@ -66,12 +67,12 @@ public class PayAction extends AjaxActionSupport {
         unifiedOrderRequestData.mch_id = getParameter("mch_id").toString();
         unifiedOrderRequestData.sub_mch_id = getParameter("sub_mch_id").toString();
         unifiedOrderRequestData.body = getParameter("productBody").toString();
-        unifiedOrderRequestData.out_trade_no = unifiedOrderRequestData.nonce_str;
         unifiedOrderRequestData.total_fee = Integer.parseInt(getParameter("productFee").toString());
         unifiedOrderRequestData.trade_type = "JSAPI";
         unifiedOrderRequestData.openid = OAuth2.fetchOpenid(unifiedOrderRequestData.appid, getParameter("appsecret").toString(), getParameter("code").toString());
         unifiedOrderRequestData.notify_url = getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + CallbackAction.BRANDWCPAYCALLBACK;
         UnifiedOrder unifiedOrder = new UnifiedOrder(unifiedOrderRequestData);
+
         Map map = new HashMap();
         if (unifiedOrder.execute(apikey)) {
             map.put("appId", unifiedOrderRequestData.appid);
@@ -81,6 +82,22 @@ public class PayAction extends AjaxActionSupport {
             map.put("signType", "MD5");
             map.put("paySign", Signature.generateSign(map, apikey));
         }
+
         return AjaxActionComplete(map);
+    }
+
+    public String refund() throws IllegalAccessException, IOException,ParserConfigurationException, SAXException {
+        RefundRequestData refundRequestData = new RefundRequestData();
+        refundRequestData.appid = getParameter("state").toString();
+        refundRequestData.mch_id = getParameter("mch_id").toString();
+        refundRequestData.sub_mch_id = getParameter("sub_mch_id").toString();
+        refundRequestData.total_fee = Integer.parseInt(getParameter("productFee").toString());
+        refundRequestData.refund_fee = Integer.parseInt(getParameter("refund_fee").toString());
+        refundRequestData.transaction_id = getParameter("transaction_id").toString();
+        refundRequestData.out_trade_no = getParameter("out_trade_no").toString();
+        refundRequestData.op_user_id = refundRequestData.mch_id;
+        Refund refund = new Refund(refundRequestData);
+        refund.execute(getParameter("apikey").toString());
+        return AjaxActionComplete();
     }
 }

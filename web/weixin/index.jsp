@@ -112,7 +112,7 @@
           <td><input type="text" id="productDetail" name="productDetail"/>
           </td>
         </tr>
-        <tr><td>价格:</td>
+        <tr><td>总金额:</td>
           <td>
             <input type="text" id="productFee" name="productFee"/>
           </td>
@@ -120,6 +120,23 @@
         <tr><td>二维码字符串:</td>
           <td>
             <input type="text" id="auth_code" name="auth_code"/>
+          </td>
+        </tr>
+        <tr>
+          <td>微信订单号:</td>
+          <td>
+            <input type="text" id="transaction_id" name="transaction_id"/>
+          </td>
+        </tr>
+        <tr>
+          <td>商户订单号:</td>
+          <td>
+            <input type="text" id="out_trade_no" name="out_trade_no"/>
+          </td>
+        </tr>
+        <tr><td>退款金额:</td>
+          <td>
+            <input type="text" id="refund_fee" name="refund_fee"/>
           </td>
         </tr>
         <tr>
