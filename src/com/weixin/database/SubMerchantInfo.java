@@ -5,7 +5,7 @@ import org.apache.ibatis.session.SqlSession;
 public class SubMerchantInfo {
     public static void main(String[] args) throws Exception {
         SqlSession sqlSession = Database.SqlSessionFactory().openSession();
-        String statement = "com.weixin.database.mapping.subMerchantInfo.getSubMerchantInfo";
+        String statement = "com.weixin.database.mapping.subMerchantInfo.getSubMerchantInfoById";
         SubMerchantInfo subMerchantInfo = sqlSession.selectOne(statement, (Object) 1596144145909760L);
         sqlSession.close();
     }
