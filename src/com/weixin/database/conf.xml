@@ -15,5 +15,6 @@
     </environments>
 
     <mappers>
+        <mapper resource="com/weixin/database/mapping/MerchantInfo.xml" />
     </mappers>
 </configuration>

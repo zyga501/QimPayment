@@ -1,0 +1,76 @@
+package com.weixin.database;
+
+import org.apache.ibatis.session.SqlSession;
+
+public class MerchantInfo {
+    public static void main(String[] args) throws Exception {
+        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
+        String statement = "com.weixin.database.mapping.merchantInfo.getMerchantInfo";
+        MerchantInfo merchantInfo = sqlSession.selectOne(statement, (Object) 1596082254858240L);
+        sqlSession.close();
+    }
+
+    public Long getId() {
+        return id_;
+    }
+
+    public void setId(Long id) {
+        this.id_ = id;
+    }
+
+    public String getName() {
+        return name_;
+    }
+
+    public void setName(String name) {
+        this.name_ = name;
+    }
+
+    public String getAppid() {
+        return appid_;
+    }
+
+    public void setAppid(String appid) {
+        this.appid_ = appid;
+    }
+
+    public String getAppsecret() {
+        return appsecret_;
+    }
+
+    public void setAppsecret(String appsecret) {
+        this.appsecret_ = appsecret;
+    }
+
+    public String getMchId() {
+        return mchId_;
+    }
+
+    public void setMchId(String mchId) {
+        this.mchId_ = mchId;
+    }
+
+    public String getApiKey() {
+        return apiKey_;
+    }
+
+    public void setApiKey(String apiKey) {
+        this.apiKey_ = apiKey;
+    }
+
+    public String getOpenId() {
+        return openId_;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId_ = openId;
+    }
+
+    private Long id_;
+    private String name_;
+    private String appid_;
+    private String appsecret_;
+    private String mchId_;
+    private String apiKey_;
+    private String openId_;
+}
