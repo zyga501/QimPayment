@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weixin.database.mapping.subMerchantInfo">
+    <select id="getSubMerchantInfo" parameterType="long" resultMap="subMerchantInfoResult">
+      SELECT * FROM SubMerchantInfo WHERE id=#{id}
+    </select>
+    <resultMap type="com.weixin.database.SubMerchantInfo" id="subMerchantInfoResult">
+        <id property="id" column="id" jdbcType="BIGINT" />
+        <result property="merchantId" column="merchantId" jdbcType="BIGINT" />
+        <result property="name" column="name" jdbcType="VARCHAR" />
+        <result property="subId" column="subId" jdbcType="VARCHAR"/>
+        <result property="salemanId" column="salemanId" jdbcType="BIGINT" />
+    </resultMap>
+</mapper>
