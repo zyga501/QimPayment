@@ -66,7 +66,7 @@
         })
       }
 
-      function microPay() {
+      function refund() {
         $.ajax({
           type: 'post',
           url: 'Pay!refund',
@@ -85,33 +85,9 @@
       <input id="state" name="state" type="hidden" value="<%=request.getParameter("state")%>" />
       <table>
         <tr>
-          <td>公众账号ID:</td>
-          <td>
-            <input type="text" id="appid" name="appid" value="wx0bfa8f7ec59b1f33"/>
-          </td>
-        </tr>
-        <tr>
-          <td>商户号:</td>
-          <td>
-            <input type="text" id="mch_id" name="mch_id" value="1307537901"/>
-          </td>
-        </tr>
-        <tr>
           <td>子商户号:</td>
           <td>
             <input type="text" id="sub_mch_id" name="sub_mch_id" value="1319548401"/>
-          </td>
-        </tr>
-        <tr>
-          <td>APIKEY:</td>
-          <td>
-            <input type="text" id="apikey" name="apikey" value="1307537901DING1307537901DING1234"/>
-          </td>
-        </tr>
-        <tr>
-          <td>APPSECRET:</td>
-          <td>
-            <input type="text" id="appsecret" name="appsecret" value="9386215269d6eb50c14199089890050f"/>
           </td>
         </tr>
         <tr>
@@ -170,7 +146,7 @@
             <input type="button" onclick="brandWCPay()" value="公众号支付"/>
           </td>
           <td>
-            <input type="button" onclick="brandWCPay()" value="申请退款"/>
+            <input type="button" onclick="refund()" value="申请退款"/>
           </td>
         </tr>
       </table>

@@ -6,8 +6,24 @@ public class SubMerchantInfo {
     public static void main(String[] args) throws Exception {
         SqlSession sqlSession = Database.SqlSessionFactory().openSession();
         String statement = "com.weixin.database.mapping.subMerchantInfo.getSubMerchantInfoById";
-        SubMerchantInfo subMerchantInfo = sqlSession.selectOne(statement, (Object) 1596144145909760L);
+        SubMerchantInfo subMerchantInfo = sqlSession.selectOne(statement, 1596144145909760L);
         sqlSession.close();
+    }
+
+    public static SubMerchantInfo getSubMerchantInfoById(long id) {
+        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
+        String statement = "com.weixin.database.mapping.subMerchantInfo.getSubMerchantInfoById";
+        SubMerchantInfo subMerchantInfo = sqlSession.selectOne(statement, id);
+        sqlSession.close();
+        return subMerchantInfo;
+    }
+
+    public static SubMerchantInfo getSubMerchantInfoBySubId(String subId) {
+        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
+        String statement = "com.weixin.database.mapping.subMerchantInfo.getSubMerchantInfoBySubId";
+        SubMerchantInfo subMerchantInfo = sqlSession.selectOne(statement, subId);
+        sqlSession.close();
+        return subMerchantInfo;
     }
 
     public long getId() {
@@ -18,11 +34,11 @@ public class SubMerchantInfo {
         this.id_ = id;
     }
 
-    public String getMerchantId() {
+    public long getMerchantId() {
         return merchantId_;
     }
 
-    public void setMerchantId(String merchantId) {
+    public void setMerchantId(long merchantId) {
         this.merchantId_ = merchantId;
     }
 
@@ -51,7 +67,7 @@ public class SubMerchantInfo {
     }
 
     private long id_;
-    private String merchantId_;
+    private long merchantId_;
     private String name_;
     private String subId_;
     private long salemanId_;

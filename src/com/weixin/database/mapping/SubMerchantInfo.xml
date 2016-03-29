@@ -4,6 +4,9 @@
     <select id="getSubMerchantInfoById" parameterType="long" resultMap="subMerchantInfoResult">
       SELECT * FROM SubMerchantInfo WHERE id=#{id}
     </select>
+    <select id="getSubMerchantInfoBySubId" parameterType="String" resultMap="subMerchantInfoResult">
+        SELECT * FROM SubMerchantInfo WHERE subId=#{subId}
+    </select>
     <resultMap type="com.weixin.database.SubMerchantInfo" id="subMerchantInfoResult">
         <id property="id" column="id" jdbcType="BIGINT" />
         <result property="merchantId" column="merchantId" jdbcType="BIGINT" />

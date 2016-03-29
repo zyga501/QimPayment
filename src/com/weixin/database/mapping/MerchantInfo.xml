@@ -11,6 +11,5 @@
         <result property="appsecret" column="appsecret" jdbcType="VARCHAR"/>
         <result property="mchId" column="mchId" jdbcType="VARCHAR"/>
         <result property="apiKey" column="apiKey" jdbcType="VARCHAR"/>
-        <result property="openId" column="openId" jdbcType="VARCHAR"/>
     </resultMap>
 </mapper>

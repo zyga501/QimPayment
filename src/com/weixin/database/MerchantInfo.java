@@ -10,6 +10,14 @@ public class MerchantInfo {
         sqlSession.close();
     }
 
+    public static MerchantInfo getMerchantInfoById(long id) {
+        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
+        String statement = "com.weixin.database.mapping.merchantInfo.getMerchantInfoById";
+        MerchantInfo merchantInfo = sqlSession.selectOne(statement, id);
+        sqlSession.close();
+        return merchantInfo;
+    }
+
     public Long getId() {
         return id_;
     }
@@ -58,19 +66,10 @@ public class MerchantInfo {
         this.apiKey_ = apiKey;
     }
 
-    public String getOpenId() {
-        return openId_;
-    }
-
-    public void setOpenId(String openId) {
-        this.openId_ = openId;
-    }
-
     private Long id_;
     private String name_;
     private String appid_;
     private String appsecret_;
     private String mchId_;
     private String apiKey_;
-    private String openId_;
 }

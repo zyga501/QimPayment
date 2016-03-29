@@ -10,6 +10,14 @@ public class SubMerchantUser {
         sqlSession.close();
     }
 
+    public static SubMerchantUser getSubMerchantUserById(long id) {
+        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
+        String statement = "com.weixin.database.mapping.subMerchantUser.getSubMerchantUserById";
+        SubMerchantUser subMerchantUser = sqlSession.selectOne(statement, id);
+        sqlSession.close();
+        return subMerchantUser;
+    }
+
     public long getId() {
         return id_;
     }
@@ -18,11 +26,11 @@ public class SubMerchantUser {
         this.id_ = id;
     }
 
-    public String getSubMerchantId() {
+    public long getSubMerchantId() {
         return subMerchantId_;
     }
 
-    public void setSubMerchantId(String subMerchantId) {
+    public void setSubMerchantId(long subMerchantId) {
         this.subMerchantId_ = subMerchantId;
     }
 
@@ -59,7 +67,7 @@ public class SubMerchantUser {
     }
 
     private long id_;
-    private String subMerchantId_;
+    private long subMerchantId_;
     private String userName_;
     private String userPwd_;
     private String storeName_;
