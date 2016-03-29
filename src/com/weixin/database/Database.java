@@ -11,11 +11,13 @@ public class Database extends DatabaseFramework {
     }
 
     public static SqlSessionFactory SqlSessionFactory() {
-        return DatabaseFramework.SqlSessionFactory();
+        return sqlSessionFactory_;
     }
 
     static {
         String mybatisConfig = "com/weixin/database/conf.xml";
         DatabaseFramework.buildSqlSessionFactory(mybatisConfig);
     }
+
+    private static SqlSessionFactory sqlSessionFactory_;
 }
