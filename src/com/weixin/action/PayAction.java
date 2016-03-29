@@ -110,7 +110,7 @@ public class PayAction extends AjaxActionSupport {
             return AjaxActionComplete();
         }
 
-        SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoBySubId(getParameter("sub_mch_id").toString());
+        SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoBySubId(subMerchantId);
         if (subMerchantInfo != null) {
             MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
             if (merchantInfo != null) {
@@ -123,8 +123,8 @@ public class PayAction extends AjaxActionSupport {
                 unifiedOrderRequestData.trade_type = "JSAPI";
                 unifiedOrderRequestData.openid = OAuth2.fetchOpenid(merchantInfo.getAppid(), merchantInfo.getAppsecret(), code);
                 unifiedOrderRequestData.notify_url = getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + CallbackAction.BRANDWCPAYCALLBACK;
-                UnifiedOrder unifiedOrder = new UnifiedOrder(unifiedOrderRequestData);
 
+                UnifiedOrder unifiedOrder = new UnifiedOrder(unifiedOrderRequestData);
                 Map map = new HashMap();
                 if (unifiedOrder.execute(merchantInfo.getApiKey())) {
                     map.put("appId", unifiedOrderRequestData.appid);
@@ -133,9 +133,8 @@ public class PayAction extends AjaxActionSupport {
                     map.put("package", "prepay_id=" + unifiedOrder.getPrepayID());
                     map.put("signType", "MD5");
                     map.put("paySign", Signature.generateSign(map, merchantInfo.getApiKey()));
+                    return AjaxActionComplete(map);
                 }
-
-                return AjaxActionComplete(map);
             }
         }
 
@@ -143,17 +142,24 @@ public class PayAction extends AjaxActionSupport {
     }
 
     public String refund() throws IllegalAccessException, IOException,ParserConfigurationException, SAXException {
-        RefundRequestData refundRequestData = new RefundRequestData();
-        refundRequestData.appid = getParameter("state").toString();
-        refundRequestData.mch_id = getParameter("mch_id").toString();
-        refundRequestData.sub_mch_id = getParameter("sub_mch_id").toString();
-        refundRequestData.total_fee = Integer.parseInt(getParameter("productFee").toString());
-        refundRequestData.refund_fee = Integer.parseInt(getParameter("refund_fee").toString());
-        refundRequestData.transaction_id = getParameter("transaction_id").toString();
-        refundRequestData.out_trade_no = getParameter("out_trade_no").toString();
-        refundRequestData.op_user_id = refundRequestData.mch_id;
-        Refund refund = new Refund(refundRequestData);
-        refund.execute(getParameter("apikey").toString());
+        SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoBySubId(getParameter("sub_mch_id").toString());
+        if (subMerchantInfo != null) {
+            MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
+            if (merchantInfo != null) {
+                RefundRequestData refundRequestData = new RefundRequestData();
+                refundRequestData.appid = merchantInfo.getAppid();
+                refundRequestData.mch_id = merchantInfo.getMchId();
+                refundRequestData.sub_mch_id = subMerchantInfo.getSubId();
+                refundRequestData.total_fee = Integer.parseInt(getParameter("productFee").toString());
+                refundRequestData.refund_fee = Integer.parseInt(getParameter("refund_fee").toString());
+                refundRequestData.transaction_id = getParameter("transaction_id").toString();
+                refundRequestData.out_trade_no = getParameter("out_trade_no").toString();
+                refundRequestData.op_user_id = refundRequestData.mch_id;
+                Refund refund = new Refund(refundRequestData);
+                refund.execute(merchantInfo.getApiKey());
+            }
+        }
+
         return AjaxActionComplete();
     }
 }

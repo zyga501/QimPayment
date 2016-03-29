@@ -35,7 +35,7 @@
         })
       }
 
-      function brandWCPay(json) {
+      function brandWCPay() {
         $.ajax({
           type: 'post',
           url: '<%=request.getContextPath()%>/weixin/Pay!brandWCPay',
@@ -46,6 +46,7 @@
               alert("请在微信客户端打开该网页");
             }
             else {
+              var json = eval("(" + data + ")");
               WeixinJSBridge.invoke(
                       'getBrandWCPayRequest',
                       {
