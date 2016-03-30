@@ -11,14 +11,6 @@ public class UnifiedOrder extends WeixinAPI {
         requestData_ = unifiedOrderRequestData;
     }
 
-    public String getCodeUrl() {
-        return code_url;
-    }
-
-    public String getPrepayID() {
-        return prepay_id;
-    }
-
     @Override
     protected String getAPIUri() {
         return UNIFIEDORDER_API;
@@ -28,18 +20,17 @@ public class UnifiedOrder extends WeixinAPI {
     protected boolean handlerResponse(Map<String,Object> responseResult) {
         switch (responseResult.get("trade_type").toString()) {
             case "NATIVE": {
-                code_url = responseResult.get("code_url").toString();
-                break;
+                if (responseResult.get("code_url") != null) {
+                    return true;
+                }
             }
             case "JSAPI": {
-                prepay_id = responseResult.get("prepay_id").toString();
-                break;
+                if (responseResult.get("prepay_id") != null) {
+                    return true;
+                }
             }
         }
 
-        return true;
+        return false;
     }
-
-    private String code_url;
-    private String prepay_id;
 }

@@ -23,6 +23,10 @@ import java.net.SocketTimeoutException;
 import java.util.Map;
 
 public abstract class WeixinAPI {
+    public Map<String,Object> getResponseResult() {
+        return responseResult_;
+    }
+
     public boolean execute(String appsecret) throws IllegalAccessException, IOException,ParserConfigurationException, SAXException {
         if (!requestData_.checkParameter() || appsecret.isEmpty()) {
             System.out.println("CheckParameter Failed!");
@@ -71,12 +75,13 @@ public abstract class WeixinAPI {
             return false;
         }
 
-        Map<String,Object> responseResult = XMLParser.convertMapFromXML(responseString);
-        return handlerResponse(responseResult);
+        responseResult_ = XMLParser.convertMapFromXML(responseString);
+        return handlerResponse(responseResult_);
     }
 
     protected abstract String getAPIUri();
     protected abstract boolean handlerResponse(Map<String,Object> responseResult);
 
     protected RequestData requestData_;
+    protected Map<String,Object> responseResult_;
 }

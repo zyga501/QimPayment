@@ -7,11 +7,14 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.thoughtworks.xstream.io.xml.XmlFriendlyNameCoder;
 import com.weixin.utils.Signature;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.ConnectTimeoutException;
 import org.apache.http.conn.ConnectionPoolTimeoutException;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.util.EntityUtils;
 
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
@@ -35,7 +38,10 @@ public class TestPayAction extends AjaxActionSupport {
             String responseString = new String();
             try {
                 CloseableHttpClient httpClient = HttpUtils.Instance();
-                httpClient.execute(httpPost);
+                CloseableHttpResponse response = httpClient.execute(httpPost);
+                HttpEntity entity = response.getEntity();
+                responseString = EntityUtils.toString(entity, "UTF-8");
+                response.close();
             }
             catch (ConnectionPoolTimeoutException e) {
             }

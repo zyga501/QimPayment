@@ -35,7 +35,9 @@ public class PayAction extends AjaxActionSupport {
                 MicroPay microPay = new MicroPay(microPayRequestData);
                 if (!microPay.execute(merchantInfo.getApiKey())) {
                     System.out.println("MicroPay Failed!");
+                    return AjaxActionComplete();
                 }
+                return AjaxActionComplete(microPay.getResponseResult());
             }
         }
 
@@ -58,14 +60,11 @@ public class PayAction extends AjaxActionSupport {
                 unifiedOrderRequestData.notify_url = getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + CallbackAction.SCANPAYCALLBACK;
                 UnifiedOrder unifiedOrder = new UnifiedOrder(unifiedOrderRequestData);
 
-                Map map = new HashMap();
-                if (unifiedOrder.execute(merchantInfo.getApiKey())) {
-                    map.put("code_url", unifiedOrder.getCodeUrl());
-                    return AjaxActionComplete(map);
-                }
-                else {
+                if (!unifiedOrder.execute(merchantInfo.getApiKey())) {
                     System.out.println("ScanPay Failed!");
+                    return AjaxActionComplete();
                 }
+                return AjaxActionComplete(unifiedOrder.getResponseResult());
             }
         }
         return AjaxActionComplete();
@@ -89,6 +88,7 @@ public class PayAction extends AjaxActionSupport {
 
         if (appid.isEmpty()) {
             System.out.println("PrePay Failed!");
+            return;
         }
 
         String redirect_uri = getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + "index.jsp";
@@ -120,16 +120,19 @@ public class PayAction extends AjaxActionSupport {
                 unifiedOrderRequestData.notify_url = getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + CallbackAction.BRANDWCPAYCALLBACK;
 
                 UnifiedOrder unifiedOrder = new UnifiedOrder(unifiedOrderRequestData);
-                Map map = new HashMap();
-                if (unifiedOrder.execute(merchantInfo.getApiKey())) {
-                    map.put("appId", unifiedOrderRequestData.appid);
-                    map.put("timeStamp", String.valueOf(System.currentTimeMillis() / 1000));
-                    map.put("nonceStr", StringUtils.generateRandomString(32));
-                    map.put("package", "prepay_id=" + unifiedOrder.getPrepayID());
-                    map.put("signType", "MD5");
-                    map.put("paySign", Signature.generateSign(map, merchantInfo.getApiKey()));
-                    return AjaxActionComplete(map);
+                if (!unifiedOrder.execute(merchantInfo.getApiKey())) {
+                    System.out.println("BrandWCPay Failed!");
+                    return AjaxActionComplete();
                 }
+
+                Map<String, String> map = new HashMap<>();
+                map.put("appId", unifiedOrderRequestData.appid);
+                map.put("timeStamp", String.valueOf(System.currentTimeMillis() / 1000));
+                map.put("nonceStr", StringUtils.generateRandomString(32));
+                map.put("package", "prepay_id=" + unifiedOrder.getResponseResult().get("prepay_id").toString());
+                map.put("signType", "MD5");
+                map.put("paySign", Signature.generateSign(map, merchantInfo.getApiKey()));
+                return AjaxActionComplete(map);
             }
         }
 
@@ -151,7 +154,11 @@ public class PayAction extends AjaxActionSupport {
                 refundRequestData.out_trade_no = getParameter("out_trade_no").toString();
                 refundRequestData.op_user_id = refundRequestData.mch_id;
                 Refund refund = new Refund(refundRequestData);
-                refund.execute(merchantInfo.getApiKey());
+                if (!refund.execute(merchantInfo.getApiKey())) {
+                    System.out.println("Refund Failed!");
+                    return AjaxActionComplete();
+                }
+                return AjaxActionComplete(refund.getResponseResult());
             }
         }
 
