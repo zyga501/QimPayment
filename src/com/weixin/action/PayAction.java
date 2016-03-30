@@ -10,7 +10,6 @@ import com.weixin.api.RequestData.UnifiedOrderRequestData;
 import com.weixin.api.UnifiedOrder;
 import com.weixin.database.MerchantInfo;
 import com.weixin.database.SubMerchantInfo;
-import com.weixin.database.SubMerchantUser;
 import com.weixin.utils.OAuth2;
 import com.weixin.utils.Signature;
 import org.xml.sax.SAXException;
@@ -73,22 +72,18 @@ public class PayAction extends AjaxActionSupport {
     }
 
     public void prePay() throws IOException {
-        String subMerchantUserId = getParameter("subMerchantUserId").toString();
         String appid = new String();
         String subMerchantId = new String();
-        if (!subMerchantUserId.isEmpty()) {
-            SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(subMerchantUserId));
-            if (subMerchantUser != null) {
-                SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
-                if (subMerchantInfo != null) {
-                    MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
+        SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoBySubId(getParameter("subMerchantId").toString());
+        if (subMerchantInfo != null) {
+            MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
+            if (merchantInfo != null) {
                     appid = merchantInfo.getAppid();
                     subMerchantId = subMerchantInfo.getSubId();
                 }
-            }
         }
         else { // compatible old api
-            subMerchantUserId = getParameter("odod").toString();
+            String subMerchantUserId = getParameter("odod").toString();
             // TODO
         }
 
