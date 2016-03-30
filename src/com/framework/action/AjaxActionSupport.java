@@ -49,11 +49,20 @@ public class AjaxActionSupport extends ActionSupport {
             return null;
         }
 
-        if (parameterMap_.containsKey(paramterName)) {
-            return ((Object[]) parameterMap_.get(paramterName))[0];
+        try {
+            if (parameterMap_.containsKey(paramterName)) {
+                return ((Object[]) parameterMap_.get(paramterName))[0];
+            }
+        }
+        catch (ClassCastException classCastException) {
+            return parameterMap_.get(paramterName);
         }
 
         return null;
+    }
+
+    public void setParameter(Map<String, Object> parameters) {
+        ActionContext.getContext().setParameters(parameters);
     }
 
     public String getAjaxActionResult() {

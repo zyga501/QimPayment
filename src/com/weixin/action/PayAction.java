@@ -29,8 +29,8 @@ public class PayAction extends AjaxActionSupport {
                 microPayRequestData.appid = merchantInfo.getAppid();
                 microPayRequestData.mch_id = merchantInfo.getMchId();
                 microPayRequestData.sub_mch_id = subMerchantInfo.getSubId();
-                microPayRequestData.body = getParameter("productBody").toString();
-                microPayRequestData.total_fee = Integer.parseInt(getParameter("productFee").toString());
+                microPayRequestData.body = getParameter("body").toString();
+                microPayRequestData.total_fee = Integer.parseInt(getParameter("total_fee").toString());
                 microPayRequestData.auth_code = getParameter("auth_code").toString();
                 MicroPay microPay = new MicroPay(microPayRequestData);
                 if (!microPay.execute(merchantInfo.getApiKey())) {
@@ -51,9 +51,9 @@ public class PayAction extends AjaxActionSupport {
                 unifiedOrderRequestData.appid = merchantInfo.getAppid();
                 unifiedOrderRequestData.mch_id = merchantInfo.getMchId();
                 unifiedOrderRequestData.sub_mch_id = subMerchantInfo.getSubId();
-                unifiedOrderRequestData.body = getParameter("productBody").toString();
-                unifiedOrderRequestData.total_fee = Integer.parseInt(getParameter("productFee").toString());
-                unifiedOrderRequestData.product_id = getParameter("auth_code").toString();
+                unifiedOrderRequestData.body = getParameter("body").toString();
+                unifiedOrderRequestData.total_fee = Integer.parseInt(getParameter("total_fee").toString());
+                unifiedOrderRequestData.product_id = getParameter("product_id").toString();
                 unifiedOrderRequestData.trade_type = "NATIVE";
                 unifiedOrderRequestData.notify_url = getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + CallbackAction.SCANPAYCALLBACK;
                 UnifiedOrder unifiedOrder = new UnifiedOrder(unifiedOrderRequestData);
@@ -113,8 +113,8 @@ public class PayAction extends AjaxActionSupport {
                 unifiedOrderRequestData.appid = merchantInfo.getAppid();
                 unifiedOrderRequestData.mch_id = merchantInfo.getMchId();
                 unifiedOrderRequestData.sub_mch_id = subMerchantInfo.getSubId();
-                unifiedOrderRequestData.body = getParameter("productBody").toString();
-                unifiedOrderRequestData.total_fee = Integer.parseInt(getParameter("productFee").toString());
+                unifiedOrderRequestData.body = getParameter("body").toString();
+                unifiedOrderRequestData.total_fee = Integer.parseInt(getParameter("total_fee").toString());
                 unifiedOrderRequestData.trade_type = "JSAPI";
                 unifiedOrderRequestData.openid = OAuth2.fetchOpenid(merchantInfo.getAppid(), merchantInfo.getAppsecret(), code);
                 unifiedOrderRequestData.notify_url = getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + CallbackAction.BRANDWCPAYCALLBACK;
@@ -145,7 +145,7 @@ public class PayAction extends AjaxActionSupport {
                 refundRequestData.appid = merchantInfo.getAppid();
                 refundRequestData.mch_id = merchantInfo.getMchId();
                 refundRequestData.sub_mch_id = subMerchantInfo.getSubId();
-                refundRequestData.total_fee = Integer.parseInt(getParameter("productFee").toString());
+                refundRequestData.total_fee = Integer.parseInt(getParameter("total_fee").toString());
                 refundRequestData.refund_fee = Integer.parseInt(getParameter("refund_fee").toString());
                 refundRequestData.transaction_id = getParameter("transaction_id").toString();
                 refundRequestData.out_trade_no = getParameter("out_trade_no").toString();

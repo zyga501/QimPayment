@@ -1,10 +1,36 @@
 package com.weixin.api.RequestData;
 
+import com.framework.utils.ClassUtils;
 import com.framework.utils.StringUtils;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RequestData {
     public RequestData() {
         nonce_str = StringUtils.generateRandomString(32);
+    }
+
+    public Map<String,Object> convertToMap() {
+        Map<String,Object> map = new HashMap<String, Object>();
+        ArrayList<Field> fields = new ArrayList<Field>();
+        ClassUtils.getBeanFields(this.getClass(), fields);
+        for (Field field : fields) {
+            Object obj;
+            try {
+                obj = field.get(this);
+                if(obj!=null){
+                    map.put(field.getName(), obj);
+                }
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+        return map;
     }
 
     public boolean checkParameter() {

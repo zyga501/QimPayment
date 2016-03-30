@@ -10,7 +10,7 @@
         type: 'post',
         url: 'api/TestPay!microPay',
         dataType:"json",
-        data:$("form").serialize(),
+        data:$("form").serialize() + '<xml>234243234243234</xml>',
         success: function (data) {
         }
       })
@@ -99,22 +99,27 @@
     <tr>
       <td>商品描述:</td>
       <td>
-        <input type="text" id="productBody" name="productBody"/>
+        <input type="text" id="body" name="body"/>
       </td>
     </tr>
     <tr>
       <td>商品详情:</td>
-      <td><input type="text" id="productDetail" name="productDetail"/>
+      <td><input type="text" id="detail" name="detail"/>
       </td>
     </tr>
     <tr><td>总金额:</td>
       <td>
-        <input type="text" id="productFee" name="productFee"/>
+        <input type="text" id="total_fee" name="total_fee"/>
       </td>
     </tr>
     <tr><td>二维码字符串:</td>
       <td>
         <input type="text" id="auth_code" name="auth_code"/>
+      </td>
+    </tr>
+    <tr><td>产品序列号:</td>
+      <td>
+        <input type="text" id="product_id" name="product_id"/>
       </td>
     </tr>
     <tr>

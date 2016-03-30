@@ -33,10 +33,6 @@
 
         <!--- test action -->
         <action name="TestPay!*" class="com.api.test.TestPayAction" method="{1}">
-            <result name="ApiMicroPay" type="chain">Pay!microPay</result>
-            <result name="ApiScanPay" type="chain">Pay!scanPay</result>
-            <result name="ApiPrePay" type="chain">Pay!prePay</result>
-            <result name="ApiBrandWCPay" type="chain">Pay!brandWCPay</result>
         </action>
     </package>
 </struts>
