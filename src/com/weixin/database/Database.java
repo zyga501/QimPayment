@@ -16,7 +16,7 @@ public class Database extends DatabaseFramework {
 
     static {
         String mybatisConfig = "com/weixin/database/conf.xml";
-        DatabaseFramework.buildSqlSessionFactory(mybatisConfig);
+        sqlSessionFactory_ = DatabaseFramework.buildSqlSessionFactory(mybatisConfig);
     }
 
     private static SqlSessionFactory sqlSessionFactory_;

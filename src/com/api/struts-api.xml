@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <package name="api" namespace="/api" extends="json-default">
+        <global-results>
+            <result name="ajaxActionCompleted" type="json">
+                <param name="root">ajaxActionResult</param>
+            </result>
+        </global-results>
+
+        <action name="Pay!*" class="com.api.action.PayAction"  method="{1}">
+            <result name="WeixinMicroPay" type="chain">
+                <param name="actionName">Pay!microPay</param>
+                <param name="namespace">/weixin</param>
+            </result>
+            <result name="WeixinScanPay" type="chain">
+                <param name="actionName">Pay!scanPay</param>
+                <param name="namespace">/weixin</param>
+            </result>
+            <result name="WeixinPrePay" type="chain">
+                <param name="actionName">Pay!prePay</param>
+                <param name="namespace">/weixin</param>
+            </result>
+            <result name="WeixinBrandWCPay" type="chain">
+                <param name="actionName">Pay!brandWCPay</param>
+                <param name="namespace">/weixin</param>
+            </result>
+        </action>
+
+        <!--- test action -->
+        <action name="TestPay!*" class="com.api.test.TestPayAction" method="{1}">
+            <result name="ApiMicroPay" type="chain">Pay!microPay</result>
+            <result name="ApiScanPay" type="chain">Pay!scanPay</result>
+            <result name="ApiPrePay" type="chain">Pay!prePay</result>
+            <result name="ApiBrandWCPay" type="chain">Pay!brandWCPay</result>
+        </action>
+    </package>
+</struts>

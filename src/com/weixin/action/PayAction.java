@@ -59,7 +59,7 @@ public class PayAction extends AjaxActionSupport {
                 UnifiedOrder unifiedOrder = new UnifiedOrder(unifiedOrderRequestData);
 
                 Map map = new HashMap();
-                if (unifiedOrder.execute(getParameter("apikey").toString())) {
+                if (unifiedOrder.execute(merchantInfo.getApiKey())) {
                     map.put("code_url", unifiedOrder.getCodeUrl());
                     return AjaxActionComplete(map);
                 }

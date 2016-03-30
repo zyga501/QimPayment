@@ -8,7 +8,7 @@
     <constant name="struts.custom.i18n.resources.weixin" value="weixin/mui/resources"/>
     <constant name="struts.action.extension" value="do,"/>
 
-    <package name="Weixin" namespace="/weixin" extends="json-default">
+    <package name="weixin" namespace="/weixin" extends="json-default">
         <global-results>
             <result name="ajaxActionCompleted" type="json">
                 <param name="root">ajaxActionResult</param>

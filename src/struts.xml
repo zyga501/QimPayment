@@ -26,4 +26,5 @@
     </package>
 
     <include file="com/weixin/struts-weixin.xml" />
+    <include file="com/api/struts-api.xml" />
 </struts>
