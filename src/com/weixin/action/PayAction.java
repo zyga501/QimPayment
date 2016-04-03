@@ -41,7 +41,15 @@ public class PayAction extends AjaxActionSupport {
                         System.out.println("MicroPay Failed!");
                         return AjaxActionComplete();
                     }
-                    return AjaxActionComplete(microPay.getResponseResult());
+
+                    Map<String, String> map = new HashMap<>();
+                    map.put("body", microPay.getResponseResult().get("attach").toString());
+                    map.put("transaction_id", microPay.getResponseResult().get("transaction_id").toString());
+                    map.put("out_trade_no", microPay.getResponseResult().get("out_trade_no").toString());
+                    map.put("bank_type", microPay.getResponseResult().get("bank_type").toString());
+                    map.put("total_fee", microPay.getResponseResult().get("total_fee").toString());
+                    map.put("time_end", microPay.getResponseResult().get("time_end").toString());
+                    return AjaxActionComplete(map);
                 }
             }
         }
@@ -71,7 +79,10 @@ public class PayAction extends AjaxActionSupport {
                         System.out.println("ScanPay Failed!");
                         return AjaxActionComplete();
                     }
-                    return AjaxActionComplete(unifiedOrder.getResponseResult());
+
+                    Map<String, String> map = new HashMap<>();
+                    map.put("code_url", unifiedOrder.getResponseResult().get("code_url").toString());
+                    return AjaxActionComplete(map);
                 }
             }
         }

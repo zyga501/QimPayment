@@ -20,7 +20,7 @@ public class PayAction extends AjaxActionSupport {
     private final static String WeixinPrePay = "WeixinPrePay";
     private final static String WeixinBrandWCPay = "WeixinBrandWCPay";
 
-    public String microPay() throws ParserConfigurationException, IOException, SAXException {
+    public String MicroPay() throws ParserConfigurationException, IOException, SAXException {
         Map<String,Object> resquestBuffer = getRequestBuffer();
         switch (StringUtils.convertNullableString(resquestBuffer.get("mode"))) {
             case WeixinMode:
@@ -35,7 +35,7 @@ public class PayAction extends AjaxActionSupport {
         }
     }
 
-    public String scanPay() throws ParserConfigurationException, IOException, SAXException {
+    public String ScanPay() throws ParserConfigurationException, IOException, SAXException {
         Map<String,Object> resquestBuffer = getRequestBuffer();
         switch (StringUtils.convertNullableString(resquestBuffer.get("mode"))) {
             case WeixinMode:
@@ -50,7 +50,7 @@ public class PayAction extends AjaxActionSupport {
         }
     }
 
-    public String prePay() throws ParserConfigurationException, IOException, SAXException {
+    public String PrePay() throws ParserConfigurationException, IOException, SAXException {
         Map<String,Object> resquestBuffer = getRequestBuffer();
         switch (StringUtils.convertNullableString(resquestBuffer.get("mode"))) {
             case WeixinMode:
@@ -65,7 +65,7 @@ public class PayAction extends AjaxActionSupport {
         }
     }
 
-    public String brandWCPay() throws ParserConfigurationException, IOException, SAXException {
+    public String BrandWCPay() throws ParserConfigurationException, IOException, SAXException {
         Map<String,Object> resquestBuffer = getRequestBuffer();
         switch (StringUtils.convertNullableString(resquestBuffer.get("mode"))) {
             case WeixinMode:
