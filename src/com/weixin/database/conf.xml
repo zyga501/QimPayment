@@ -7,7 +7,7 @@
             <!-- 配置数据库连接信息 -->
             <dataSource type="POOLED">
                 <property name="driver" value="com.mysql.jdbc.Driver" />
-                <property name="url" value="jdbc:mysql://localhost:3306/weixinpayment" />
+                <property name="url" value="jdbc:mysql://localhost:3306/weixinpayment?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf8" />
                 <property name="username" value="root" />
                 <property name="password" value="" />
             </dataSource>
@@ -19,5 +19,6 @@
         <mapper resource="com/weixin/database/mapping/SubMerchantInfo.xml" />
         <mapper resource="com/weixin/database/mapping/SubMerchantUser.xml" />
         <mapper resource="com/weixin/database/mapping/SubMerchantAct.xml" />
+        <mapper resource="com/weixin/database/mapping/OrderInfo.xml" />
     </mappers>
 </configuration>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weixin.database.mapping.merchantInfo">
+    <select id="getOrderInfoById" parameterType="long" resultMap="orderInfoResult">
+      SELECT * FROM OrderInfo WHERE id=#{id}
+    </select>
+    <resultMap type="com.weixin.database.OrderInfo" id="orderInfoResult">
+        <id property="id" column="id" jdbcType="BIGINT" />
+        <result property="appid" column="appid" jdbcType="VARCHAR"/>
+        <result property="mchId" column="mchId" jdbcType="VARCHAR"/>
+        <result property="subMchId" column="subMchId" jdbcType="VARCHAR" />
+        <result property="body" column="body" jdbcType="VARCHAR" />
+        <result property="transactionId" column="transactionId" jdbcType="VARCHAR"/>
+        <result property="outTradeNo" column="outTradeNo" jdbcType="VARCHAR"/>
+        <result property="bankType" column="bankType" jdbcType="VARCHAR"/>
+        <result property="totalFee" column="totalFee" jdbcType="INTEGER" />
+        <result property="timeEnd" column="timeEnd" jdbcType="VARCHAR" />
+    </resultMap>
+    <insert id="insertOrderInfo" parameterType="com.weixin.database.OrderInfo">
+        INSERT INTO OrderInfo(appid,mchid,subMchId,body,transactionId,outTradeNo,bankType,totalFee,timeEnd,createUser)
+        VALUE (#{appid},#{mchId},#{subMchId},#{body},#{transactionId},#{outTradeNo},#{bankType},#{totalFee},#{timeEnd},#{createUser})
+    </insert>
+</mapper>

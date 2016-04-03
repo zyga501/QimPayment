@@ -21,39 +21,39 @@ import java.net.UnknownHostException;
 
 public class TestPayAction extends AjaxActionSupport {
     public void microPay() throws UnknownHostException, IllegalAccessException {
-            MicroPayRequestData microPayRequestData = new MicroPayRequestData();
-            microPayRequestData.sub_mch_id = getParameter("sub_mch_id").toString();
-            microPayRequestData.body = getParameter("body").toString();
-            microPayRequestData.total_fee = Integer.parseInt(getParameter("total_fee").toString());
-            microPayRequestData.auth_code = getParameter("auth_code").toString();
-            microPayRequestData.mode = getParameter("mode").toString();
-            microPayRequestData.sign = Signature.generateSign(microPayRequestData, microPayRequestData.sub_mch_id);
-            XStream xStreamForRequestPostData = new XStream(new DomDriver("UTF-8", new XmlFriendlyNameCoder("-_", "_")));
-            String postDataXML = xStreamForRequestPostData.toXML(microPayRequestData);
-            HttpPost httpPost = new HttpPost(getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + "Pay!microPay");
-            StringEntity postEntity = new StringEntity(postDataXML, "UTF-8");
-            httpPost.addHeader("Content-Type", "text/xml");
-            httpPost.setEntity(postEntity);
+        MicroPayRequestData microPayRequestData = new MicroPayRequestData();
+        microPayRequestData.sub_mch_id = getParameter("sub_mch_id").toString();
+        microPayRequestData.body = getParameter("body").toString();
+        microPayRequestData.total_fee = Integer.parseInt(getParameter("total_fee").toString());
+        microPayRequestData.auth_code = getParameter("auth_code").toString();
+        microPayRequestData.mode = getParameter("mode").toString();
+        microPayRequestData.sign = Signature.generateSign(microPayRequestData, microPayRequestData.sub_mch_id);
+        XStream xStreamForRequestPostData = new XStream(new DomDriver("UTF-8", new XmlFriendlyNameCoder("-_", "_")));
+        String postDataXML = xStreamForRequestPostData.toXML(microPayRequestData);
+        HttpPost httpPost = new HttpPost(getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + "Pay!microPay");
+        StringEntity postEntity = new StringEntity(postDataXML, "UTF-8");
+        httpPost.addHeader("Content-Type", "text/xml");
+        httpPost.setEntity(postEntity);
 
-            String responseString = new String();
-            try {
-                CloseableHttpClient httpClient = HttpUtils.Instance();
-                CloseableHttpResponse response = httpClient.execute(httpPost);
-                HttpEntity entity = response.getEntity();
-                responseString = EntityUtils.toString(entity, "UTF-8");
-                response.close();
-            }
-            catch (ConnectionPoolTimeoutException e) {
-            }
-            catch (ConnectTimeoutException e) {
-            }
-            catch (SocketTimeoutException e) {
-            }
-            catch (Exception e) {
-            }
-            finally {
-                httpPost.abort();
-            }
+        String responseString = new String();
+        try {
+            CloseableHttpClient httpClient = HttpUtils.Instance();
+            CloseableHttpResponse response = httpClient.execute(httpPost);
+            HttpEntity entity = response.getEntity();
+            responseString = EntityUtils.toString(entity, "UTF-8");
+            response.close();
+        }
+        catch (ConnectionPoolTimeoutException e) {
+        }
+        catch (ConnectTimeoutException e) {
+        }
+        catch (SocketTimeoutException e) {
+        }
+        catch (Exception e) {
+        }
+        finally {
+            httpPost.abort();
+        }
     }
 
     public String scanPay() {

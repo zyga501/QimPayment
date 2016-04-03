@@ -10,6 +10,7 @@ import com.weixin.api.RequestData.UnifiedOrderRequestData;
 import com.weixin.api.UnifiedOrder;
 import com.weixin.database.MerchantInfo;
 import com.weixin.database.SubMerchantInfo;
+import com.weixin.database.SubMerchantUser;
 import com.weixin.utils.OAuth2;
 import com.weixin.utils.Signature;
 import org.xml.sax.SAXException;
@@ -21,23 +22,27 @@ import java.util.Map;
 
 public class PayAction extends AjaxActionSupport {
     public String microPay() throws IllegalAccessException, IOException,ParserConfigurationException, SAXException {
-        SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoBySubId(getParameter("sub_mch_id").toString());
-        if (subMerchantInfo != null) {
-            MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
-            if (merchantInfo != null) {
-                MicroPayRequestData microPayRequestData = new MicroPayRequestData();
-                microPayRequestData.appid = merchantInfo.getAppid();
-                microPayRequestData.mch_id = merchantInfo.getMchId();
-                microPayRequestData.sub_mch_id = subMerchantInfo.getSubId();
-                microPayRequestData.body = getParameter("body").toString();
-                microPayRequestData.total_fee = Integer.parseInt(getParameter("total_fee").toString());
-                microPayRequestData.auth_code = getParameter("auth_code").toString();
-                MicroPay microPay = new MicroPay(microPayRequestData);
-                if (!microPay.execute(merchantInfo.getApiKey())) {
-                    System.out.println("MicroPay Failed!");
-                    return AjaxActionComplete();
+        SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(getParameter("id").toString()));
+        if (subMerchantUser != null) {
+            SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
+            if (subMerchantInfo != null) {
+                MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
+                if (merchantInfo != null) {
+                    MicroPayRequestData microPayRequestData = new MicroPayRequestData();
+                    microPayRequestData.appid = merchantInfo.getAppid();
+                    microPayRequestData.mch_id = merchantInfo.getMchId();
+                    microPayRequestData.sub_mch_id = subMerchantInfo.getSubId();
+                    microPayRequestData.body = getParameter("body").toString();
+                    microPayRequestData.attach = microPayRequestData.body;
+                    microPayRequestData.total_fee = Integer.parseInt(getParameter("total_fee").toString());
+                    microPayRequestData.auth_code = getParameter("auth_code").toString();
+                    MicroPay microPay = new MicroPay(microPayRequestData, subMerchantUser.getId());
+                    if (!microPay.execute(merchantInfo.getApiKey())) {
+                        System.out.println("MicroPay Failed!");
+                        return AjaxActionComplete();
+                    }
+                    return AjaxActionComplete(microPay.getResponseResult());
                 }
-                return AjaxActionComplete(microPay.getResponseResult());
             }
         }
 

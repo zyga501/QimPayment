@@ -86,25 +86,25 @@
       <input id="state" name="state" type="hidden" value="<%=request.getParameter("state")%>" />
       <table>
         <tr>
-          <td>子商户号:</td>
+          <td>子商户员工号:</td>
           <td>
-            <input type="text" id="sub_mch_id" name="sub_mch_id" value="1319548401"/>
+            <input type="text" id="id" name="id" value="1596144387655680"/>
           </td>
         </tr>
         <tr>
           <td>商品描述:</td>
           <td>
-            <input type="text" id="body" name="body"/>
+            <input type="text" id="body" name="body" value="测试商品"/>
           </td>
         </tr>
         <tr>
           <td>商品详情:</td>
-          <td><input type="text" id="detail" name="detail"/>
+          <td><input type="text" id="detail" name="detail" value="测试商品"/>
           </td>
         </tr>
         <tr><td>总金额:</td>
           <td>
-            <input type="text" id="total_fee" name="total_fee"/>
+            <input type="text" id="total_fee" name="total_fee" value="1"/>
           </td>
         </tr>
         <tr><td>二维码字符串:</td>

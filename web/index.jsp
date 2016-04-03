@@ -91,9 +91,9 @@
       </td>
     </tr>
     <tr>
-      <td>子商户号:</td>
+      <td>子商户员工号:</td>
       <td>
-        <input type="text" id="sub_mch_id" name="sub_mch_id" value="1319548401"/>
+        <input type="text" id="id" name="id" value="1596144387655680"/>
       </td>
     </tr>
     <tr>
