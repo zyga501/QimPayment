@@ -22,12 +22,12 @@ import java.net.UnknownHostException;
 public class TestPayAction extends AjaxActionSupport {
     public void microPay() throws UnknownHostException, IllegalAccessException {
         MicroPayRequestData microPayRequestData = new MicroPayRequestData();
-        microPayRequestData.sub_mch_id = getParameter("sub_mch_id").toString();
+        microPayRequestData.id = getParameter("id").toString();
         microPayRequestData.body = getParameter("body").toString();
         microPayRequestData.total_fee = Integer.parseInt(getParameter("total_fee").toString());
         microPayRequestData.auth_code = getParameter("auth_code").toString();
         microPayRequestData.mode = getParameter("mode").toString();
-        microPayRequestData.sign = Signature.generateSign(microPayRequestData, microPayRequestData.sub_mch_id);
+        microPayRequestData.sign = Signature.generateSign(microPayRequestData, microPayRequestData.id);
         XStream xStreamForRequestPostData = new XStream(new DomDriver("UTF-8", new XmlFriendlyNameCoder("-_", "_")));
         String postDataXML = xStreamForRequestPostData.toXML(microPayRequestData);
         HttpPost httpPost = new HttpPost(getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + "Pay!microPay");

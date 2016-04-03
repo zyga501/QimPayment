@@ -97,11 +97,6 @@
             <input type="text" id="body" name="body" value="测试商品"/>
           </td>
         </tr>
-        <tr>
-          <td>商品详情:</td>
-          <td><input type="text" id="detail" name="detail" value="测试商品"/>
-          </td>
-        </tr>
         <tr><td>总金额:</td>
           <td>
             <input type="text" id="total_fee" name="total_fee" value="1"/>

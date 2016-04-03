@@ -15,10 +15,7 @@ import org.apache.http.conn.ConnectionPoolTimeoutException;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.util.Map;
 
@@ -27,7 +24,7 @@ public abstract class WeixinAPI {
         return responseResult_;
     }
 
-    public boolean execute(String appsecret) throws IllegalAccessException, IOException,ParserConfigurationException, SAXException {
+    public boolean execute(String appsecret) throws Exception {
         if (!requestData_.checkParameter() || appsecret.isEmpty()) {
             System.out.println("CheckParameter Failed!");
             return false;
@@ -70,17 +67,17 @@ public abstract class WeixinAPI {
 
         System.out.println(responseString);
 
-        if (!Signature.checkResponseSignValid(responseString, appsecret)) {
-            System.out.println("CheckResponseSignValid Failed!");
+        if (!Signature.checkSignValid(responseString, appsecret)) {
+            System.out.println("checkSignValid Failed!");
             return false;
         }
 
         responseResult_ = XMLParser.convertMapFromXML(responseString);
-        return handlerResponse(responseResult_);
+        return handlerResponse(responseResult_, appsecret);
     }
 
     protected abstract String getAPIUri();
-    protected abstract boolean handlerResponse(Map<String,Object> responseResult);
+    protected abstract boolean handlerResponse(Map<String,Object> responseResult, String appsecret) throws Exception;
 
     protected RequestData requestData_;
     protected Map<String,Object> responseResult_;

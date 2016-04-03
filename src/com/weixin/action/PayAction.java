@@ -3,8 +3,10 @@ package com.weixin.action;
 import com.framework.action.AjaxActionSupport;
 import com.framework.utils.StringUtils;
 import com.weixin.api.MicroPay;
+import com.weixin.api.OrderQuery;
 import com.weixin.api.Refund;
 import com.weixin.api.RequestData.MicroPayRequestData;
+import com.weixin.api.RequestData.OrderQueryData;
 import com.weixin.api.RequestData.RefundRequestData;
 import com.weixin.api.RequestData.UnifiedOrderRequestData;
 import com.weixin.api.UnifiedOrder;
@@ -13,15 +15,13 @@ import com.weixin.database.SubMerchantInfo;
 import com.weixin.database.SubMerchantUser;
 import com.weixin.utils.OAuth2;
 import com.weixin.utils.Signature;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class PayAction extends AjaxActionSupport {
-    public String microPay() throws IllegalAccessException, IOException,ParserConfigurationException, SAXException {
+    public String microPay() throws Exception {
         SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(getParameter("id").toString()));
         if (subMerchantUser != null) {
             SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
@@ -49,27 +49,30 @@ public class PayAction extends AjaxActionSupport {
         return AjaxActionComplete();
     }
 
-    public String scanPay() throws IllegalAccessException, IOException,ParserConfigurationException, SAXException {
-        SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoBySubId(getParameter("sub_mch_id").toString());
-        if (subMerchantInfo != null) {
-            MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
-            if (merchantInfo != null) {
-                UnifiedOrderRequestData unifiedOrderRequestData = new UnifiedOrderRequestData();
-                unifiedOrderRequestData.appid = merchantInfo.getAppid();
-                unifiedOrderRequestData.mch_id = merchantInfo.getMchId();
-                unifiedOrderRequestData.sub_mch_id = subMerchantInfo.getSubId();
-                unifiedOrderRequestData.body = getParameter("body").toString();
-                unifiedOrderRequestData.total_fee = Integer.parseInt(getParameter("total_fee").toString());
-                unifiedOrderRequestData.product_id = getParameter("product_id").toString();
-                unifiedOrderRequestData.trade_type = "NATIVE";
-                unifiedOrderRequestData.notify_url = getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + CallbackAction.SCANPAYCALLBACK;
-                UnifiedOrder unifiedOrder = new UnifiedOrder(unifiedOrderRequestData);
+    public String scanPay() throws Exception {
+        SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(getParameter("id").toString()));
+        if (subMerchantUser != null) {
+            SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
+            if (subMerchantInfo != null) {
+                MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
+                if (merchantInfo != null) {
+                    UnifiedOrderRequestData unifiedOrderRequestData = new UnifiedOrderRequestData();
+                    unifiedOrderRequestData.appid = merchantInfo.getAppid();
+                    unifiedOrderRequestData.mch_id = merchantInfo.getMchId();
+                    unifiedOrderRequestData.sub_mch_id = subMerchantInfo.getSubId();
+                    unifiedOrderRequestData.body = getParameter("body").toString();
+                    unifiedOrderRequestData.total_fee = Integer.parseInt(getParameter("total_fee").toString());
+                    unifiedOrderRequestData.product_id = getParameter("product_id").toString();
+                    unifiedOrderRequestData.trade_type = "NATIVE";
+                    unifiedOrderRequestData.notify_url = getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + CallbackAction.SCANPAYCALLBACK;
+                    UnifiedOrder unifiedOrder = new UnifiedOrder(unifiedOrderRequestData);
 
-                if (!unifiedOrder.execute(merchantInfo.getApiKey())) {
-                    System.out.println("ScanPay Failed!");
-                    return AjaxActionComplete();
+                    if (!unifiedOrder.execute(merchantInfo.getApiKey())) {
+                        System.out.println("ScanPay Failed!");
+                        return AjaxActionComplete();
+                    }
+                    return AjaxActionComplete(unifiedOrder.getResponseResult());
                 }
-                return AjaxActionComplete(unifiedOrder.getResponseResult());
             }
         }
         return AjaxActionComplete();
@@ -103,7 +106,7 @@ public class PayAction extends AjaxActionSupport {
         getResponse().sendRedirect(perPayUri);
     }
 
-    public String brandWCPay() throws IllegalAccessException, IOException,ParserConfigurationException, SAXException {
+    public String brandWCPay() throws Exception {
         String subMerchantId = getParameter("state").toString();
         String code = getParameter("code").toString();
         if (subMerchantId.isEmpty() || code.isEmpty()) {
@@ -144,7 +147,7 @@ public class PayAction extends AjaxActionSupport {
         return AjaxActionComplete();
     }
 
-    public String refund() throws IllegalAccessException, IOException,ParserConfigurationException, SAXException {
+    public String refund() throws Exception {
         SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoBySubId(getParameter("sub_mch_id").toString());
         if (subMerchantInfo != null) {
             MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
@@ -164,6 +167,32 @@ public class PayAction extends AjaxActionSupport {
                     return AjaxActionComplete();
                 }
                 return AjaxActionComplete(refund.getResponseResult());
+            }
+        }
+
+        return AjaxActionComplete();
+    }
+
+    public String orderQuery() throws Exception {
+        SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(getParameter("id").toString()));
+        if (subMerchantUser != null) {
+            SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
+            if (subMerchantInfo != null) {
+                MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
+                if (merchantInfo != null) {
+                    OrderQueryData orderQueryData = new OrderQueryData();
+                    orderQueryData.appid = merchantInfo.getAppid();
+                    orderQueryData.mch_id = merchantInfo.getMchId();
+                    orderQueryData.sub_mch_id = subMerchantInfo.getSubId();
+                    orderQueryData.transaction_id = getParameter("transaction_id").toString();
+                    orderQueryData.out_trade_no = getParameter("out_trade_no").toString();
+                    OrderQuery orderQuery = new OrderQuery(orderQueryData);
+                    if (!orderQuery.execute(merchantInfo.getApiKey())) {
+                        System.out.println("Refund Failed!");
+                        return AjaxActionComplete();
+                    }
+                    return AjaxActionComplete(orderQuery.getResponseResult());
+                }
             }
         }
 

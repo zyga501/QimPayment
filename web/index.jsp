@@ -99,17 +99,12 @@
     <tr>
       <td>商品描述:</td>
       <td>
-        <input type="text" id="body" name="body"/>
-      </td>
-    </tr>
-    <tr>
-      <td>商品详情:</td>
-      <td><input type="text" id="detail" name="detail"/>
+        <input type="text" id="body" name="body" value="测试商品"/>
       </td>
     </tr>
     <tr><td>总金额:</td>
       <td>
-        <input type="text" id="total_fee" name="total_fee"/>
+        <input type="text" id="total_fee" name="total_fee" value="1"/>
       </td>
     </tr>
     <tr><td>二维码字符串:</td>

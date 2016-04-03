@@ -16,7 +16,7 @@ public class Refund extends WeixinAPI  {
     }
 
     @Override
-    protected boolean handlerResponse(Map<String,Object> responseResult) {
+    protected boolean handlerResponse(Map<String,Object> responseResult, String appsecret) {
         return true;
     }
 }

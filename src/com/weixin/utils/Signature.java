@@ -57,9 +57,12 @@ public class Signature {
         return result;
     }
 
-    public static boolean checkResponseSignValid(String responseString, String key) throws ParserConfigurationException, IOException, SAXException {
+    public static boolean checkSignValid(String responseString, String key) throws ParserConfigurationException, IOException, SAXException {
         Map<String,Object> map = XMLParser.convertMapFromXML(responseString);
+        return checkSignValid(map, key);
+    }
 
+    public static boolean checkSignValid(Map<String,Object> map, String key) {
         String signFromAPIResponse = map.getOrDefault("sign", "").toString();
         if(signFromAPIResponse=="") {
             return false;
@@ -72,5 +75,4 @@ public class Signature {
         }
         return true;
     }
-
 }
