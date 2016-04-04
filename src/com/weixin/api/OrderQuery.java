@@ -17,21 +17,21 @@ public class OrderQuery extends WeixinAPI {
     }
 
     @Override
-    protected boolean handlerResponse(Map<String,Object> responseResult, String appsecret) throws Exception {
+    protected boolean handlerResponse(Map<String,Object> responseResult, String apiKey) throws Exception {
         String returnCode = responseResult.get("return_code").toString().toUpperCase();
         String resultCode = responseResult.get("result_code").toString().toUpperCase();
         if (returnCode.compareTo("SUCCESS") == 0) {
             if (resultCode.compareTo("SUCCESS") == 0) {
                 if (responseResult.get("trade_state").toString().toUpperCase().compareTo("USERPAYING") == 0) {
                     Thread.sleep(10000);
-                    return execute(appsecret);
+                    return execute(apiKey);
                 }
                 return true;
             }
             else {
                 String errorCode = responseResult.get("err_code").toString().toUpperCase();
                 if (errorCode.compareTo("SYSTEMERROR") == 0) {
-                    return execute(appsecret);
+                    return execute(apiKey);
                 }
             }
         }

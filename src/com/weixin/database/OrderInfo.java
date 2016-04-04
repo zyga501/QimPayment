@@ -30,6 +30,14 @@ public class OrderInfo {
         return orderInfo;
     }
 
+    public static OrderInfo getOrderInfoByTransactionId(String transactionId) {
+        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
+        String statement = "com.weixin.database.mapping.merchantInfo.getOrderInfoByTransactionId";
+        OrderInfo orderInfo = sqlSession.selectOne(statement, transactionId);
+        sqlSession.close();
+        return orderInfo;
+    }
+
     public static boolean insertOrderInfo(OrderInfo orderInfo) {
         SqlSession sqlSession = Database.SqlSessionFactory().openSession(true);
         String statement = "com.weixin.database.mapping.merchantInfo.insertOrderInfo";

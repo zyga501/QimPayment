@@ -4,6 +4,9 @@
     <select id="getOrderInfoById" parameterType="long" resultMap="orderInfoResult">
       SELECT * FROM OrderInfo WHERE id=#{id}
     </select>
+    <select id="getOrderInfoByTransactionId" parameterType="String" resultMap="orderInfoResult">
+        SELECT * FROM OrderInfo WHERE transactionId=#{transactionId}
+    </select>
     <resultMap type="com.weixin.database.OrderInfo" id="orderInfoResult">
         <id property="id" column="id" jdbcType="BIGINT" />
         <result property="appid" column="appid" jdbcType="VARCHAR"/>

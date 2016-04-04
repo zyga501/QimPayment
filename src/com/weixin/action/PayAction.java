@@ -36,10 +36,10 @@ public class PayAction extends AjaxActionSupport {
                     microPayRequestData.attach = microPayRequestData.body;
                     microPayRequestData.total_fee = Integer.parseInt(getParameter("total_fee").toString());
                     microPayRequestData.auth_code = getParameter("auth_code").toString();
-                    if (getParameter("out_trade_no") != null) {
+                    if (!StringUtils.convertNullableString(getParameter("out_trade_no")).isEmpty()) {
                         microPayRequestData.out_trade_no = getParameter("out_trade_no").toString();
                     }
-                    if (getParameter("goods_tag") != null) {
+                    if (!StringUtils.convertNullableString(getParameter("goods_tag")).isEmpty()) {
                         microPayRequestData.goods_tag = getParameter("goods_tag").toString();
                     }
                     MicroPay microPay = new MicroPay(microPayRequestData, subMerchantUser.getId());
@@ -75,14 +75,16 @@ public class PayAction extends AjaxActionSupport {
                     unifiedOrderRequestData.mch_id = merchantInfo.getMchId();
                     unifiedOrderRequestData.sub_mch_id = subMerchantInfo.getSubId();
                     unifiedOrderRequestData.body = getParameter("body").toString();
+                    unifiedOrderRequestData.attach = "{ 'id':'" + getParameter("id").toString() + "', 'body':'" + unifiedOrderRequestData.body + "'}";
                     unifiedOrderRequestData.total_fee = Integer.parseInt(getParameter("total_fee").toString());
                     unifiedOrderRequestData.product_id = getParameter("product_id").toString();
                     unifiedOrderRequestData.trade_type = "NATIVE";
-                    unifiedOrderRequestData.notify_url = getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + CallbackAction.SCANPAYCALLBACK;
-                    if (getParameter("out_trade_no") != null) {
+                    unifiedOrderRequestData.notify_url = getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1)
+                            + CallbackAction.SCANPAYCALLBACK;
+                    if (!StringUtils.convertNullableString(getParameter("out_trade_no")).isEmpty()) {
                         unifiedOrderRequestData.out_trade_no = getParameter("out_trade_no").toString();
                     }
-                    if (getParameter("goods_tag") != null) {
+                    if (!StringUtils.convertNullableString(getParameter("goods_tag")).isEmpty()) {
                         unifiedOrderRequestData.goods_tag = getParameter("goods_tag").toString();
                     }
                     UnifiedOrder unifiedOrder = new UnifiedOrder(unifiedOrderRequestData);
@@ -152,14 +154,16 @@ public class PayAction extends AjaxActionSupport {
                     unifiedOrderRequestData.mch_id = merchantInfo.getMchId();
                     unifiedOrderRequestData.sub_mch_id = subMerchantInfo.getSubId();
                     unifiedOrderRequestData.body = getParameter("body").toString();
+                    unifiedOrderRequestData.attach = "{ 'id':'" + getParameter("id").toString() + "', 'body':'" + unifiedOrderRequestData.body + "'}";
                     unifiedOrderRequestData.total_fee = Integer.parseInt(getParameter("total_fee").toString());
                     unifiedOrderRequestData.trade_type = "JSAPI";
                     unifiedOrderRequestData.openid = OAuth2.fetchOpenid(merchantInfo.getAppid(), merchantInfo.getAppsecret(), code);
-                    unifiedOrderRequestData.notify_url = getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + CallbackAction.BRANDWCPAYCALLBACK;
-                    if (getParameter("out_trade_no") != null) {
+                    unifiedOrderRequestData.notify_url = getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1)
+                            + CallbackAction.BRANDWCPAYCALLBACK;
+                    if (!StringUtils.convertNullableString(getParameter("out_trade_no")).isEmpty()) {
                         unifiedOrderRequestData.out_trade_no = getParameter("out_trade_no").toString();
                     }
-                    if (getParameter("goods_tag") != null) {
+                    if (!StringUtils.convertNullableString(getParameter("goods_tag")).isEmpty()) {
                         unifiedOrderRequestData.goods_tag = getParameter("goods_tag").toString();
                     }
                     UnifiedOrder unifiedOrder = new UnifiedOrder(unifiedOrderRequestData);

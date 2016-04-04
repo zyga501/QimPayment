@@ -5,8 +5,8 @@ import org.apache.ibatis.session.SqlSession;
 public class MerchantInfo {
     public static void main(String[] args) throws Exception {
         SqlSession sqlSession = Database.SqlSessionFactory().openSession();
-        String statement = "com.weixin.database.mapping.merchantInfo.getMerchantInfoById";
-        MerchantInfo merchantInfo = sqlSession.selectOne(statement, (Object) 1596082254858240L);
+        String statement = "com.weixin.database.mapping.merchantInfo.getMerchantInfoByAppId";
+        MerchantInfo merchantInfo = sqlSession.selectOne(statement, "wx0bfa8f7ec59b1f33");
         sqlSession.close();
     }
 
@@ -14,6 +14,14 @@ public class MerchantInfo {
         SqlSession sqlSession = Database.SqlSessionFactory().openSession();
         String statement = "com.weixin.database.mapping.merchantInfo.getMerchantInfoById";
         MerchantInfo merchantInfo = sqlSession.selectOne(statement, id);
+        sqlSession.close();
+        return merchantInfo;
+    }
+
+    public static MerchantInfo getMerchantInfoByAppId(String appid) {
+        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
+        String statement = "com.weixin.database.mapping.merchantInfo.getMerchantInfoByAppId";
+        MerchantInfo merchantInfo = sqlSession.selectOne(statement, "wx0bfa8f7ec59b1f33");
         sqlSession.close();
         return merchantInfo;
     }

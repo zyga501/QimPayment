@@ -17,7 +17,7 @@ public class UnifiedOrder extends WeixinAPI {
     }
 
     @Override
-    protected boolean handlerResponse(Map<String,Object> responseResult, String appsecret) {
+    protected boolean handlerResponse(Map<String,Object> responseResult, String apiKey) {
         switch (responseResult.get("trade_type").toString()) {
             case "NATIVE": {
                 if (responseResult.get("code_url") != null) {

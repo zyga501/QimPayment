@@ -24,13 +24,13 @@ public abstract class WeixinAPI {
         return responseResult_;
     }
 
-    public boolean execute(String appsecret) throws Exception {
-        if (!requestData_.checkParameter() || appsecret.isEmpty()) {
+    public boolean execute(String apiKey) throws Exception {
+        if (!requestData_.checkParameter() || apiKey.isEmpty()) {
             System.out.println("CheckParameter Failed!");
             return false;
         }
 
-        String sign = Signature.generateSign(requestData_, appsecret);
+        String sign = Signature.generateSign(requestData_, apiKey);
         requestData_.sign = sign;
 
         String apiUri = getAPIUri();
@@ -67,17 +67,17 @@ public abstract class WeixinAPI {
 
         System.out.println(responseString);
 
-        if (!Signature.checkSignValid(responseString, appsecret)) {
+        responseResult_ = XMLParser.convertMapFromXML(responseString);
+        if (!Signature.checkSignValid(responseResult_, apiKey)) {
             System.out.println("checkSignValid Failed!");
             return false;
         }
 
-        responseResult_ = XMLParser.convertMapFromXML(responseString);
-        return handlerResponse(responseResult_, appsecret);
+        return handlerResponse(responseResult_, apiKey);
     }
 
     protected abstract String getAPIUri();
-    protected abstract boolean handlerResponse(Map<String,Object> responseResult, String appsecret) throws Exception;
+    protected abstract boolean handlerResponse(Map<String,Object> responseResult, String apiKey) throws Exception;
 
     protected RequestData requestData_;
     protected Map<String,Object> responseResult_;

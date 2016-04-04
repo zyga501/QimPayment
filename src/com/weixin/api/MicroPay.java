@@ -23,7 +23,7 @@ public class MicroPay extends WeixinAPI {
     }
 
     @Override
-    protected boolean handlerResponse(Map<String,Object> responseResult, String appsecret) throws IllegalAccessException, IOException,ParserConfigurationException, SAXException {
+    protected boolean handlerResponse(Map<String,Object> responseResult, String apiKey) throws IllegalAccessException, IOException,ParserConfigurationException, SAXException {
         try {
             String returnCode = responseResult.get("return_code").toString().toUpperCase();
             String resultCode = responseResult.get("result_code").toString().toUpperCase();
@@ -45,7 +45,7 @@ public class MicroPay extends WeixinAPI {
                             orderQueryData.sub_mch_id = requestData_.sub_mch_id;
                             orderQueryData.out_trade_no = microPayRequestData.out_trade_no;
                             OrderQuery orderQuery = new OrderQuery(orderQueryData);
-                            if (!orderQuery.execute(appsecret)) {
+                            if (!orderQuery.execute(apiKey)) {
                                 return false;
                             }
                             saveOrderToDb(orderQuery.getResponseResult());
