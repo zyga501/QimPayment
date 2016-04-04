@@ -39,6 +39,9 @@ public class PayAction extends AjaxActionSupport {
                     if (getParameter("out_trade_no") != null) {
                         microPayRequestData.out_trade_no = getParameter("out_trade_no").toString();
                     }
+                    if (getParameter("goods_tag") != null) {
+                        microPayRequestData.goods_tag = getParameter("goods_tag").toString();
+                    }
                     MicroPay microPay = new MicroPay(microPayRequestData, subMerchantUser.getId());
                     if (!microPay.execute(merchantInfo.getApiKey())) {
                         System.out.println("MicroPay Failed!");
@@ -78,6 +81,9 @@ public class PayAction extends AjaxActionSupport {
                     unifiedOrderRequestData.notify_url = getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + CallbackAction.SCANPAYCALLBACK;
                     if (getParameter("out_trade_no") != null) {
                         unifiedOrderRequestData.out_trade_no = getParameter("out_trade_no").toString();
+                    }
+                    if (getParameter("goods_tag") != null) {
+                        unifiedOrderRequestData.goods_tag = getParameter("goods_tag").toString();
                     }
                     UnifiedOrder unifiedOrder = new UnifiedOrder(unifiedOrderRequestData);
 
@@ -152,6 +158,9 @@ public class PayAction extends AjaxActionSupport {
                     unifiedOrderRequestData.notify_url = getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + CallbackAction.BRANDWCPAYCALLBACK;
                     if (getParameter("out_trade_no") != null) {
                         unifiedOrderRequestData.out_trade_no = getParameter("out_trade_no").toString();
+                    }
+                    if (getParameter("goods_tag") != null) {
+                        unifiedOrderRequestData.goods_tag = getParameter("goods_tag").toString();
                     }
                     UnifiedOrder unifiedOrder = new UnifiedOrder(unifiedOrderRequestData);
                     if (!unifiedOrder.execute(merchantInfo.getApiKey())) {
