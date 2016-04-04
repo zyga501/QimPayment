@@ -8,7 +8,9 @@ import java.net.UnknownHostException;
 public class MicroPayRequestData extends RequestData {
     public MicroPayRequestData() throws UnknownHostException {
         spbill_create_ip = InetAddress.getLocalHost().getHostAddress().toString();
-        out_trade_no = String.valueOf(new IdWorker(0).nextId());
+        if (out_trade_no == null) {
+            out_trade_no = String.valueOf(new IdWorker(0).nextId());
+        }
     }
 
     public boolean checkParameter() {

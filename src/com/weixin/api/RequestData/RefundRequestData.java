@@ -1,10 +1,8 @@
 package com.weixin.api.RequestData;
 
-import com.framework.utils.IdWorker;
-
 public class RefundRequestData extends RequestData {
     public RefundRequestData() {
-        out_refund_no = String.valueOf(new IdWorker(0).nextId());
+
     }
 
     public boolean checkParameter() {

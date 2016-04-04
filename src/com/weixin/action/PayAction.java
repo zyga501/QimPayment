@@ -36,6 +36,9 @@ public class PayAction extends AjaxActionSupport {
                     microPayRequestData.attach = microPayRequestData.body;
                     microPayRequestData.total_fee = Integer.parseInt(getParameter("total_fee").toString());
                     microPayRequestData.auth_code = getParameter("auth_code").toString();
+                    if (getParameter("out_trade_no") != null) {
+                        microPayRequestData.out_trade_no = getParameter("out_trade_no").toString();
+                    }
                     MicroPay microPay = new MicroPay(microPayRequestData, subMerchantUser.getId());
                     if (!microPay.execute(merchantInfo.getApiKey())) {
                         System.out.println("MicroPay Failed!");
@@ -73,6 +76,9 @@ public class PayAction extends AjaxActionSupport {
                     unifiedOrderRequestData.product_id = getParameter("product_id").toString();
                     unifiedOrderRequestData.trade_type = "NATIVE";
                     unifiedOrderRequestData.notify_url = getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + CallbackAction.SCANPAYCALLBACK;
+                    if (getParameter("out_trade_no") != null) {
+                        unifiedOrderRequestData.out_trade_no = getParameter("out_trade_no").toString();
+                    }
                     UnifiedOrder unifiedOrder = new UnifiedOrder(unifiedOrderRequestData);
 
                     if (!unifiedOrder.execute(merchantInfo.getApiKey())) {
@@ -144,7 +150,9 @@ public class PayAction extends AjaxActionSupport {
                     unifiedOrderRequestData.trade_type = "JSAPI";
                     unifiedOrderRequestData.openid = OAuth2.fetchOpenid(merchantInfo.getAppid(), merchantInfo.getAppsecret(), code);
                     unifiedOrderRequestData.notify_url = getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + CallbackAction.BRANDWCPAYCALLBACK;
-
+                    if (getParameter("out_trade_no") != null) {
+                        unifiedOrderRequestData.out_trade_no = getParameter("out_trade_no").toString();
+                    }
                     UnifiedOrder unifiedOrder = new UnifiedOrder(unifiedOrderRequestData);
                     if (!unifiedOrder.execute(merchantInfo.getApiKey())) {
                         System.out.println("BrandWCPay Failed!");
@@ -179,8 +187,12 @@ public class PayAction extends AjaxActionSupport {
                     refundRequestData.sub_mch_id = subMerchantInfo.getSubId();
                     refundRequestData.total_fee = Integer.parseInt(getParameter("total_fee").toString());
                     refundRequestData.refund_fee = Integer.parseInt(getParameter("refund_fee").toString());
-                    refundRequestData.transaction_id = getParameter("transaction_id").toString();
-                    refundRequestData.out_trade_no = getParameter("out_trade_no").toString();
+                    if (getParameter("transaction_id") != null) {
+                        refundRequestData.transaction_id = getParameter("transaction_id").toString();
+                    }
+                    if (getParameter("out_trade_no") != null) {
+                        refundRequestData.out_trade_no = getParameter("out_trade_no").toString();
+                    }
                     refundRequestData.op_user_id = refundRequestData.mch_id;
                     Refund refund = new Refund(refundRequestData);
                     if (!refund.execute(merchantInfo.getApiKey())) {
@@ -206,8 +218,12 @@ public class PayAction extends AjaxActionSupport {
                     orderQueryData.appid = merchantInfo.getAppid();
                     orderQueryData.mch_id = merchantInfo.getMchId();
                     orderQueryData.sub_mch_id = subMerchantInfo.getSubId();
-                    orderQueryData.transaction_id = getParameter("transaction_id").toString();
-                    orderQueryData.out_trade_no = getParameter("out_trade_no").toString();
+                    if (getParameter("transaction_id") != null) {
+                        orderQueryData.transaction_id = getParameter("transaction_id").toString();
+                    }
+                    if (getParameter("out_trade_no") != null) {
+                        orderQueryData.out_trade_no = getParameter("out_trade_no").toString();
+                    }
                     OrderQuery orderQuery = new OrderQuery(orderQueryData);
                     if (!orderQuery.execute(merchantInfo.getApiKey())) {
                         System.out.println("Refund Failed!");
