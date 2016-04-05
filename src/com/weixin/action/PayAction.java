@@ -242,7 +242,15 @@ public class PayAction extends AjaxActionSupport {
                         System.out.println("Refund Failed!");
                         return AjaxActionComplete();
                     }
-                    return AjaxActionComplete(orderQuery.getResponseResult());
+
+                    Map<String, String> map = new HashMap<>();
+                    map.put("body", orderQuery.getResponseResult().get("attach").toString());
+                    map.put("transaction_id", orderQuery.getResponseResult().get("transaction_id").toString());
+                    map.put("out_trade_no", orderQuery.getResponseResult().get("out_trade_no").toString());
+                    map.put("bank_type", orderQuery.getResponseResult().get("bank_type").toString());
+                    map.put("total_fee", orderQuery.getResponseResult().get("total_fee").toString());
+                    map.put("time_end", orderQuery.getResponseResult().get("time_end").toString());
+                    return AjaxActionComplete(map);
                 }
             }
         }
