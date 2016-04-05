@@ -9,7 +9,6 @@
     </select>
     <resultMap type="com.weixin.database.MerchantInfo" id="merchantInfoResult">
         <id property="id" column="id" jdbcType="BIGINT" />
-        <result property="name" column="name" jdbcType="VARCHAR" />
         <result property="appid" column="appid" jdbcType="VARCHAR"/>
         <result property="appsecret" column="appsecret" jdbcType="VARCHAR"/>
         <result property="mchId" column="mchId" jdbcType="VARCHAR"/>

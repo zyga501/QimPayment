@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.merchant.database.mapping.merchantInfo">
+    <select id="getMerchantInfoById" parameterType="long" resultMap="merchantInfoResult">
+      SELECT * FROM MerchantInfo WHERE id=#{id}
+    </select>
+    <resultMap type="com.merchant.database.MerchantInfo" id="merchantInfoResult">
+        <id property="id" column="id" jdbcType="BIGINT" />
+        <result property="name" column="name" jdbcType="VARCHAR" />
+    </resultMap>
+</mapper>

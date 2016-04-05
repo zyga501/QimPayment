@@ -2,6 +2,7 @@ package com.weixin.action;
 
 import com.framework.action.AjaxActionSupport;
 import com.framework.utils.StringUtils;
+import com.merchant.database.SubMerchantUser;
 import com.weixin.api.MicroPay;
 import com.weixin.api.OrderQuery;
 import com.weixin.api.Refund;
@@ -12,7 +13,6 @@ import com.weixin.api.RequestData.UnifiedOrderRequestData;
 import com.weixin.api.UnifiedOrder;
 import com.weixin.database.MerchantInfo;
 import com.weixin.database.SubMerchantInfo;
-import com.weixin.database.SubMerchantUser;
 import com.weixin.utils.OAuth2;
 import com.weixin.utils.Signature;
 

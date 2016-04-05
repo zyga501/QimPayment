@@ -25,6 +25,7 @@
         </interceptors>
     </package>
 
+    <include file="com/merchant/struts-merchant.xml" />
     <include file="com/weixin/struts-weixin.xml" />
     <include file="com/api/struts-api.xml" />
 </struts>

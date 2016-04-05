@@ -1,18 +1,18 @@
-package com.weixin.database;
+package com.merchant.database;
 
 import org.apache.ibatis.session.SqlSession;
 
 public class SubMerchantUser {
     public static void main(String[] args) throws Exception {
         SqlSession sqlSession = Database.SqlSessionFactory().openSession();
-        String statement = "com.weixin.database.mapping.subMerchantUser.getSubMerchantUserById";
+        String statement = "com.merchant.database.mapping.subMerchantUser.getSubMerchantUserById";
         SubMerchantUser subMerchantUser = sqlSession.selectOne(statement, (Object) 1596144387655680L);
         sqlSession.close();
     }
 
     public static SubMerchantUser getSubMerchantUserById(long id) {
         SqlSession sqlSession = Database.SqlSessionFactory().openSession();
-        String statement = "com.weixin.database.mapping.subMerchantUser.getSubMerchantUserById";
+        String statement = "com.merchant.database.mapping.subMerchantUser.getSubMerchantUserById";
         SubMerchantUser subMerchantUser = sqlSession.selectOne(statement, id);
         sqlSession.close();
         return subMerchantUser;

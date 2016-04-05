@@ -1,18 +1,18 @@
-package com.weixin.database;
+package com.merchant.database;
 
 import org.apache.ibatis.session.SqlSession;
 
 public class MerchantInfo {
     public static void main(String[] args) throws Exception {
         SqlSession sqlSession = Database.SqlSessionFactory().openSession();
-        String statement = "com.weixin.database.mapping.merchantInfo.getMerchantInfoByAppId";
+        String statement = "com.merchant.database.mapping.merchantInfo.getMerchantInfoByAppId";
         MerchantInfo merchantInfo = sqlSession.selectOne(statement, "wx0bfa8f7ec59b1f33");
         sqlSession.close();
     }
 
     public static MerchantInfo getMerchantInfoById(long id) {
         SqlSession sqlSession = Database.SqlSessionFactory().openSession();
-        String statement = "com.weixin.database.mapping.merchantInfo.getMerchantInfoById";
+        String statement = "com.merchant.database.mapping.merchantInfo.getMerchantInfoById";
         MerchantInfo merchantInfo = sqlSession.selectOne(statement, id);
         sqlSession.close();
         return merchantInfo;
@@ -20,7 +20,7 @@ public class MerchantInfo {
 
     public static MerchantInfo getMerchantInfoByAppId(String appid) {
         SqlSession sqlSession = Database.SqlSessionFactory().openSession();
-        String statement = "com.weixin.database.mapping.merchantInfo.getMerchantInfoByAppId";
+        String statement = "com.merchant.database.mapping.merchantInfo.getMerchantInfoByAppId";
         MerchantInfo merchantInfo = sqlSession.selectOne(statement, "wx0bfa8f7ec59b1f33");
         sqlSession.close();
         return merchantInfo;
@@ -34,41 +34,14 @@ public class MerchantInfo {
         this.id_ = id;
     }
 
-    public String getAppid() {
-        return appid_;
+    public String getName() {
+        return name_;
     }
 
-    public void setAppid(String appid) {
-        this.appid_ = appid;
-    }
-
-    public String getAppsecret() {
-        return appsecret_;
-    }
-
-    public void setAppsecret(String appsecret) {
-        this.appsecret_ = appsecret;
-    }
-
-    public String getMchId() {
-        return mchId_;
-    }
-
-    public void setMchId(String mchId) {
-        this.mchId_ = mchId;
-    }
-
-    public String getApiKey() {
-        return apiKey_;
-    }
-
-    public void setApiKey(String apiKey) {
-        this.apiKey_ = apiKey;
+    public void setName(String name) {
+        this.name_ = name;
     }
 
     private Long id_;
-    private String appid_;
-    private String appsecret_;
-    private String mchId_;
-    private String apiKey_;
+    private String name_;
 }

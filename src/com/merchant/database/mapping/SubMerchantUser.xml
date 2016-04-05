@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.weixin.database.mapping.subMerchantUser">
+<mapper namespace="com.merchant.database.mapping.subMerchantUser">
     <select id="getSubMerchantUserById" parameterType="long" resultMap="subMerchantUserResult">
       SELECT * FROM SubMerchantUser WHERE id=#{id}
     </select>
-    <resultMap type="com.weixin.database.SubMerchantUser" id="subMerchantUserResult">
+    <resultMap type="com.merchant.database.SubMerchantUser" id="subMerchantUserResult">
         <id property="id" column="id" jdbcType="BIGINT" />
         <result property="subMerchantId" column="subMerchantId" jdbcType="BIGINT" />
         <result property="userName" column="userName" jdbcType="VARCHAR" />
