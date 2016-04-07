@@ -5,7 +5,7 @@ import org.apache.ibatis.session.SqlSession;
 public class OrderInfo {
     public static void main(String[] args) throws Exception {
         SqlSession sqlSession = Database.SqlSessionFactory().openSession(true);
-        String statement = "com.weixin.database.mapping.merchantInfo.insertOrderInfo";
+        String statement = "com.weixin.database.mapping.orderInfo.insertOrderInfo";
         OrderInfo orderInfo = new OrderInfo();
         orderInfo.setAppid("wx0bfa8f7ec59b1f33");
         orderInfo.setMchId("1307537901");
@@ -24,7 +24,7 @@ public class OrderInfo {
 
     public static OrderInfo getOrderInfoById(long id) {
         SqlSession sqlSession = Database.SqlSessionFactory().openSession();
-        String statement = "com.weixin.database.mapping.merchantInfo.getOrderInfoById";
+        String statement = "com.weixin.database.mapping.orderInfo.getOrderInfoById";
         OrderInfo orderInfo = sqlSession.selectOne(statement, id);
         sqlSession.close();
         return orderInfo;
@@ -32,7 +32,7 @@ public class OrderInfo {
 
     public static OrderInfo getOrderInfoByTransactionId(String transactionId) {
         SqlSession sqlSession = Database.SqlSessionFactory().openSession();
-        String statement = "com.weixin.database.mapping.merchantInfo.getOrderInfoByTransactionId";
+        String statement = "com.weixin.database.mapping.orderInfo.getOrderInfoByTransactionId";
         OrderInfo orderInfo = sqlSession.selectOne(statement, transactionId);
         sqlSession.close();
         return orderInfo;
@@ -40,7 +40,7 @@ public class OrderInfo {
 
     public static boolean insertOrderInfo(OrderInfo orderInfo) {
         SqlSession sqlSession = Database.SqlSessionFactory().openSession(true);
-        String statement = "com.weixin.database.mapping.merchantInfo.insertOrderInfo";
+        String statement = "com.weixin.database.mapping.orderInfo.insertOrderInfo";
         int result = sqlSession.insert(statement, orderInfo);
         sqlSession.commit();
         sqlSession.close();
