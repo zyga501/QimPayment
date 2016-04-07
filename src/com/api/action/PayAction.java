@@ -1,94 +1,82 @@
 package com.api.action;
 
+import com.api.mode.BaseMode;
 import com.framework.action.AjaxActionSupport;
 import com.framework.utils.StringUtils;
 import com.framework.utils.XMLParser;
-import com.weixin.utils.Signature;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 import java.util.Map;
 
 public class PayAction extends AjaxActionSupport {
-    private final static String WeixinMode = "weixin";
+    private final static String WEIXINMODE = "weixin";
 
-    private final static String WeixinMicroPay = "WeixinMicroPay";
-    private final static String WeixinScanPay = "WeixinScanPay";
-    private final static String WeixinPrePay = "WeixinPrePay";
-    private final static String WeixinBrandWCPay = "WeixinBrandWCPay";
-
-    public String MicroPay() throws ParserConfigurationException, IOException, SAXException {
-        Map<String,Object> resquestBuffer = getRequestBuffer();
-        switch (StringUtils.convertNullableString(resquestBuffer.get("mode"))) {
-            case WeixinMode:
-            default: {
-                if (!Signature.checkSignValid(resquestBuffer, resquestBuffer.get("id").toString())) {
-                    System.out.println("checkSignValid Failed!");
-                    return AjaxActionComplete();
-                }
-                setParameter(resquestBuffer);
-                return WeixinMicroPay;
-            }
-        }
+    public String MicroPay() throws Exception {
+        parseRequestBuffer();
+        String mode = StringUtils.convertNullableString(requestBuffer_.get("mode"));
+        return handlerResult(createMode(mode).microPay());
     }
 
-    public String ScanPay() throws ParserConfigurationException, IOException, SAXException {
-        Map<String,Object> resquestBuffer = getRequestBuffer();
-        switch (StringUtils.convertNullableString(resquestBuffer.get("mode"))) {
-            case WeixinMode:
-            default: {
-                if (!Signature.checkSignValid(resquestBuffer, resquestBuffer.get("id").toString())) {
-                    System.out.println("checkSignValid Failed!");
-                    return AjaxActionComplete();
-                }
-                setParameter(resquestBuffer);
-                return WeixinScanPay;
-            }
-        }
+    public String ScanPay() throws Exception {
+        parseRequestBuffer();
+        String mode = StringUtils.convertNullableString(requestBuffer_.get("mode"));
+        return handlerResult(createMode(mode).scanPay());
     }
 
-    public String PrePay() throws ParserConfigurationException, IOException, SAXException {
-        Map<String,Object> resquestBuffer = getRequestBuffer();
-        switch (StringUtils.convertNullableString(resquestBuffer.get("mode"))) {
-            case WeixinMode:
-            default: {
-                if (!Signature.checkSignValid(resquestBuffer, resquestBuffer.get("id").toString())) {
-                    System.out.println("checkSignValid Failed!");
-                    return AjaxActionComplete();
-                }
-                setParameter(resquestBuffer);
-                return WeixinPrePay;
-            }
-        }
+    public String PrePay() throws Exception {
+        parseRequestBuffer();
+        String mode = StringUtils.convertNullableString(requestBuffer_.get("mode"));
+        return handlerResult(createMode(mode).prePay());
     }
 
-    public String BrandWCPay() throws ParserConfigurationException, IOException, SAXException {
-        Map<String,Object> resquestBuffer = getRequestBuffer();
-        switch (StringUtils.convertNullableString(resquestBuffer.get("mode"))) {
-            case WeixinMode:
-            default: {
-                if (!Signature.checkSignValid(resquestBuffer, resquestBuffer.get("id").toString())) {
-                    System.out.println("checkSignValid Failed!");
-                    return AjaxActionComplete();
-                }
-                setParameter(resquestBuffer);
-                return WeixinBrandWCPay;
-            }
-        }
+    public String BrandWCPay() throws Exception {
+        parseRequestBuffer();
+        String mode = StringUtils.convertNullableString(requestBuffer_.get("mode"));
+        return handlerResult(createMode(mode).brandWCPay());
     }
 
-    private Map<String,Object> getRequestBuffer() throws IOException, ParserConfigurationException, IOException, SAXException {
+    public String OrderQuery() throws Exception {
+        parseRequestBuffer();
+        String mode = StringUtils.convertNullableString(requestBuffer_.get("mode"));
+        return handlerResult(createMode(mode).orderQuery());
+    }
+
+    private void parseRequestBuffer() throws IOException, ParserConfigurationException, IOException, SAXException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(getRequest().getInputStream(), "utf-8"));
         StringBuilder stringBuilder = new StringBuilder();
-        String lineBuffer = null;
+        String lineBuffer;
         while ((lineBuffer = bufferedReader.readLine()) != null) {
             stringBuilder.append(lineBuffer);
         }
 
         String resquestString = stringBuilder.toString();
-        return XMLParser.convertMapFromXML(resquestString);
+        requestBuffer_ = XMLParser.convertMapFromXML(resquestString);
     }
+
+    private BaseMode createMode(String mode) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+        BaseMode baseMode;
+        switch (mode) {
+            case WEIXINMODE:
+            default:
+                baseMode = (BaseMode)Class.forName("com.api.mode.WeixinMode").newInstance();
+        }
+        baseMode.initMode(requestBuffer_);
+        return baseMode;
+    }
+
+    private String handlerResult(String modeResult) {
+        if (modeResult.isEmpty()) {
+            return AjaxActionComplete();
+        }
+
+        setParameter(requestBuffer_);
+        return modeResult;
+    }
+
+    private Map<String,Object> requestBuffer_ = new HashMap<>();
 }

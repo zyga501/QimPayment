@@ -36,7 +36,12 @@
                 <param name="namespace">/weixin</param>
             </result>
         </action>
-
+        <action name="OrderQuery" class="com.api.action.PayAction" method="OrderQuery">
+            <result name="WeixinOrderQuery" type="chain">
+                <param name="actionName">Pay!orderQuery</param>
+                <param name="namespace">/weixin</param>
+            </result>
+        </action>
         <!--- test action -->
         <action name="TestPay!*" class="com.api.test.TestPayAction" method="{1}">
         </action>
