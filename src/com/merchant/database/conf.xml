@@ -18,5 +18,6 @@
         <mapper resource="com/merchant/database/mapping/MerchantInfo.xml" />
         <mapper resource="com/merchant/database/mapping/SubMerchantInfo.xml" />
         <mapper resource="com/merchant/database/mapping/SubMerchantUser.xml" />
+        <mapper resource="com/merchant/database/mapping/IdMapUUID.xml" />
     </mappers>
 </configuration>

@@ -2,16 +2,11 @@ package com.weixin.database;
 
 import org.apache.ibatis.session.SqlSession;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class OrderInfo {
-    public static void main(String[] args) throws Exception {
-        SqlSession sqlSession = Database.SqlSessionFactory().openSession(true);
-        String statement = "com.weixin.database.mapping.orderInfo.getOrderInfo";
-        List<OrderInfo> orderInfos = sqlSession.selectList(statement);
-        sqlSession.close();
-    }
-
     public static OrderInfo getOrderInfoById(long id) {
         SqlSession sqlSession = Database.SqlSessionFactory().openSession();
         String statement = "com.weixin.database.mapping.orderInfo.getOrderInfoById";
@@ -24,6 +19,18 @@ public class OrderInfo {
         SqlSession sqlSession = Database.SqlSessionFactory().openSession();
         String statement = "com.weixin.database.mapping.orderInfo.getOrderInfoByTransactionId";
         OrderInfo orderInfo = sqlSession.selectOne(statement, transactionId);
+        sqlSession.close();
+        return orderInfo;
+    }
+
+    public static List<OrderInfo> getOrderInfoListByDate(String createuser, String startDate, String endDate) {
+        SqlSession sqlSession = com.weixin.database.Database.SqlSessionFactory().openSession();
+        String statement = "com.weixin.database.mapping.orderInfo.getOrderInfoListByDate";
+        Map<String, Object> param=new HashMap<String, Object>();
+        param.put("createuser",createuser);
+        param.put("startdate",startDate);
+        param.put("enddate",endDate);
+        List<OrderInfo> orderInfo = sqlSession.selectList(statement,param);
         sqlSession.close();
         return orderInfo;
     }

@@ -2,6 +2,9 @@ package com.merchant.database;
 
 import org.apache.ibatis.session.SqlSession;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class SubMerchantUser {
     public static void main(String[] args) throws Exception {
         SqlSession sqlSession = Database.SqlSessionFactory().openSession();
@@ -14,6 +17,17 @@ public class SubMerchantUser {
         SqlSession sqlSession = Database.SqlSessionFactory().openSession();
         String statement = "com.merchant.database.mapping.subMerchantUser.getSubMerchantUserById";
         SubMerchantUser subMerchantUser = sqlSession.selectOne(statement, id);
+        sqlSession.close();
+        return subMerchantUser;
+    }
+
+    public static SubMerchantUser getSubMerchantUserByLogin(String userName, String userPwd) {
+        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
+        String statement = "com.merchant.database.mapping.subMerchantUser.getSubMerchantUserByAccount";
+        Map<String, Object> param=new HashMap<String, Object>();
+        param.put("userName",userName);
+        param.put("userPwd",userPwd);
+        SubMerchantUser subMerchantUser = sqlSession.selectOne(statement, param);
         sqlSession.close();
         return subMerchantUser;
     }

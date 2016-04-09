@@ -4,6 +4,9 @@
     <select id="getSubMerchantUserById" parameterType="long" resultMap="subMerchantUserResult">
       SELECT * FROM SubMerchantUser WHERE id=#{id}
     </select>
+    <select id="getSubMerchantUserByAccount"  parameterType="java.util.HashMap" resultMap="subMerchantUserResult">
+        SELECT * FROM SubMerchantUser WHERE userName=#{userName} and  userpwd= #{userPwd}
+    </select>
     <resultMap type="com.merchant.database.SubMerchantUser" id="subMerchantUserResult">
         <id property="id" column="id" jdbcType="BIGINT" />
         <result property="subMerchantId" column="subMerchantId" jdbcType="BIGINT" />

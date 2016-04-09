@@ -10,6 +10,17 @@
     <select id="getOrderInfoByTransactionId" parameterType="String" resultMap="orderInfoResult">
         SELECT * FROM OrderInfo WHERE transactionId=#{transactionId}
     </select>
+    <select id="getOrderInfoListByDate" parameterType="java.util.HashMap"  resultMap="orderInfoResult">
+        SELECT * FROM OrderInfo WHERE createuser=#{createuser} and createtime between #{startdate}  and #{enddate}
+    </select>
+    <select id="collectOrderInfoByDate"  parameterType="java.util.HashMap"  resultMap="orderInfoCollect">
+        SELECT count(*) as infoCount,sum(totalFee) as sumFee FROM OrderInfo WHERE createuser=#{createuser}
+        and createtime between #{startdate} and #{enddate}
+    </select>
+    <resultMap type="com.weixin.database.OrderInfoCollect" id="orderInfoCollect">
+        <result property="infoCount" column="infoCount" jdbcType="INTEGER" />
+        <result property="sumFee" column="sumFee" jdbcType="INTEGER" />
+    </resultMap>
     <resultMap type="com.weixin.database.OrderInfo" id="orderInfoResult">
         <id property="id" column="id" jdbcType="BIGINT" />
         <result property="appid" column="appid" jdbcType="VARCHAR"/>
