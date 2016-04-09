@@ -14,8 +14,8 @@
         SELECT * FROM OrderInfo WHERE createuser=#{createuser} and createtime between #{startdate}  and #{enddate}
     </select>
     <select id="collectOrderInfoByDate"  parameterType="java.util.HashMap"  resultMap="orderInfoCollect">
-        SELECT count(*) as infoCount,sum(totalFee) as sumFee FROM OrderInfo WHERE createuser=#{createuser}
-        and createtime between #{startdate} and #{enddate}
+        SELECT count(*) as infoCount,sum(totalFee) as sumFee FROM OrderInfo WHERE createUser=#{createUser}
+        and createTime between #{startDate} and #{endDate}
     </select>
     <resultMap type="com.weixin.database.OrderInfoCollect" id="orderInfoCollect">
         <result property="infoCount" column="infoCount" jdbcType="INTEGER" />
