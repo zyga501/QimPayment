@@ -2,23 +2,13 @@ package com.weixin.database;
 
 import org.apache.ibatis.session.SqlSession;
 
+import java.util.List;
+
 public class OrderInfo {
     public static void main(String[] args) throws Exception {
         SqlSession sqlSession = Database.SqlSessionFactory().openSession(true);
-        String statement = "com.weixin.database.mapping.orderInfo.insertOrderInfo";
-        OrderInfo orderInfo = new OrderInfo();
-        orderInfo.setAppid("wx0bfa8f7ec59b1f33");
-        orderInfo.setMchId("1307537901");
-        orderInfo.setSubMchId("1319548401");
-        orderInfo.setBody("测试商品ddd");
-        orderInfo.setTransactionId("4000482001201604034519398119");
-        orderInfo.setOutTradeNo("1604427766398976");
-        orderInfo.setBankType("PAB_DEBIT");
-        orderInfo.setTotalFee(1);
-        orderInfo.setTimeEnd("20160403184422");
-        orderInfo.setCreateUser(121123L);
-        int result = sqlSession.insert(statement, orderInfo);
-        sqlSession.commit();
+        String statement = "com.weixin.database.mapping.orderInfo.getOrderInfo";
+        List<OrderInfo> orderInfos = sqlSession.selectList(statement);
         sqlSession.close();
     }
 

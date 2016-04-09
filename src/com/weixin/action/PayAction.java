@@ -157,7 +157,7 @@ public class PayAction extends AjaxActionSupport {
                     unifiedOrderRequestData.mch_id = merchantInfo.getMchId();
                     unifiedOrderRequestData.sub_mch_id = subMerchantInfo.getSubId();
                     unifiedOrderRequestData.body = getParameter("body").toString();
-                    unifiedOrderRequestData.attach = "{ 'id':'" + getParameter("id").toString() + "', 'body':'" + unifiedOrderRequestData.body + "'}";
+                    unifiedOrderRequestData.attach = "{ 'id':'" + subMerchantUserId + "', 'body':'" + unifiedOrderRequestData.body + "'}";
                     unifiedOrderRequestData.total_fee = Integer.parseInt(getParameter("total_fee").toString());
                     unifiedOrderRequestData.trade_type = "JSAPI";
                     unifiedOrderRequestData.openid = OAuth2.fetchOpenid(merchantInfo.getAppid(), merchantInfo.getAppsecret(), code);
