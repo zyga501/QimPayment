@@ -130,7 +130,7 @@
             document.getElementById("imgid").src = "../image/loading.gif";
             $.ajax({
                 type: 'post',
-                url: 'weixin/Pay!scanPay',
+                url: 'Pay!scanPay',
                 dataType:"json",
                 data:$("form").serialize(),
                 success: function (data) {
