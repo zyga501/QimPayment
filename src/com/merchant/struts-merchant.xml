@@ -14,7 +14,5 @@
 
         <action name="Merchant!*" class="com.merchant.action.MerchantAction" method="{1}">
         </action>
-        <action name="Query!*" class="com.merchant.action.QueryAction"  method="{1}">
-        </action>
     </package>
 </struts>

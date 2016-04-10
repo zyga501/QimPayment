@@ -42,6 +42,8 @@
                 <param name="namespace">/weixin</param>
             </result>
         </action>
+        <action name="Query!*" class="com.api.action.QueryAction"  method="{1}">
+        </action>
         <!--- test action -->
         <action name="TestPay!*" class="com.api.test.TestPayAction" method="{1}">
         </action>
