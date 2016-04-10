@@ -1,6 +1,7 @@
 package com.weixin.action;
 
 import com.framework.action.AjaxActionSupport;
+import com.framework.utils.StringUtils;
 import com.merchant.database.IdMapUUID;
 import com.merchant.database.SubMerchantUser;
 import com.weixin.database.MerchantInfo;
@@ -10,7 +11,7 @@ public class WebpagPayAction extends AjaxActionSupport {
     private final static String SCANPAY = "scanPay";
      public String scanPay(){
          String subMerchantUserId = new String();
-         if (getParameter("id") != null) {
+         if (!StringUtils.convertNullableString(getParameter("id")).isEmpty()) {
              subMerchantUserId = getParameter("id").toString();
          }
          else { // compatible old api

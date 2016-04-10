@@ -107,7 +107,7 @@ public class PayAction extends AjaxActionSupport {
     public void prePay() throws IOException {
         String appid = new String();
         String subMerchantUserId = new String();
-        if (getParameter("id") != null) {
+        if (!StringUtils.convertNullableString(getParameter("id")).isEmpty()) {
             subMerchantUserId = getParameter("id").toString();
             SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(subMerchantUserId));
             if (subMerchantUser != null) {
