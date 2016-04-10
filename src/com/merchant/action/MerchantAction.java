@@ -1,6 +1,7 @@
 package com.merchant.action;
 
 import com.framework.action.AjaxActionSupport;
+import com.merchant.database.SubMerchantInfo;
 import com.merchant.database.SubMerchantUser;
 import com.weixin.utils.OAuth2;
 
@@ -8,7 +9,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LoginAction extends AjaxActionSupport {
+public class MerchantAction extends AjaxActionSupport {
     public String wx() throws IOException {
         String appid = "wx0bfa8f7ec59b1f33";
         String appsecret = "9386215269d6eb50c14199089890050f";
@@ -44,5 +45,15 @@ public class LoginAction extends AjaxActionSupport {
             map.put("return","failure");
         }
         return AjaxActionComplete(map);
+    }
+
+    public void FetchLogo() throws IOException {
+        super.getResponse().setHeader("Pragma", "No-cache");
+        super.getResponse().setHeader("Cache-Control", "no-cache");
+        super.getResponse().setDateHeader("Expires", 0);
+        super.getResponse().setContentType("image/jpeg");
+        super.getResponse().getOutputStream().write(SubMerchantInfo.getSubMerchantLogoBySubId(getParameter("id").toString()));
+        super.getResponse().getOutputStream().flush();
+        super.getResponse().getOutputStream().close();
     }
 }

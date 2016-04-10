@@ -144,7 +144,7 @@
             })
 
         $.ajax({
-            url: "<%=request.getContextPath()%>/getqcode.do?method=getquerylist",
+            url: "<%=request.getContextPath()%>/api/",
             type: "post",
             data: $("form").serialize(),
             error: function () {
@@ -157,7 +157,7 @@
         });
     }
     function clearimg() {
-        document.getElementById("imgid").src = "img/nopic.png";
+        document.getElementById("imgid").src = "image/nopic.png";
     }
 
     function amount(th) {
@@ -189,7 +189,7 @@
     <div class="Layer1">
         <div align="center" class="STYLE3"></div>
         <div align="center" class="STYLE3"><img style="width:90px;height:90px;border-radius:8px"
-                                                src="<%=request.getContextPath()%>/downfile.do?method=compic"></div>
+                                                src="<%=request.getContextPath()%>/Merchant!FetchLogo?id="></div>
         <div align="center" class="STYLE5"><%=request.getSession().getAttribute("storename")%>
             &nbsp;&nbsp;<%="收银员：" + request.getSession().getAttribute("ucode")%>
         </div>

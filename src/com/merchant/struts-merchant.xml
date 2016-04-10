@@ -12,7 +12,7 @@
             </result>
         </global-results>
 
-        <action name="L!*" class="com.merchant.action.LoginAction"  method="{1}">
+        <action name="Merchant!*" class="com.merchant.action.MerchantAction" method="{1}">
         </action>
         <action name="Query!*" class="com.merchant.action.QueryAction"  method="{1}">
         </action>

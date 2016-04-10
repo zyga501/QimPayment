@@ -18,6 +18,7 @@ public class QueryAction extends AjaxActionSupport {
         }
         return AjaxActionComplete(map);
     }
+
     public String OrderList(){
        List<OrderInfo> orderInfo = OrderInfo.getOrderInfoListByDate(getParameter("id").toString(),getParameter("startdate").toString(),getParameter("enddate").toString());
         Map<String , Object> map = new HashMap<>();

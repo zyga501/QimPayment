@@ -17,6 +17,12 @@
 
         <action name="shoppay.*" class="com.weixin.action.PayAction" method="prePay">
         </action>
+        <action name="jjzzjjzz.*" class="com.weixin.action.WebpagPayAction" method="scanPay">
+            <result name="scanPay">../weixin/scanpay.jsp</result>
+        </action>
+        <action name="WebpagPayAction" class="com.weixin.action.WebpagPayAction" method="scanPay">
+            <result name="scanPay">../weixin/scanpay.jsp</result>
+        </action>
 
         <action name="Pay!*" class="com.weixin.action.PayAction"  method="{1}">
         </action>

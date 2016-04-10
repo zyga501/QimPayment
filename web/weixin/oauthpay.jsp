@@ -153,16 +153,18 @@
 <body>
 <input type="hidden" name="hideparam" id="hideparam" value=""/>
 
-<form action="<%=request.getContextPath()%>/shoppay.do?m=pay" method="post">
-    <input type="hidden" value="" name="encodestr"/>
+<form action="<%=request.getContextPath()%>/api/Pay!brandWCPay" method="post">
+    <input type="hidden" value="<%=request.getParameter("statestate")%>" name="state"/>
     <input type="hidden" value="<%=request.getParameter("code")%>" name="code"/>
+    <input type="hidden" value="<%=request.getParameter("storename")%>" name="body"/>
+    <input type="hidden" value="" name="total_fee" id="total_fee"/>
 
     <div class="Layer122">
         <div align="center" class="STYLE3"></div>
         <br>
 
         <div align="center" class="STYLE3"><img style="width:90px;height:90px;border-radius:8px"
-                                                src="<%=request.getContextPath()%>/downfile.do?method=compic"></div>
+                                                src="<%=request.getContextPath()%>/merchant/Merchant!FetchLogo"></div>
         <br>
 
         <div align="center" class="STYLE5"><%=request.getSession().getAttribute("storename")%>

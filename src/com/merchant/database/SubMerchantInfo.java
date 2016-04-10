@@ -26,6 +26,14 @@ public class SubMerchantInfo {
         return subMerchantInfo;
     }
 
+    public static byte[] getSubMerchantLogoBySubId(String subId) {
+        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
+        String statement = "com.merchant.database.mapping.subMerchantInfo.getSubMerchantLogoById";
+        byte[] logo = sqlSession.selectOne(statement, subId);
+        sqlSession.close();
+        return logo;
+    }
+
     public long getId() {
         return id_;
     }
@@ -58,8 +66,17 @@ public class SubMerchantInfo {
         this.salemanId_ = salemanId;
     }
 
+    public byte[] getLogo() {
+        return logo_;
+    }
+
+    public void setLogo_(byte[] logo) {
+        this.logo_ = logo;
+    }
+
     private long id_;
     private long merchantId_;
     private String name_;
     private long salemanId_;
+    private byte[] logo_;
 }
