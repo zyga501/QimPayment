@@ -6,7 +6,6 @@
 
 <struts>
     <constant name="struts.custom.i18n.resources.weixin" value="weixin/mui/resources"/>
-    <constant name="struts.action.extension" value="do,"/>
 
     <package name="weixin" namespace="/weixin" extends="json-default">
         <global-results>
@@ -14,15 +13,6 @@
                 <param name="root">ajaxActionResult</param>
             </result>
         </global-results>
-
-        <action name="shoppay.*" class="com.weixin.action.PayAction" method="prePay">
-        </action>
-        <action name="jjzzjjzz.*" class="com.weixin.action.WebpagePayAction" method="scanPay">
-            <result name="scanPay">../weixin/scanpay.jsp</result>
-        </action>
-        <action name="WebpagePayAction!*" class="com.weixin.action.WebpagePayAction" method="{1}">
-            <result name="scanPay">../weixin/scanpay.jsp</result>
-        </action>
 
         <action name="Pay!*" class="com.weixin.action.PayAction"  method="{1}">
         </action>

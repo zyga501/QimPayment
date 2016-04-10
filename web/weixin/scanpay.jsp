@@ -179,6 +179,8 @@
         <div align="center" class="STYLE3">
             <img style="width:90px;height:90px;border-radius:8px"
                                                 src="../merchant/Merchant!FetchLogo?id=<s:property value="subMerchantId" escape="false" />">
+            <img style="width:90px;height:90px;border-radius:8px"
+                 src="<s:property value="subMerchantLogo" escape="false" />">
         </div>
         <div align="center" class="STYLE5"><s:property value="storeName" escape="false" />
             &nbsp;&nbsp;收银员：<s:property value="userName" escape="false" />
