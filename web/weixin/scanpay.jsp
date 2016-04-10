@@ -181,7 +181,7 @@
                                                 src="../merchant/Merchant!FetchLogo?id=<s:property value="subMerchantId" escape="false" />">
         </div>
         <div align="center" class="STYLE5"><s:property value="storeName" escape="false" />
-            &nbsp;&nbsp;收银员： + <s:property value="userName" escape="false" />
+            &nbsp;&nbsp;收银员：<s:property value="userName" escape="false" />
         </div>
     </div>
     <div class="Layer1">
