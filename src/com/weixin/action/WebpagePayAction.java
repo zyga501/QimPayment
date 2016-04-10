@@ -7,8 +7,11 @@ import com.merchant.database.SubMerchantUser;
 import com.weixin.database.MerchantInfo;
 import com.weixin.database.SubMerchantInfo;
 
-public class WebpagPayAction extends AjaxActionSupport {
+public class WebpagePayAction extends AjaxActionSupport {
     private final static String SCANPAY = "scanPay";
+
+    private String storeName;
+    private String userName;
      public String scanPay(){
          String subMerchantUserId = new String();
          if (!StringUtils.convertNullableString(getParameter("id")).isEmpty()) {

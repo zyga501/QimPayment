@@ -126,7 +126,7 @@
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/qrcode.js"></script>
     <script>
         function getQcode() {
-        document.getElementById("imgid").src = "../image/loading.gif";
+            document.getElementById("imgid").src = "../image/loading.gif";
             $.ajax({
                 type: 'post',
                 url: 'Pay!scanPay',
@@ -142,54 +142,41 @@
                     $("#QRCode")[0].appendChild(dom);
                 }
             })
+        }
+        function clearimg() {
+            document.getElementById("imgid").src = "/image/nopic.png";
+        }
 
-        $.ajax({
-            url: "<%=request.getContextPath()%>/api/",
-            type: "post",
-            data: $("form").serialize(),
-            error: function () {
-                alert("服务器没有返回数据，可能服务器忙，请再次提交");
-            },
-            success: function (rtstr) {
-                strs = rtstr.split("*");
-                document.getElementById("imgid").src = strs[0];
+        function amount(th) {
+            var regStrs = [
+                ['^0(\\d+)$', '$1'],
+                ['[^\\d\\.]+$', ''],
+                ['\\.(\\d?)\\.+', '.$1'],
+                ['^(\\d+\\.\\d{2}).+', '$1']
+            ];
+            for (i = 0; i < regStrs.length; i++) {
+                var reg = new RegExp(regStrs[i][0]);
+                th.value = th.value.replace(reg, regStrs[i][1]);
             }
-        });
-    }
-    function clearimg() {
-        document.getElementById("imgid").src = "image/nopic.png";
-    }
-
-    function amount(th) {
-        var regStrs = [
-            ['^0(\\d+)$', '$1'],
-            ['[^\\d\\.]+$', ''],
-            ['\\.(\\d?)\\.+', '.$1'],
-            ['^(\\d+\\.\\d{2}).+', '$1']
-        ];
-        for (i = 0; i < regStrs.length; i++) {
-            var reg = new RegExp(regStrs[i][0]);
-            th.value = th.value.replace(reg, regStrs[i][1]);
-        }
-        if (th.value == "") {
-            $("#paynum").text("");
-        }
-        else {
-            $("#paynum").text("￥" + th.value);
-        }
-    }  </script>
+            if (th.value == "") {
+                $("#paynum").text("");
+            }
+            else {
+                $("#paynum").text("￥" + th.value);
+            }
+        }  </script>
 </head>
 <body>
 <form>
-    <input type="hidden" id="businessguid" name="businessguid" value=<%=request.getSession().getAttribute("buguid")%>/>
-    <input type="hidden" id="ucode" name="ucode" value=<%=request.getSession().getAttribute("ucode")%>/>
+    <input type="hidden" id="id" name="id" value="<%=request.getSession().getAttribute("id")%>"/>
+    <input type="hidden" id="ucode" name="ucode" value="<%=request.getSession().getAttribute("ucode")%>"/>
     <input type="hidden" id="productname" name="productname" value="SJ"
            +<%=request.getSession().getAttribute("storename")%>/>
 
     <div class="Layer1">
         <div align="center" class="STYLE3"></div>
         <div align="center" class="STYLE3"><img style="width:90px;height:90px;border-radius:8px"
-                                                src="<%=request.getContextPath()%>/Merchant!FetchLogo?id="></div>
+                                                src="../merchant/Merchant!FetchLogo"></div>
         <div align="center" class="STYLE5"><%=request.getSession().getAttribute("storename")%>
             &nbsp;&nbsp;<%="收银员：" + request.getSession().getAttribute("ucode")%>
         </div>
@@ -211,6 +198,7 @@
             <input type="button" class="but" id="butpaynum" onclick="getQcode()" value="提交生成二维码"/>
         </div>
         <img id="imgid" src="../image/nopic.png">
+        <div id="QRCode"></div>
     </div>
 </form>
 </body>
