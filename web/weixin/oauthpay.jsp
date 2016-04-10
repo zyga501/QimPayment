@@ -157,7 +157,6 @@
     <input type="hidden" value="<%=request.getParameter("state")%>" name="state"/>
     <input type="hidden" value="<%=request.getParameter("code")%>" name="code"/>
     <input type="hidden" value="<%=request.getParameter("storename")%>" name="body"/>
-    <input type="hidden" value="" name="total_fee" id="total_fee"/>
 
     <div class="Layer122">
         <div align="center" class="STYLE3"></div>
@@ -183,9 +182,10 @@
     </div>
     <div class="Layer1">
         <div class="dv2">
-	<span class="STYLE7">
-  	  <label>实付金额: </label>
-  	</span> <label id="paynum" class="paynum"></label><br><br>
+            <span class="STYLE7">
+              <label>实付金额: </label>
+            </span>
+            <label id="total_fee" class="total_fee"></label><br><br>
             <input type="submit" class="but" id="butpaynum" disabled="disabled" value="微信支付" />
         </div>
     </div>
