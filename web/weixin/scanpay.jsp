@@ -177,7 +177,6 @@
     <div class="Layer1">
         <div align="center" class="STYLE3"></div>
         <div align="center" class="STYLE3">
-            <s:
             <img style="width:90px;height:90px;border-radius:8px"
                                                 src="../merchant/Merchant!FetchLogo?id=<s:property value="subMerchantId" escape="false" />">
         </div>
