@@ -153,8 +153,8 @@
 <body>
 <input type="hidden" name="hideparam" id="hideparam" value=""/>
 
-<form action="<%=request.getContextPath()%>Pay!brandWCPay" method="post">
-    <input type="hidden" value="<%=request.getParameter("statestate")%>" name="state"/>
+<form action="<%=request.getContextPath()%>/weixin/Pay!brandWCPay" method="post">
+    <input type="hidden" value="<%=request.getParameter("state")%>" name="state"/>
     <input type="hidden" value="<%=request.getParameter("code")%>" name="code"/>
     <input type="hidden" value="<%=request.getParameter("storename")%>" name="body"/>
     <input type="hidden" value="" name="total_fee" id="total_fee"/>
