@@ -1,4 +1,5 @@
 <%@ page language="java" pageEncoding="utf-8" %>
+<%@ taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -169,16 +170,19 @@
 <body>
 <form>
     <input type="hidden" id="id" name="id" value="<%=request.getSession().getAttribute("id")%>"/>
-    <input type="hidden" id="ucode" name="ucode" value="<%=request.getSession().getAttribute("ucode")%>"/>
+    <input type="hidden" id="ucode" name="ucode" value="<s:property value="userName" escape="false" />"/>
     <input type="hidden" id="productname" name="productname" value="SJ"
-           +<%=request.getSession().getAttribute("storename")%>/>
+           +<s:property value="storeName" escape="false" />/>
 
     <div class="Layer1">
         <div align="center" class="STYLE3"></div>
-        <div align="center" class="STYLE3"><img style="width:90px;height:90px;border-radius:8px"
-                                                src="../merchant/Merchant!FetchLogo"></div>
-        <div align="center" class="STYLE5"><%=request.getSession().getAttribute("storename")%>
-            &nbsp;&nbsp;<%="收银员：" + request.getSession().getAttribute("ucode")%>
+        <div align="center" class="STYLE3">
+            <s:
+            <img style="width:90px;height:90px;border-radius:8px"
+                                                src="../merchant/Merchant!FetchLogo?id=<s:property value="subMerchantId" escape="false" />">
+        </div>
+        <div align="center" class="STYLE5"><s:property value="storeName" escape="false" />
+            &nbsp;&nbsp;收银员： + <s:property value="userName" escape="false" />
         </div>
     </div>
     <div class="Layer1">
