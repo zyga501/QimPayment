@@ -52,7 +52,7 @@ public class MerchantAction extends AjaxActionSupport {
         super.getResponse().setHeader("Cache-Control", "no-cache");
         super.getResponse().setDateHeader("Expires", 0);
         super.getResponse().setContentType("image/jpeg");
-        super.getResponse().getOutputStream().write(SubMerchantInfo.getSubMerchantLogoBySubId(getParameter("id").toString()));
+        super.getResponse().getOutputStream().write(SubMerchantInfo.getSubMerchantLogoById(Long.parseLong(getParameter("id").toString())));
         super.getResponse().getOutputStream().flush();
         super.getResponse().getOutputStream().close();
     }

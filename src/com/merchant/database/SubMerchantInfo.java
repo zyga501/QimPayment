@@ -4,10 +4,7 @@ import org.apache.ibatis.session.SqlSession;
 
 public class SubMerchantInfo {
     public static void main(String[] args) throws Exception {
-        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
-        String statement = "com.merchant.database.mapping.subMerchantInfo.getSubMerchantInfoById";
-        SubMerchantInfo subMerchantInfo = sqlSession.selectOne(statement, 1596144145909760L);
-        sqlSession.close();
+        getSubMerchantLogoById(1596144145909760L);
     }
 
     public static SubMerchantInfo getSubMerchantInfoById(long id) {
@@ -26,12 +23,12 @@ public class SubMerchantInfo {
         return subMerchantInfo;
     }
 
-    public static byte[] getSubMerchantLogoBySubId(String subId) {
+    public static byte[] getSubMerchantLogoById(long id) {
         SqlSession sqlSession = Database.SqlSessionFactory().openSession();
         String statement = "com.merchant.database.mapping.subMerchantInfo.getSubMerchantLogoById";
-        byte[] logo = sqlSession.selectOne(statement, subId);
+        SubMerchantInfo subMerchantInfo = sqlSession.selectOne(statement, id);
         sqlSession.close();
-        return logo;
+        return subMerchantInfo.getLogo();
     }
 
     public long getId() {
@@ -70,7 +67,7 @@ public class SubMerchantInfo {
         return logo_;
     }
 
-    public void setLogo_(byte[] logo) {
+    public void setLogo(byte[] logo) {
         this.logo_ = logo;
     }
 
