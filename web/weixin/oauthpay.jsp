@@ -1,4 +1,5 @@
 <%@ page language="java" pageEncoding="utf-8" %>
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -196,7 +197,7 @@
         <br>
 
         <div align="center" class="STYLE3"><img style="width:90px;height:90px;border-radius:8px"
-                                                src="<%=request.getContextPath()%>/merchant/Merchant!FetchLogo"></div>
+                                                src="<%=request.getContextPath()%>/merchant/Merchant!FetchLogo?id=<s:property value="subMerchantId" escape="false" />></div>
         <br>
 
         <div align="center" class="STYLE5"><%=request.getSession().getAttribute("storename")%>

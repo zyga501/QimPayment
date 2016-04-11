@@ -3,7 +3,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-    <title><%=request.getSession().getAttribute("storename")%>
+    <title><s:property value="storeName" />
     </title>
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <style type="text/css">
@@ -127,10 +127,10 @@
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/qrcode.js"></script>
     <script>
         function getQcode() {
-            document.getElementById("imgid").src = "../image/loading.gif";
+            document.getElementById("imgid").src = "./image/loading.gif";
             $.ajax({
                 type: 'post',
-                url: 'Pay!scanPay',
+                url: 'weixin/Pay!scanPay',
                 dataType:"json",
                 data:$("form").serialize(),
                 success: function (data) {
@@ -146,7 +146,7 @@
             })
         }
         function clearimg() {
-            document.getElementById("imgid").src = "/image/nopic.png";
+            document.getElementById("imgid").src = "./image/nopic.png";
             $("#QRCode").html("");
         }
 
@@ -167,6 +167,7 @@
             else {
                 $("#paynum").text("￥" + th.value);
             }
+            $("#total_fee").val(parseInt(th.value)*100);
         }  </script>
 </head>
 <body>
@@ -175,14 +176,13 @@
     <input type="hidden" id="ucode" name="ucode" value="<s:property value="userName" escape="false" />"/>
     <input type="hidden" id="body" name="body" value="<s:property value="storeName" />"/>
     <input type="hidden" id="product_id" name="product_id" value="<s:property value="storeName" />"/>
-    <input type="hidden" id="productname" name="productname" value="SJ"
-           +<s:property value="storeName" escape="false" />/>
+    <input type="hidden" id="total_fee" name="total_fee" value=""/>
 
     <div class="Layer1">
         <div align="center" class="STYLE3"></div>
         <div align="center" class="STYLE3">
             <img style="width:90px;height:90px;border-radius:8px"
-                                                src="../merchant/Merchant!FetchLogo?id=<s:property value="subMerchantId" escape="false" />">
+                                                src="./merchant/Merchant!FetchLogo?id=<s:property value="subMerchantId" escape="false" />">
         </div>
         <div align="center" class="STYLE5"><s:property value="storeName" escape="false" />
             &nbsp;&nbsp;收银员：<s:property value="userName" escape="false" />
@@ -193,7 +193,7 @@
 	<span class="STYLE7">
   	  <label>消费总额: </label>
   	</span>
-            <input type="text" name="total_fee" id="productprice" class="amount" onkeyup="amount(this)"
+            <input type="text" name="productprice" id="productprice" class="amount" onkeyup="amount(this)"
                    onpaste="return false;" autocomplete="off" onchange="clearimg()" placeholder="单位：￥（元）"/>
         </div>
     </div>
@@ -204,7 +204,7 @@
   	</span> <label id="paynum" class="paynum"></label><br>
             <input type="button" class="but" id="butpaynum" onclick="getQcode()" value="提交生成二维码"/>
         </div>
-        <img id="imgid" src="../image/nopic.png">
+        <img id="imgid" src="./image/nopic.png">
         <div id="QRCode"></div>
     </div>
 </form>
