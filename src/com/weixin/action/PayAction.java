@@ -139,7 +139,7 @@ public class PayAction extends AjaxActionSupport {
             return;
         }
 
-        String redirect_uri = getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + "weixin/oauthpay.jsp";
+        String redirect_uri = getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + "oauthpay.jsp";
         if (!StringUtils.convertNullableString(getParameter("redirect_uri")).isEmpty()) {
             redirect_uri = getParameter("redirect_uri").toString();
         }
@@ -179,13 +179,14 @@ public class PayAction extends AjaxActionSupport {
                     if (!StringUtils.convertNullableString(getParameter("goods_tag")).isEmpty()) {
                         unifiedOrderRequestData.goods_tag = getParameter("goods_tag").toString();
                     }
+
                     UnifiedOrder unifiedOrder = new UnifiedOrder(unifiedOrderRequestData);
                     if (!unifiedOrder.execute(merchantInfo.getApiKey())) {
                         System.out.println("BrandWCPay Failed!");
                         return AjaxActionComplete();
                     }
 
-                    Map<String, String> map = new HashMap<>();
+                    Map map = new HashMap<>();
                     map.put("appId", unifiedOrderRequestData.appid);
                     map.put("timeStamp", String.valueOf(System.currentTimeMillis() / 1000));
                     map.put("nonceStr", StringUtils.generateRandomString(32));
