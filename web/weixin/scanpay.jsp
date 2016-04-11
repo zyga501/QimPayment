@@ -140,12 +140,14 @@
                     qr.make();
                     var dom=document.createElement('DIV');
                     dom.innerHTML = qr.createImgTag();
+                    clearimg();
                     $("#QRCode")[0].appendChild(dom);
                 }
             })
         }
         function clearimg() {
             document.getElementById("imgid").src = "/image/nopic.png";
+            $("#QRCode").html("");
         }
 
         function amount(th) {
@@ -171,6 +173,8 @@
 <form>
     <input type="hidden" id="id" name="id" value="<%=request.getSession().getAttribute("id")%>"/>
     <input type="hidden" id="ucode" name="ucode" value="<s:property value="userName" escape="false" />"/>
+    <input type="hidden" id="body" name="body" value="<s:property value="storeName" />"/>
+    <input type="hidden" id="product_id" name="product_id" value="<s:property value="storeName" />"/>
     <input type="hidden" id="productname" name="productname" value="SJ"
            +<s:property value="storeName" escape="false" />/>
 
@@ -179,8 +183,6 @@
         <div align="center" class="STYLE3">
             <img style="width:90px;height:90px;border-radius:8px"
                                                 src="../merchant/Merchant!FetchLogo?id=<s:property value="subMerchantId" escape="false" />">
-            <img style="width:90px;height:90px;border-radius:8px"
-                 src="<s:property value="subMerchantLogo" escape="false" />">
         </div>
         <div align="center" class="STYLE5"><s:property value="storeName" escape="false" />
             &nbsp;&nbsp;收银员：<s:property value="userName" escape="false" />
@@ -191,7 +193,7 @@
 	<span class="STYLE7">
   	  <label>消费总额: </label>
   	</span>
-            <input type="text" name="productprice" id="productprice" class="amount" onkeyup="amount(this)"
+            <input type="text" name="total_fee" id="productprice" class="amount" onkeyup="amount(this)"
                    onpaste="return false;" autocomplete="off" onchange="clearimg()" placeholder="单位：￥（元）"/>
         </div>
     </div>
