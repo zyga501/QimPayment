@@ -31,6 +31,7 @@ public class MicroPay extends WeixinAPI {
             if (returnCode.compareTo("SUCCESS") == 0) {
                 if (resultCode.compareTo("SUCCESS") == 0) {
                     saveOrderToDb(responseResult);
+                    return true;
                 }
                 else {
                     String errorCode = responseResult.get("err_code").toString().toUpperCase();
