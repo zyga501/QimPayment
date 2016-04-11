@@ -45,6 +45,7 @@ public class WebpagePayAction extends AjaxActionSupport {
          }
 
          SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(subMerchantUserId));
+         getRequest().getSession().setAttribute("id",subMerchantUser.getId());
          storeName = subMerchantUser.getStoreName();
          userName = subMerchantUser.getUserName();
          subMerchantId = new Long(subMerchantUser.getSubMerchantId()).toString();
