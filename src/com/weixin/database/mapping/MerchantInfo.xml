@@ -13,5 +13,9 @@
         <result property="appsecret" column="appsecret" jdbcType="VARCHAR"/>
         <result property="mchId" column="mchId" jdbcType="VARCHAR"/>
         <result property="apiKey" column="apiKey" jdbcType="VARCHAR"/>
+        <result property="accessToken" column="accessToken" jdbcType="VARCHAR"/>
     </resultMap>
+    <update id="updateAccessToken" parameterType="com.weixin.database.MerchantInfo">
+        UPDATE MerchantInfo set accessToken=#{accessToken} WHERE id=#{id}
+    </update>
 </mapper>
