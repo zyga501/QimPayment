@@ -44,7 +44,7 @@ public class PayAction extends AjaxActionSupport {
                         microPayRequestData.goods_tag = getParameter("goods_tag").toString();
                     }
                     MicroPay microPay = new MicroPay(microPayRequestData, subMerchantUser.getId());
-                    if (!microPay.execute(merchantInfo.getApiKey())) {
+                    if (!microPay.postWithSign(merchantInfo.getApiKey())) {
                         System.out.println("MicroPay Failed!");
                         return AjaxActionComplete();
                     }
@@ -90,7 +90,7 @@ public class PayAction extends AjaxActionSupport {
                     }
                     UnifiedOrder unifiedOrder = new UnifiedOrder(unifiedOrderRequestData);
 
-                    if (!unifiedOrder.execute(merchantInfo.getApiKey())) {
+                    if (!unifiedOrder.postWithSign(merchantInfo.getApiKey())) {
                         System.out.println("ScanPay Failed!");
                         return AjaxActionComplete();
                     }
@@ -181,7 +181,7 @@ public class PayAction extends AjaxActionSupport {
                     }
 
                     UnifiedOrder unifiedOrder = new UnifiedOrder(unifiedOrderRequestData);
-                    if (!unifiedOrder.execute(merchantInfo.getApiKey())) {
+                    if (!unifiedOrder.postWithSign(merchantInfo.getApiKey())) {
                         System.out.println("BrandWCPay Failed!");
                         return AjaxActionComplete();
                     }
@@ -222,7 +222,7 @@ public class PayAction extends AjaxActionSupport {
                     }
                     refundRequestData.op_user_id = refundRequestData.mch_id;
                     Refund refund = new Refund(refundRequestData);
-                    if (!refund.execute(merchantInfo.getApiKey())) {
+                    if (!refund.postWithSign(merchantInfo.getApiKey())) {
                         System.out.println("Refund Failed!");
                         return AjaxActionComplete();
                     }
@@ -252,7 +252,7 @@ public class PayAction extends AjaxActionSupport {
                         orderQueryData.out_trade_no = getParameter("out_trade_no").toString();
                     }
                     OrderQuery orderQuery = new OrderQuery(orderQueryData);
-                    if (!orderQuery.execute(merchantInfo.getApiKey())) {
+                    if (!orderQuery.postWithSign(merchantInfo.getApiKey())) {
                         System.out.println("Refund Failed!");
                         return AjaxActionComplete();
                     }

@@ -1,5 +1,6 @@
 package com.framework.utils;
 
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.AuthSchemes;
@@ -39,6 +40,10 @@ public class HttpUtils {
         HttpGet httpGet = new HttpGet(url);
         CloseableHttpResponse response = httpClient.execute(httpGet);
         HttpEntity entity = response.getEntity();
+        Header header = entity.getContentType();
+        String name = header.getName();
+        String value = header.getValue();
+        String xx = header.getElements().toString();
         String responseString = EntityUtils.toString(entity, "UTF-8");
         response.close();
         return responseString;

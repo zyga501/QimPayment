@@ -46,7 +46,7 @@ public class MicroPay extends WeixinAPI {
                             orderQueryData.sub_mch_id = requestData_.sub_mch_id;
                             orderQueryData.out_trade_no = microPayRequestData.out_trade_no;
                             OrderQuery orderQuery = new OrderQuery(orderQueryData);
-                            if (!orderQuery.execute(apiKey)) {
+                            if (!orderQuery.postWithSign(apiKey)) {
                                 return false;
                             }
                             saveOrderToDb(orderQuery.getResponseResult());
