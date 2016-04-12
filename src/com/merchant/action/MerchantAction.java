@@ -1,8 +1,10 @@
 package com.merchant.action;
 
 import com.framework.action.AjaxActionSupport;
+import com.merchant.database.MerchantInfo;
 import com.merchant.database.SubMerchantInfo;
 import com.merchant.database.SubMerchantUser;
+import com.weixin.database.SubMerchantAct;
 import com.weixin.utils.OAuth2;
 
 import java.io.IOException;
@@ -40,6 +42,12 @@ public class MerchantAction extends AjaxActionSupport {
             map.put("return","success");
             map.put("uid", String.valueOf(submerchantuser.getId()));
             map.put("storename",submerchantuser.getStoreName());
+            map.put("uname",submerchantuser.getUserName());
+            SubMerchantInfo submerchantinfo = SubMerchantInfo.getSubMerchantInfoById(submerchantuser.getSubMerchantId());
+            map.put("businessname",submerchantinfo.getName());
+            map.put("ads",submerchantinfo.getAds());
+            SubMerchantAct  submerchantact = new SubMerchantAct().getGoodstagById(submerchantinfo.getId());
+            map.put("goods",submerchantact.getGoodsTag());
         }
         else {
             map.put("return","failure");

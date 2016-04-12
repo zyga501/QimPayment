@@ -10,6 +10,14 @@ public class SubMerchantAct {
         sqlSession.close();
     }
 
+    public SubMerchantAct getGoodstagById(long ID){
+        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
+        String statement = "com.weixin.database.mapping.subMerchantAct.getSubMerchantActById";
+        SubMerchantAct subMerchantAct = sqlSession.selectOne(statement, ID);
+        sqlSession.close();
+        return subMerchantAct;
+    }
+
     public long getId() {
         return id_;
     }
