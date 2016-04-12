@@ -139,7 +139,7 @@ public class PayAction extends AjaxActionSupport {
             return;
         }
 
-        String redirect_uri = getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + "oauthpay.jsp";
+        String redirect_uri = getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + "weixin/oauthpay.jsp";
         if (!StringUtils.convertNullableString(getParameter("redirect_uri")).isEmpty()) {
             redirect_uri = getParameter("redirect_uri").toString();
         }

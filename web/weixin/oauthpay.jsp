@@ -7,121 +7,118 @@
     </title>
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <style type="text/css">
-        input[type="submit"], input[type="reset"], input[type="button"], button {
-            -webkit-appearance: none;
-        }
+<!--
+input[type="submit"],input[type="reset"],input[type="button"],button {
+	-webkit-appearance: none;
+}
 
-        body {
-            -webkit-user-select: none;
-            user-select: none;
-            background-color: #EFEFEF
-        }
+body {
+	-webkit-user-select: none;
+	user-select: none;
+	background-color: #EFEFEF
+}
 
-        .Layer1 {
-            width: 100%;
-            z-index: 1;
-            top: 28px;
-        }
+.Layer1 {
+	width: 100%;
+	z-index: 1;
+	top: 28px;
+}
 
-        .STYLE3 {
-            color: #06af3f;
-            font-size: 22px;
-        }
+.STYLE3 {
+	color: #06af3f;
+	font-size: 22px;
+}
 
-        .STYLE5 {
-            color: #06af3f;
-            font-size: 16px;
-        }
+.STYLE5 {
+	color: #06af3f;
+	font-size: 16px;
+}
 
-        .STYLE7 {
-            font-size: 22px;
-        }
+.STYLE7 {
+	font-size: 22px;
+}
 
-        .STYLE8 {
-            color: #06af3f;
-            font-size: 16px;
-            text-align: left;
-        }
+.STYLE8 {
+	color: #06af3f;
+	font-size: 16px;
+	text-align: left;
+}
 
-        .dv1, .dv2 {
-            margin: 12px 1px 12px 1px;
-            border: 0px none #d7d7d7;
-            padding: 11px 1px;
-            font-size: 18px;
-            background: #fff;
-            display: -webkit-box;
-            display: -moz-box;
-            display: -ms-flexbox;
-            display: -webkit-flex;
-            display: flex;
-            -webkit-box-orient: horizontal;
-            -moz-box-orient: horizontal;
-            -webkit-flex-direction: row;
-            -ms-flex-direction: row;
-            flex-direction: row;
-            position: relative;
-            z-index: 0
-        }
+.dv1 {
+	margin: 12px 1px 12px 1px;
+	border: 0px none #d7d7d7;
+	padding: 11px 1px;
+	font-size: 18px;
+	background: #fff;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-orient: horizontal;
+	-moz-box-orient: horizontal;
+	-webkit-flex-direction: row;
+	-ms-flex-direction: row;
+	flex-direction: row;
+	position: relative;
+	z-index: 0
+}
 
-        .dv2 {
-            padding: 11px 1px;
-            text-align: center
-        }
+.dv2 {
+	padding: 11px 1px;
+	text-align: center
+}
 
-        a, input, label {
-            outline: 0;
-            white-space: nowrap;
-        }
+a,input,label {
+	outline: 0;
+	white-space: nowrap;
+}
 
-        .amount {
-            display: block;
-            -webkit-box-flex: 1;
-            -moz-box-flex: 1;
-            -webkit-flex: 1 1 auto;
-            -ms-flex: 1 1 auto;
-            flex: 1 1 auto;
-            z-index: 1;
-            padding: 0;
-            line-height: 1;
-            color: #000;
-            text-align: right;
-            font-size: 22px;
-            white-space: nowrap;
-            border-left: 0px;
-            border-top: 0px;
-            border-right: 0px;
-            border-bottom: 0px;
-        }
+.amount {
+	display: block;
+	-webkit-box-flex: 1;
+	-moz-box-flex: 1;
+	-webkit-flex: 1 1 auto;
+	-ms-flex: 1 1 auto;
+	flex: 1 1 auto;
+	z-index: 1;
+	padding: 0;
+	line-height: 1;
+	color: #000;
+	text-align: right;
+	font-size: 22px;
+	white-space: nowrap;
+	border-left: 0px;
+	border-top: 0px;
+	border-right: 0px;
+	border-bottom: 0px;
+}
 
-        .amount::before {
-            content: '\a5';
-            margin-right: .1em
-        }
+.amount::before {
+	content: '\a5';
+	margin-right: .1em
+}
 
-        .but {
-            -webkit-border-radius: 5px;
-            border-radius: 5px;
-            background-color: #c8c8c8;
-            color: #FEFEFE;
-            border: none;
-            font-size: 18px;
-            width: 100%;
-            padding: 10px 6px;
-        }
+.but {
+	width: 100%;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	background-color: #c8c8c8;
+	color: #FEFEFE;
+	border: none;
+	font-size: 18px;
+	padding: 10px 6px;
+}
 
-        .paynum {
-            color: #FF0000;
-            font-size: 20px;
-            font-weight: bold;
-        }
-    </style>
+.paynum {
+	color: #FF0000;
+	font-size: 20px;
+	font-weight: bold;
+}
+-->
+</style>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery/1.9.1/jquery.min.js"></script>
     <script language="javascript">
-        $().ready(function () {
-            $("input[name='encodestr']").val("weiuriwueiruweiosd98349389sd8s8s867f6s66s56w");
-        });
-        alert(<%=request.getSession().getAttribute("storename")%>);
-        alert(<%=request.getSession().getAttribute("code")%>);
         function amount(th) {
             var regStrs = [
                 ['^0(\\d+)$', '$1'],
@@ -197,7 +194,7 @@
         <br>
 
         <div align="center" class="STYLE3"><img style="width:90px;height:90px;border-radius:8px"
-                                                src="<%=request.getContextPath()%>/merchant/Merchant!FetchLogo?id=<s:property value="subMerchantId" escape="false" />></div>
+                                                src="<%=request.getContextPath()%>/merchant/Merchant!FetchLogo?id=<s:property value="subMerchantId" escape="false" />"></div>
         <br>
 
         <div align="center" class="STYLE5"><%=request.getSession().getAttribute("storename")%>
@@ -219,7 +216,7 @@
 	<span class="STYLE7">
   	  <label>实付金额: </label>
   	</span> <label id="paynum" class="paynum"></label><br><br>
-            <input type="button" class="but" id="butpaynum" disabled="disabled" value="微信支付" onclick="brandWCPay()"/>
+            <input type="button" class="but" id="butpaynum"  disabled="disabled" value="微信支付" onclick="brandWCPay()"/>
         </div>
     </div>
 </form>

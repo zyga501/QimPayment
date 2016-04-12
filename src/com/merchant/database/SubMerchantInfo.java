@@ -71,9 +71,19 @@ public class SubMerchantInfo {
         this.logo_ = logo;
     }
 
+    public String getAds() {
+        return ads;
+    }
+
+    public void setAds(String ads) {
+        this.ads = ads;
+    }
+
     private long id_;
     private long merchantId_;
     private String name_;
     private long salemanId_;
     private byte[] logo_;
+    private String ads;
+
 }

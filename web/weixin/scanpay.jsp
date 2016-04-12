@@ -49,7 +49,7 @@
             font-size: 16px;
         }
 
-        .dv1, .dv2 {
+        .dv1  {
             margin: 10px 1px 12px 1px;
             padding: 11px 10px;
             border: 0px none #d7d7d7;
