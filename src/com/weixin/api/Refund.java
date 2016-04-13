@@ -4,7 +4,7 @@ import com.weixin.api.RequestData.RefundRequestData;
 
 import java.util.Map;
 
-public class Refund extends WeixinAPI  {
+public class Refund extends WeixinAPIWithSign  {
     public final static String REFUND_API = "https://api.mch.weixin.qq.com/secapi/pay/refund";
 
     public Refund(RefundRequestData refundRequestData) {
@@ -13,10 +13,5 @@ public class Refund extends WeixinAPI  {
     @Override
     protected String getAPIUri() {
         return REFUND_API;
-    }
-
-    @Override
-    protected boolean handlerResponse(Map<String,Object> responseResult, String apiKey) {
-        return true;
     }
 }

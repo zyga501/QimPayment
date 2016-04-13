@@ -4,7 +4,7 @@ import com.weixin.api.RequestData.UnifiedOrderRequestData;
 
 import java.util.Map;
 
-public class UnifiedOrder extends WeixinAPI {
+public class UnifiedOrder extends WeixinAPIWithSign {
     public final static String UNIFIEDORDER_API = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 
     public UnifiedOrder(UnifiedOrderRequestData unifiedOrderRequestData) {
@@ -17,7 +17,7 @@ public class UnifiedOrder extends WeixinAPI {
     }
 
     @Override
-    protected boolean handlerResponse(Map<String,Object> responseResult, String apiKey) {
+    protected boolean handlerResponse(Map<String,Object> responseResult) {
         switch (responseResult.get("trade_type").toString()) {
             case "NATIVE": {
                 if (responseResult.get("code_url") != null) {

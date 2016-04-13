@@ -47,12 +47,6 @@ public class TestPayAction extends AjaxActionSupport {
             responseString = EntityUtils.toString(entity, "UTF-8");
             response.close();
         }
-        catch (ConnectionPoolTimeoutException e) {
-        }
-        catch (ConnectTimeoutException e) {
-        }
-        catch (SocketTimeoutException e) {
-        }
         catch (Exception e) {
         }
         finally {
@@ -82,12 +76,6 @@ public class TestPayAction extends AjaxActionSupport {
             HttpEntity entity = response.getEntity();
             responseString = EntityUtils.toString(entity, "UTF-8");
             response.close();
-        }
-        catch (ConnectionPoolTimeoutException e) {
-        }
-        catch (ConnectTimeoutException e) {
-        }
-        catch (SocketTimeoutException e) {
         }
         catch (Exception e) {
         }

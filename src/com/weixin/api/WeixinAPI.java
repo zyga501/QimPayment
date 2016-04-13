@@ -21,63 +21,7 @@ import java.net.SocketTimeoutException;
 import java.util.Map;
 
 public abstract class WeixinAPI {
-    public Map<String,Object> getResponseResult() {
-        return responseResult_;
-    }
-
-    public boolean postWithSign(String apiKey) throws Exception {
-        if (!requestData_.checkParameter() || apiKey.isEmpty()) {
-            System.out.println("CheckParameter Failed!");
-            return false;
-        }
-
-        String sign = Signature.generateSign(requestData_, apiKey);
-        requestData_.sign = sign;
-
-        String apiUri = getAPIUri();
-        if (apiUri.isEmpty()) {
-            return false;
-        }
-
-        XStream xStreamForRequestPostData = new XStream(new DomDriver("UTF-8", new XmlFriendlyNameCoder("-_", "_")));
-        String postDataXML = xStreamForRequestPostData.toXML(requestData_);
-        HttpPost httpPost = new HttpPost(apiUri);
-        StringEntity postEntity = new StringEntity(postDataXML, "UTF-8");
-        httpPost.addHeader("Content-Type", "text/xml");
-        httpPost.setEntity(postEntity);
-
-        String responseString = new String();
-        try {
-            CloseableHttpClient httpClient = HttpUtils.Instance();
-            CloseableHttpResponse response = httpClient.execute(httpPost);
-            HttpEntity entity = response.getEntity();
-            responseString = EntityUtils.toString(entity, "UTF-8");
-            response.close();
-        }
-        catch (ConnectionPoolTimeoutException e) {
-        }
-        catch (ConnectTimeoutException e) {
-        }
-        catch (SocketTimeoutException e) {
-        }
-        catch (Exception e) {
-        }
-        finally {
-            httpPost.abort();
-        }
-
-        System.out.println(responseString);
-
-        responseResult_ = XMLParser.convertMapFromXML(responseString);
-        if (!Signature.checkSignValid(responseResult_, apiKey)) {
-            System.out.println("checkSignValid Failed!");
-            return false;
-        }
-
-        return handlerResponse(responseResult_, apiKey);
-    }
-
-    public boolean get() throws Exception {
+    public boolean getRequest() throws Exception {
         String apiUri = getAPIUri();
         if (apiUri.isEmpty()) {
             return false;
@@ -90,13 +34,12 @@ public abstract class WeixinAPI {
         String responseString = EntityUtils.toString(entity, "UTF-8");
         response.close();
 
-        return true;
+        return handlerResponse(responseString);
     }
 
     protected abstract String getAPIUri();
 
-    protected abstract boolean handlerResponse(Map<String,Object> responseResult, String apiKey) throws Exception;
-
-    protected RequestData requestData_;
-    protected Map<String,Object> responseResult_;
+    protected boolean handlerResponse(String responseResult) throws Exception {
+        return true;
+    }
 }

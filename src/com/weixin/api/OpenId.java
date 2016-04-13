@@ -1,5 +1,8 @@
 package com.weixin.api;
 
+import com.framework.utils.HttpUtils;
+import net.sf.json.JSONObject;
+
 import java.util.Map;
 
 public class OpenId extends WeixinAPI {
@@ -11,16 +14,25 @@ public class OpenId extends WeixinAPI {
         code_ = code;
     }
 
+    public String getOpenId() { return openid_; }
+
     @Override
     protected String getAPIUri() {
         return String.format(OPENID_API, appid_, appSecret_, code_);
     }
 
-    protected boolean handlerResponse(Map<String,Object> responseResult, String apiKey) throws Exception {
+    @Override
+    protected boolean handlerResponse(String responseResult) throws Exception {
+        JSONObject jsonParse = JSONObject.fromObject(responseResult);
+        if (jsonParse.get("openid") != null) {
+            openid_ = jsonParse.get("openid").toString();
+            return true;
+        }
         return false;
     }
 
     private String appid_;
     private String appSecret_;
     private String code_;
+    private String openid_;
 }

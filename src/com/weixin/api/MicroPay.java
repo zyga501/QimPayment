@@ -9,7 +9,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.util.Map;
 
-public class MicroPay extends WeixinAPI {
+public class MicroPay extends WeixinAPIWithSign {
     public final static String MICROPAY_API = "https://api.mch.weixin.qq.com/pay/micropay";
 
     public MicroPay(MicroPayRequestData microPayRequestData, long createUser) {
@@ -23,7 +23,7 @@ public class MicroPay extends WeixinAPI {
     }
 
     @Override
-    protected boolean handlerResponse(Map<String,Object> responseResult, String apiKey) throws IllegalAccessException, IOException,ParserConfigurationException, SAXException {
+    protected boolean handlerResponse(Map<String,Object> responseResult) throws IllegalAccessException, IOException,ParserConfigurationException, SAXException {
         try {
             String returnCode = responseResult.get("return_code").toString().toUpperCase();
             String resultCode = responseResult.get("result_code").toString().toUpperCase();
@@ -46,7 +46,7 @@ public class MicroPay extends WeixinAPI {
                             orderQueryData.sub_mch_id = requestData_.sub_mch_id;
                             orderQueryData.out_trade_no = microPayRequestData.out_trade_no;
                             OrderQuery orderQuery = new OrderQuery(orderQueryData);
-                            if (!orderQuery.postWithSign(apiKey)) {
+                            if (!orderQuery.postRequest(apiKey_)) {
                                 return false;
                             }
                             saveOrderToDb(orderQuery.getResponseResult());
