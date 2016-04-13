@@ -11,4 +11,11 @@
         <filter-name>struts2</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+    <servlet>
+        <servlet-name>WeixinAccessTokenServlet</servlet-name>
+        <servlet-class>
+            com.weixin.servlet.AccessTokenServlet
+        </servlet-class>
+        <load-on-startup>0</load-on-startup>
+    </servlet>
 </web-app>

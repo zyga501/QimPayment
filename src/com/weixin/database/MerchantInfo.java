@@ -2,12 +2,22 @@ package com.weixin.database;
 
 import org.apache.ibatis.session.SqlSession;
 
+import java.util.List;
+
 public class MerchantInfo {
     public static void main(String[] args) throws Exception {
         SqlSession sqlSession = Database.SqlSessionFactory().openSession();
         String statement = "com.weixin.database.mapping.merchantInfo.getMerchantInfoByAppId";
         MerchantInfo merchantInfo = sqlSession.selectOne(statement, "wx0bfa8f7ec59b1f33");
         sqlSession.close();
+    }
+
+    public static List<MerchantInfo> getAllMerchantInfo() {
+        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
+        String statement = "com.weixin.database.mapping.merchantInfo.getAllMerchantInfo";
+        List<MerchantInfo> merchantInfoList = sqlSession.selectList(statement);
+        sqlSession.close();
+        return merchantInfoList;
     }
 
     public static MerchantInfo getMerchantInfoById(long id) {
