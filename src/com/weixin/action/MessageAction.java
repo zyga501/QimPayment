@@ -19,10 +19,14 @@ public class MessageAction extends AjaxActionSupport {
                 MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
                 if (merchantInfo != null) {
                     String accessToken = AccessToken.getAccessToken(merchantInfo.getAppid());
-                    String sendMessage = String.format(SEND_MESSAGE, accessToken);
+                    String sendMessageUrl = String.format(SEND_MESSAGE, accessToken);
                 }
             }
         }
         return AjaxActionComplete();
+    }
+
+    private String buildTemplateMessage() {
+        return "";
     }
 }

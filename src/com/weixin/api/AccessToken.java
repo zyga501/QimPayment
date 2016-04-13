@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public class AccessToken extends WeixinAPI{
-    private final static String ACCESS_TOKEN = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s";
+    private final static String ACCESS_TOKEN_API = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s";
 
     private static Map<String, String> accessTokenMap_ = new HashMap<>();
     public static String getAccessToken(String appid) throws Exception {
@@ -55,7 +55,7 @@ public class AccessToken extends WeixinAPI{
 
     @Override
     protected String getAPIUri() {
-        return String.format(ACCESS_TOKEN, appid_, appSecret_);
+        return String.format(ACCESS_TOKEN_API, appid_, appSecret_);
     }
 
     @Override
