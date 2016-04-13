@@ -26,6 +26,18 @@ public class MerchantInfo {
         return merchantInfo;
     }
 
+    public static boolean updateAccessToken(Long id, String accessToken) {
+        SqlSession sqlSession = Database.SqlSessionFactory().openSession(true);
+        String statement = "com.weixin.database.mapping.merchantInfo.updateAccessToken";
+        MerchantInfo merchantInfo = new MerchantInfo();
+        merchantInfo.setId(id);
+        merchantInfo.setAccessToken(accessToken);
+        int result = sqlSession.update(statement, merchantInfo);
+        sqlSession.commit();
+        sqlSession.close();
+        return result == 1;
+    }
+
     public Long getId() {
         return id_;
     }
@@ -66,9 +78,18 @@ public class MerchantInfo {
         this.apiKey_ = apiKey;
     }
 
+    public String getAccessToken() {
+        return accessToken_;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken_ = accessToken;
+    }
+
     private Long id_;
     private String appid_;
     private String appsecret_;
     private String mchId_;
     private String apiKey_;
+    private String accessToken_;
 }

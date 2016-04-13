@@ -72,11 +72,19 @@ public class SubMerchantInfo {
     }
 
     public String getAds() {
-        return ads;
+        return ads_;
     }
 
     public void setAds(String ads) {
-        this.ads = ads;
+        this.ads_ = ads;
+    }
+
+    public String getWeixinId() {
+        return weixinId_;
+    }
+
+    public void setWeixinId(String weixinId) {
+        this.weixinId_ = weixinId;
     }
 
     private long id_;
@@ -84,6 +92,6 @@ public class SubMerchantInfo {
     private String name_;
     private long salemanId_;
     private byte[] logo_;
-    private String ads;
-
+    private String ads_;
+    private String weixinId_;
 }

@@ -24,14 +24,15 @@ public class OrderQuery extends WeixinAPI {
             if (resultCode.compareTo("SUCCESS") == 0) {
                 if (responseResult.get("trade_state").toString().toUpperCase().compareTo("USERPAYING") == 0) {
                     Thread.sleep(10000);
-                    return execute(apiKey);
+                    return postWithSign(apiKey);
                 }
+
                 return true;
             }
             else {
                 String errorCode = responseResult.get("err_code").toString().toUpperCase();
                 if (errorCode.compareTo("SYSTEMERROR") == 0) {
-                    return execute(apiKey);
+                    return postWithSign(apiKey);
                 }
             }
         }

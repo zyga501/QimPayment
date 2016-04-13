@@ -9,6 +9,7 @@ import com.weixin.api.RequestData.RequestData;
 import com.weixin.utils.Signature;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.ConnectTimeoutException;
 import org.apache.http.conn.ConnectionPoolTimeoutException;
@@ -24,7 +25,7 @@ public abstract class WeixinAPI {
         return responseResult_;
     }
 
-    public boolean execute(String apiKey) throws Exception {
+    public boolean postWithSign(String apiKey) throws Exception {
         if (!requestData_.checkParameter() || apiKey.isEmpty()) {
             System.out.println("CheckParameter Failed!");
             return false;
@@ -67,16 +68,33 @@ public abstract class WeixinAPI {
 
         System.out.println(responseString);
 
-        responseResult_ = XMLParser.convertMapFromXML(responseString);
-        if (!Signature.checkSignValid(responseResult_, apiKey)) {
+        Map<String,Object> responseResult = XMLParser.convertMapFromXML(responseString);
+        if (!Signature.checkSignValid(responseResult, apiKey)) {
             System.out.println("checkSignValid Failed!");
             return false;
         }
 
-        return handlerResponse(responseResult_, apiKey);
+        return handlerResponse(responseResult, apiKey);
+    }
+
+    public boolean get() throws Exception {
+        String apiUri = getAPIUri();
+        if (apiUri.isEmpty()) {
+            return false;
+        }
+
+        CloseableHttpClient httpClient = HttpUtils.Instance();
+        HttpGet httpGet = new HttpGet(apiUri);
+        CloseableHttpResponse response = httpClient.execute(httpGet);
+        HttpEntity entity = response.getEntity();
+        String responseString = EntityUtils.toString(entity, "UTF-8");
+        response.close();
+
+        return true;
     }
 
     protected abstract String getAPIUri();
+
     protected abstract boolean handlerResponse(Map<String,Object> responseResult, String apiKey) throws Exception;
 
     protected RequestData requestData_;
