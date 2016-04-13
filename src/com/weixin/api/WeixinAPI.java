@@ -27,6 +27,8 @@ public abstract class WeixinAPI {
         String responseString = EntityUtils.toString(entity, "UTF-8");
         response.close();
 
+        System.out.println(responseString);
+        
         return handlerResponse(responseString);
     }
 
