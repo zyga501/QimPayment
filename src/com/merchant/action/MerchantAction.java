@@ -47,7 +47,7 @@ public class MerchantAction extends AjaxActionSupport {
             map.put("businessname",submerchantinfo.getName());
             map.put("ads",submerchantinfo.getAds());
             SubMerchantAct  submerchantact = new SubMerchantAct().getGoodstagById(submerchantinfo.getId());
-            map.put("goods",submerchantact.getGoodsTag());
+            map.put("goodstag",submerchantact.getGoodsTag());
         }
         else {
             map.put("return","failure");
