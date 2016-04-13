@@ -1,9 +1,9 @@
 package com.weixin.api;
 
-public class Message extends WeixinAPI {
-    private static final String SEND_MESSAGE = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=%s";
+public class TemplateMessage extends WeixinAPI {
+    private static final String SEND_MESSAGE = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=%s";
 
-    public Message(String accessToken) {
+    public TemplateMessage(String accessToken) {
         accessToken_ = accessToken;
     }
 

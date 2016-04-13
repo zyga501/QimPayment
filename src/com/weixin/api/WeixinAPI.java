@@ -1,12 +1,6 @@
 package com.weixin.api;
 
 import com.framework.utils.HttpUtils;
-import com.framework.utils.XMLParser;
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
-import com.thoughtworks.xstream.io.xml.XmlFriendlyNameCoder;
-import com.weixin.api.RequestData.RequestData;
-import com.weixin.utils.Signature;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -18,7 +12,6 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
 
 import java.net.SocketTimeoutException;
-import java.util.Map;
 
 public abstract class WeixinAPI {
     public boolean getRequest() throws Exception {
@@ -33,6 +26,41 @@ public abstract class WeixinAPI {
         HttpEntity entity = response.getEntity();
         String responseString = EntityUtils.toString(entity, "UTF-8");
         response.close();
+
+        return handlerResponse(responseString);
+    }
+
+    public boolean postRequest(String postData) throws Exception {
+        String apiUri = getAPIUri();
+        if (apiUri.isEmpty()) {
+            return false;
+        }
+
+        HttpPost httpPost = new HttpPost(apiUri);
+        StringEntity postEntity = new StringEntity(postData, "UTF-8");
+        httpPost.setEntity(postEntity);
+
+        String responseString = new String();
+        try {
+            CloseableHttpClient httpClient = HttpUtils.Instance();
+            CloseableHttpResponse response = httpClient.execute(httpPost);
+            HttpEntity entity = response.getEntity();
+            responseString = EntityUtils.toString(entity, "UTF-8");
+            response.close();
+        }
+        catch (ConnectionPoolTimeoutException e) {
+        }
+        catch (ConnectTimeoutException e) {
+        }
+        catch (SocketTimeoutException e) {
+        }
+        catch (Exception e) {
+        }
+        finally {
+            httpPost.abort();
+        }
+
+        System.out.println(responseString);
 
         return handlerResponse(responseString);
     }

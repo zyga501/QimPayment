@@ -50,16 +50,7 @@ public class SubMerchantInfo {
         this.subId_ = subId;
     }
 
-    public String getTemplateId() {
-        return templateId_;
-    }
-
-    public void setTemplateId(String templateId) {
-        this.templateId_ = templateId;
-    }
-
     private long id_;
     private long merchantId_;
     private String subId_;
-    private String templateId_;
 }

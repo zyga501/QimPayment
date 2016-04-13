@@ -17,5 +17,6 @@
         <result property="name" column="name" jdbcType="VARCHAR" />
         <result property="salemanId" column="salemanId" jdbcType="BIGINT" />
         <result property="ads" column="ads" jdbcType="VARCHAR" />
+        <result property="templateId" column="templateId" jdbcType="VARCHAR"/>
     </resultMap>
 </mapper>

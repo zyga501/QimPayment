@@ -11,6 +11,5 @@
         <id property="id" column="id" jdbcType="BIGINT" />
         <result property="merchantId" column="merchantId" jdbcType="BIGINT" />
         <result property="subId" column="subId" jdbcType="VARCHAR"/>
-        <result property="templateId" column="templateId" jdbcType="VARCHAR"/>
     </resultMap>
 </mapper>

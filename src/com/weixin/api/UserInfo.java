@@ -5,8 +5,8 @@ import net.sf.json.JSONObject;
 public class UserInfo extends WeixinAPI {
     private final static String USERINFO_API = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=%s&openid=%s";
 
-    public UserInfo(String appid, String openid) {
-        appid_ = appid;
+    public UserInfo(String accessToken, String openid) {
+        accessToken_ = accessToken;
         openid_ = openid;
     }
 
@@ -16,7 +16,7 @@ public class UserInfo extends WeixinAPI {
 
     @Override
     protected String getAPIUri() {
-        return String.format(USERINFO_API, appid_, openid_);
+        return String.format(USERINFO_API, accessToken_, openid_);
     }
 
     @Override
@@ -29,7 +29,7 @@ public class UserInfo extends WeixinAPI {
         return false;
     }
 
-    private String appid_;
+    private String accessToken_;
     private String openid_;
     private String nickname_;
 }

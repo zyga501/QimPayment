@@ -3,10 +3,9 @@ package com.weixin.api.RequestData;
 import net.sf.json.JSONObject;
 
 import java.util.LinkedHashMap;
-import java.util.Map;
 
-public class MessageRequestData {
-    public MessageRequestData() {
+public class TemplateMessageRequestData {
+    public TemplateMessageRequestData() {
         topcolor = "#FF0F0F";
     }
 
@@ -29,5 +28,5 @@ public class MessageRequestData {
     public String template_id;
     public String url;
     public String topcolor;
-    public LinkedHashMap<String, String> body;
+    public LinkedHashMap<String, Object> body;
 }

@@ -87,6 +87,14 @@ public class SubMerchantInfo {
         this.weixinId_ = weixinId;
     }
 
+    public String getTemplateId() {
+        return templateId_;
+    }
+
+    public void setTemplateId(String templateId) {
+        this.templateId_ = templateId;
+    }
+
     private long id_;
     private long merchantId_;
     private String name_;
@@ -94,4 +102,5 @@ public class SubMerchantInfo {
     private byte[] logo_;
     private String ads_;
     private String weixinId_;
+    private String templateId_;
 }
