@@ -130,7 +130,7 @@ a,input,label {
                 var reg = new RegExp(regStrs[i][0]);
                 th.value = th.value.replace(reg, regStrs[i][1]);
             }
-            $("#total_fee").val(parseInt(th.value)*100);
+            $("#total_fee").val(parseFloat(th.value)*100);
             if (th.value == "") {
                 $("#paynum").text("");
             }

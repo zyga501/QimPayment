@@ -167,7 +167,7 @@
             else {
                 $("#paynum").text("￥" + th.value);
             }
-            $("#total_fee").val(parseInt(th.value)*100);
+            $("#total_fee").val(parseFloat(th.value)*100);
         }  </script>
 </head>
 <body>
