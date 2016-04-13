@@ -26,7 +26,7 @@ public abstract class WeixinAPIWithSign extends WeixinAPI {
 
     public boolean postRequest(String apiKey) throws Exception {
         if (!requestData_.checkParameter() || apiKey.isEmpty()) {
-            System.out.println(this.getClass().getName() + "CheckParameter Failed!");
+            System.out.println(this.getClass().getName() + " CheckParameter Failed!");
             return false;
         }
 
@@ -69,7 +69,7 @@ public abstract class WeixinAPIWithSign extends WeixinAPI {
 
         responseResult_ = XMLParser.convertMapFromXML(responseString);
         if (!Signature.checkSignValid(responseResult_, apiKey)) {
-            System.out.println(this.getClass().getName() + "CheckSignValid Failed!");
+            System.out.println(this.getClass().getName() + " CheckSignValid Failed!");
             return false;
         }
 

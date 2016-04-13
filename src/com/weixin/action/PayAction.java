@@ -174,7 +174,7 @@ public class PayAction extends AjaxActionSupport {
                         unifiedOrderRequestData.openid = openId.getOpenId();
                     }
                     else {
-                        System.out.println(this.getClass().getName() + "Get OpenId Failed!");
+                        System.out.println(this.getClass().getName() + " Get OpenId Failed!");
                         return AjaxActionComplete();
                     }
                     unifiedOrderRequestData.notify_url = getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1)

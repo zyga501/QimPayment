@@ -1,7 +1,6 @@
 package com.merchant.action;
 
 import com.framework.action.AjaxActionSupport;
-import com.merchant.database.MerchantInfo;
 import com.merchant.database.SubMerchantInfo;
 import com.merchant.database.SubMerchantUser;
 import com.weixin.api.OpenId;
@@ -23,7 +22,7 @@ public class MerchantAction extends AjaxActionSupport {
             map.put("openid",openId.getOpenId());
         }
         else {
-            System.out.println(this.getClass().getName() + "Get OpenId Failed!");
+            System.out.println(this.getClass().getName() + " Get OpenId Failed!");
             return AjaxActionComplete();
         }
         return AjaxActionComplete(map);
