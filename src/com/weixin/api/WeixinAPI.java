@@ -68,13 +68,13 @@ public abstract class WeixinAPI {
 
         System.out.println(responseString);
 
-        Map<String,Object> responseResult = XMLParser.convertMapFromXML(responseString);
-        if (!Signature.checkSignValid(responseResult, apiKey)) {
+        responseResult_ = XMLParser.convertMapFromXML(responseString);
+        if (!Signature.checkSignValid(responseResult_, apiKey)) {
             System.out.println("checkSignValid Failed!");
             return false;
         }
 
-        return handlerResponse(responseResult, apiKey);
+        return handlerResponse(responseResult_, apiKey);
     }
 
     public boolean get() throws Exception {

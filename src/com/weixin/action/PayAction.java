@@ -258,7 +258,12 @@ public class PayAction extends AjaxActionSupport {
                     }
 
                     Map<String, String> map = new HashMap<>();
-                    map.put("body", orderQuery.getResponseResult().get("attach").toString());
+                    if (null !=orderQuery.getResponseResult().get("attach")) {
+                        map.put("body", orderQuery.getResponseResult().get("attach").toString());
+                    }
+                    else {
+                        map.put("body", "");
+                    }
                     map.put("transaction_id", orderQuery.getResponseResult().get("transaction_id").toString());
                     map.put("out_trade_no", orderQuery.getResponseResult().get("out_trade_no").toString());
                     map.put("bank_type", orderQuery.getResponseResult().get("bank_type").toString());
