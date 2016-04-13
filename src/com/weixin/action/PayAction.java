@@ -52,6 +52,9 @@ public class PayAction extends AjaxActionSupport {
                     map.put("bank_type", microPay.getResponseResult().get("bank_type").toString());
                     map.put("total_fee", microPay.getResponseResult().get("total_fee").toString());
                     map.put("time_end", microPay.getResponseResult().get("time_end").toString());
+
+                    TemplateMessage.sendMessage(microPay.getResponseResult().get("transaction_id").toString());
+
                     return AjaxActionComplete(map);
                 }
             }

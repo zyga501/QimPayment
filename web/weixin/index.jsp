@@ -78,17 +78,6 @@
         })
       }
 
-      function sendTemplateMessage() {
-        $.ajax({
-          type: 'post',
-          url: 'Message!sendTemplateMessage',
-          dataType:"json",
-          data:$("form").serialize(),
-          success: function (data) {
-          }
-        })
-      }
-
     </script>
   </head>
   <body>
@@ -159,9 +148,6 @@
           </td>
           <td>
             <input type="button" onclick="refund()" value="申请退款"/>
-          </td>
-          <td>
-            <input type="button" onclick="sendTemplateMessage()" value="发送模版信息"/>
           </td>
         </tr>
       </table>

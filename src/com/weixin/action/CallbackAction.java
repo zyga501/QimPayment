@@ -2,15 +2,13 @@ package com.weixin.action;
 
 import com.framework.action.AjaxActionSupport;
 import com.framework.utils.XMLParser;
+import com.weixin.api.TemplateMessage;
 import com.weixin.database.MerchantInfo;
 import com.weixin.database.OrderInfo;
 import com.weixin.utils.Signature;
 import net.sf.json.JSONObject;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Map;
 
@@ -18,15 +16,15 @@ public class CallbackAction extends AjaxActionSupport {
     public final static String SCANPAYCALLBACK = "Callback!scanPay";
     public final static String BRANDWCPAYCALLBACK = "Callback!brandWCPay";
 
-    public void scanPay() throws IOException, ParserConfigurationException, IOException, SAXException {
+    public void scanPay() throws Exception {
         handlerCallback();
     }
 
-    public void brandWCPay() throws IOException, ParserConfigurationException, IOException, SAXException {
+    public void brandWCPay() throws Exception {
         handlerCallback();
     }
 
-    private boolean handlerCallback() throws IOException, ParserConfigurationException, IOException, SAXException {
+    private boolean handlerCallback() throws Exception {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(getRequest().getInputStream(), "utf-8"));
         StringBuilder stringBuilder = new StringBuilder();
         String lineBuffer = null;
@@ -44,7 +42,12 @@ public class CallbackAction extends AjaxActionSupport {
             }
         }
 
-        return saveOrderToDb(responseResult);
+        boolean ret = saveOrderToDb(responseResult);
+        if (ret) {
+            return TemplateMessage.sendMessage(responseResult.get("transaction_id").toString());
+        }
+
+        return false;
     }
 
     private boolean saveOrderToDb(Map<String,Object> responseResult) {
