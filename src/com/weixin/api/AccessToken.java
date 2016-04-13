@@ -17,13 +17,9 @@ public class AccessToken extends WeixinAPI{
                 return accessTokenMap_.get(appid);
             }
 
-            MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoByAppId(appid);
-            if (merchantInfo != null) {
-                AccessToken accessToken = new AccessToken(merchantInfo.getAppid(), merchantInfo.getAppsecret());
-                if (accessToken.getRequest()) {
-                    accessTokenMap_.put(appid, accessToken.getAccessToken());
-                    return accessTokenMap_.get(appid);
-                }
+            updateAccessToken(appid);
+            if (accessTokenMap_.get(appid) != null) {
+                return accessTokenMap_.get(appid);
             }
 
             System.out.println("Get Access Token Failed!");
@@ -31,17 +27,21 @@ public class AccessToken extends WeixinAPI{
         }
     }
 
+    public static void updateAccessToken(String appid) throws Exception {
+        MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoByAppId(appid);
+        if (merchantInfo != null) {
+            AccessToken accessToken = new AccessToken(merchantInfo.getAppid(), merchantInfo.getAppsecret());
+            if (accessToken.getRequest()) {
+                accessTokenMap_.put(appid, accessToken.getAccessToken());
+            }
+        }
+    }
+
     public static void updateAccessToken(List<String> appidList) throws Exception {
         synchronized(accessTokenMap_) {
             for (int index = 0; index < appidList.size(); ++index) {
                 String appid = appidList.get(index);
-                MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoByAppId(appid);
-                if (merchantInfo != null) {
-                    AccessToken accessToken = new AccessToken(merchantInfo.getAppid(), merchantInfo.getAppsecret());
-                    if (accessToken.getRequest()) {
-                        accessTokenMap_.put(appidList.get(index), accessToken.getAccessToken());
-                    }
-                }
+                updateAccessToken(appid);
             }
         }
     }
