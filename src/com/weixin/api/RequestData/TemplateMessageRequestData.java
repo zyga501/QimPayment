@@ -6,11 +6,12 @@ import java.util.LinkedHashMap;
 
 public class TemplateMessageRequestData {
     public TemplateMessageRequestData() {
+        url = "";
         topcolor = "#FF0F0F";
     }
 
     public String buildRequestData() {
-        if (touser.isEmpty() || template_id.isEmpty() || url.isEmpty()) {
+        if (touser.isEmpty() || template_id.isEmpty()) {
             return "";
         }
 

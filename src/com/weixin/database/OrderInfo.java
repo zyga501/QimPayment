@@ -132,6 +132,14 @@ public class OrderInfo {
         this.createUser_ = createUser;
     }
 
+    public String getOpenId() {
+        return openId_;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId_ = openId;
+    }
+
     private long id_;
     private String appid_;
     private String mchId_;
@@ -143,4 +151,5 @@ public class OrderInfo {
     private int totalFee_;
     private String timeEnd_;
     private long createUser_;
+    private String openId_;
 }
