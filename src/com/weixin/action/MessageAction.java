@@ -18,21 +18,7 @@ public class MessageAction extends AjaxActionSupport {
             if (subMerchantInfo != null) {
                 MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
                 if (merchantInfo != null) {
-                    String accessToken = new String();
-                    if (merchantInfo.getAccessToken().isEmpty()) {
-                        AccessToken accessTokenApi = new AccessToken(merchantInfo.getAppid(), merchantInfo.getAppsecret());
-                        if (accessTokenApi.getRequest()) {
-                            accessToken = accessTokenApi.getAccessToken();
-                            MerchantInfo.updateAccessToken(merchantInfo.getId(), accessToken);
-                        }
-                        else {
-                            System.out.println(this.getClass().getName() + "Get AccessToken Failed!");
-                            return AjaxActionComplete();
-                        }
-                    }
-                    else {
-                        accessToken = merchantInfo.getAccessToken();
-                    }
+                    String accessToken = AccessToken.getAccessToken(merchantInfo.getAppid());
                     String sendMessage = String.format(SEND_MESSAGE, accessToken);
                 }
             }
