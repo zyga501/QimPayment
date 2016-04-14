@@ -1,8 +1,6 @@
 package com.weixin.api.RequestData;
 
-import net.sf.json.JSONObject;
-
-import java.util.LinkedHashMap;
+import com.framework.utils.I18n;
 
 public class TemplateMessageRequestData {
     public TemplateMessageRequestData() {
@@ -15,19 +13,26 @@ public class TemplateMessageRequestData {
             return "";
         }
 
-        LinkedHashMap<String, Object> resultMap = new LinkedHashMap<>();
-        resultMap.put("touser", touser);
-        resultMap.put("template_id", template_id);
-        resultMap.put("url", url);
-        resultMap.put("topcolor", topcolor);
-        resultMap.put("data", body);
+        String reqeustData = String.format(I18n.GetText("TemplateMessage"),
+                touser,
+                template_id,
+                topcolor,
+                nickName, "#173177",
+                timeEnd, "#173177",
+                totalFee.toString(), "#FF0FFF",
+                storeName, "#173177",
+                transactionId, "#173177");
 
-        return JSONObject.fromObject(resultMap).toString();
+        return reqeustData;
     }
 
     public String touser;
     public String template_id;
     public String url;
     public String topcolor;
-    public LinkedHashMap<String, Object> body;
+    public String nickName;
+    public String timeEnd;
+    public Double totalFee;
+    public String storeName;
+    public String transactionId;
 }

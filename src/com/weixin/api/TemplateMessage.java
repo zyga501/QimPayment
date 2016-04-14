@@ -27,34 +27,17 @@ public class TemplateMessage extends WeixinAPI {
                     TemplateMessageRequestData templateMessageRequestData = new TemplateMessageRequestData();
                     templateMessageRequestData.touser = subMerchantUser.getWeixinId();
                     templateMessageRequestData.template_id = subMerchantInfo.getTemplateId();
-                    LinkedHashMap<String, Object> body = new LinkedHashMap<>();
-                    LinkedHashMap<String, String> value = new LinkedHashMap<>();
                     UserInfo userInfo = new UserInfo(accessToken, orderInfo.getOpenId());
                     if (userInfo.getRequest()) {
-                        value.put("value", userInfo.getNickname());
+                        templateMessageRequestData.nickName = userInfo.getNickname();
                     }
                     else {
-                        value.put("value", "匿名消费者");
+                        templateMessageRequestData.nickName = "匿名消费者";
                     }
-                    value.put("color", "#173177");
-                    body.put("first", value);
-                    value = new LinkedHashMap<>();
-                    value.put("value", orderInfo.getTimeEnd());
-                    value.put("color", "#173177");
-                    body.put("keyword1", value);
-                    value = new LinkedHashMap<>();
-                    value.put("value", new Integer(orderInfo.getTotalFee()).toString());
-                    value.put("color", "FF0FFF");
-                    body.put("keyword2", value);
-                    value = new LinkedHashMap<>();
-                    value.put("value", subMerchantUser.getStoreName());
-                    value.put("color", "#173177");
-                    body.put("keyword3", value);
-                    value = new LinkedHashMap<>();
-                    value.put("value", "详情请查询微信");
-                    value.put("color", "#173177");
-                    body.put("remark", value);
-                    templateMessageRequestData.body = body;
+                    templateMessageRequestData.timeEnd = orderInfo.getTimeEnd();
+                    templateMessageRequestData.totalFee = orderInfo.getTotalFee() / 100.0;
+                    templateMessageRequestData.storeName = subMerchantUser.getStoreName();
+                    templateMessageRequestData.transactionId = transactionId;
                     TemplateMessage templateMessage = new TemplateMessage(accessToken);
                     return templateMessage.postRequest(templateMessageRequestData.buildRequestData());
                 }
