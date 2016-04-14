@@ -36,13 +36,13 @@
                 <param name="namespace">/weixin</param>
             </result>
         </action>
-        <action name="OrderQuery" class="com.api.action.QueryAction" method="OrderQuery">
+        <action name="OrderQuery" class="com.api.action.CommonAction" method="OrderQuery">
             <result name="WeixinOrderQuery" type="chain">
                 <param name="actionName">Order!queryOrder</param>
                 <param name="namespace">/weixin</param>
             </result>
         </action>
-        <action name="OrderInsert" class="com.api.action.QueryAction" method="OrderInsert">
+        <action name="OrderInsert" class="com.api.action.CommonAction" method="OrderInsert">
             <result name="WeixinOrderInsert" type="chain">
                 <param name="actionName">Order!insertOrder</param>
                 <param name="namespace">/weixin</param>
