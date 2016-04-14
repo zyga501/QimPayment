@@ -54,7 +54,7 @@ public class CallbackAction extends AjaxActionSupport {
         String transactionId = responseResult.get("transaction_id").toString();
         OrderInfo orderInfo = OrderInfo.getOrderInfoByTransactionId(transactionId);
         if (orderInfo != null) {
-            return true;
+            return false;
         }
         orderInfo = new OrderInfo();
         JSONObject jsonObject = JSONObject.fromObject(responseResult.get("attach").toString());
