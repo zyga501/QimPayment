@@ -13,7 +13,7 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PayAction extends AjaxActionSupport {
+public class CommonAction extends AjaxActionSupport {
     private final static String WEIXINMODE = "weixin";
 
     public String MicroPay() throws Exception {

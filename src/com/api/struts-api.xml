@@ -12,36 +12,43 @@
             </result>
         </global-results>
 
-        <action name="MicroPay" class="com.api.action.PayAction" method="MicroPay">
+        <action name="MicroPay" class="com.api.action.CommonAction" method="MicroPay">
             <result name="WeixinMicroPay" type="chain">
                 <param name="actionName">Pay!microPay</param>
                 <param name="namespace">/weixin</param>
             </result>
         </action>
-        <action name="ScanPay" class="com.api.action.PayAction" method="ScanPay">
+        <action name="ScanPay" class="com.api.action.CommonAction" method="ScanPay">
             <result name="WeixinScanPay" type="chain">
                 <param name="actionName">Pay!scanPay</param>
                 <param name="namespace">/weixin</param>
             </result>
         </action>
-        <action name="PrePay" class="com.api.action.PayAction" method="PrePay">
+        <action name="PrePay" class="com.api.action.CommonAction" method="PrePay">
             <result name="WeixinPrePay" type="chain">
                 <param name="actionName">Pay!prePay</param>
                 <param name="namespace">/weixin</param>
             </result>
         </action>
-        <action name="BrandWCPay" class="com.api.action.PayAction" method="BrandWCPay">
+        <action name="BrandWCPay" class="com.api.action.CommonAction" method="BrandWCPay">
             <result name="WeixinBrandWCPay" type="chain">
                 <param name="actionName">Pay!brandWCPay</param>
                 <param name="namespace">/weixin</param>
             </result>
         </action>
-        <action name="OrderQuery" class="com.api.action.PayAction" method="OrderQuery">
+        <action name="OrderQuery" class="com.api.action.QueryAction" method="OrderQuery">
             <result name="WeixinOrderQuery" type="chain">
-                <param name="actionName">Pay!orderQuery</param>
+                <param name="actionName">Order!queryOrder</param>
                 <param name="namespace">/weixin</param>
             </result>
         </action>
+        <action name="OrderInsert" class="com.api.action.QueryAction" method="OrderInsert">
+            <result name="WeixinOrderQuery" type="chain">
+                <param name="actionName">Order!insertOrder</param>
+                <param name="namespace">/weixin</param>
+            </result>
+        </action>
+
         <action name="Query!*" class="com.api.action.QueryAction"  method="{1}">
         </action>
         <!--- test action -->
