@@ -91,6 +91,7 @@ public class OrderAction extends AjaxActionSupport {
         orderInfo.setBankType(getParameter("bank_type").toString());
         orderInfo.setTotalFee(Integer.parseInt(getParameter("total_fee").toString()));
         orderInfo.setTimeEnd(getParameter("time_end").toString());
+        orderInfo.setOpenId("0xFFFFFF");
         orderInfo.setCreateUser(0xFFFFFF);
         OrderInfo.insertOrderInfo(orderInfo);
         return AjaxActionComplete();
