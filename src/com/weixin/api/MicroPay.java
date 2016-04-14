@@ -50,6 +50,7 @@ public class MicroPay extends WeixinAPIWithSign {
                                 return false;
                             }
                             saveOrderToDb(orderQuery.getResponseResult());
+                            responseResult_ = orderQuery.getResponseResult();
                             return true;
                         }
                     }

@@ -6,13 +6,11 @@ import com.merchant.database.IdMapUUID;
 import com.merchant.database.SubMerchantUser;
 import com.weixin.api.*;
 import com.weixin.api.RequestData.MicroPayRequestData;
-import com.weixin.api.RequestData.OrderQueryData;
 import com.weixin.api.RequestData.RefundRequestData;
 import com.weixin.api.RequestData.UnifiedOrderRequestData;
 import com.weixin.database.MerchantInfo;
 import com.weixin.database.SubMerchantInfo;
 import com.weixin.utils.Signature;
-import net.sf.json.JSONObject;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -80,7 +78,8 @@ public class PayAction extends AjaxActionSupport {
                     unifiedOrderRequestData.total_fee = Integer.parseInt(getParameter("total_fee").toString());
                     unifiedOrderRequestData.product_id = getParameter("product_id").toString();
                     unifiedOrderRequestData.trade_type = "NATIVE";
-                    unifiedOrderRequestData.notify_url = getRequest().getRequestURL().substring(0, getRequest().getRequestURL().indexOf("/") + 1) + "weixin/"
+                    unifiedOrderRequestData.notify_url =
+                            getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf(getRequest().getRequestURI()) + 1) + "weixin/"
                             + CallbackAction.SCANPAYCALLBACK;
                     if (!StringUtils.convertNullableString(getParameter("out_trade_no")).isEmpty()) {
                         unifiedOrderRequestData.out_trade_no = getParameter("out_trade_no").toString();
@@ -178,7 +177,8 @@ public class PayAction extends AjaxActionSupport {
                         System.out.println(this.getClass().getName() + " Get OpenId Failed!");
                         return AjaxActionComplete();
                     }
-                    unifiedOrderRequestData.notify_url = getRequest().getRequestURL().substring(0, getRequest().getRequestURL().indexOf("/") + 1) + "weixin/"
+                    unifiedOrderRequestData.notify_url =
+                            getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf(getRequest().getRequestURI()) + 1) + "weixin/"
                             + CallbackAction.BRANDWCPAYCALLBACK;
                     if (!StringUtils.convertNullableString(getParameter("out_trade_no")).isEmpty()) {
                         unifiedOrderRequestData.out_trade_no = getParameter("out_trade_no").toString();
