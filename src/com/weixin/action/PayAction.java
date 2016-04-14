@@ -12,6 +12,7 @@ import com.weixin.api.RequestData.UnifiedOrderRequestData;
 import com.weixin.database.MerchantInfo;
 import com.weixin.database.SubMerchantInfo;
 import com.weixin.utils.Signature;
+import net.sf.json.JSONObject;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -30,7 +31,7 @@ public class PayAction extends AjaxActionSupport {
                     microPayRequestData.mch_id = merchantInfo.getMchId();
                     microPayRequestData.sub_mch_id = subMerchantInfo.getSubId();
                     microPayRequestData.body = getParameter("body").toString();
-                    microPayRequestData.attach = microPayRequestData.body;
+                    microPayRequestData.attach = "{ 'id':'" + subMerchantUser.getId() + "', 'body':'" + microPayRequestData.body + "'}";
                     microPayRequestData.total_fee = Integer.parseInt(getParameter("total_fee").toString());
                     microPayRequestData.auth_code = getParameter("auth_code").toString();
                     if (!StringUtils.convertNullableString(getParameter("out_trade_no")).isEmpty()) {
@@ -46,7 +47,7 @@ public class PayAction extends AjaxActionSupport {
                     }
 
                     Map<String, String> map = new HashMap<>();
-                    map.put("body", microPay.getResponseResult().get("attach").toString());
+                    map.put("body", microPayRequestData.body);
                     map.put("transaction_id", microPay.getResponseResult().get("transaction_id").toString());
                     map.put("out_trade_no", microPay.getResponseResult().get("out_trade_no").toString());
                     map.put("bank_type", microPay.getResponseResult().get("bank_type").toString());
@@ -264,8 +265,14 @@ public class PayAction extends AjaxActionSupport {
                     }
 
                     Map<String, String> map = new HashMap<>();
-                    if (null !=orderQuery.getResponseResult().get("attach")) {
-                        map.put("body", orderQuery.getResponseResult().get("attach").toString());
+                    if (null != orderQuery.getResponseResult().get("attach")) {
+                        JSONObject jsonObject = JSONObject.fromObject(orderQuery.getResponseResult().get("attach").toString());
+                        if (jsonObject.get("body") != null) {
+                            map.put("body", jsonObject.get("body").toString());
+                        }
+                        else {
+                            map.put("body", orderQuery.getResponseResult().get("attach").toString());
+                        }
                     }
                     else {
                         map.put("body", "");
