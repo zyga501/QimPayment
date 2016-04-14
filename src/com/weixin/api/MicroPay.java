@@ -74,6 +74,7 @@ public class MicroPay extends WeixinAPIWithSign {
         orderInfo.setBankType(responseResult.get("bank_type").toString());
         orderInfo.setTotalFee(Integer.parseInt(responseResult.get("total_fee").toString()));
         orderInfo.setTimeEnd(responseResult.get("time_end").toString());
+        orderInfo.setOpenId(responseResult.get("openid").toString());
         orderInfo.setCreateUser(createUser_);
         return OrderInfo.insertOrderInfo(orderInfo);
     }

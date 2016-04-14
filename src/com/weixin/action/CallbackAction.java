@@ -68,6 +68,7 @@ public class CallbackAction extends AjaxActionSupport {
         orderInfo.setTotalFee(Integer.parseInt(responseResult.get("total_fee").toString()));
         orderInfo.setTimeEnd(responseResult.get("time_end").toString());
         orderInfo.setCreateUser(Long.parseLong(jsonObject.get("id").toString()));
+        orderInfo.setOpenId(responseResult.get("openid").toString());
         return OrderInfo.insertOrderInfo(orderInfo);
     }
 }
