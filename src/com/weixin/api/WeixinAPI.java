@@ -20,6 +20,9 @@ public abstract class WeixinAPI {
             return false;
         }
 
+        System.out.println("Response Url:");
+        System.out.println(apiUri);
+
         CloseableHttpClient httpClient = HttpUtils.Instance();
         HttpGet httpGet = new HttpGet(apiUri);
         CloseableHttpResponse response = httpClient.execute(httpGet);
@@ -38,6 +41,9 @@ public abstract class WeixinAPI {
         if (apiUri.isEmpty()) {
             return false;
         }
+
+        System.out.println("Response Url:");
+        System.out.println(apiUri);
 
         System.out.println("Reqest Data:");
         System.out.println(postData);

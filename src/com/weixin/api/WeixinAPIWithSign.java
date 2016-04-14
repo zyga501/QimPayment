@@ -38,6 +38,9 @@ public abstract class WeixinAPIWithSign extends WeixinAPI {
             return false;
         }
 
+        System.out.println("Response Url:");
+        System.out.println(apiUri);
+
         XStream xStreamForRequestPostData = new XStream(new DomDriver("UTF-8", new XmlFriendlyNameCoder("-_", "_")));
         String postDataXML = xStreamForRequestPostData.toXML(requestData_);
         System.out.println("Reqest Data:");
