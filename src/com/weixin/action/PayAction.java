@@ -78,9 +78,11 @@ public class PayAction extends AjaxActionSupport {
                     unifiedOrderRequestData.total_fee = Integer.parseInt(getParameter("total_fee").toString());
                     unifiedOrderRequestData.product_id = getParameter("product_id").toString();
                     unifiedOrderRequestData.trade_type = "NATIVE";
-                    unifiedOrderRequestData.notify_url =
-                            getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf(getRequest().getRequestURI()) + 1) + "weixin/"
-                            + CallbackAction.SCANPAYCALLBACK;
+                    String requestUrl = getRequest().getRequestURL().toString();
+                    requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/'));
+                    requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/') + 1) + "weixin/"
+                            + CallbackAction.SCANPAYCALLBACK;;
+                    unifiedOrderRequestData.notify_url = requestUrl;
                     if (!StringUtils.convertNullableString(getParameter("out_trade_no")).isEmpty()) {
                         unifiedOrderRequestData.out_trade_no = getParameter("out_trade_no").toString();
                     }
@@ -177,9 +179,11 @@ public class PayAction extends AjaxActionSupport {
                         System.out.println(this.getClass().getName() + " Get OpenId Failed!");
                         return AjaxActionComplete();
                     }
-                    unifiedOrderRequestData.notify_url =
-                            getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf(getRequest().getRequestURI()) + 1) + "weixin/"
+                    String requestUrl = getRequest().getRequestURL().toString();
+                    requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/'));
+                    requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/') + 1) + "weixin/"
                             + CallbackAction.BRANDWCPAYCALLBACK;
+                    unifiedOrderRequestData.notify_url = requestUrl;
                     if (!StringUtils.convertNullableString(getParameter("out_trade_no")).isEmpty()) {
                         unifiedOrderRequestData.out_trade_no = getParameter("out_trade_no").toString();
                     }
