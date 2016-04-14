@@ -277,11 +277,24 @@ public class PayAction extends AjaxActionSupport {
                     else {
                         map.put("body", "");
                     }
-                    map.put("transaction_id", orderQuery.getResponseResult().get("transaction_id").toString());
-                    map.put("out_trade_no", orderQuery.getResponseResult().get("out_trade_no").toString());
-                    map.put("bank_type", orderQuery.getResponseResult().get("bank_type").toString());
-                    map.put("total_fee", orderQuery.getResponseResult().get("total_fee").toString());
-                    map.put("time_end", orderQuery.getResponseResult().get("time_end").toString());
+                    if (orderQuery.getResponseResult().get("transaction_id") != null) {
+                        map.put("transaction_id", orderQuery.getResponseResult().get("transaction_id").toString());
+                    }
+                    if (orderQuery.getResponseResult().get("out_trade_no") != null) {
+                        map.put("out_trade_no", orderQuery.getResponseResult().get("out_trade_no").toString());
+                    }
+                    if (orderQuery.getResponseResult().get("bank_type") != null) {
+                        map.put("bank_type", orderQuery.getResponseResult().get("bank_type").toString());
+                    }
+                    if (orderQuery.getResponseResult().get("total_fee") != null) {
+                        map.put("total_fee", orderQuery.getResponseResult().get("total_fee").toString());
+                    }
+                    if (orderQuery.getResponseResult().get("time_end") != null) {
+                        map.put("time_end", orderQuery.getResponseResult().get("time_end").toString());
+                    }
+                    if (orderQuery.getResponseResult().get("trade_state") != null) {
+                        map.put("trade_state", orderQuery.getResponseResult().get("trade_state").toString());
+                    }
                     return AjaxActionComplete(map);
                 }
             }
