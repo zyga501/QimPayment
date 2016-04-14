@@ -46,6 +46,12 @@ public class CommonAction extends AjaxActionSupport {
         return handlerResult(createMode(mode).orderQuery());
     }
 
+    public String OrderInsert() throws Exception {
+        parseRequestBuffer();
+        String mode = StringUtils.convertNullableString(requestBuffer_.get("mode"));
+        return handlerResult(createMode(mode).orderQuery());
+    }
+
     private void parseRequestBuffer() throws IOException, ParserConfigurationException, IOException, SAXException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(getRequest().getInputStream(), "utf-8"));
         StringBuilder stringBuilder = new StringBuilder();

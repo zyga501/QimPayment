@@ -8,6 +8,7 @@ public class WeixinMode extends BaseMode  {
     private final static String WeixinPrePay = "WeixinPrePay";
     private final static String WeixinBrandWCPay = "WeixinBrandWCPay";
     private final static String WeixinOrderQuery = "WeixinOrderQuery";
+    private final static String WeixinOrderInsert = "WeixinOrderInsert";
 
     public String microPay() {
         if (!Signature.checkSignValid(requestBuffer_, requestBuffer_.get("id").toString())) {
@@ -47,5 +48,13 @@ public class WeixinMode extends BaseMode  {
         }
 
         return WeixinOrderQuery;
+    }
+
+    public String orderInsert() {
+        if (!Signature.checkSignValid(requestBuffer_, requestBuffer_.get("id").toString())) {
+            return super.orderInsert();
+        }
+
+        return WeixinOrderInsert;
     }
 }

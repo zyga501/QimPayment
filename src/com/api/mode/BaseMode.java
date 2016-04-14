@@ -12,6 +12,7 @@ public abstract class BaseMode {
     public String prePay()  { return ""; }
     public String brandWCPay()  { return ""; }
     public String orderQuery()  { return ""; }
+    public String orderInsert() { return ""; }
 
     protected Map<String,Object> requestBuffer_;
 }

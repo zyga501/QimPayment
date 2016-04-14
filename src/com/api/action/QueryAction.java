@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public class QueryAction extends AjaxActionSupport {
-    public String CashInfo(){
+    public String CashInfo() {
         OrderInfoCollect orderInfo = OrderInfoCollect.collectOrderInfoByDate(getParameter("id").toString(),getParameter("startdate").toString(),getParameter("enddate").toString());
         Map<String, String> map = new HashMap<>();
         if (null!=orderInfo) {
@@ -19,7 +19,7 @@ public class QueryAction extends AjaxActionSupport {
         return AjaxActionComplete(map);
     }
 
-    public String OrderList(){
+    public String OrderList() {
        List<OrderInfo> orderInfo = OrderInfo.getOrderInfoListByDate(getParameter("id").toString(),getParameter("startdate").toString(),getParameter("enddate").toString());
         Map<String , Object> map = new HashMap<>();
         map.put("resultlist",orderInfo);

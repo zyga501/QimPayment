@@ -43,7 +43,7 @@
             </result>
         </action>
         <action name="OrderInsert" class="com.api.action.QueryAction" method="OrderInsert">
-            <result name="WeixinOrderQuery" type="chain">
+            <result name="WeixinOrderInsert" type="chain">
                 <param name="actionName">Order!insertOrder</param>
                 <param name="namespace">/weixin</param>
             </result>
