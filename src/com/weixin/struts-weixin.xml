@@ -5,8 +5,6 @@
         "http://struts.apache.org/dtds/struts-2.3.dtd">
 
 <struts>
-    <constant name="struts.custom.i18n.resources.weixin" value="weixin/mui/resources"/>
-
     <package name="weixin" namespace="/weixin" extends="json-default">
         <global-results>
             <result name="ajaxActionCompleted" type="json">

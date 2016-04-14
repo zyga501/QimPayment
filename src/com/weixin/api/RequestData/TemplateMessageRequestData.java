@@ -13,7 +13,8 @@ public class TemplateMessageRequestData {
             return "";
         }
 
-        String reqeustData = String.format(I18n.GetText("TemplateMessage"),
+        String templateMessage = I18n.GetText("TemplateMessage");
+        String reqeustData = String.format(templateMessage,
                 touser,
                 template_id,
                 topcolor,

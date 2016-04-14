@@ -35,7 +35,7 @@
         <result property="openId" column="openId" jdbcType="VARCHAR" />
     </resultMap>
     <insert id="insertOrderInfo" parameterType="com.weixin.database.OrderInfo">
-        INSERT INTO OrderInfo(appid,mchid,subMchId,body,transactionId,outTradeNo,bankType,totalFee,timeEnd,createUser)
-        VALUE (#{appid},#{mchId},#{subMchId},#{body},#{transactionId},#{outTradeNo},#{bankType},#{totalFee},#{timeEnd},#{createUser})
+        INSERT INTO OrderInfo(appid,mchid,subMchId,body,transactionId,outTradeNo,bankType,totalFee,timeEnd,createUser,openId)
+        VALUE (#{appid},#{mchId},#{subMchId},#{body},#{transactionId},#{outTradeNo},#{bankType},#{totalFee},#{timeEnd},#{createUser},#{openId})
     </insert>
 </mapper>
