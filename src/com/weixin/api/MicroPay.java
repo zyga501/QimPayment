@@ -3,6 +3,7 @@ package com.weixin.api;
 import com.weixin.api.RequestData.MicroPayRequestData;
 import com.weixin.api.RequestData.OrderQueryData;
 import com.weixin.database.OrderInfo;
+import net.sf.json.JSONObject;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -68,7 +69,13 @@ public class MicroPay extends WeixinAPIWithSign {
         orderInfo.setAppid(responseResult.get("appid").toString());
         orderInfo.setMchId(responseResult.get("mch_id").toString());
         orderInfo.setSubMchId(responseResult.get("sub_mch_id").toString());
-        orderInfo.setBody(responseResult.get("attach").toString());
+        JSONObject jsonObject = JSONObject.fromObject(responseResult.get("attach").toString());
+        if (jsonObject.get("body") != null) {
+            orderInfo.setBody(jsonObject.get("body").toString());
+        }
+        else {
+            orderInfo.setBody(responseResult.get("attach").toString());
+        }
         orderInfo.setTransactionId(responseResult.get("transaction_id").toString());
         orderInfo.setOutTradeNo(responseResult.get("out_trade_no").toString());
         orderInfo.setBankType(responseResult.get("bank_type").toString());
