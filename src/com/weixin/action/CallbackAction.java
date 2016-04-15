@@ -15,13 +15,21 @@ import java.util.Map;
 public class CallbackAction extends AjaxActionSupport {
     public final static String SCANPAYCALLBACK = "Callback!scanPay";
     public final static String BRANDWCPAYCALLBACK = "Callback!brandWCPay";
+    public final static String WEIXINCALLBACKSUCCESS = "" +
+            "<xml>" +
+            "<return_code><![CDATA[SUCCESS]]></return_code>" +
+            "<return_msg><![CDATA[OK]]></return_msg>" +
+            "<result_code><![CDATA[SUCCESS]]></result_code>" +
+            "</xml>";
 
     public void scanPay() throws Exception {
         handlerCallback();
+        getResponse().getWriter().write(WEIXINCALLBACKSUCCESS);
     }
 
     public void brandWCPay() throws Exception {
         handlerCallback();
+        getResponse().getWriter().write(WEIXINCALLBACKSUCCESS);
     }
 
     private boolean handlerCallback() throws Exception {
