@@ -1,6 +1,7 @@
 package com.weixin.action;
 
 import com.framework.action.AjaxActionSupport;
+import com.framework.utils.Logger;
 import com.merchant.database.SubMerchantUser;
 import com.weixin.api.OrderQuery;
 import com.weixin.api.RequestData.OrderQueryData;
@@ -32,7 +33,7 @@ public class OrderAction extends AjaxActionSupport {
                     }
                     OrderQuery orderQuery = new OrderQuery(orderQueryData);
                     if (!orderQuery.postRequest(merchantInfo.getApiKey())) {
-                        System.out.println("Refund Failed!");
+                        Logger.warn("Refund Failed!");
                         return AjaxActionComplete();
                     }
 

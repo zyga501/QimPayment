@@ -1,5 +1,6 @@
 package com.weixin.api;
 
+import com.framework.utils.Logger;
 import com.weixin.database.MerchantInfo;
 import net.sf.json.JSONObject;
 
@@ -22,7 +23,7 @@ public class AccessToken extends WeixinAPI{
                 return accessTokenMap_.get(appid);
             }
 
-            System.out.println("Get Access Token Failed!");
+            Logger.warn("Get Access Token Failed!");
             return null;
         }
     }

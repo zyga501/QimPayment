@@ -1,6 +1,7 @@
 package com.weixin.action;
 
 import com.framework.action.AjaxActionSupport;
+import com.framework.utils.Logger;
 import com.framework.utils.XMLParser;
 import com.weixin.api.TemplateMessage;
 import com.weixin.database.MerchantInfo;
@@ -45,7 +46,7 @@ public class CallbackAction extends AjaxActionSupport {
         MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoByAppId(responseResult.get("appid").toString());
         if (merchantInfo != null) {
             if (!Signature.checkSignValid(responseResult, merchantInfo.getApiKey())) {
-                System.out.println("checkSignValid Failed!");
+                Logger.warn(this.getClass().getName() + " CheckSignValid Failed!");
                 return false;
             }
         }

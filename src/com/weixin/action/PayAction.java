@@ -2,6 +2,7 @@ package com.weixin.action;
 
 import com.framework.action.AjaxActionSupport;
 import com.framework.utils.I18n;
+import com.framework.utils.Logger;
 import com.framework.utils.StringUtils;
 import com.merchant.database.IdMapUUID;
 import com.merchant.database.SubMerchantUser;
@@ -41,7 +42,7 @@ public class PayAction extends AjaxActionSupport {
                     }
                     MicroPay microPay = new MicroPay(microPayRequestData, subMerchantUser.getId());
                     if (!microPay.postRequest(merchantInfo.getApiKey())) {
-                        System.out.println("MicroPay Failed!");
+                        Logger.warn("MicroPay Failed!");
                         return AjaxActionComplete();
                     }
 
@@ -93,7 +94,7 @@ public class PayAction extends AjaxActionSupport {
                     UnifiedOrder unifiedOrder = new UnifiedOrder(unifiedOrderRequestData);
 
                     if (!unifiedOrder.postRequest(merchantInfo.getApiKey())) {
-                        System.out.println("ScanPay Failed!");
+                        Logger.warn("ScanPay Failed!");
                         return AjaxActionComplete();
                     }
 
@@ -137,7 +138,7 @@ public class PayAction extends AjaxActionSupport {
         }
 
         if (appid.isEmpty()) {
-            System.out.println("PrePay Failed!");
+            Logger.warn("PrePay Failed!");
             return;
         }
 
@@ -177,7 +178,7 @@ public class PayAction extends AjaxActionSupport {
                         unifiedOrderRequestData.openid = openId.getOpenId();
                     }
                     else {
-                        System.out.println(this.getClass().getName() + " Get OpenId Failed!");
+                        Logger.warn(this.getClass().getName() + " Get OpenId Failed!");
                         return AjaxActionComplete();
                     }
                     String requestUrl = getRequest().getRequestURL().toString();
@@ -194,7 +195,7 @@ public class PayAction extends AjaxActionSupport {
 
                     UnifiedOrder unifiedOrder = new UnifiedOrder(unifiedOrderRequestData);
                     if (!unifiedOrder.postRequest(merchantInfo.getApiKey())) {
-                        System.out.println("BrandWCPay Failed!");
+                        Logger.warn("BrandWCPay Failed!");
                         return AjaxActionComplete();
                     }
 
@@ -235,7 +236,7 @@ public class PayAction extends AjaxActionSupport {
                     refundRequestData.op_user_id = refundRequestData.mch_id;
                     Refund refund = new Refund(refundRequestData);
                     if (!refund.postRequest(merchantInfo.getApiKey())) {
-                        System.out.println("Refund Failed!");
+                        Logger.warn("Refund Failed!");
                         return AjaxActionComplete();
                     }
                     return AjaxActionComplete(refund.getResponseResult());

@@ -1,6 +1,7 @@
 package com.weixin.api;
 
 import com.framework.utils.HttpUtils;
+import com.framework.utils.Logger;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -19,9 +20,7 @@ public abstract class WeixinAPI {
         if (apiUri.isEmpty()) {
             return false;
         }
-
-        System.out.println("Response Url:");
-        System.out.println(apiUri);
+        Logger.info("Request Url:\r\n" + apiUri);
 
         CloseableHttpClient httpClient = HttpUtils.Instance();
         HttpGet httpGet = new HttpGet(apiUri);
@@ -30,8 +29,7 @@ public abstract class WeixinAPI {
         String responseString = EntityUtils.toString(entity, "UTF-8");
         response.close();
 
-        System.out.println("Response Data:");
-        System.out.println(responseString);
+        Logger.info("Response Data:\r\n" + responseString);
 
         return handlerResponse(responseString);
     }
@@ -41,12 +39,9 @@ public abstract class WeixinAPI {
         if (apiUri.isEmpty()) {
             return false;
         }
+        Logger.info("Request Url:\r\n" + apiUri);
 
-        System.out.println("Response Url:");
-        System.out.println(apiUri);
-
-        System.out.println("Reqest Data:");
-        System.out.println(postData);
+        Logger.info("Reqest Data:\r\n" + postData);
 
         HttpPost httpPost = new HttpPost(apiUri);
         StringEntity postEntity = new StringEntity(postData, "UTF-8");
@@ -72,8 +67,8 @@ public abstract class WeixinAPI {
             httpPost.abort();
         }
 
-        System.out.println("Response Data:");
-        System.out.println(responseString);
+        Logger.info("Response Data:\r\n" + responseString);
+        Logger.info("Response Data:\r\n" + responseString);
 
         return handlerResponse(responseString);
     }

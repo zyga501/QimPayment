@@ -1,6 +1,7 @@
 package com.weixin.api;
 
 import com.framework.utils.HttpUtils;
+import com.framework.utils.Logger;
 import com.framework.utils.XMLParser;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
@@ -26,7 +27,7 @@ public abstract class WeixinAPIWithSign extends WeixinAPI {
 
     public boolean postRequest(String apiKey) throws Exception {
         if (!requestData_.checkParameter() || apiKey.isEmpty()) {
-            System.out.println(this.getClass().getName() + " CheckParameter Failed!");
+            Logger.warn(this.getClass().getName() + " CheckParameter Failed!");
             return false;
         }
 
@@ -37,14 +38,11 @@ public abstract class WeixinAPIWithSign extends WeixinAPI {
         if (apiUri.isEmpty()) {
             return false;
         }
-
-        System.out.println("Response Url:");
-        System.out.println(apiUri);
+        Logger.info("Request Url:\r\n" + apiUri);
 
         XStream xStreamForRequestPostData = new XStream(new DomDriver("UTF-8", new XmlFriendlyNameCoder("-_", "_")));
         String postDataXML = xStreamForRequestPostData.toXML(requestData_);
-        System.out.println("Reqest Data:");
-        System.out.println(postDataXML);
+        Logger.info("Reqest Data:\r\n" + postDataXML);
 
         HttpPost httpPost = new HttpPost(apiUri);
         StringEntity postEntity = new StringEntity(postDataXML, "UTF-8");
@@ -71,12 +69,11 @@ public abstract class WeixinAPIWithSign extends WeixinAPI {
             httpPost.abort();
         }
 
-        System.out.println("Response Data:");
-        System.out.println(responseString);
+        Logger.info("Response Data:\r\n" + responseString);
 
         responseResult_ = XMLParser.convertMapFromXML(responseString);
         if (!Signature.checkSignValid(responseResult_, apiKey)) {
-            System.out.println(this.getClass().getName() + " CheckSignValid Failed!");
+            Logger.warn(this.getClass().getName() + " CheckSignValid Failed!");
             return false;
         }
 
