@@ -1,6 +1,7 @@
 package com.weixin.action;
 
 import com.framework.action.AjaxActionSupport;
+import com.framework.utils.I18n;
 import com.framework.utils.StringUtils;
 import com.merchant.database.IdMapUUID;
 import com.merchant.database.SubMerchantUser;
