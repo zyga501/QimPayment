@@ -23,7 +23,7 @@ public class AccessToken extends WeixinAPI{
                 return accessTokenMap_.get(appid);
             }
 
-            Logger.warn("Get Access Token Failed!");
+            Logger.error("Get Access Token Failed!");
             return null;
         }
     }

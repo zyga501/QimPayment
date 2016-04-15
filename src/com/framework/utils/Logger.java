@@ -1,19 +1,23 @@
 package com.framework.utils;
 
-import java.util.logging.Level;
+import org.apache.log4j.PropertyConfigurator;
 
 public class Logger {
-    private static java.util.logging.Logger logger_ = java.util.logging.Logger.getLogger("Loggers");
+    private static org.apache.log4j.Logger logger_ = org.apache.log4j.Logger.getLogger("Logger");
 
     public static void info(String message) {
-        logger_.log(Level.INFO, message);
+        logger_.info(message);
     }
 
     public static void warn(String message) {
-        logger_.log(Level.WARNING, message);
+        logger_.warn(message);
     }
 
-    public static void server(String message) {
-        logger_.log(Level.SEVERE, message);
+    public static void error(String message) {
+        logger_.error(message);
+    }
+
+    static {
+        PropertyConfigurator.configureAndWatch("./log4j.properties", 60000);
     }
 }
