@@ -21,10 +21,11 @@ public class SubMerchantUser {
         return subMerchantUser;
     }
 
-    public static SubMerchantUser getSubMerchantUserByLogin(String userName, String userPwd) {
+    public static SubMerchantUser getSubMerchantUserByLogin(String id,String userName, String userPwd) {
         SqlSession sqlSession = Database.SqlSessionFactory().openSession();
         String statement = "com.merchant.database.mapping.subMerchantUser.getSubMerchantUserByAccount";
         Map<String, Object> param=new HashMap<String, Object>();
+        param.put("submerchantid",id);
         param.put("userName",userName);
         param.put("userPwd",userPwd);
         SubMerchantUser subMerchantUser = sqlSession.selectOne(statement, param);

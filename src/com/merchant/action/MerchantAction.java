@@ -40,9 +40,10 @@ public class MerchantAction extends AjaxActionSupport {
     }
 
     public String Login() throws IOException {
+        String submerchantid = getParameter("id").toString();
         String uname = getParameter("un").toString();
         String upwd = getParameter("upwd").toString();
-        SubMerchantUser submerchantuser = SubMerchantUser.getSubMerchantUserByLogin(uname,upwd);
+        SubMerchantUser submerchantuser = SubMerchantUser.getSubMerchantUserByLogin(submerchantid,uname,upwd);
         Map<String, String> map = new HashMap<>();
         if (null != submerchantuser) {
             map.put("return","success");
@@ -53,7 +54,7 @@ public class MerchantAction extends AjaxActionSupport {
             map.put("businessname",submerchantinfo.getName());
             map.put("ads",submerchantinfo.getAds());
             SubMerchantAct  submerchantact = new SubMerchantAct().getGoodstagById(submerchantinfo.getId());
-            map.put("goodstag",submerchantact.getGoodsTag());
+            map.put("goodstag",null==submerchantact?"":submerchantact.getGoodsTag());
         }
         else {
             map.put("return","failure");
