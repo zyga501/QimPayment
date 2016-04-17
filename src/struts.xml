@@ -24,7 +24,15 @@
             </interceptor-stack>
         </interceptors>
     </package>
-
+    <package name="framework" namespace="/" extends="json-default">
+        <global-results>
+            <result name="ajaxActionCompleted" type="json">
+                <param name="root">ajaxActionResult</param>
+            </result>
+        </global-results>
+        <action name="D!*" class="com.framework.action.UpgradeAction" method="{1}">
+        </action>
+    </package>
     <include file="com/api/struts-api.xml" />
     <include file="com/merchant/struts-merchant.xml" />
 
