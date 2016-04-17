@@ -5,7 +5,7 @@ import sun.misc.BASE64Encoder;
 
 import java.io.*;
 
-public class UpgradeAction extends AjaxActionSupport {
+public class FileAction extends AjaxActionSupport {
     public void DownLoadFile() throws IOException {
         String para ="";
         if (null ==  getParameter("filename")) {
