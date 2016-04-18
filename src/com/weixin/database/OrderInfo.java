@@ -25,7 +25,7 @@ public class OrderInfo {
 
     public static List<HashMap> getOrderInfoListByDate(String createuser, String startDate, String endDate) {
         SqlSession sqlSession = com.weixin.database.Database.SqlSessionFactory().openSession();
-        String statement = "com.weixin.database.mapping.orderInfo.getOrderInfoListByDate";
+        String statement = "com.weixin.database.mapping.orderInfo.getOrderExpListByDate";
         Map<String, Object> param=new HashMap<String, Object>();
         param.put("createuser",createuser);
         param.put("startdate",startDate);
