@@ -68,7 +68,6 @@ public abstract class WeixinAPI {
         }
 
         Logger.info("Response Data:\r\n" + responseString);
-        Logger.info("Response Data:\r\n" + responseString);
 
         return handlerResponse(responseString);
     }
