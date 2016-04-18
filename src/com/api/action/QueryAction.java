@@ -20,7 +20,7 @@ public class QueryAction extends AjaxActionSupport {
     }
 
     public String OrderList() {
-       List<OrderInfo> orderInfo = OrderInfo.getOrderInfoListByDate(getParameter("id").toString(),getParameter("startdate").toString(),getParameter("enddate").toString());
+       List<HashMap> orderInfo = OrderInfo.getOrderInfoListByDate(getParameter("id").toString(),getParameter("startdate").toString(),getParameter("enddate").toString());
         Map<String , Object> map = new HashMap<>();
         map.put("resultlist",orderInfo);
         return AjaxActionComplete(map);
