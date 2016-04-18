@@ -11,7 +11,11 @@
         SELECT * FROM OrderInfo WHERE transactionId=#{transactionId}
     </select>
     <select id="getOrderInfoListByDate" parameterType="java.util.HashMap"  resultMap="orderInfoResult">
-        SELECT * FROM OrderInfo WHERE createuser=#{createuser} and createtime between #{startdate}  and #{enddate}
+            SELECT * FROM OrderInfo WHERE createuser=#{createuser} and createtime between #{startdate}  and #{enddate}
+    </select>
+    <select id="getOrderExpListByDate" parameterType="java.util.HashMap"  resultType="java.util.HashMap">
+        SELECT body 附记,transactionId as 微信订单号,outTradeNo 订单号,bankType 结构银行,totalFee 金额【分】,timeEnd 时间
+          FROM OrderInfo WHERE createuser=#{createuser} and createtime between #{startdate}  and #{enddate}
     </select>
     <select id="collectOrderInfoByDate"  parameterType="java.util.HashMap"  resultMap="orderInfoCollect">
         SELECT count(*) as infoCount,sum(totalFee) as sumFee FROM OrderInfo WHERE createUser=#{createUser}

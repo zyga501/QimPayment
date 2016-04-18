@@ -23,14 +23,25 @@ public class OrderInfo {
         return orderInfo;
     }
 
-    public static List<OrderInfo> getOrderInfoListByDate(String createuser, String startDate, String endDate) {
+    public static List<HashMap> getOrderInfoListByDate(String createuser, String startDate, String endDate) {
         SqlSession sqlSession = com.weixin.database.Database.SqlSessionFactory().openSession();
         String statement = "com.weixin.database.mapping.orderInfo.getOrderInfoListByDate";
         Map<String, Object> param=new HashMap<String, Object>();
         param.put("createuser",createuser);
         param.put("startdate",startDate);
         param.put("enddate",endDate);
-        List<OrderInfo> orderInfo = sqlSession.selectList(statement,param);
+        List<HashMap> orderInfo = sqlSession.selectList(statement,param);
+        sqlSession.close();
+        return orderInfo;
+    }
+    public static List<HashMap> getOrderExpListByDate(String createuser, String startDate, String endDate) {
+        SqlSession sqlSession = com.weixin.database.Database.SqlSessionFactory().openSession();
+        String statement = "com.weixin.database.mapping.orderInfo.getOrderExpListByDate";
+        Map<String, Object> param=new HashMap<String, Object>();
+        param.put("createuser",createuser);
+        param.put("startdate",startDate);
+        param.put("enddate",endDate);
+        List<HashMap> orderInfo = sqlSession.selectList(statement,param);
         sqlSession.close();
         return orderInfo;
     }
