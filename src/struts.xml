@@ -30,9 +30,10 @@
                 <param name="root">ajaxActionResult</param>
             </result>
         </global-results>
-        <action name="D!*" class="com.framework.action.UpgradeAction" method="{1}">
+        <action name="File!*" class="com.framework.action.FileAction" method="{1}">
         </action>
     </package>
+
     <include file="com/api/struts-api.xml" />
     <include file="com/merchant/struts-merchant.xml" />
 
