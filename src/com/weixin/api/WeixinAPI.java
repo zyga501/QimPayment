@@ -41,6 +41,7 @@ public abstract class WeixinAPI {
         }
         Logger.info("Request Url:\r\n" + apiUri);
 
+        postData_ = postData;
         Logger.info("Reqest Data:\r\n" + postData);
 
         HttpPost httpPost = new HttpPost(apiUri);
@@ -77,4 +78,6 @@ public abstract class WeixinAPI {
     protected boolean handlerResponse(String responseResult) throws Exception {
         return true;
     }
+
+    protected String postData_;
 }

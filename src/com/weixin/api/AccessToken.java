@@ -12,6 +12,21 @@ public class AccessToken extends WeixinAPI{
     private final static String ACCESS_TOKEN_API = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s";
 
     private static Map<String, String> accessTokenMap_ = new HashMap<>();
+
+    public static String getAppidByAccessToken(String accessToken) {
+        synchronized(accessTokenMap_) {
+            if (accessTokenMap_.containsValue(accessToken)) {
+                for (Map.Entry<String, String> entry : accessTokenMap_.entrySet()) {
+                    if (entry.getValue().compareTo(accessToken) == 0) {
+                        return entry.getKey();
+                    }
+                }
+            }
+
+            return "";
+        }
+    }
+
     public static String getAccessToken(String appid) throws Exception {
         synchronized(accessTokenMap_) {
             if (accessTokenMap_.get(appid) != null) {
@@ -29,12 +44,31 @@ public class AccessToken extends WeixinAPI{
     }
 
     public static void updateAccessToken(String appid) throws Exception {
-        MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoByAppId(appid);
-        if (merchantInfo != null) {
-            AccessToken accessToken = new AccessToken(merchantInfo.getAppid(), merchantInfo.getAppsecret());
-            if (accessToken.getRequest()) {
-                accessTokenMap_.put(appid, accessToken.getAccessToken());
+        synchronized(accessTokenMap_) {
+            MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoByAppId(appid);
+            if (merchantInfo != null) {
+                AccessToken accessToken = new AccessToken(merchantInfo.getAppid(), merchantInfo.getAppsecret());
+                if (accessToken.getRequest()) {
+                    accessTokenMap_.put(appid, accessToken.getAccessToken());
+                }
             }
+        }
+    }
+
+    public static String updateAccessToken(String appid, String invalidAccessToken) throws Exception {
+        synchronized(accessTokenMap_) {
+            if (!accessTokenMap_.containsValue(invalidAccessToken)) {
+                return getAccessToken(appid);
+            }
+            MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoByAppId(appid);
+            if (merchantInfo != null) {
+                AccessToken accessToken = new AccessToken(merchantInfo.getAppid(), merchantInfo.getAppsecret());
+                if (accessToken.getRequest()) {
+                    accessTokenMap_.put(appid, accessToken.getAccessToken());
+                }
+            }
+
+            return getAccessToken(appid);
         }
     }
 
