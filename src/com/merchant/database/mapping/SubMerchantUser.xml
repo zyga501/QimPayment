@@ -22,7 +22,7 @@
         INSERT INTO SubMerchantUser(id,subMerchantId,userName,userPwd,storeName)
         VALUE (#{id},#{subMerchantId},#{userName},#{userPwd},#{storeName})
     </insert>
-    <update id="updateWeixinIdByUserId" parameterType="com.merchant.database.SubMerchantUser">
+    <update id="updateWeixinIdById" parameterType="com.merchant.database.SubMerchantUser">
         UPDATE SubMerchantUser
         SET weixinId = #{weixinId}
         WHERE id = #{id}

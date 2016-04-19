@@ -103,10 +103,23 @@
       })
     }
 
-    function updateWeixinIdByUserId() {
+    function updateUserWeixinIdByUId() {
       $.ajax({
         type: 'post',
-        url: 'merchant/SubMerchantUser!updateWeixinIdByUserId',
+        url: 'merchant/SubMerchantUser!updateWeixinIdById',
+        dataType:"json",
+        data:$("form").serialize(),
+        success: function (data) {
+          var json = eval("(" + data + ")");
+          alert(json);
+        }
+      })
+    }
+
+    function updateSubMerchantWeixinIdByUId() {
+      $.ajax({
+        type: 'post',
+        url: 'merchant/SubMerchant!updateWeixinIdById',
         dataType:"json",
         data:$("form").serialize(),
         success: function (data) {
@@ -226,7 +239,10 @@
         <input type="button" onclick="regsiterSubMerchantInfo()" value="注册子商户"/>
       </td>
     <td>
-      <input type="button" onclick="updateWeixinIdByUserId()" value="更新微信号"/>
+      <input type="button" onclick="updateUserWeixinIdById()" value="更新员工微信号"/>
+    </td>
+    <td>
+      <input type="button" onclick="updateSubMerchantWeixinIdByUId()" value="更新商户微信号"/>
     </td>
   </tr>
   </table>

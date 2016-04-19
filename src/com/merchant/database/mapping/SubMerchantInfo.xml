@@ -23,4 +23,9 @@
         INSERT INTO SubMerchant(id,merchantId,name,address)
         VALUE (#{id},#{merchantId},#{name},#{address})
     </insert>
+    <update id="updateWeixinIdById" parameterType="com.merchant.database.SubMerchantUser">
+        UPDATE SubMerchant
+        SET weixinId = #{weixinId}
+        WHERE id = #{id}
+    </update>
 </mapper>

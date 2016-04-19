@@ -50,6 +50,15 @@ public class SubMerchantInfo {
         }
     }
 
+    public static boolean updateWeixinIdById(SubMerchantInfo subMerchantInfo) {
+        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
+        String statement = "com.merchant.database.mapping.subMerchantInfo.updateWeixinIdById";
+        int result = sqlSession.update(statement, subMerchantInfo);
+        sqlSession.commit();
+        sqlSession.close();
+        return result == 1;
+    }
+
     public long getId() {
         return id_;
     }

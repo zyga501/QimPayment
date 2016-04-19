@@ -61,9 +61,9 @@ public class SubMerchantUser {
         }
     }
 
-    public static boolean updateWeixinIdByUserId(SubMerchantUser subMerchantUser) {
+    public static boolean updateWeixinIdById(SubMerchantUser subMerchantUser) {
         SqlSession sqlSession = Database.SqlSessionFactory().openSession();
-        String statement = "com.merchant.database.mapping.subMerchantUser.updateWeixinIdByUserId";
+        String statement = "com.merchant.database.mapping.subMerchantUser.updateWeixinIdById";
         int result = sqlSession.update(statement, subMerchantUser);
         sqlSession.commit();
         sqlSession.close();

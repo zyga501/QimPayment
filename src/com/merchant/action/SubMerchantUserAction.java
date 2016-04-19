@@ -13,7 +13,7 @@ public class SubMerchantUserAction extends AjaxActionSupport {
         return AjaxActionComplete(SubMerchantUser.getSubMerchantUserBySubMerchantId(subMerchantInfo.getId()));
     }
 
-    public String updateWeixinIdByUserId() {
+    public String updateWeixinIdById() {
         Map<String, String> resultMap = new HashMap<>();
         resultMap.put("resultCode", "Failed");
 
@@ -22,7 +22,7 @@ public class SubMerchantUserAction extends AjaxActionSupport {
         SubMerchantUser subMerchantUser = new SubMerchantUser();
         subMerchantUser.setId(id);
         subMerchantUser.setWeixinId(weixinId);
-        if (SubMerchantUser.updateWeixinIdByUserId(subMerchantUser)) {
+        if (SubMerchantUser.updateWeixinIdById(subMerchantUser)) {
             resultMap.put("resultCode", "Succeed");
         }
 
