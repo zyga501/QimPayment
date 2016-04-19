@@ -2,6 +2,7 @@ package com.weixin.action;
 
 import com.framework.action.AjaxActionSupport;
 import com.framework.utils.Logger;
+import com.framework.utils.UdpSocket;
 import com.framework.utils.XMLParser;
 import com.message.WeixinMessage;
 import com.weixin.database.MerchantInfo;
@@ -10,7 +11,9 @@ import com.weixin.utils.Signature;
 import net.sf.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 import java.util.Map;
 
 public class CallbackAction extends AjaxActionSupport {
@@ -53,6 +56,7 @@ public class CallbackAction extends AjaxActionSupport {
 
         boolean ret = saveOrderToDb(responseResult);
         if (ret) {
+            notifyClientToPrint(responseResult);
             return WeixinMessage.sendTemplateMessage(responseResult.get("transaction_id").toString());
         }
 
@@ -79,5 +83,17 @@ public class CallbackAction extends AjaxActionSupport {
         orderInfo.setCreateUser(Long.parseLong(jsonObject.get("id").toString()));
         orderInfo.setOpenId(responseResult.get("openid").toString());
         return OrderInfo.insertOrderInfo(orderInfo);
+    }
+
+    private void notifyClientToPrint(Map<String,Object> responseResult) throws IOException {
+        Map<String, String> map = new HashMap<>();
+        JSONObject jsonObject = JSONObject.fromObject(responseResult.get("attach").toString());
+        map.put("body", jsonObject.get("body").toString());
+        map.put("transaction_id",responseResult.get("transaction_id").toString());
+        map.put("out_trade_no", responseResult.get("out_trade_no").toString());
+        map.put("bank_type", responseResult.get("bank_type").toString());
+        map.put("total_fee", responseResult.get("total_fee").toString());
+        map.put("time_end", responseResult.get("time_end").toString());
+        new UdpSocket("127.0.0.1", 8848).sendMessage(jsonObject.get("id").toString().concat(JSONObject.fromObject(map).toString()).getBytes());
     }
 }

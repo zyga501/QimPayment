@@ -3,6 +3,7 @@ package com.weixin.action;
 import com.framework.action.AjaxActionSupport;
 import com.framework.utils.Logger;
 import com.framework.utils.StringUtils;
+import com.framework.utils.UdpSocket;
 import com.merchant.database.IdMapUUID;
 import com.merchant.database.SubMerchantUser;
 import com.message.WeixinMessage;
@@ -13,6 +14,7 @@ import com.weixin.api.RequestData.UnifiedOrderRequestData;
 import com.weixin.database.MerchantInfo;
 import com.weixin.database.SubMerchantInfo;
 import com.weixin.utils.Signature;
+import net.sf.json.JSONObject;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -54,6 +56,7 @@ public class PayAction extends AjaxActionSupport {
                     map.put("total_fee", microPay.getResponseResult().get("total_fee").toString());
                     map.put("time_end", microPay.getResponseResult().get("time_end").toString());
 
+                    new UdpSocket("127.0.0.1", 8848).sendMessage(String.valueOf(subMerchantUser.getId()).concat(JSONObject.fromObject(map).toString()).getBytes()); // notify client to print
                     WeixinMessage.sendTemplateMessage(microPay.getResponseResult().get("transaction_id").toString());
 
                     return AjaxActionComplete(map);
