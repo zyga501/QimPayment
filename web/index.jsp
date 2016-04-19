@@ -77,6 +77,19 @@
       })
     }
 
+    function getInfoBySubMerchantId() {
+      $.ajax({
+        type: 'post',
+        url: 'merchant/SubMerchantUser!getInfoBySubMerchantId',
+        dataType:"json",
+        data:$("form").serialize(),
+        success: function (data) {
+          var json = eval("(" + data + ")");
+          alert(json);
+        }
+      })
+    }
+
   </script>
 </head>
 <body>
@@ -141,6 +154,12 @@
         </div>
       </td>
     </tr>
+    <tr><td>子商户编号:</td>
+      <td>
+        <input type="text" id="subMerchantId" name="subMerchantId"/>
+      </td>
+    </tr>
+    <tr>
     <tr>
       <td>
         <input type="button" onclick="microPay()" value="刷卡提交"/>
@@ -154,7 +173,10 @@
       <td>
         <input type="button" onclick="refund()" value="申请退款"/>
       </td>
-    </tr>
+      <td>
+        <input type="button" onclick="getInfoBySubMerchantId()" value="获取子商户信息"/>
+      </td>
+  </tr>
   </table>
 </form>
 </body>

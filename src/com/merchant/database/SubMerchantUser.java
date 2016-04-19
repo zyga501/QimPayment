@@ -3,6 +3,7 @@ package com.merchant.database;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SubMerchantUser {
@@ -21,16 +22,24 @@ public class SubMerchantUser {
         return subMerchantUser;
     }
 
-    public static SubMerchantUser getSubMerchantUserByLogin(String id,String userName, String userPwd) {
+    public static SubMerchantUser getSubMerchantUserByLogin(String subMerchantId, String userName, String userPwd) {
         SqlSession sqlSession = Database.SqlSessionFactory().openSession();
         String statement = "com.merchant.database.mapping.subMerchantUser.getSubMerchantUserByAccount";
         Map<String, Object> param=new HashMap<String, Object>();
-        param.put("submerchantid",id);
-        param.put("userName",userName);
-        param.put("userPwd",userPwd);
+        param.put("submerchantid", subMerchantId);
+        param.put("userName", userName);
+        param.put("userPwd", userPwd);
         SubMerchantUser subMerchantUser = sqlSession.selectOne(statement, param);
         sqlSession.close();
         return subMerchantUser;
+    }
+
+    public static List<SubMerchantUser> getSubMerchantUserBySubMerchantId(long subMerchantId) {
+        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
+        String statement = "com.merchant.database.mapping.subMerchantUser.getSubMerchantUserBySubMerchantId";
+        List<SubMerchantUser> subMerchantUserList = sqlSession.selectList(statement, subMerchantId);
+        sqlSession.close();
+        return subMerchantUserList;
     }
 
     public long getId() {

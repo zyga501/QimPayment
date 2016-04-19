@@ -3,11 +3,13 @@ package com.framework.action;
 import com.framework.utils.StringUtils;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.struts2.ServletActionContext;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.Map;
 
 public class AjaxActionSupport extends ActionSupport {
@@ -73,6 +75,11 @@ public class AjaxActionSupport extends ActionSupport {
     }
     public String AjaxActionComplete( Map resultMap) {
         ajaxActionResult_ = JSONObject.fromObject(resultMap).toString();
+        return AJAXACTIONCOMPLETED;
+    }
+
+    public String AjaxActionComplete(List resultList) {
+        ajaxActionResult_ = JSONArray.fromObject(resultList).toString();
         return AJAXACTIONCOMPLETED;
     }
 
