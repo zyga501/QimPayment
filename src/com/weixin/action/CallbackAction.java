@@ -3,7 +3,7 @@ package com.weixin.action;
 import com.framework.action.AjaxActionSupport;
 import com.framework.utils.Logger;
 import com.framework.utils.XMLParser;
-import com.weixin.api.TemplateMessage;
+import com.message.WeixinMessage;
 import com.weixin.database.MerchantInfo;
 import com.weixin.database.OrderInfo;
 import com.weixin.utils.Signature;
@@ -53,7 +53,7 @@ public class CallbackAction extends AjaxActionSupport {
 
         boolean ret = saveOrderToDb(responseResult);
         if (ret) {
-            return TemplateMessage.sendMessage(responseResult.get("transaction_id").toString());
+            return WeixinMessage.sendTemplateMessage(responseResult.get("transaction_id").toString());
         }
 
         return false;

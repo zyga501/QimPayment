@@ -1,11 +1,11 @@
 package com.weixin.action;
 
 import com.framework.action.AjaxActionSupport;
-import com.framework.utils.I18n;
 import com.framework.utils.Logger;
 import com.framework.utils.StringUtils;
 import com.merchant.database.IdMapUUID;
 import com.merchant.database.SubMerchantUser;
+import com.message.WeixinMessage;
 import com.weixin.api.*;
 import com.weixin.api.RequestData.MicroPayRequestData;
 import com.weixin.api.RequestData.RefundRequestData;
@@ -54,7 +54,7 @@ public class PayAction extends AjaxActionSupport {
                     map.put("total_fee", microPay.getResponseResult().get("total_fee").toString());
                     map.put("time_end", microPay.getResponseResult().get("time_end").toString());
 
-                    TemplateMessage.sendMessage(microPay.getResponseResult().get("transaction_id").toString());
+                    WeixinMessage.sendTemplateMessage(microPay.getResponseResult().get("transaction_id").toString());
 
                     return AjaxActionComplete(map);
                 }
