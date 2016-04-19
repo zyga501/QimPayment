@@ -27,4 +27,9 @@
         SET weixinId = #{weixinId}
         WHERE id = #{id}
     </update>
+    <update id="updateStoreNameById" parameterType="com.merchant.database.SubMerchantUser">
+        UPDATE SubMerchantUser
+        SET storeName = #{storeName}
+        WHERE id = #{id}
+    </update>
 </mapper>

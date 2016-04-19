@@ -28,4 +28,20 @@ public class SubMerchantUserAction extends AjaxActionSupport {
 
         return AjaxActionComplete(resultMap);
     }
+
+    public String updateStoreNameById() {
+        Map<String, String> resultMap = new HashMap<>();
+        resultMap.put("resultCode", "Failed");
+
+        long id = Long.parseLong(getParameter("id").toString());
+        String storeName = getParameter("storeName").toString();
+        SubMerchantUser subMerchantUser = new SubMerchantUser();
+        subMerchantUser.setId(id);
+        subMerchantUser.setStoreName(storeName);
+        if (SubMerchantUser.updateStoreNameById(subMerchantUser)) {
+            resultMap.put("resultCode", "Succeed");
+        }
+
+        return AjaxActionComplete(resultMap);
+    }
 }

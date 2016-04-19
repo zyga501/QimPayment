@@ -129,6 +129,18 @@
       })
     }
 
+    function updateStoreNameById() {
+      $.ajax({
+        type: 'post',
+        url: 'merchant/SubMerchantUser!updateStoreNameById',
+        dataType:"json",
+        data:$("form").serialize(),
+        success: function (data) {
+          var json = eval("(" + data + ")");
+          alert(json);
+        }
+      })
+    }
   </script>
 </head>
 <body>
@@ -243,6 +255,9 @@
     </td>
     <td>
       <input type="button" onclick="updateSubMerchantWeixinIdByUId()" value="更新商户微信号"/>
+    </td>
+    <td>
+      <input type="button" onclick="updateStoreNameById()" value="更新店名"/>
     </td>
   </tr>
   </table>

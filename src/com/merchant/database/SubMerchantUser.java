@@ -70,6 +70,15 @@ public class SubMerchantUser {
         return result == 1;
     }
 
+    public static boolean updateStoreNameById(SubMerchantUser subMerchantUser) {
+        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
+        String statement = "com.merchant.database.mapping.subMerchantUser.updateStoreNameById";
+        int result = sqlSession.update(statement, subMerchantUser);
+        sqlSession.commit();
+        sqlSession.close();
+        return result == 1;
+    }
+
     public long getId() {
         return id_;
     }
