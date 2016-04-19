@@ -103,6 +103,19 @@
       })
     }
 
+    function updateWeixinIdByUserId() {
+      $.ajax({
+        type: 'post',
+        url: 'merchant/SubMerchantUser!updateWeixinIdByUserId',
+        dataType:"json",
+        data:$("form").serialize(),
+        success: function (data) {
+          var json = eval("(" + data + ")");
+          alert(json);
+        }
+      })
+    }
+
   </script>
 </head>
 <body>
@@ -187,6 +200,11 @@
         <input type="text" id="merchantId" name="merchantId" value="1596082254858240"/>
       </td>
     </tr>
+    <tr><td>微信Id:</td>
+      <td>
+        <input type="text" id="weixinId" name="weixinId"/>
+      </td>
+    </tr>
     <tr>
     <tr>
       <td>
@@ -204,8 +222,11 @@
       <td>
         <input type="button" onclick="getInfoBySubMerchantId()" value="获取子商户信息"/>
       </td>
+      <td>
+        <input type="button" onclick="regsiterSubMerchantInfo()" value="注册子商户"/>
+      </td>
     <td>
-      <input type="button" onclick="regsiterSubMerchantInfo()" value="注册子商户"/>
+      <input type="button" onclick="updateWeixinIdByUserId()" value="更新微信号"/>
     </td>
   </tr>
   </table>
