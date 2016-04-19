@@ -1,10 +1,16 @@
 package com.merchant.database;
 
+import com.framework.utils.IdWorker;
 import org.apache.ibatis.session.SqlSession;
 
 public class SubMerchantInfo {
     public static void main(String[] args) throws Exception {
-        getSubMerchantLogoById(1596144145909760L);
+        SubMerchantInfo subMerchantInfo = new SubMerchantInfo();
+        subMerchantInfo.setId(new IdWorker(0).nextId());
+        subMerchantInfo.setMerchantId(1596082254858240L);
+        subMerchantInfo.setName("1234");
+        subMerchantInfo.setAddress("123");
+        SubMerchantInfo.insertSubMerchantBaseInfo(subMerchantInfo);
     }
 
     public static SubMerchantInfo getSubMerchantInfoById(long id) {
@@ -29,6 +35,19 @@ public class SubMerchantInfo {
         SubMerchantInfo subMerchantInfo = sqlSession.selectOne(statement, id);
         sqlSession.close();
         return subMerchantInfo.getLogo();
+    }
+
+    public static SqlSession insertSubMerchantBaseInfo(SubMerchantInfo subMerchantInfo) {
+        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
+        String statement = "com.merchant.database.mapping.subMerchantInfo.insertSubMerchantBaseInfo";
+        int result = sqlSession.insert(statement, subMerchantInfo);
+        if (result == 1) {
+            return sqlSession;
+        }
+        else {
+            sqlSession.close();
+            return null;
+        }
     }
 
     public long getId() {
@@ -95,6 +114,14 @@ public class SubMerchantInfo {
         this.templateId_ = templateId;
     }
 
+    public String getAddress() {
+        return address_;
+    }
+
+    public void setAddress(String address) {
+        this.address_ = address;
+    }
+
     private long id_;
     private long merchantId_;
     private String name_;
@@ -103,4 +130,5 @@ public class SubMerchantInfo {
     private String ads_;
     private String weixinId_;
     private String templateId_;
+    private String address_;
 }

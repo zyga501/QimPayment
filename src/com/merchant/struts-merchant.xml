@@ -14,6 +14,8 @@
 
         <action name="Merchant!*" class="com.merchant.action.MerchantAction" method="{1}">
         </action>
+        <action name="SubMerchant!*" class="com.merchant.action.SubMerchantUserAction" method="{1}">
+        </action>
         <action name="SubMerchantUser!*" class="com.merchant.action.SubMerchantUserAction" method="{1}">
         </action>
     </package>

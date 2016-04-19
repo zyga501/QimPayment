@@ -48,7 +48,7 @@ public class OrderInfo {
     }
 
     public static boolean insertOrderInfo(OrderInfo orderInfo) {
-        SqlSession sqlSession = Database.SqlSessionFactory().openSession(true);
+        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
         String statement = "com.weixin.database.mapping.orderInfo.insertOrderInfo";
         int result = sqlSession.insert(statement, orderInfo);
         sqlSession.commit();
