@@ -80,7 +80,7 @@
     function getInfoBySubMerchantId() {
       $.ajax({
         type: 'post',
-        url: 'merchant/SubMerchantUser!getInfoBySubMerchantId',
+        url: 'merchant/SubMerchantUser!getInfoByWeixinSubMerchantId',
         dataType:"json",
         data:$("form").serialize(),
         success: function (data) {
@@ -117,7 +117,7 @@
     </tr>
     <tr><td>总金额:</td>
       <td>
-        <input type="text" id="total_fee" name="total_fee" value="600"/>
+        <input type="text" id="total_fee" name="total_fee" value="1"/>
       </td>
     </tr>
     <tr><td>二维码字符串:</td>
@@ -156,7 +156,7 @@
     </tr>
     <tr><td>子商户编号:</td>
       <td>
-        <input type="text" id="subMerchantId" name="subMerchantId"/>
+        <input type="text" id="sub_mch_id" name="sub_mch_id"/>
       </td>
     </tr>
     <tr>

@@ -36,7 +36,7 @@ public class SubMerchantAction extends AjaxActionSupport {
                 // insert weixin info
                 String sub_mch_id = getParameter("sub_mch_id").toString();
                 com.weixin.database.SubMerchantInfo subMerchantWeixinInfo = new com.weixin.database.SubMerchantInfo();
-                subMerchantWeixinInfo.setId(new IdWorker(0).nextId());
+                subMerchantWeixinInfo.setId(subMerchantId);
                 subMerchantWeixinInfo.setSubId(sub_mch_id);
                 subMerchantWeixinInfo.setMerchantId(merchantId);
                 if (com.weixin.database.SubMerchantInfo.insertSubMerchantInfo(subMerchantWeixinInfo)) {
