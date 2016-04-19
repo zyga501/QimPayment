@@ -6,6 +6,8 @@ import com.merchant.database.SubMerchantInfo;
 import com.merchant.database.SubMerchantUser;
 import org.apache.ibatis.session.SqlSession;
 
+import java.io.DataInputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -63,6 +65,28 @@ public class SubMerchantAction extends AjaxActionSupport {
         subMerchantInfo.setWeixinId(weixinId);
         if (SubMerchantInfo.updateWeixinIdById(subMerchantInfo)) {
             resultMap.put("resultCode", "Succeed");
+        }
+
+        return AjaxActionComplete(resultMap);
+    }
+
+    public String updateLogoById() throws IOException {
+        Map<String, String> resultMap = new HashMap<>();
+        resultMap.put("resultCode", "Failed");
+
+        long id = Long.parseLong(getParameter("id").toString());
+        int contentLength = getRequest().getContentLength();
+        if (contentLength > 0) {
+            byte[] logoBuffer = new byte[contentLength];
+            DataInputStream dataInputStream = new DataInputStream(getRequest().getInputStream());
+            dataInputStream.readFully(logoBuffer);
+            dataInputStream.close();
+            SubMerchantInfo subMerchantInfo = new SubMerchantInfo();
+            subMerchantInfo.setId(id);
+            subMerchantInfo.setLogo(logoBuffer);
+            if (SubMerchantInfo.updateLogoById(subMerchantInfo)) {
+                resultMap.put("resultCode", "Succeed");
+            }
         }
 
         return AjaxActionComplete(resultMap);

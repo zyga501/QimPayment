@@ -59,6 +59,15 @@ public class SubMerchantInfo {
         return result == 1;
     }
 
+    public static boolean updateLogoById(SubMerchantInfo subMerchantInfo) {
+        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
+        String statement = "com.merchant.database.mapping.subMerchantInfo.updateLogoById";
+        int result = sqlSession.update(statement, subMerchantInfo);
+        sqlSession.commit();
+        sqlSession.close();
+        return result == 1;
+    }
+
     public long getId() {
         return id_;
     }
