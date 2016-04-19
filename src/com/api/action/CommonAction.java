@@ -59,6 +59,7 @@ public class CommonAction extends AjaxActionSupport {
         while ((lineBuffer = bufferedReader.readLine()) != null) {
             stringBuilder.append(lineBuffer);
         }
+        bufferedReader.close();
 
         String resquestString = stringBuilder.toString();
         requestBuffer_ = XMLParser.convertMapFromXML(resquestString);
