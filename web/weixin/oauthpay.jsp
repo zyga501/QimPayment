@@ -186,7 +186,7 @@ a,input,label {
 <form >
     <input type="hidden" value="<%=request.getParameter("state")%>" name="state"/>
     <input type="hidden" value="<%=request.getParameter("code")%>" name="code"/>
-    <input type="hidden" value="<%=request.getParameter("storename")%>" name="body"/>
+    <input type="hidden" value="${storename}" name="body"/>
     <input type="hidden" value="" name="total_fee" id="total_fee"/>
 
     <div class="Layer122">
@@ -194,7 +194,7 @@ a,input,label {
         <br>
 
         <div align="center" class="STYLE3"><img style="width:90px;height:90px;border-radius:8px"
-                                                src="<%=request.getContextPath()%>/merchant/Merchant!FetchLogo?id=<s:property value="subMerchantId" escape="false" />"></div>
+                                                src="<%=request.getContextPath()%>/merchant/Merchant!FetchLogo?id=${subMerchantId}"></div>
         <br>
 
         <div align="center" class="STYLE5"><%=request.getSession().getAttribute("storename")%>
