@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SubMerchantAction extends AjaxActionSupport {
-    public String insertSubMerchantBaseInfo() {
+    public String regsiterSubMerchantInfo() {
         Map<String, String> resultMap = new HashMap<>();
         resultMap.put("resultCode", "Failed");
         // insert base info
@@ -25,6 +25,7 @@ public class SubMerchantAction extends AjaxActionSupport {
         subMerchantInfo.setAddress(address);
         SqlSession sqlSubMerchantSession = SubMerchantInfo.insertSubMerchantInfo(subMerchantInfo);
         if (sqlSubMerchantSession != null) {
+            // insert default user
             SubMerchantUser subMerchantUser = new SubMerchantUser();
             subMerchantUser.setId(new IdWorker(0).nextId());
             subMerchantUser.setSubMerchantId(subMerchantId);

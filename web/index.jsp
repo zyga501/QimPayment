@@ -90,6 +90,19 @@
       })
     }
 
+    function regsiterSubMerchantInfo() {
+      $.ajax({
+        type: 'post',
+        url: 'merchant/SubMerchant!regsiterSubMerchantInfo',
+        dataType:"json",
+        data:$("form").serialize(),
+        success: function (data) {
+          var json = eval("(" + data + ")");
+          alert(json);
+        }
+      })
+    }
+
   </script>
 </head>
 <body>
@@ -154,9 +167,24 @@
         </div>
       </td>
     </tr>
-    <tr><td>子商户编号:</td>
+    <tr><td>微信子商户ID:</td>
       <td>
         <input type="text" id="sub_mch_id" name="sub_mch_id"/>
+      </td>
+    </tr>
+    <tr><td>店名:</td>
+      <td>
+        <input type="text" id="storeName" name="storeName" value="狗皮牌狗皮膏药"/>
+      </td>
+    </tr>
+    <tr><td>地址:</td>
+      <td>
+        <input type="text" id="address" name="address" value="没地址"/>
+      </td>
+    </tr>
+    <tr><td>商户内部ID:</td>
+      <td>
+        <input type="text" id="merchantId" name="merchantId" value="1596082254858240"/>
       </td>
     </tr>
     <tr>
@@ -176,6 +204,9 @@
       <td>
         <input type="button" onclick="getInfoBySubMerchantId()" value="获取子商户信息"/>
       </td>
+    <td>
+      <input type="button" onclick="regsiterSubMerchantInfo()" value="注册子商户"/>
+    </td>
   </tr>
   </table>
 </form>
