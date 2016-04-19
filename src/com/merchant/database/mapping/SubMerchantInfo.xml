@@ -19,7 +19,7 @@
         <result property="ads" column="ads" jdbcType="VARCHAR" />
         <result property="templateId" column="templateId" jdbcType="VARCHAR"/>
     </resultMap>
-    <insert id="insertSubMerchantBaseInfo" parameterType="com.merchant.database.SubMerchantInfo">
+    <insert id="insertSubMerchantInfo" parameterType="com.merchant.database.SubMerchantInfo">
         INSERT INTO SubMerchant(id,merchantId,name,address)
         VALUE (#{id},#{merchantId},#{name},#{address})
     </insert>

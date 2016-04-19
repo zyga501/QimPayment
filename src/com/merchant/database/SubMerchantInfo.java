@@ -10,7 +10,7 @@ public class SubMerchantInfo {
         subMerchantInfo.setMerchantId(1596082254858240L);
         subMerchantInfo.setName("1234");
         subMerchantInfo.setAddress("123");
-        SubMerchantInfo.insertSubMerchantBaseInfo(subMerchantInfo);
+        SubMerchantInfo.insertSubMerchantInfo(subMerchantInfo);
     }
 
     public static SubMerchantInfo getSubMerchantInfoById(long id) {
@@ -37,9 +37,9 @@ public class SubMerchantInfo {
         return subMerchantInfo.getLogo();
     }
 
-    public static SqlSession insertSubMerchantBaseInfo(SubMerchantInfo subMerchantInfo) {
+    public static SqlSession insertSubMerchantInfo(SubMerchantInfo subMerchantInfo) {
         SqlSession sqlSession = Database.SqlSessionFactory().openSession();
-        String statement = "com.merchant.database.mapping.subMerchantInfo.insertSubMerchantBaseInfo";
+        String statement = "com.merchant.database.mapping.subMerchantInfo.insertSubMerchantInfo";
         int result = sqlSession.insert(statement, subMerchantInfo);
         if (result == 1) {
             return sqlSession;
