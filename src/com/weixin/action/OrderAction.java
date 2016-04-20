@@ -2,6 +2,7 @@ package com.weixin.action;
 
 import com.framework.action.AjaxActionSupport;
 import com.framework.utils.Logger;
+import com.framework.utils.UdpSocket;
 import com.merchant.database.SubMerchantUser;
 import com.weixin.api.OrderQuery;
 import com.weixin.api.RequestData.OrderQueryData;
@@ -68,6 +69,8 @@ public class OrderAction extends AjaxActionSupport {
                     if (orderQuery.getResponseResult().get("trade_state") != null) {
                         map.put("trade_state", orderQuery.getResponseResult().get("trade_state").toString());
                     }
+
+                    new UdpSocket("127.0.0.1", 8848).sendMessage(String.valueOf(subMerchantUser.getId()).concat("@").concat(JSONObject.fromObject(map).toString()).getBytes());
                     return AjaxActionComplete(map);
                 }
             }
