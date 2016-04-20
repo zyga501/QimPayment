@@ -70,7 +70,7 @@ public class SubMerchantInfo {
 
     public static boolean updateWeixinInfoById(SubMerchantInfo subMerchantInfo) {
         SqlSession sqlSession = Database.SqlSessionFactory().openSession();
-        String statement = "com.merchant.database.mapping.subMerchantInfo.updateWeixinInfo";
+        String statement = "com.merchant.database.mapping.subMerchantInfo.updateWeixinInfoById";
         int result = sqlSession.update(statement, subMerchantInfo);
         sqlSession.commit();
         sqlSession.close();
