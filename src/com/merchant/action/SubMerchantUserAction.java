@@ -13,7 +13,7 @@ public class SubMerchantUserAction extends AjaxActionSupport {
         return AjaxActionComplete(SubMerchantUser.getSubMerchantUserBySubMerchantId(subMerchantInfo.getId()));
     }
 
-    public String updateWeixinIdById() {
+    public String updateWeixinIdDirectById() {
         Map<String, String> resultMap = new HashMap<>();
         resultMap.put("resultCode", "Failed");
 

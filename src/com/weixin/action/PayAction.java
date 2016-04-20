@@ -56,7 +56,7 @@ public class PayAction extends AjaxActionSupport {
                     map.put("total_fee", microPay.getResponseResult().get("total_fee").toString());
                     map.put("time_end", microPay.getResponseResult().get("time_end").toString());
 
-                    new UdpSocket("127.0.0.1", 8848).sendMessage(String.valueOf(subMerchantUser.getId()).concat("@").concat(JSONObject.fromObject(map).toString()).getBytes()); // notify client to print
+                    new UdpSocket("127.0.0.1", 8848).send(String.valueOf(subMerchantUser.getId()).concat("@").concat(JSONObject.fromObject(map).toString()).getBytes()); // notify client to print
                     WeixinMessage.sendTemplateMessage(microPay.getResponseResult().get("transaction_id").toString());
 
                     return AjaxActionComplete(map);
