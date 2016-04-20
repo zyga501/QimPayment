@@ -18,8 +18,8 @@ public class TemplateMessage extends WeixinAPI {
     @Override
     protected boolean handlerResponse(String responseResult) throws Exception {
         JSONObject jsonParse = JSONObject.fromObject(responseResult);
-        if (jsonParse.get("errorcode") != null) {
-            String errorCode = jsonParse.get("errorcode").toString();
+        if (jsonParse.get("errcode") != null) {
+            String errorCode = jsonParse.get("errcode").toString();
             if (errorCode.compareTo("40001") == 0) {
                 String appid = AccessToken.getAppidByAccessToken(accessToken_);
                 if (appid.isEmpty()) {

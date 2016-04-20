@@ -9,7 +9,7 @@ public class UdpSocket {
         port_ = port;
     }
 
-    public void sendMessage(byte[] buffer) throws IOException {
+    public void send(byte[] buffer) throws IOException {
         DatagramSocket ds  = new DatagramSocket();
         DatagramPacket dp = new DatagramPacket(buffer, buffer.length, InetAddress.getByName(host_), port_);
         ds.send(dp);

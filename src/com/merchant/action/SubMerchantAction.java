@@ -55,6 +55,10 @@ public class SubMerchantAction extends AjaxActionSupport {
     }
 
     public String updateWeixinIdById() {
+        return AjaxActionComplete();
+    }
+
+    public String updateWeixinIdDirectById() {
         Map<String, String> resultMap = new HashMap<>();
         resultMap.put("resultCode", "Failed");
 
