@@ -1,11 +1,13 @@
 package com.merchant.action;
 
 import com.framework.action.AjaxActionSupport;
+import com.framework.utils.IdWorker;
 import com.framework.utils.Logger;
 import com.merchant.database.SubMerchantInfo;
 import com.merchant.database.SubMerchantUser;
 import com.weixin.api.OpenId;
 import com.weixin.database.MerchantInfo;
+import org.apache.ibatis.session.SqlSession;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -17,7 +19,7 @@ public class SubMerchantUserAction extends AjaxActionSupport {
         com.weixin.database.SubMerchantInfo subMerchantInfo = com.weixin.database.SubMerchantInfo.getSubMerchantInfoBySubId(sub_mch_id);
         return AjaxActionComplete(SubMerchantUser.getSubMerchantUserBySubMerchantId(subMerchantInfo.getId()));
     }
-    
+
     public void preUpdateWeixinIdById() throws IOException {
         String subMerchantUserId = getParameter("id").toString();
         SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(subMerchantUserId));
@@ -42,7 +44,7 @@ public class SubMerchantUserAction extends AjaxActionSupport {
         Map<String, String> resultMap = new HashMap<>();
         resultMap.put("resultCode", "Failed");
 
-        String subMerchantUserId = getParameter("state").toString();
+        String subMerchantUserId = getParameter("id").toString();
         String code = getParameter("code").toString();
         if (subMerchantUserId.isEmpty() || code.isEmpty()) {
             return AjaxActionComplete(resultMap);
@@ -98,6 +100,26 @@ public class SubMerchantUserAction extends AjaxActionSupport {
         subMerchantUser.setId(id);
         subMerchantUser.setStoreName(storeName);
         if (SubMerchantUser.updateStoreNameById(subMerchantUser)) {
+            resultMap.put("resultCode", "Succeed");
+        }
+
+        return AjaxActionComplete(resultMap);
+    }
+
+    public String registerSubMerchantUserInfo() {
+        Map<String, String> resultMap = new HashMap<>();
+        resultMap.put("resultCode", "Failed");
+
+        SubMerchantUser subMerchantUser = new SubMerchantUser();
+        subMerchantUser.setId(new IdWorker(0).nextId());
+        subMerchantUser.setSubMerchantId(Long.parseLong(getParameter("subMerchantId").toString()));
+        subMerchantUser.setUserName(getParameter("userName").toString());
+        subMerchantUser.setUserPwd(getParameter("userPwd").toString());
+        subMerchantUser.setStoreName(getParameter("storeName").toString());
+        SqlSession sqlsubMerchantUserSession = SubMerchantUser.insertSubMerchantUserInfo(subMerchantUser);
+        if (sqlsubMerchantUserSession != null) {
+            sqlsubMerchantUserSession.commit();
+            sqlsubMerchantUserSession.close();
             resultMap.put("resultCode", "Succeed");
         }
 
