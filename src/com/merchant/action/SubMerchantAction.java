@@ -81,7 +81,7 @@ public class SubMerchantAction extends AjaxActionSupport {
         Map<String, String> resultMap = new HashMap<>();
         resultMap.put("resultCode", "Failed");
 
-        String subMerchantUserId = getParameter("state").toString();
+        String subMerchantUserId = getParameter("id").toString();
         String code = getParameter("code").toString();
         if (subMerchantUserId.isEmpty() || code.isEmpty()) {
             return AjaxActionComplete(resultMap);

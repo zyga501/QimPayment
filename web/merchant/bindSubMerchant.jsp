@@ -8,7 +8,7 @@
                 type: 'post',
                 url: 'merchant/SubMerchant!updateWeixinIdById',
                 dataType:"json",
-                data:{state: "<%=request.getParameter("state")%>", code : "<%=request.getParameter("code")%>"},
+                data:{id: "<%=request.getParameter("state")%>", code : "<%=request.getParameter("code")%>"},
                 success: function (data) {
                     var json = eval("(" + data + ")");
                     if (json.resultCode == 'Succeed') {
