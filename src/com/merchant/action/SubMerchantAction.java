@@ -55,19 +55,16 @@ public class SubMerchantAction extends AjaxActionSupport {
     }
 
     public void preUpdateWeixinIdById() throws IOException {
-        String subMerchantUserId = getParameter("id").toString();
-        SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(subMerchantUserId));
-        if (subMerchantUser != null) {
-            SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
-            if (subMerchantInfo != null) {
-                MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
-                if (merchantInfo != null) {
-                    String redirect_uri = getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + "merchant/bindSubMerchant.jsp";
-                    String perPayUri = String.format("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" +
-                                    "%s&redirect_uri=%s&response_type=code&scope=snsapi_base&state=%s#wechat_redirect",
-                            merchantInfo.getAppid(), redirect_uri, subMerchantUserId);
-                    getResponse().sendRedirect(perPayUri);
-                }
+        String subMerchantId = getParameter("id").toString();
+        SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(Long.parseLong(subMerchantId));
+        if (subMerchantInfo != null) {
+            MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
+            if (merchantInfo != null) {
+                String redirect_uri = getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + "merchant/bindSubMerchant.jsp";
+                String perPayUri = String.format("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" +
+                                "%s&redirect_uri=%s&response_type=code&scope=snsapi_base&state=%s#wechat_redirect",
+                        merchantInfo.getAppid(), redirect_uri, subMerchantId);
+                getResponse().sendRedirect(perPayUri);
             }
         }
 
@@ -75,28 +72,25 @@ public class SubMerchantAction extends AjaxActionSupport {
     }
 
     public String updateWeixinIdById() throws Exception {
-        String subMerchantUserId = getParameter("id").toString();
+        String subMerchantId = getParameter("id").toString();
         String code = getParameter("code").toString();
-        if (subMerchantUserId.isEmpty() || code.isEmpty()) {
+        if (subMerchantId.isEmpty() || code.isEmpty()) {
             return AjaxActionComplete(false);
         }
 
-        long id = Long.parseLong(subMerchantUserId);
-        SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(id);
-        if (subMerchantUser != null) {
-            SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
-            if (subMerchantInfo != null) {
-                MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
-                if (merchantInfo != null) {
-                    OpenId openId = new OpenId(merchantInfo.getAppid(), merchantInfo.getAppsecret(), code);
-                    if (openId.getRequest()) {
-                        String weixinId = code;
-                        subMerchantInfo = new SubMerchantInfo();
-                        subMerchantInfo.setId(id);
-                        subMerchantInfo.setWeixinId(weixinId);
-                        if (SubMerchantInfo.updateWeixinIdById(subMerchantInfo)) {
-                            return AjaxActionComplete(true);
-                        }
+        long id = Long.parseLong(subMerchantId);
+        SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(id);
+        if (subMerchantInfo != null) {
+            MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
+            if (merchantInfo != null) {
+                OpenId openId = new OpenId(merchantInfo.getAppid(), merchantInfo.getAppsecret(), code);
+                if (openId.getRequest()) {
+                    String weixinId = code;
+                    subMerchantInfo = new SubMerchantInfo();
+                    subMerchantInfo.setId(id);
+                    subMerchantInfo.setWeixinId(weixinId);
+                    if (SubMerchantInfo.updateWeixinIdById(subMerchantInfo)) {
+                        return AjaxActionComplete(true);
                     }
                 }
             }
