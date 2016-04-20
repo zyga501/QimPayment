@@ -9,6 +9,7 @@ import org.apache.struts2.ServletActionContext;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -81,6 +82,15 @@ public class AjaxActionSupport extends ActionSupport {
     public String AjaxActionComplete(List resultList) {
         ajaxActionResult_ = JSONArray.fromObject(resultList).toString();
         return AJAXACTIONCOMPLETED;
+    }
+
+    public String AjaxActionComplete(boolean result) {
+        Map<String, String> resultMap = new HashMap<>();
+        resultMap.put("resultCode", "Failed");
+        if (result) {
+            resultMap.put("resultCode", "Succeed");
+        }
+        return AjaxActionComplete(resultMap);
     }
 
     private String ajaxActionResult_;

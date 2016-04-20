@@ -10,8 +10,6 @@ import com.weixin.database.MerchantInfo;
 import org.apache.ibatis.session.SqlSession;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 public class SubMerchantUserAction extends AjaxActionSupport {
     public String getInfoByWeixinSubMerchantId() {
@@ -41,13 +39,10 @@ public class SubMerchantUserAction extends AjaxActionSupport {
     }
 
     public String updateWeixinIdById() throws Exception {
-        Map<String, String> resultMap = new HashMap<>();
-        resultMap.put("resultCode", "Failed");
-
         String subMerchantUserId = getParameter("id").toString();
         String code = getParameter("code").toString();
         if (subMerchantUserId.isEmpty() || code.isEmpty()) {
-            return AjaxActionComplete(resultMap);
+            return AjaxActionComplete(false);
         }
 
         long id = Long.parseLong(subMerchantUserId);
@@ -64,52 +59,43 @@ public class SubMerchantUserAction extends AjaxActionSupport {
                         subMerchantUser.setId(id);
                         subMerchantUser.setWeixinId(weixinId);
                         if (SubMerchantUser.updateWeixinIdById(subMerchantUser)) {
-                            resultMap.put("resultCode", "Succeed");
+                            return AjaxActionComplete(true);
                         }
                     }
                 }
             }
         }
 
-        return AjaxActionComplete(resultMap);
+        return AjaxActionComplete(false);
     }
 
     public String updateWeixinIdDirectById() {
-        Map<String, String> resultMap = new HashMap<>();
-        resultMap.put("resultCode", "Failed");
-
         long id = Long.parseLong(getParameter("id").toString());
         String weixinId = getParameter("weixinId").toString();
         SubMerchantUser subMerchantUser = new SubMerchantUser();
         subMerchantUser.setId(id);
         subMerchantUser.setWeixinId(weixinId);
         if (SubMerchantUser.updateWeixinIdById(subMerchantUser)) {
-            resultMap.put("resultCode", "Succeed");
+            return AjaxActionComplete(true);
         }
 
-        return AjaxActionComplete(resultMap);
+        return AjaxActionComplete(false);
     }
 
     public String updateStoreNameById() {
-        Map<String, String> resultMap = new HashMap<>();
-        resultMap.put("resultCode", "Failed");
-
         long id = Long.parseLong(getParameter("id").toString());
         String storeName = getParameter("storeName").toString();
         SubMerchantUser subMerchantUser = new SubMerchantUser();
         subMerchantUser.setId(id);
         subMerchantUser.setStoreName(storeName);
         if (SubMerchantUser.updateStoreNameById(subMerchantUser)) {
-            resultMap.put("resultCode", "Succeed");
+            return AjaxActionComplete(true);
         }
 
-        return AjaxActionComplete(resultMap);
+        return AjaxActionComplete(false);
     }
 
     public String registerSubMerchantUserInfo() {
-        Map<String, String> resultMap = new HashMap<>();
-        resultMap.put("resultCode", "Failed");
-
         SubMerchantUser subMerchantUser = new SubMerchantUser();
         subMerchantUser.setId(new IdWorker(0).nextId());
         subMerchantUser.setSubMerchantId(Long.parseLong(getParameter("subMerchantId").toString()));
@@ -120,9 +106,9 @@ public class SubMerchantUserAction extends AjaxActionSupport {
         if (sqlsubMerchantUserSession != null) {
             sqlsubMerchantUserSession.commit();
             sqlsubMerchantUserSession.close();
-            resultMap.put("resultCode", "Succeed");
+            return AjaxActionComplete(true);
         }
 
-        return AjaxActionComplete(resultMap);
+        return AjaxActionComplete(false);
     }
 }

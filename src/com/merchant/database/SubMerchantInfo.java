@@ -68,6 +68,15 @@ public class SubMerchantInfo {
         return result == 1;
     }
 
+    public static boolean updateWeixinInfoById(SubMerchantInfo subMerchantInfo) {
+        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
+        String statement = "com.merchant.database.mapping.subMerchantInfo.updateWeixinInfoById";
+        int result = sqlSession.update(statement, subMerchantInfo);
+        sqlSession.commit();
+        sqlSession.close();
+        return result == 1;
+    }
+
     public long getId() {
         return id_;
     }
@@ -140,6 +149,22 @@ public class SubMerchantInfo {
         this.address_ = address;
     }
 
+    public String getAppid() {
+        return appid_;
+    }
+
+    public void setAppid(String appid) {
+        this.appid_ = appid;
+    }
+
+    public String getAppsecret() {
+        return appsecret_;
+    }
+
+    public void setAppsecret(String appsecret) {
+        this.appsecret_ = appsecret;
+    }
+
     private long id_;
     private long merchantId_;
     private String name_;
@@ -149,4 +174,6 @@ public class SubMerchantInfo {
     private String weixinId_;
     private String templateId_;
     private String address_;
+    private String appid_;
+    private String appsecret_;
 }
