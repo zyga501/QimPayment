@@ -158,7 +158,7 @@ public class SubMerchantAction extends AjaxActionSupport {
         subMerchantInfo.setAppid(getParameter("appid").toString());
         subMerchantInfo.setAppsecret(getParameter("appsecret").toString());
         subMerchantInfo.setTemplateId(getParameter("templateId").toString());
-        if (SubMerchantInfo.updateWeixinIdById(subMerchantInfo)) {
+        if (SubMerchantInfo.updateWeixinInfoById(subMerchantInfo)) {
             resultMap.put("resultCode", "Succeed");
         }
 
