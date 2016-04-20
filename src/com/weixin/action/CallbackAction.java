@@ -43,6 +43,7 @@ public class CallbackAction extends AjaxActionSupport {
         while ((lineBuffer = bufferedReader.readLine()) != null) {
             stringBuilder.append(lineBuffer);
         }
+        bufferedReader.close();
 
         String responseString = stringBuilder.toString();
         Map<String,Object> responseResult = XMLParser.convertMapFromXML(responseString);;

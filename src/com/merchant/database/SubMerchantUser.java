@@ -1,15 +1,22 @@
 package com.merchant.database;
 
+import com.framework.utils.IdWorker;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SubMerchantUser {
     public static void main(String[] args) throws Exception {
-        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
-        String statement = "com.merchant.database.mapping.subMerchantUser.getSubMerchantUserById";
-        SubMerchantUser subMerchantUser = sqlSession.selectOne(statement, (Object) 1596144387655680L);
+        SubMerchantUser subMerchantUser = new SubMerchantUser();
+        subMerchantUser.setId(new IdWorker(0).nextId());
+        subMerchantUser.setSubMerchantId(1596144145909760L);
+        subMerchantUser.setUserName("001");
+        subMerchantUser.setUserPwd("001");
+        subMerchantUser.setStoreName("力乾二手车(乐清分公司)");
+        SqlSession sqlSession = SubMerchantUser.insertSubMerchantUserInfo(subMerchantUser);
+        sqlSession.commit();
         sqlSession.close();
     }
 
@@ -21,16 +28,55 @@ public class SubMerchantUser {
         return subMerchantUser;
     }
 
-    public static SubMerchantUser getSubMerchantUserByLogin(String id,String userName, String userPwd) {
+    public static SubMerchantUser getSubMerchantUserByLogin(String subMerchantId, String userName, String userPwd) {
         SqlSession sqlSession = Database.SqlSessionFactory().openSession();
         String statement = "com.merchant.database.mapping.subMerchantUser.getSubMerchantUserByAccount";
         Map<String, Object> param=new HashMap<String, Object>();
-        param.put("submerchantid",id);
-        param.put("userName",userName);
-        param.put("userPwd",userPwd);
+        param.put("submerchantid", subMerchantId);
+        param.put("userName", userName);
+        param.put("userPwd", userPwd);
         SubMerchantUser subMerchantUser = sqlSession.selectOne(statement, param);
         sqlSession.close();
         return subMerchantUser;
+    }
+
+    public static List<SubMerchantUser> getSubMerchantUserBySubMerchantId(long subMerchantId) {
+        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
+        String statement = "com.merchant.database.mapping.subMerchantUser.getSubMerchantUserBySubMerchantId";
+        List<SubMerchantUser> subMerchantUserList = sqlSession.selectList(statement, subMerchantId);
+        sqlSession.close();
+        return subMerchantUserList;
+    }
+
+    public static SqlSession insertSubMerchantUserInfo(SubMerchantUser subMerchantUser) {
+        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
+        String statement = "com.merchant.database.mapping.subMerchantUser.insertSubMerchantUserInfo";
+        int result = sqlSession.insert(statement, subMerchantUser);
+        if (result == 1) {
+            return sqlSession;
+        }
+        else {
+            sqlSession.close();
+            return null;
+        }
+    }
+
+    public static boolean updateWeixinIdById(SubMerchantUser subMerchantUser) {
+        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
+        String statement = "com.merchant.database.mapping.subMerchantUser.updateWeixinIdById";
+        int result = sqlSession.update(statement, subMerchantUser);
+        sqlSession.commit();
+        sqlSession.close();
+        return result == 1;
+    }
+
+    public static boolean updateStoreNameById(SubMerchantUser subMerchantUser) {
+        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
+        String statement = "com.merchant.database.mapping.subMerchantUser.updateStoreNameById";
+        int result = sqlSession.update(statement, subMerchantUser);
+        sqlSession.commit();
+        sqlSession.close();
+        return result == 1;
     }
 
     public long getId() {

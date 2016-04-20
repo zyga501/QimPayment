@@ -77,6 +77,70 @@
       })
     }
 
+    function getInfoBySubMerchantId() {
+      $.ajax({
+        type: 'post',
+        url: 'merchant/SubMerchantUser!getInfoByWeixinSubMerchantId',
+        dataType:"json",
+        data:$("form").serialize(),
+        success: function (data) {
+          var json = eval("(" + data + ")");
+          alert(json);
+        }
+      })
+    }
+
+    function regsiterSubMerchantInfo() {
+      $.ajax({
+        type: 'post',
+        url: 'merchant/SubMerchant!regsiterSubMerchantInfo',
+        dataType:"json",
+        data:$("form").serialize(),
+        success: function (data) {
+          var json = eval("(" + data + ")");
+          alert(json);
+        }
+      })
+    }
+
+    function updateUserWeixinIdByUId() {
+      $.ajax({
+        type: 'post',
+        url: 'merchant/SubMerchantUser!updateWeixinIdById',
+        dataType:"json",
+        data:$("form").serialize(),
+        success: function (data) {
+          var json = eval("(" + data + ")");
+          alert(json);
+        }
+      })
+    }
+
+    function updateSubMerchantWeixinIdByUId() {
+      $.ajax({
+        type: 'post',
+        url: 'merchant/SubMerchant!updateWeixinIdById',
+        dataType:"json",
+        data:$("form").serialize(),
+        success: function (data) {
+          var json = eval("(" + data + ")");
+          alert(json);
+        }
+      })
+    }
+
+    function updateStoreNameById() {
+      $.ajax({
+        type: 'post',
+        url: 'merchant/SubMerchantUser!updateStoreNameById',
+        dataType:"json",
+        data:$("form").serialize(),
+        success: function (data) {
+          var json = eval("(" + data + ")");
+          alert(json);
+        }
+      })
+    }
   </script>
 </head>
 <body>
@@ -104,7 +168,7 @@
     </tr>
     <tr><td>总金额:</td>
       <td>
-        <input type="text" id="total_fee" name="total_fee" value="600"/>
+        <input type="text" id="total_fee" name="total_fee" value="1"/>
       </td>
     </tr>
     <tr><td>二维码字符串:</td>
@@ -141,6 +205,32 @@
         </div>
       </td>
     </tr>
+    <tr><td>微信子商户ID:</td>
+      <td>
+        <input type="text" id="sub_mch_id" name="sub_mch_id"/>
+      </td>
+    </tr>
+    <tr><td>店名:</td>
+      <td>
+        <input type="text" id="storeName" name="storeName" value="狗皮牌狗皮膏药"/>
+      </td>
+    </tr>
+    <tr><td>地址:</td>
+      <td>
+        <input type="text" id="address" name="address" value="没地址"/>
+      </td>
+    </tr>
+    <tr><td>商户内部ID:</td>
+      <td>
+        <input type="text" id="merchantId" name="merchantId" value="1596082254858240"/>
+      </td>
+    </tr>
+    <tr><td>微信Id:</td>
+      <td>
+        <input type="text" id="weixinId" name="weixinId"/>
+      </td>
+    </tr>
+    <tr>
     <tr>
       <td>
         <input type="button" onclick="microPay()" value="刷卡提交"/>
@@ -154,7 +244,22 @@
       <td>
         <input type="button" onclick="refund()" value="申请退款"/>
       </td>
-    </tr>
+      <td>
+        <input type="button" onclick="getInfoBySubMerchantId()" value="获取子商户信息"/>
+      </td>
+      <td>
+        <input type="button" onclick="regsiterSubMerchantInfo()" value="注册子商户"/>
+      </td>
+    <td>
+      <input type="button" onclick="updateUserWeixinIdById()" value="更新员工微信号"/>
+    </td>
+    <td>
+      <input type="button" onclick="updateSubMerchantWeixinIdByUId()" value="更新商户微信号"/>
+    </td>
+    <td>
+      <input type="button" onclick="updateStoreNameById()" value="更新店名"/>
+    </td>
+  </tr>
   </table>
 </form>
 </body>

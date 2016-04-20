@@ -7,6 +7,9 @@
     <select id="getSubMerchantUserByAccount"  parameterType="java.util.HashMap" resultMap="subMerchantUserResult">
         SELECT * FROM SubMerchantUser WHERE subMerchantId=#{submerchantid} and userName=#{userName} and  userpwd= #{userPwd}
     </select>
+    <select id="getSubMerchantUserBySubMerchantId"  parameterType="long" resultMap="subMerchantUserResult">
+        SELECT * FROM SubMerchantUser WHERE subMerchantId=#{submerchantid}
+    </select>
     <resultMap type="com.merchant.database.SubMerchantUser" id="subMerchantUserResult">
         <id property="id" column="id" jdbcType="BIGINT" />
         <result property="subMerchantId" column="subMerchantId" jdbcType="BIGINT" />
@@ -15,4 +18,18 @@
         <result property="storeName" column="storeName" jdbcType="VARCHAR"/>
         <result property="weixinId" column="weixinId" jdbcType="VARCHAR"/>
     </resultMap>
+    <insert id="insertSubMerchantUserInfo" parameterType="com.merchant.database.SubMerchantUser">
+        INSERT INTO SubMerchantUser(id,subMerchantId,userName,userPwd,storeName)
+        VALUE (#{id},#{subMerchantId},#{userName},#{userPwd},#{storeName})
+    </insert>
+    <update id="updateWeixinIdById" parameterType="com.merchant.database.SubMerchantUser">
+        UPDATE SubMerchantUser
+        SET weixinId = #{weixinId}
+        WHERE id = #{id}
+    </update>
+    <update id="updateStoreNameById" parameterType="com.merchant.database.SubMerchantUser">
+        UPDATE SubMerchantUser
+        SET storeName = #{storeName}
+        WHERE id = #{id}
+    </update>
 </mapper>
