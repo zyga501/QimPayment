@@ -148,4 +148,20 @@ public class SubMerchantAction extends AjaxActionSupport {
 
         return AjaxActionComplete(resultMap);
     }
+
+    public String updateSubMerchantWeixinInfo() {
+        Map<String, String> resultMap = new HashMap<>();
+        resultMap.put("resultCode", "Failed");
+
+        SubMerchantInfo subMerchantInfo = new SubMerchantInfo();
+        subMerchantInfo.setId(Long.parseLong(getParameter("id").toString()));
+        subMerchantInfo.setAppid(getParameter("appid").toString());
+        subMerchantInfo.setAppsecret(getParameter("appsecret").toString());
+        subMerchantInfo.setTemplateId(getParameter("templateId").toString());
+        if (SubMerchantInfo.updateWeixinIdById(subMerchantInfo)) {
+            resultMap.put("resultCode", "Succeed");
+        }
+
+        return AjaxActionComplete(resultMap);
+    }
 }

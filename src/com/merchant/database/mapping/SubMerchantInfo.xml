@@ -33,4 +33,10 @@
         SET logo = #{logo}
         WHERE id = #{id}
     </update>
+    <update id="updateWeixinInfo" parameterType="com.merchant.database.SubMerchantInfo">
+        UPDATE SubMerchant
+        SET appid = #{appid}, appsecret=#{appsecret}, templateId=#{templateId}
+        WHERE id = #{id}
+    </update>
+
 </mapper>
