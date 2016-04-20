@@ -70,7 +70,6 @@ public class OrderAction extends AjaxActionSupport {
                         map.put("trade_state", orderQuery.getResponseResult().get("trade_state").toString());
                     }
 
-                    new UdpSocket("127.0.0.1", 8848).sendMessage(String.valueOf(subMerchantUser.getId()).concat("@").concat(JSONObject.fromObject(map).toString()).getBytes());
                     return AjaxActionComplete(map);
                 }
             }
