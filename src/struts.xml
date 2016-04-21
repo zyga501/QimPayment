@@ -30,7 +30,10 @@
                 <param name="root">ajaxActionResult</param>
             </result>
         </global-results>
+
         <action name="File!*" class="com.framework.action.FileAction" method="{1}">
+        </action>
+        <action name="downfile.*" class="com.framework.action.FileAction" method="DownLoadFile">
         </action>
     </package>
 
