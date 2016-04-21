@@ -1,5 +1,6 @@
 package com.merchant.action;
 
+import com.framework.ProjectSettings;
 import com.framework.action.AjaxActionSupport;
 import com.framework.utils.IdWorker;
 import com.framework.utils.Logger;
@@ -97,7 +98,7 @@ public class SubMerchantUserAction extends AjaxActionSupport {
 
     public String registerSubMerchantUserInfo() {
         SubMerchantUser subMerchantUser = new SubMerchantUser();
-        subMerchantUser.setId(new IdWorker(0).nextId());
+        subMerchantUser.setId(new IdWorker(ProjectSettings.getIdWorkerSeed()).nextId());
         subMerchantUser.setSubMerchantId(Long.parseLong(getParameter("subMerchantId").toString()));
         subMerchantUser.setUserName(getParameter("userName").toString());
         subMerchantUser.setUserPwd(getParameter("userPwd").toString());
