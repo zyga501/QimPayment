@@ -2,7 +2,7 @@
 
 <project>
     <id>0</id>
-	<name>PaymentFramWork</name>
+    <name>PaymentFramWork</name>
     <serverAddress>127.0.0.1.</serverAddress>
     <IdWorkerSeed>0</IdWorkerSeed>
 </project>
