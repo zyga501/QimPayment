@@ -29,8 +29,8 @@ public class ProjectSettings {
 
     public static long getIdWorkerSeed() {
         try {
-            if (projectSettings_ != null && projectSettings_.get("IdWorkerSeed") != null) {
-                return Long.parseLong(projectSettings_.get("IdWorkerSeed").toString());
+            if (projectSettings_ != null && projectSettings_.get("idWorkerSeed") != null) {
+                return Long.parseLong(projectSettings_.get("idWorkerSeed").toString());
             }
         }
         catch (NumberFormatException exception) {

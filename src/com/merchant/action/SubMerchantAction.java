@@ -13,6 +13,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 public class SubMerchantAction extends AjaxActionSupport {
@@ -151,6 +152,14 @@ public class SubMerchantAction extends AjaxActionSupport {
         long subMerchantId = Long.parseLong(getParameter("id").toString());
         SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantId);
         Map<String, Object> resultMap = ClassUtils.convertToMap(subMerchantInfo);
+        return AjaxActionComplete(resultMap);
+    }
+
+    public String getSubMerchantIdByCompatibleId() {
+        String compatibleId = getParameter("compatibleId").toString();
+        long subMerchantId = com.weixin.database.SubMerchantInfo.getSubMerchantIdByCompatibleId(compatibleId);
+        Map<String, Long> resultMap = new HashMap<>();
+        resultMap.put("subMerchantId", subMerchantId);
         return AjaxActionComplete(resultMap);
     }
 }

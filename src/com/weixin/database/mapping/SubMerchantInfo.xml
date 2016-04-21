@@ -7,6 +7,14 @@
     <select id="getSubMerchantInfoBySubId" parameterType="String" resultMap="subMerchantInfoResult">
         SELECT * FROM SubMerchantInfo WHERE subId=#{subId}
     </select>
+    <select id="getSubMerchantIdByCompatibleId" parameterType="String" resultType="long">
+        SELECT
+          submerchantinfo.id id
+        FROM
+          compatibleidmapsubid
+        INNER JOIN submerchantinfo ON compatibleidmapsubid.subid = submerchantinfo.subId
+        where compatibleidmapsubid.id=#{id}
+    </select>
     <resultMap type="com.weixin.database.SubMerchantInfo" id="subMerchantInfoResult">
         <id property="id" column="id" jdbcType="BIGINT" />
         <result property="merchantId" column="merchantId" jdbcType="BIGINT" />

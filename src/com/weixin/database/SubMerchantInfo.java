@@ -1,16 +1,9 @@
 package com.weixin.database;
 
-import com.framework.ProjectSettings;
-import com.framework.utils.IdWorker;
 import org.apache.ibatis.session.SqlSession;
 
 public class SubMerchantInfo {
     public static void main(String[] args) throws Exception {
-        SubMerchantInfo subMerchantInfo = new SubMerchantInfo();
-        subMerchantInfo.setId(new IdWorker(ProjectSettings.getIdWorkerSeed()).nextId());
-        subMerchantInfo.setMerchantId(1596082254858240L);
-        subMerchantInfo.setSubId("1288460801");
-        SubMerchantInfo.insertSubMerchantInfo(subMerchantInfo);
     }
 
     public static SubMerchantInfo getSubMerchantInfoById(long id) {
@@ -36,6 +29,14 @@ public class SubMerchantInfo {
         sqlSession.commit();
         sqlSession.close();
         return result == 1;
+    }
+
+    public static long getSubMerchantIdByCompatibleId(String compatibleId) {
+        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
+        String statement = "com.weixin.database.mapping.subMerchantInfo.getSubMerchantIdByCompatibleId";
+        long subMerchantId = sqlSession.selectOne(statement, compatibleId);
+        sqlSession.close();
+        return subMerchantId;
     }
 
     public long getId() {
