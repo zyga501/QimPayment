@@ -2,6 +2,7 @@ package com.merchant.action;
 
 import com.framework.ProjectSettings;
 import com.framework.action.AjaxActionSupport;
+import com.framework.utils.ClassUtils;
 import com.framework.utils.IdWorker;
 import com.framework.utils.Logger;
 import com.merchant.database.SubMerchantInfo;
@@ -12,6 +13,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.util.Map;
 
 public class SubMerchantAction extends AjaxActionSupport {
     public String regsiterSubMerchantInfo() {
@@ -143,5 +145,12 @@ public class SubMerchantAction extends AjaxActionSupport {
         }
 
         return AjaxActionComplete(false);
+    }
+
+    public String getSubMerchantInfo() {
+        long subMerchantId = Long.parseLong(getParameter("id").toString());
+        SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantId);
+        Map<String, Object> resultMap = ClassUtils.convertToMap(subMerchantInfo);
+        return AjaxActionComplete(resultMap);
     }
 }
