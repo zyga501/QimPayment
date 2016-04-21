@@ -7,7 +7,7 @@ import java.io.*;
 import java.util.Map;
 
 public class ProjectSettings {
-    public static void Init() {
+    static {
         try {
             String projectSettingsPath = ProjectSettings.class.getResource("/").getPath().substring(1) + "project.xml";
             File file = new File(projectSettingsPath);
@@ -25,6 +25,19 @@ public class ProjectSettings {
         catch (Exception exception) {
             Logger.error(exception.getMessage());
         }
+    }
+
+    public static long getId() {
+        try {
+            if (projectSettings_ != null && projectSettings_.get("id") != null) {
+                return Long.parseLong(projectSettings_.get("id").toString());
+            }
+        }
+        catch (NumberFormatException exception) {
+
+        }
+
+        return 0;
     }
 
     public static long getIdWorkerSeed() {
