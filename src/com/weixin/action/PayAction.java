@@ -202,7 +202,7 @@ public class PayAction extends AjaxActionSupport {
                         return AjaxActionComplete();
                     }
 
-                    Map map = new HashMap<>();
+                    Map<String,Object> map = new HashMap<>();
                     map.put("appId", unifiedOrderRequestData.appid);
                     map.put("timeStamp", String.valueOf(System.currentTimeMillis() / 1000));
                     map.put("nonceStr", StringUtils.generateRandomString(32));
