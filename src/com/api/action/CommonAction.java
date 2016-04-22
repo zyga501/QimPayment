@@ -60,9 +60,7 @@ public class CommonAction extends AjaxActionSupport {
             stringBuilder.append(lineBuffer);
         }
         bufferedReader.close();
-
-        String resquestString = stringBuilder.toString();
-        requestBuffer_ = XMLParser.convertMapFromXML(resquestString);
+        requestBuffer_ = XMLParser.convertMapFromXML(stringBuilder.toString());
     }
 
     private BaseMode createMode(String mode) throws ClassNotFoundException, InstantiationException, IllegalAccessException {

@@ -6,6 +6,7 @@ import com.merchant.database.SubMerchantInfo;
 import com.merchant.database.SubMerchantUser;
 import com.weixin.api.OpenId;
 import com.weixin.database.SubMerchantAct;
+import org.apache.struts2.components.Submit;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -40,26 +41,27 @@ public class MerchantAction extends AjaxActionSupport {
     }
 
     public String Login() throws IOException {
-        String submerchantid = getParameter("id").toString();
         String uname = getParameter("un").toString();
         String upwd = getParameter("upwd").toString();
-        SubMerchantUser submerchantuser = SubMerchantUser.getSubMerchantUserByLogin(submerchantid,uname,upwd);
-        Map<String, String> map = new HashMap<>();
-        if (null != submerchantuser) {
-            map.put("return","success");
-            map.put("uid", String.valueOf(submerchantuser.getId()));
-            map.put("storename",submerchantuser.getStoreName());
-            map.put("uname",submerchantuser.getUserName());
-            SubMerchantInfo submerchantinfo = SubMerchantInfo.getSubMerchantInfoById(submerchantuser.getSubMerchantId());
-            map.put("businessname",submerchantinfo.getName());
-            map.put("ads",submerchantinfo.getAds());
+        SubMerchantUser subMerchantUser = new SubMerchantUser();
+        subMerchantUser.setSubMerchantId(Long.parseLong(getParameter("id").toString()));
+        subMerchantUser.setUserName(getParameter("un").toString());
+        subMerchantUser.setUserPwd(getParameter("upwd").toString());
+        subMerchantUser = SubMerchantUser.getSubMerchantUserByAccount(subMerchantUser);
+        Map<String, String> resultMap = new HashMap<>();
+        if (null != subMerchantUser) {
+            resultMap.put("uid", String.valueOf(subMerchantUser.getId()));
+            resultMap.put("storename",subMerchantUser.getStoreName());
+            resultMap.put("uname",subMerchantUser.getUserName());
+            SubMerchantInfo submerchantinfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
+            resultMap.put("businessname",submerchantinfo.getName());
+            resultMap.put("ads",submerchantinfo.getAds());
             SubMerchantAct  submerchantact = new SubMerchantAct().getGoodstagById(submerchantinfo.getId());
-            map.put("goodstag",null==submerchantact?"":submerchantact.getGoodsTag());
+            resultMap.put("goodstag",null==submerchantact?"":submerchantact.getGoodsTag());
+            return AjaxActionComplete(true, resultMap);
         }
-        else {
-            map.put("return","failure");
-        }
-        return AjaxActionComplete(map);
+
+        return AjaxActionComplete(false);
     }
 
     public void FetchLogo() throws IOException {

@@ -5,7 +5,7 @@ import java.util.Random;
 public class StringUtils {
     public static String convertNullableString(Object object) {
         if (object == null) {
-            return "";
+            return new String();
         }
 
         return object.toString();

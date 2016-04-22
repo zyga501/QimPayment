@@ -93,6 +93,15 @@ public class AjaxActionSupport extends ActionSupport {
         return AjaxActionComplete(resultMap);
     }
 
+    public String AjaxActionComplete(boolean result, Map resultMap) {
+        resultMap.put("resultCode", "Failed");
+        if (result) {
+            resultMap.put("resultCode", "Succeed");
+        }
+
+        return AjaxActionComplete(resultMap);
+    }
+
     private String ajaxActionResult_;
     private Map parameterMap_;
 }

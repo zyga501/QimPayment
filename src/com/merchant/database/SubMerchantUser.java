@@ -15,13 +15,9 @@ public class SubMerchantUser {
         return Database.Instance().selectOne(statement, id);
     }
 
-    public static SubMerchantUser getSubMerchantUserByLogin(String subMerchantId, String userName, String userPwd) {
+    public static SubMerchantUser getSubMerchantUserByAccount(SubMerchantUser subMerchantUser) {
         String statement = "com.merchant.database.mapping.subMerchantUser.getSubMerchantUserByAccount";
-        Map<String, Object> param=new HashMap<String, Object>();
-        param.put("submerchantid", subMerchantId);
-        param.put("userName", userName);
-        param.put("userPwd", userPwd);
-        return Database.Instance().selectOne(statement, param);
+        return Database.Instance().selectOne(statement, subMerchantUser);
     }
 
     public static List<SubMerchantUser> getSubMerchantUserBySubMerchantId(long subMerchantId) {
