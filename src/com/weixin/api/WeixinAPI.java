@@ -20,7 +20,7 @@ public abstract class WeixinAPI {
         if (apiUri.isEmpty()) {
             return false;
         }
-        Logger.info("Request Url:\r\n" + apiUri);
+        Logger.debug("Request Url:\r\n" + apiUri);
 
         CloseableHttpClient httpClient = HttpUtils.Instance();
         HttpGet httpGet = new HttpGet(apiUri);
@@ -29,7 +29,7 @@ public abstract class WeixinAPI {
         String responseString = EntityUtils.toString(entity, "UTF-8");
         response.close();
 
-        Logger.info("Response Data:\r\n" + responseString);
+        Logger.debug("Response Data:\r\n" + responseString);
 
         return handlerResponse(responseString);
     }
@@ -39,10 +39,10 @@ public abstract class WeixinAPI {
         if (apiUri.isEmpty()) {
             return false;
         }
-        Logger.info("Request Url:\r\n" + apiUri);
+        Logger.debug("Request Url:\r\n" + apiUri);
 
         postData_ = postData;
-        Logger.info("Reqest Data:\r\n" + postData);
+        Logger.debug("Reqest Data:\r\n" + postData);
 
         HttpPost httpPost = new HttpPost(apiUri);
         StringEntity postEntity = new StringEntity(postData, "UTF-8");
@@ -68,7 +68,7 @@ public abstract class WeixinAPI {
             httpPost.abort();
         }
 
-        Logger.info("Response Data:\r\n" + responseString);
+        Logger.debug("Response Data:\r\n" + responseString);
 
         return handlerResponse(responseString);
     }

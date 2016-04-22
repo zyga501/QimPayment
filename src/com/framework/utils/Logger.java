@@ -5,6 +5,10 @@ import org.apache.log4j.PropertyConfigurator;
 public class Logger {
     private static org.apache.log4j.Logger logger_ = org.apache.log4j.Logger.getLogger("Logger");
 
+    public static void debug(String message) {
+        logger_.debug(message);
+    }
+
     public static void info(String message) {
         logger_.info(message);
     }
