@@ -6,10 +6,11 @@ import org.apache.http.HttpHost;
 import org.apache.http.client.config.AuthSchemes;
 import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.*;
 import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
+import org.apache.http.conn.ConnectTimeoutException;
+import org.apache.http.conn.ConnectionPoolTimeoutException;
 import org.apache.http.conn.routing.HttpRoute;
 import org.apache.http.conn.socket.ConnectionSocketFactory;
 import org.apache.http.conn.socket.LayeredConnectionSocketFactory;
@@ -22,6 +23,7 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 
@@ -33,16 +35,42 @@ public class HttpUtils {
         System.out.print(response.getStatusLine().toString());
     }
 
+    public interface HttpCallback<V> {
+        V call(HttpEntity httpEntity) throws Exception;
+    }
+
     public static CloseableHttpClient Instance() { return httpClient_; }
 
-    public static String Get(String url) throws IOException {
+    public static <T> T GetRequest(HttpGet httpGet, HttpCallback<T> httpCallback) throws IOException {
+        return DoRequest(httpGet, httpCallback);
+    }
+
+    public static <T> T PostRequest(HttpPost httpPost, HttpCallback<T> httpCallback) throws IOException {
+        return DoRequest(httpPost, httpCallback);
+    }
+
+    private static <T> T DoRequest(HttpRequestBase requestBase, HttpCallback<T> httpCallback) {
         CloseableHttpClient httpClient = HttpUtils.Instance();
-        HttpGet httpGet = new HttpGet(url);
-        CloseableHttpResponse response = httpClient.execute(httpGet);
-        HttpEntity entity = response.getEntity();
-        String responseString = EntityUtils.toString(entity, "UTF-8");
-        response.close();
-        return responseString;
+        CloseableHttpResponse closeableHttpResponse = null;
+        try {
+            closeableHttpResponse = httpClient.execute(requestBase);
+            return httpCallback.call(closeableHttpResponse.getEntity());
+        }
+        catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        finally {
+            try {
+                if (closeableHttpResponse != null) {
+                    closeableHttpResponse.close();
+                }
+            }
+            catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        }
+
+        return null;
     }
 
     static {

@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TestPayAction extends AjaxActionSupport {
-    public void microPay() throws UnknownHostException, IllegalAccessException {
+    public void microPay() throws Exception {
         MicroPayRequestData microPayRequestData = new MicroPayRequestData();
         microPayRequestData.id = getParameter("id").toString();
         microPayRequestData.body = getParameter("body").toString();
@@ -41,13 +41,10 @@ public class TestPayAction extends AjaxActionSupport {
 
         String responseString = new String();
         try {
-            CloseableHttpClient httpClient = HttpUtils.Instance();
-            CloseableHttpResponse response = httpClient.execute(httpPost);
-            HttpEntity entity = response.getEntity();
-            responseString = EntityUtils.toString(entity, "UTF-8");
-            response.close();
-        }
-        catch (Exception e) {
+            responseString = HttpUtils.PostRequest(httpPost, (HttpEntity httpEntity)->
+            {
+                return EntityUtils.toString(httpEntity, "UTF-8");
+            });
         }
         finally {
             httpPost.abort();
@@ -71,13 +68,10 @@ public class TestPayAction extends AjaxActionSupport {
 
         String responseString = new String();
         try {
-            CloseableHttpClient httpClient = HttpUtils.Instance();
-            CloseableHttpResponse response = httpClient.execute(httpPost);
-            HttpEntity entity = response.getEntity();
-            responseString = EntityUtils.toString(entity, "UTF-8");
-            response.close();
-        }
-        catch (Exception e) {
+            responseString = HttpUtils.PostRequest(httpPost, (HttpEntity httpEntity)->
+            {
+                return EntityUtils.toString(httpEntity, "UTF-8");
+            });
         }
         finally {
             httpPost.abort();

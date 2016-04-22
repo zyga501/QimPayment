@@ -51,19 +51,10 @@ public abstract class WeixinAPIWithSign extends WeixinAPI {
 
         String responseString = new String();
         try {
-            CloseableHttpClient httpClient = HttpUtils.Instance();
-            CloseableHttpResponse response = httpClient.execute(httpPost);
-            HttpEntity entity = response.getEntity();
-            responseString = EntityUtils.toString(entity, "UTF-8");
-            response.close();
-        }
-        catch (ConnectionPoolTimeoutException e) {
-        }
-        catch (ConnectTimeoutException e) {
-        }
-        catch (SocketTimeoutException e) {
-        }
-        catch (Exception e) {
+            responseString = HttpUtils.PostRequest(httpPost, (HttpEntity httpEntity)->
+            {
+                return EntityUtils.toString(httpEntity, "UTF-8");
+            });
         }
         finally {
             httpPost.abort();
