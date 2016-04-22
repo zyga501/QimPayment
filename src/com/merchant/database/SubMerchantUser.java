@@ -1,5 +1,6 @@
 package com.merchant.database;
 
+import com.framework.ProjectSettings;
 import com.framework.utils.IdWorker;
 import org.apache.ibatis.session.SqlSession;
 
@@ -10,7 +11,7 @@ import java.util.Map;
 public class SubMerchantUser {
     public static void main(String[] args) throws Exception {
         SubMerchantUser subMerchantUser = new SubMerchantUser();
-        subMerchantUser.setId(new IdWorker(0).nextId());
+        subMerchantUser.setId(new IdWorker(ProjectSettings.getIdWorkerSeed()).nextId());
         subMerchantUser.setSubMerchantId(1596144145909760L);
         subMerchantUser.setUserName("001");
         subMerchantUser.setUserPwd("001");

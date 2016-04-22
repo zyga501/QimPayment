@@ -12,7 +12,7 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
     <servlet>
-        <servlet-name>WeixinAccessTokenServlet</servlet-name>
+        <servlet-name>WeixinAccessToken</servlet-name>
         <servlet-class>
             com.weixin.servlet.AccessTokenServlet
         </servlet-class>

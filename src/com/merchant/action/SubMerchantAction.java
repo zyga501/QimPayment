@@ -1,6 +1,8 @@
 package com.merchant.action;
 
+import com.framework.ProjectSettings;
 import com.framework.action.AjaxActionSupport;
+import com.framework.utils.ClassUtils;
 import com.framework.utils.IdWorker;
 import com.framework.utils.Logger;
 import com.merchant.database.SubMerchantInfo;
@@ -11,6 +13,8 @@ import org.apache.ibatis.session.SqlSession;
 
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SubMerchantAction extends AjaxActionSupport {
     public String regsiterSubMerchantInfo() {
@@ -19,7 +23,7 @@ public class SubMerchantAction extends AjaxActionSupport {
         String address = getParameter("address").toString();
         long merchantId = Long.parseLong(getParameter("merchantId").toString());
         SubMerchantInfo subMerchantInfo = new SubMerchantInfo();
-        long subMerchantId = new IdWorker(0).nextId();
+        long subMerchantId = new IdWorker(ProjectSettings.getIdWorkerSeed()).nextId();
         subMerchantInfo.setId(subMerchantId);
         subMerchantInfo.setMerchantId(merchantId);
         subMerchantInfo.setName(storeName);
@@ -28,7 +32,7 @@ public class SubMerchantAction extends AjaxActionSupport {
         if (sqlSubMerchantSession != null) {
             // insert default user
             SubMerchantUser subMerchantUser = new SubMerchantUser();
-            subMerchantUser.setId(new IdWorker(0).nextId());
+            subMerchantUser.setId(new IdWorker(ProjectSettings.getIdWorkerSeed()).nextId());
             subMerchantUser.setSubMerchantId(subMerchantId);
             subMerchantUser.setUserName("001");
             subMerchantUser.setUserPwd("001");
@@ -142,5 +146,20 @@ public class SubMerchantAction extends AjaxActionSupport {
         }
 
         return AjaxActionComplete(false);
+    }
+
+    public String getSubMerchantInfo() {
+        long subMerchantId = Long.parseLong(getParameter("id").toString());
+        SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantId);
+        Map<String, Object> resultMap = ClassUtils.convertToMap(subMerchantInfo);
+        return AjaxActionComplete(resultMap);
+    }
+
+    public String getSubMerchantIdByCompatibleId() {
+        String compatibleId = getParameter("compatibleId").toString();
+        long subMerchantId = com.weixin.database.SubMerchantInfo.getSubMerchantIdByCompatibleId(compatibleId);
+        Map<String, Long> resultMap = new HashMap<>();
+        resultMap.put("subMerchantId", subMerchantId);
+        return AjaxActionComplete(resultMap);
     }
 }

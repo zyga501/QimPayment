@@ -18,6 +18,6 @@ public class Logger {
     }
 
     static {
-        PropertyConfigurator.configureAndWatch("./log4j.properties", 60000);
+        PropertyConfigurator.configureAndWatch(Logger.class.getResource("/").getPath().substring(1) + "log4j.properties", 60000);
     }
 }

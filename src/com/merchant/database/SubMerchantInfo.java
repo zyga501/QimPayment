@@ -1,12 +1,13 @@
 package com.merchant.database;
 
+import com.framework.ProjectSettings;
 import com.framework.utils.IdWorker;
 import org.apache.ibatis.session.SqlSession;
 
 public class SubMerchantInfo {
     public static void main(String[] args) throws Exception {
         SubMerchantInfo subMerchantInfo = new SubMerchantInfo();
-        subMerchantInfo.setId(new IdWorker(0).nextId());
+        subMerchantInfo.setId(new IdWorker(ProjectSettings.getIdWorkerSeed()).nextId());
         subMerchantInfo.setMerchantId(1596082254858240L);
         subMerchantInfo.setName("1234");
         subMerchantInfo.setAddress("123");
