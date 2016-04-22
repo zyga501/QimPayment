@@ -20,19 +20,24 @@ public class TemplateMessage extends WeixinAPI {
         JSONObject jsonParse = JSONObject.fromObject(responseResult);
         if (jsonParse.get("errcode") != null) {
             String errorCode = jsonParse.get("errcode").toString();
-            if (errorCode.compareTo("40001") == 0) {
-                String appid = AccessToken.getAppidByAccessToken(accessToken_);
-                if (appid.isEmpty()) {
-                    Logger.error("AccessToken Handler Error!");
-                    return false;
+            switch (errorCode) {
+                case "40001":
+                {
+                    String appid = AccessToken.getAppidByAccessToken(accessToken_);
+                    if (appid.isEmpty()) {
+                        Logger.error("AccessToken Handler Error!");
+                        return false;
+                    }
+
+                    accessToken_ = AccessToken.updateAccessToken(appid, accessToken_);
+                    return postRequest(postData_);
                 }
-
-                accessToken_ = AccessToken.updateAccessToken(appid, accessToken_);
-                return postRequest(postData_);
+                case "0":
+                    return true;
+                default:
+                    Logger.error("UnHandler Exception!");
+                    return false;
             }
-
-            Logger.error("UnHandler Exception!");
-            return false;
         }
         return super.handlerResponse(responseResult);
     }
