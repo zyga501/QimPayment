@@ -2,7 +2,6 @@ package com.merchant.action;
 
 import com.framework.ProjectSettings;
 import com.framework.action.AjaxActionSupport;
-import com.framework.database.DatabaseAction;
 import com.framework.utils.ClassUtils;
 import com.framework.utils.IdWorker;
 import com.framework.utils.Logger;
@@ -10,7 +9,6 @@ import com.merchant.database.SubMerchantInfo;
 import com.merchant.database.SubMerchantUser;
 import com.weixin.api.OpenId;
 import com.weixin.database.MerchantInfo;
-import org.apache.ibatis.session.SqlSession;
 
 import java.io.DataInputStream;
 import java.io.IOException;

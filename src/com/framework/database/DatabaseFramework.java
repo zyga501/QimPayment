@@ -1,15 +1,15 @@
 package com.framework.database;
 
 import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.javassist.tools.Callback;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Array;
-import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 public abstract class DatabaseFramework {
     protected static SqlSessionFactory buildSqlSessionFactory(String batisConfig) {
@@ -59,15 +59,21 @@ public abstract class DatabaseFramework {
         return value;
     }
 
-    public int insert(String var1, Object var2, DatabaseAction databaseAction) {
+    public int insert(String var1, Object var2, Callable<Boolean> callable) {
         SqlSession sqlSession = sqlSessionFactory().openSession();
         int value = sqlSession.insert(var1, var2);
-        if (databaseAction == null || databaseAction.doAction()) {
-            sqlSession.commit();
+        try {
+            if (callable == null || callable.call()) {
+                sqlSession.commit();
+            }
+            else {
+                value = 0;
+            }
         }
-        else {
+        catch (Exception exception) {
             value = 0;
         }
+
         sqlSession.close();
         return value;
     }

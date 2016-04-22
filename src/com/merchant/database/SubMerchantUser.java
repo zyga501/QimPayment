@@ -1,13 +1,9 @@
 package com.merchant.database;
 
-import com.framework.ProjectSettings;
-import com.framework.database.DatabaseAction;
-import com.framework.utils.IdWorker;
-import org.apache.ibatis.session.SqlSession;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 public class SubMerchantUser {
     public static void main(String[] args) throws Exception {
@@ -33,9 +29,9 @@ public class SubMerchantUser {
         return Database.Instance().selectList(statement, subMerchantId);
     }
 
-    public static boolean insertSubMerchantUserInfo(SubMerchantUser subMerchantUser, DatabaseAction databaseAction) {
+    public static boolean insertSubMerchantUserInfo(SubMerchantUser subMerchantUser, Callable<Boolean> callable) {
         String statement = "com.merchant.database.mapping.subMerchantUser.insertSubMerchantUserInfo";
-        return Database.Instance().insert(statement, subMerchantUser, databaseAction) == 1;
+        return Database.Instance().insert(statement, subMerchantUser, callable) == 1;
     }
 
     public static boolean updateWeixinIdById(SubMerchantUser subMerchantUser) {
