@@ -29,9 +29,7 @@ public class SubMerchantAction extends AjaxActionSupport {
         subMerchantInfo.setMerchantId(merchantId);
         subMerchantInfo.setName(storeName);
         subMerchantInfo.setAddress(address);
-        return AjaxActionComplete(SubMerchantInfo.insertSubMerchantInfo(subMerchantInfo, new DatabaseAction() {
-            @Override
-            public boolean doAction() {
+        return AjaxActionComplete(SubMerchantInfo.insertSubMerchantInfo(subMerchantInfo, () -> {
                 // insert default user
                 SubMerchantUser subMerchantUser = new SubMerchantUser();
                 subMerchantUser.setId(new IdWorker(ProjectSettings.getIdWorkerSeed()).nextId());
@@ -39,9 +37,7 @@ public class SubMerchantAction extends AjaxActionSupport {
                 subMerchantUser.setUserName("001");
                 subMerchantUser.setUserPwd("001");
                 subMerchantUser.setStoreName(storeName);
-                return SubMerchantUser.insertSubMerchantUserInfo(subMerchantUser, new DatabaseAction() {
-                    @Override
-                    public boolean doAction() {
+                return SubMerchantUser.insertSubMerchantUserInfo(subMerchantUser, () -> {
                         // insert weixin info
                         String sub_mch_id = getParameter("sub_mch_id").toString();
                         com.weixin.database.SubMerchantInfo subMerchantWeixinInfo = new com.weixin.database.SubMerchantInfo();
@@ -50,9 +46,9 @@ public class SubMerchantAction extends AjaxActionSupport {
                         subMerchantWeixinInfo.setMerchantId(merchantId);
                         return com.weixin.database.SubMerchantInfo.insertSubMerchantInfo(subMerchantWeixinInfo);
                     }
-                });
+                );
             }
-        }));
+        ));
     }
 
     public void preUpdateWeixinIdById() throws IOException {
