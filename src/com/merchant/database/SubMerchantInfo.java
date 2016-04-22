@@ -1,81 +1,48 @@
 package com.merchant.database;
 
 import com.framework.ProjectSettings;
+import com.framework.database.DatabaseAction;
 import com.framework.utils.IdWorker;
 import org.apache.ibatis.session.SqlSession;
 
 public class SubMerchantInfo {
     public static void main(String[] args) throws Exception {
-        SubMerchantInfo subMerchantInfo = new SubMerchantInfo();
-        subMerchantInfo.setId(new IdWorker(ProjectSettings.getIdWorkerSeed()).nextId());
-        subMerchantInfo.setMerchantId(1596082254858240L);
-        subMerchantInfo.setName("1234");
-        subMerchantInfo.setAddress("123");
-        SubMerchantInfo.insertSubMerchantInfo(subMerchantInfo);
+
     }
 
     public static SubMerchantInfo getSubMerchantInfoById(long id) {
-        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
         String statement = "com.merchant.database.mapping.subMerchantInfo.getSubMerchantInfoById";
-        SubMerchantInfo subMerchantInfo = sqlSession.selectOne(statement, id);
-        sqlSession.close();
-        return subMerchantInfo;
+        return Database.Instance().selectOne(statement, id);
     }
 
     public static SubMerchantInfo getSubMerchantInfoBySubId(String subId) {
-        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
         String statement = "com.merchant.database.mapping.subMerchantInfo.getSubMerchantInfoBySubId";
-        SubMerchantInfo subMerchantInfo = sqlSession.selectOne(statement, subId);
-        sqlSession.close();
-        return subMerchantInfo;
+        return Database.Instance().selectOne(statement, subId);
     }
 
     public static byte[] getSubMerchantLogoById(long id) {
-        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
         String statement = "com.merchant.database.mapping.subMerchantInfo.getSubMerchantLogoById";
-        SubMerchantInfo subMerchantInfo = sqlSession.selectOne(statement, id);
-        sqlSession.close();
-        return subMerchantInfo.getLogo();
+        return Database.Instance().selectOne(statement, id);
     }
 
-    public static SqlSession insertSubMerchantInfo(SubMerchantInfo subMerchantInfo) {
-        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
+    public static boolean insertSubMerchantInfo(SubMerchantInfo subMerchantInfo, DatabaseAction databaseAction) {
         String statement = "com.merchant.database.mapping.subMerchantInfo.insertSubMerchantInfo";
-        int result = sqlSession.insert(statement, subMerchantInfo);
-        if (result == 1) {
-            return sqlSession;
-        }
-        else {
-            sqlSession.close();
-            return null;
-        }
+        return Database.Instance().insert(statement, subMerchantInfo, databaseAction) == 1;
     }
 
     public static boolean updateWeixinIdById(SubMerchantInfo subMerchantInfo) {
-        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
         String statement = "com.merchant.database.mapping.subMerchantInfo.updateWeixinIdById";
-        int result = sqlSession.update(statement, subMerchantInfo);
-        sqlSession.commit();
-        sqlSession.close();
-        return result == 1;
+        return Database.Instance().update(statement, subMerchantInfo) == 1;
     }
 
     public static boolean updateLogoById(SubMerchantInfo subMerchantInfo) {
-        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
         String statement = "com.merchant.database.mapping.subMerchantInfo.updateLogoById";
-        int result = sqlSession.update(statement, subMerchantInfo);
-        sqlSession.commit();
-        sqlSession.close();
-        return result == 1;
+        return Database.Instance().update(statement, subMerchantInfo) == 1;
     }
 
     public static boolean updateWeixinInfoById(SubMerchantInfo subMerchantInfo) {
-        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
         String statement = "com.merchant.database.mapping.subMerchantInfo.updateWeixinInfoById";
-        int result = sqlSession.update(statement, subMerchantInfo);
-        sqlSession.commit();
-        sqlSession.close();
-        return result == 1;
+        return Database.Instance().update(statement, subMerchantInfo) == 1;
     }
 
     public long getId() {

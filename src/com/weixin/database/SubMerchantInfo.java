@@ -7,36 +7,23 @@ public class SubMerchantInfo {
     }
 
     public static SubMerchantInfo getSubMerchantInfoById(long id) {
-        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
         String statement = "com.weixin.database.mapping.subMerchantInfo.getSubMerchantInfoById";
-        SubMerchantInfo subMerchantInfo = sqlSession.selectOne(statement, id);
-        sqlSession.close();
-        return subMerchantInfo;
+        return Database.Instance().selectOne(statement, id);
     }
 
     public static SubMerchantInfo getSubMerchantInfoBySubId(String subId) {
-        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
         String statement = "com.weixin.database.mapping.subMerchantInfo.getSubMerchantInfoBySubId";
-        SubMerchantInfo subMerchantInfo = sqlSession.selectOne(statement, subId);
-        sqlSession.close();
-        return subMerchantInfo;
+        return Database.Instance().selectOne(statement, subId);
     }
 
     public static boolean insertSubMerchantInfo(SubMerchantInfo subMerchantInfo) {
-        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
         String statement = "com.weixin.database.mapping.subMerchantInfo.insertSubMerchantInfo";
-        int result = sqlSession.insert(statement, subMerchantInfo);
-        sqlSession.commit();
-        sqlSession.close();
-        return result == 1;
+        return Database.Instance().insert(statement, subMerchantInfo) == 1;
     }
 
     public static long getSubMerchantIdByCompatibleId(String compatibleId) {
-        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
         String statement = "com.weixin.database.mapping.subMerchantInfo.getSubMerchantIdByCompatibleId";
-        long subMerchantId = sqlSession.selectOne(statement, compatibleId);
-        sqlSession.close();
-        return subMerchantId;
+        return Database.Instance().selectOne(statement, compatibleId);
     }
 
     public long getId() {

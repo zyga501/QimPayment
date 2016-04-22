@@ -6,34 +6,24 @@ import java.util.List;
 
 public class MerchantInfo {
     public static void main(String[] args) throws Exception {
-        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
         String statement = "com.weixin.database.mapping.merchantInfo.getMerchantInfoByAppId";
-        MerchantInfo merchantInfo = sqlSession.selectOne(statement, "wx0bfa8f7ec59b1f33");
-        sqlSession.close();
+        MerchantInfo merchantInfo = Database.Instance().selectOne(statement, "wx0bfa8f7ec59b1f33");
+
     }
 
     public static List<MerchantInfo> getAllMerchantInfo() {
-        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
         String statement = "com.weixin.database.mapping.merchantInfo.getAllMerchantInfo";
-        List<MerchantInfo> merchantInfoList = sqlSession.selectList(statement);
-        sqlSession.close();
-        return merchantInfoList;
+        return Database.Instance().selectList(statement);
     }
 
     public static MerchantInfo getMerchantInfoById(long id) {
-        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
         String statement = "com.weixin.database.mapping.merchantInfo.getMerchantInfoById";
-        MerchantInfo merchantInfo = sqlSession.selectOne(statement, id);
-        sqlSession.close();
-        return merchantInfo;
+        return Database.Instance().selectOne(statement, id);
     }
 
     public static MerchantInfo getMerchantInfoByAppId(String appid) {
-        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
         String statement = "com.weixin.database.mapping.merchantInfo.getMerchantInfoByAppId";
-        MerchantInfo merchantInfo = sqlSession.selectOne(statement, appid);
-        sqlSession.close();
-        return merchantInfo;
+        return Database.Instance().selectOne(statement, appid);
     }
 
     public Long getId() {

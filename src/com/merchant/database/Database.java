@@ -6,12 +6,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 
 public class Database extends DatabaseFramework {
     public static void main(String[] args) throws Exception {
-        SqlSession sqlSession = Database.SqlSessionFactory().openSession(false);
-        sqlSession.close();
-    }
 
-    public static SqlSessionFactory SqlSessionFactory() {
-        return sqlSessionFactory_;
     }
 
     static {
@@ -19,5 +14,16 @@ public class Database extends DatabaseFramework {
         sqlSessionFactory_ = DatabaseFramework.buildSqlSessionFactory(mybatisConfig);
     }
 
+    public static Database Instance() {
+        return instance_;
+    }
+
+    private Database() {}
+
+    protected SqlSessionFactory sqlSessionFactory() {
+        return sqlSessionFactory_;
+    }
+
+    private static final Database instance_ = new Database();
     private static SqlSessionFactory sqlSessionFactory_;
 }

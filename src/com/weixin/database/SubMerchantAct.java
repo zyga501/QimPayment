@@ -4,18 +4,11 @@ import org.apache.ibatis.session.SqlSession;
 
 public class SubMerchantAct {
     public static void main(String[] args) throws Exception {
-        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
-        String statement = "com.weixin.database.mapping.subMerchantAct.getSubMerchantActById";
-        SubMerchantAct subMerchantAct = sqlSession.selectOne(statement, (Object) 1596144145909760L);
-        sqlSession.close();
     }
 
     public SubMerchantAct getGoodstagById(long ID){
-        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
         String statement = "com.weixin.database.mapping.subMerchantAct.getSubMerchantActById";
-        SubMerchantAct subMerchantAct = sqlSession.selectOne(statement, ID);
-        sqlSession.close();
-        return subMerchantAct;
+        return Database.Instance().selectOne(statement, ID);
     }
 
     public long getId() {

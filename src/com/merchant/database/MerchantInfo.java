@@ -4,26 +4,17 @@ import org.apache.ibatis.session.SqlSession;
 
 public class MerchantInfo {
     public static void main(String[] args) throws Exception {
-        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
-        String statement = "com.merchant.database.mapping.merchantInfo.getMerchantInfoByAppId";
-        MerchantInfo merchantInfo = sqlSession.selectOne(statement, "wx0bfa8f7ec59b1f33");
-        sqlSession.close();
+
     }
 
     public static MerchantInfo getMerchantInfoById(long id) {
-        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
         String statement = "com.merchant.database.mapping.merchantInfo.getMerchantInfoById";
-        MerchantInfo merchantInfo = sqlSession.selectOne(statement, id);
-        sqlSession.close();
-        return merchantInfo;
+        return Database.Instance().selectOne(statement, id);
     }
 
     public static MerchantInfo getMerchantInfoByAppId(String appid) {
-        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
         String statement = "com.merchant.database.mapping.merchantInfo.getMerchantInfoByAppId";
-        MerchantInfo merchantInfo = sqlSession.selectOne(statement, "wx0bfa8f7ec59b1f33");
-        sqlSession.close();
-        return merchantInfo;
+        return Database.Instance().selectOne(statement, appid);
     }
 
     public Long getId() {

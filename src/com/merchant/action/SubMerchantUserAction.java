@@ -103,13 +103,6 @@ public class SubMerchantUserAction extends AjaxActionSupport {
         subMerchantUser.setUserName(getParameter("userName").toString());
         subMerchantUser.setUserPwd(getParameter("userPwd").toString());
         subMerchantUser.setStoreName(getParameter("storeName").toString());
-        SqlSession sqlsubMerchantUserSession = SubMerchantUser.insertSubMerchantUserInfo(subMerchantUser);
-        if (sqlsubMerchantUserSession != null) {
-            sqlsubMerchantUserSession.commit();
-            sqlsubMerchantUserSession.close();
-            return AjaxActionComplete(true);
-        }
-
-        return AjaxActionComplete(false);
+        return AjaxActionComplete(SubMerchantUser.insertSubMerchantUserInfo(subMerchantUser, null));
     }
 }

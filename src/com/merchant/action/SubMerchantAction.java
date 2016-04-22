@@ -2,6 +2,7 @@ package com.merchant.action;
 
 import com.framework.ProjectSettings;
 import com.framework.action.AjaxActionSupport;
+import com.framework.database.DatabaseAction;
 import com.framework.utils.ClassUtils;
 import com.framework.utils.IdWorker;
 import com.framework.utils.Logger;
@@ -28,34 +29,30 @@ public class SubMerchantAction extends AjaxActionSupport {
         subMerchantInfo.setMerchantId(merchantId);
         subMerchantInfo.setName(storeName);
         subMerchantInfo.setAddress(address);
-        SqlSession sqlSubMerchantSession = SubMerchantInfo.insertSubMerchantInfo(subMerchantInfo);
-        if (sqlSubMerchantSession != null) {
-            // insert default user
-            SubMerchantUser subMerchantUser = new SubMerchantUser();
-            subMerchantUser.setId(new IdWorker(ProjectSettings.getIdWorkerSeed()).nextId());
-            subMerchantUser.setSubMerchantId(subMerchantId);
-            subMerchantUser.setUserName("001");
-            subMerchantUser.setUserPwd("001");
-            subMerchantUser.setStoreName(storeName);
-            SqlSession sqlsubMerchantUserSession = SubMerchantUser.insertSubMerchantUserInfo(subMerchantUser);
-            if (sqlsubMerchantUserSession != null) {
-                // insert weixin info
-                String sub_mch_id = getParameter("sub_mch_id").toString();
-                com.weixin.database.SubMerchantInfo subMerchantWeixinInfo = new com.weixin.database.SubMerchantInfo();
-                subMerchantWeixinInfo.setId(subMerchantId);
-                subMerchantWeixinInfo.setSubId(sub_mch_id);
-                subMerchantWeixinInfo.setMerchantId(merchantId);
-                if (com.weixin.database.SubMerchantInfo.insertSubMerchantInfo(subMerchantWeixinInfo)) {
-                    sqlSubMerchantSession.commit();
-                    sqlSubMerchantSession.close();
-                    sqlsubMerchantUserSession.commit();
-                    sqlsubMerchantUserSession.close();
-                    return AjaxActionComplete(true);
-                }
+        return AjaxActionComplete(SubMerchantInfo.insertSubMerchantInfo(subMerchantInfo, new DatabaseAction() {
+            @Override
+            public boolean doAction() {
+                // insert default user
+                SubMerchantUser subMerchantUser = new SubMerchantUser();
+                subMerchantUser.setId(new IdWorker(ProjectSettings.getIdWorkerSeed()).nextId());
+                subMerchantUser.setSubMerchantId(subMerchantId);
+                subMerchantUser.setUserName("001");
+                subMerchantUser.setUserPwd("001");
+                subMerchantUser.setStoreName(storeName);
+                return SubMerchantUser.insertSubMerchantUserInfo(subMerchantUser, new DatabaseAction() {
+                    @Override
+                    public boolean doAction() {
+                        // insert weixin info
+                        String sub_mch_id = getParameter("sub_mch_id").toString();
+                        com.weixin.database.SubMerchantInfo subMerchantWeixinInfo = new com.weixin.database.SubMerchantInfo();
+                        subMerchantWeixinInfo.setId(subMerchantId);
+                        subMerchantWeixinInfo.setSubId(sub_mch_id);
+                        subMerchantWeixinInfo.setMerchantId(merchantId);
+                        return com.weixin.database.SubMerchantInfo.insertSubMerchantInfo(subMerchantWeixinInfo);
+                    }
+                });
             }
-        }
-
-        return AjaxActionComplete(false);
+        }));
     }
 
     public void preUpdateWeixinIdById() throws IOException {
