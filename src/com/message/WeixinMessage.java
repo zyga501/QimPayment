@@ -1,13 +1,13 @@
 package com.message;
 
-import com.merchant.database.SubMerchantInfo;
-import com.merchant.database.SubMerchantUser;
+import com.database.merchant.SubMerchantInfo;
+import com.database.merchant.SubMerchantUser;
 import com.weixin.api.AccessToken;
 import com.weixin.api.RequestData.TemplateMessageRequestData;
 import com.weixin.api.TemplateMessage;
 import com.weixin.api.UserInfo;
-import com.weixin.database.MerchantInfo;
-import com.weixin.database.OrderInfo;
+import com.database.weixin.MerchantInfo;
+import com.database.weixin.OrderInfo;
 
 public class WeixinMessage {
     public static boolean sendTemplateMessage(String transactionId) throws Exception {
@@ -38,7 +38,10 @@ public class WeixinMessage {
                     templateMessageRequestData.storeName = subMerchantUser.getStoreName();
                     templateMessageRequestData.transactionId = transactionId;
                     TemplateMessage templateMessage = new TemplateMessage(accessToken);
-                    return templateMessage.postRequest(templateMessageRequestData.buildRequestData());
+                    if (templateMessage.postRequest(templateMessageRequestData.buildRequestData())) {
+                        templateMessageRequestData.touser = subMerchantInfo.getWeixinId();
+                        return templateMessage.postRequest(templateMessageRequestData.buildRequestData());
+                    }
                 }
             }
         }

@@ -1,4 +1,4 @@
-package com.merchant.database;
+package com.database.merchant;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -8,12 +8,12 @@ public class MerchantInfo {
     }
 
     public static MerchantInfo getMerchantInfoById(long id) {
-        String statement = "com.merchant.database.mapping.merchantInfo.getMerchantInfoById";
+        String statement = "com.database.merchant.mapping.merchantInfo.getMerchantInfoById";
         return Database.Instance().selectOne(statement, id);
     }
 
     public static MerchantInfo getMerchantInfoByAppId(String appid) {
-        String statement = "com.merchant.database.mapping.merchantInfo.getMerchantInfoByAppId";
+        String statement = "com.database.merchant.mapping.merchantInfo.getMerchantInfoByAppId";
         return Database.Instance().selectOne(statement, appid);
     }
 

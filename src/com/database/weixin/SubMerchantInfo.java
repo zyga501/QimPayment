@@ -1,4 +1,4 @@
-package com.weixin.database;
+package com.database.weixin;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -7,22 +7,22 @@ public class SubMerchantInfo {
     }
 
     public static SubMerchantInfo getSubMerchantInfoById(long id) {
-        String statement = "com.weixin.database.mapping.subMerchantInfo.getSubMerchantInfoById";
+        String statement = "com.database.weixin.mapping.subMerchantInfo.getSubMerchantInfoById";
         return Database.Instance().selectOne(statement, id);
     }
 
     public static SubMerchantInfo getSubMerchantInfoBySubId(String subId) {
-        String statement = "com.weixin.database.mapping.subMerchantInfo.getSubMerchantInfoBySubId";
+        String statement = "com.database.weixin.mapping.subMerchantInfo.getSubMerchantInfoBySubId";
         return Database.Instance().selectOne(statement, subId);
     }
 
     public static boolean insertSubMerchantInfo(SubMerchantInfo subMerchantInfo) {
-        String statement = "com.weixin.database.mapping.subMerchantInfo.insertSubMerchantInfo";
+        String statement = "com.database.weixin.mapping.subMerchantInfo.insertSubMerchantInfo";
         return Database.Instance().insert(statement, subMerchantInfo) == 1;
     }
 
     public static long getSubMerchantIdByCompatibleId(String compatibleId) {
-        String statement = "com.weixin.database.mapping.subMerchantInfo.getSubMerchantIdByCompatibleId";
+        String statement = "com.database.weixin.mapping.subMerchantInfo.getSubMerchantIdByCompatibleId";
         return Database.Instance().selectOne(statement, compatibleId);
     }
 

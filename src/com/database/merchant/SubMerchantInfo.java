@@ -1,4 +1,4 @@
-package com.merchant.database;
+package com.database.merchant;
 
 import java.util.concurrent.Callable;
 
@@ -8,37 +8,37 @@ public class SubMerchantInfo {
     }
 
     public static SubMerchantInfo getSubMerchantInfoById(long id) {
-        String statement = "com.merchant.database.mapping.subMerchantInfo.getSubMerchantInfoById";
+        String statement = "com.database.merchant.mapping.subMerchantInfo.getSubMerchantInfoById";
         return Database.Instance().selectOne(statement, id);
     }
 
     public static SubMerchantInfo getSubMerchantInfoBySubId(String subId) {
-        String statement = "com.merchant.database.mapping.subMerchantInfo.getSubMerchantInfoBySubId";
+        String statement = "com.database.merchant.mapping.subMerchantInfo.getSubMerchantInfoBySubId";
         return Database.Instance().selectOne(statement, subId);
     }
 
     public static byte[] getSubMerchantLogoById(long id) {
-        String statement = "com.merchant.database.mapping.subMerchantInfo.getSubMerchantLogoById";
+        String statement = "com.database.merchant.mapping.subMerchantInfo.getSubMerchantLogoById";
         return Database.Instance().selectOne(statement, id);
     }
 
     public static boolean insertSubMerchantInfo(SubMerchantInfo subMerchantInfo, Callable<Boolean> callable) {
-        String statement = "com.merchant.database.mapping.subMerchantInfo.insertSubMerchantInfo";
+        String statement = "com.database.merchant.mapping.subMerchantInfo.insertSubMerchantInfo";
         return Database.Instance().insert(statement, subMerchantInfo, callable) == 1;
     }
 
     public static boolean updateWeixinIdById(SubMerchantInfo subMerchantInfo) {
-        String statement = "com.merchant.database.mapping.subMerchantInfo.updateWeixinIdById";
+        String statement = "com.database.merchant.mapping.subMerchantInfo.updateWeixinIdById";
         return Database.Instance().update(statement, subMerchantInfo) == 1;
     }
 
     public static boolean updateLogoById(SubMerchantInfo subMerchantInfo) {
-        String statement = "com.merchant.database.mapping.subMerchantInfo.updateLogoById";
+        String statement = "com.database.merchant.mapping.subMerchantInfo.updateLogoById";
         return Database.Instance().update(statement, subMerchantInfo) == 1;
     }
 
     public static boolean updateWeixinInfoById(SubMerchantInfo subMerchantInfo) {
-        String statement = "com.merchant.database.mapping.subMerchantInfo.updateWeixinInfoById";
+        String statement = "com.database.merchant.mapping.subMerchantInfo.updateWeixinInfoById";
         return Database.Instance().update(statement, subMerchantInfo) == 1;
     }
 

@@ -1,12 +1,11 @@
 package com.merchant.action;
 
+import com.database.merchant.SubMerchantInfo;
+import com.database.merchant.SubMerchantUser;
+import com.database.weixin.SubMerchantAct;
 import com.framework.action.AjaxActionSupport;
 import com.framework.utils.Logger;
-import com.merchant.database.SubMerchantInfo;
-import com.merchant.database.SubMerchantUser;
 import com.weixin.api.OpenId;
-import com.weixin.database.SubMerchantAct;
-import org.apache.struts2.components.Submit;
 
 import java.io.IOException;
 import java.util.HashMap;

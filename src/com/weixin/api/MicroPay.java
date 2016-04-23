@@ -2,7 +2,7 @@ package com.weixin.api;
 
 import com.weixin.api.RequestData.MicroPayRequestData;
 import com.weixin.api.RequestData.OrderQueryData;
-import com.weixin.database.OrderInfo;
+import com.database.weixin.OrderInfo;
 import net.sf.json.JSONObject;
 import org.xml.sax.SAXException;
 

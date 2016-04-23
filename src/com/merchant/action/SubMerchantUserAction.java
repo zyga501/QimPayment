@@ -4,10 +4,10 @@ import com.framework.ProjectSettings;
 import com.framework.action.AjaxActionSupport;
 import com.framework.utils.IdWorker;
 import com.framework.utils.Logger;
-import com.merchant.database.SubMerchantInfo;
-import com.merchant.database.SubMerchantUser;
+import com.database.merchant.SubMerchantInfo;
+import com.database.merchant.SubMerchantUser;
 import com.weixin.api.OpenId;
-import com.weixin.database.MerchantInfo;
+import com.database.weixin.MerchantInfo;
 import org.apache.ibatis.session.SqlSession;
 
 import java.io.IOException;
@@ -15,7 +15,7 @@ import java.io.IOException;
 public class SubMerchantUserAction extends AjaxActionSupport {
     public String getInfoByWeixinSubMerchantId() {
         String sub_mch_id = getParameter("sub_mch_id").toString();
-        com.weixin.database.SubMerchantInfo subMerchantInfo = com.weixin.database.SubMerchantInfo.getSubMerchantInfoBySubId(sub_mch_id);
+        com.database.weixin.SubMerchantInfo subMerchantInfo = com.database.weixin.SubMerchantInfo.getSubMerchantInfoBySubId(sub_mch_id);
         return AjaxActionComplete(SubMerchantUser.getSubMerchantUserBySubMerchantId(subMerchantInfo.getId()));
     }
 

@@ -1,4 +1,4 @@
-package com.merchant.database;
+package com.database.merchant;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -9,7 +9,7 @@ public class IdMapUUID {
     }
 
     public static IdMapUUID getMappingByUUID(String odod) {
-        String statement = "com.merchant.database.mapping.idMapUUID.getMappingByUUID";
+        String statement = "com.database.merchant.mapping.idMapUUID.getMappingByUUID";
         return Database.Instance().selectOne(statement, odod);
     }
 

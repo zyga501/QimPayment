@@ -1,4 +1,4 @@
-package com.weixin.database;
+package com.database.weixin;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -8,17 +8,17 @@ import java.util.Map;
 
 public class OrderInfo {
     public static OrderInfo getOrderInfoById(long id) {
-        String statement = "com.weixin.database.mapping.orderInfo.getOrderInfoById";
+        String statement = "com.database.weixin.mapping.orderInfo.getOrderInfoById";
         return Database.Instance().selectOne(statement, id);
     }
 
     public static OrderInfo getOrderInfoByTransactionId(String transactionId) {
-        String statement = "com.weixin.database.mapping.orderInfo.getOrderInfoByTransactionId";
+        String statement = "com.database.weixin.mapping.orderInfo.getOrderInfoByTransactionId";
         return Database.Instance().selectOne(statement, transactionId);
     }
 
     public static List<HashMap> getOrderInfoListByDate(String createuser, String startDate, String endDate) {
-        String statement = "com.weixin.database.mapping.orderInfo.getOrderInfoListByDate";
+        String statement = "com.database.weixin.mapping.orderInfo.getOrderInfoListByDate";
         Map<String, Object> param=new HashMap<String, Object>();
         param.put("createuser",createuser);
         param.put("startdate",startDate);
@@ -27,7 +27,7 @@ public class OrderInfo {
     }
     
     public static List<HashMap> getOrderExpListByDate(String createuser, String startDate, String endDate) {
-        String statement = "com.weixin.database.mapping.orderInfo.getOrderExpListByDate";
+        String statement = "com.database.weixin.mapping.orderInfo.getOrderExpListByDate";
         Map<String, Object> param=new HashMap<String, Object>();
         param.put("createuser",createuser);
         param.put("startdate",startDate);
@@ -36,7 +36,7 @@ public class OrderInfo {
     }
 
     public static boolean insertOrderInfo(OrderInfo orderInfo) {
-        String statement = "com.weixin.database.mapping.orderInfo.insertOrderInfo";
+        String statement = "com.database.weixin.mapping.orderInfo.insertOrderInfo";
         return Database.Instance().insert(statement, orderInfo) == 1;
     }
 

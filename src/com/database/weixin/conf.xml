@@ -7,22 +7,22 @@
             <!-- 配置数据库连接信息 -->
             <dataSource type="POOLED">
                 <property name="driver" value="com.mysql.jdbc.Driver" />
-                <property name="url" value="jdbc:mysql://localhost:3306/merchantinfo?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf8" />
+                <property name="url" value="jdbc:mysql://localhost:3306/weixinpayment?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf8" />
                 <property name="username" value="root" />
                 <property name="password" value="" />
                 <property name="poolMaximumActiveConnections" value="150" />
                 <property name="poolMaximumIdleConnections" value="0" />
                 <property name="poolTimeToWait" value="28000" />
                 <property name="poolPingEnabled" value="true"/>
-                <property name="poolPingQuery" value="select 1 from submerchantuser limit 1" />
+                <property name="poolPingQuery" value="select 1 from submerchantinfo limit 1" />
             </dataSource>
         </environment>
     </environments>
 
     <mappers>
-        <mapper resource="com/merchant/database/mapping/MerchantInfo.xml" />
-        <mapper resource="com/merchant/database/mapping/SubMerchantInfo.xml" />
-        <mapper resource="com/merchant/database/mapping/SubMerchantUser.xml" />
-        <mapper resource="com/merchant/database/mapping/IdMapUUID.xml" />
+        <mapper resource="com/database/weixin/mapping/MerchantInfo.xml" />
+        <mapper resource="com/database/weixin/mapping/SubMerchantInfo.xml" />
+        <mapper resource="com/database/weixin/mapping/SubMerchantAct.xml" />
+        <mapper resource="com/database/weixin/mapping/OrderInfo.xml" />
     </mappers>
 </configuration>

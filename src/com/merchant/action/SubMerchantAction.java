@@ -5,10 +5,10 @@ import com.framework.action.AjaxActionSupport;
 import com.framework.utils.ClassUtils;
 import com.framework.utils.IdWorker;
 import com.framework.utils.Logger;
-import com.merchant.database.SubMerchantInfo;
-import com.merchant.database.SubMerchantUser;
+import com.database.merchant.SubMerchantInfo;
+import com.database.merchant.SubMerchantUser;
 import com.weixin.api.OpenId;
-import com.weixin.database.MerchantInfo;
+import com.database.weixin.MerchantInfo;
 
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -38,11 +38,11 @@ public class SubMerchantAction extends AjaxActionSupport {
                 return SubMerchantUser.insertSubMerchantUserInfo(subMerchantUser, () -> {
                         // insert weixin info
                         String sub_mch_id = getParameter("sub_mch_id").toString();
-                        com.weixin.database.SubMerchantInfo subMerchantWeixinInfo = new com.weixin.database.SubMerchantInfo();
+                        com.database.weixin.SubMerchantInfo subMerchantWeixinInfo = new com.database.weixin.SubMerchantInfo();
                         subMerchantWeixinInfo.setId(subMerchantId);
                         subMerchantWeixinInfo.setSubId(sub_mch_id);
                         subMerchantWeixinInfo.setMerchantId(merchantId);
-                        return com.weixin.database.SubMerchantInfo.insertSubMerchantInfo(subMerchantWeixinInfo);
+                        return com.database.weixin.SubMerchantInfo.insertSubMerchantInfo(subMerchantWeixinInfo);
                     }
                 );
             }
@@ -148,7 +148,7 @@ public class SubMerchantAction extends AjaxActionSupport {
 
     public String getSubMerchantIdByCompatibleId() {
         String compatibleId = getParameter("compatibleId").toString();
-        long subMerchantId = com.weixin.database.SubMerchantInfo.getSubMerchantIdByCompatibleId(compatibleId);
+        long subMerchantId = com.database.weixin.SubMerchantInfo.getSubMerchantIdByCompatibleId(compatibleId);
         Map<String, Long> resultMap = new HashMap<>();
         resultMap.put("subMerchantId", subMerchantId);
         return AjaxActionComplete(resultMap);

@@ -1,4 +1,4 @@
-package com.weixin.database;
+package com.database.weixin;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -7,7 +7,7 @@ public class SubMerchantAct {
     }
 
     public SubMerchantAct getGoodstagById(long ID){
-        String statement = "com.weixin.database.mapping.subMerchantAct.getSubMerchantActById";
+        String statement = "com.database.weixin.mapping.subMerchantAct.getSubMerchantActById";
         return Database.Instance().selectOne(statement, ID);
     }
 

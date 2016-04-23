@@ -2,7 +2,7 @@ package com.weixin.servlet;
 
 import com.framework.ProjectSettings;
 import com.weixin.api.AccessToken;
-import com.weixin.database.MerchantInfo;
+import com.database.weixin.MerchantInfo;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

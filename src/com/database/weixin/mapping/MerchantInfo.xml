@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.weixin.database.mapping.merchantInfo">
+<mapper namespace="com.database.weixin.mapping.merchantInfo">
     <select id="getAllMerchantInfo" parameterType="long" resultMap="merchantInfoResult">
         SELECT * FROM MerchantInfo
     </select>
@@ -10,7 +10,7 @@
     <select id="getMerchantInfoByAppId" parameterType="String" resultMap="merchantInfoResult">
         SELECT * FROM MerchantInfo WHERE appid=#{appid}
     </select>
-    <resultMap type="com.weixin.database.MerchantInfo" id="merchantInfoResult">
+    <resultMap type="com.database.weixin.MerchantInfo" id="merchantInfoResult">
         <id property="id" column="id" jdbcType="BIGINT" />
         <result property="appid" column="appid" jdbcType="VARCHAR"/>
         <result property="appsecret" column="appsecret" jdbcType="VARCHAR"/>
