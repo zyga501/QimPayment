@@ -1,4 +1,4 @@
-package com.weixin.database;
+package com.database.weixin;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -8,52 +8,36 @@ import java.util.Map;
 
 public class OrderInfo {
     public static OrderInfo getOrderInfoById(long id) {
-        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
-        String statement = "com.weixin.database.mapping.orderInfo.getOrderInfoById";
-        OrderInfo orderInfo = sqlSession.selectOne(statement, id);
-        sqlSession.close();
-        return orderInfo;
+        String statement = "com.database.weixin.mapping.orderInfo.getOrderInfoById";
+        return Database.Instance().selectOne(statement, id);
     }
 
     public static OrderInfo getOrderInfoByTransactionId(String transactionId) {
-        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
-        String statement = "com.weixin.database.mapping.orderInfo.getOrderInfoByTransactionId";
-        OrderInfo orderInfo = sqlSession.selectOne(statement, transactionId);
-        sqlSession.close();
-        return orderInfo;
+        String statement = "com.database.weixin.mapping.orderInfo.getOrderInfoByTransactionId";
+        return Database.Instance().selectOne(statement, transactionId);
     }
 
     public static List<HashMap> getOrderInfoListByDate(String createuser, String startDate, String endDate) {
-        SqlSession sqlSession = com.weixin.database.Database.SqlSessionFactory().openSession();
-        String statement = "com.weixin.database.mapping.orderInfo.getOrderInfoListByDate";
+        String statement = "com.database.weixin.mapping.orderInfo.getOrderInfoListByDate";
         Map<String, Object> param=new HashMap<String, Object>();
         param.put("createuser",createuser);
         param.put("startdate",startDate);
         param.put("enddate",endDate);
-        List<HashMap> orderInfo = sqlSession.selectList(statement,param);
-        sqlSession.close();
-        return orderInfo;
+        return Database.Instance().selectList(statement,param);
     }
     
     public static List<HashMap> getOrderExpListByDate(String createuser, String startDate, String endDate) {
-        SqlSession sqlSession = com.weixin.database.Database.SqlSessionFactory().openSession();
-        String statement = "com.weixin.database.mapping.orderInfo.getOrderExpListByDate";
+        String statement = "com.database.weixin.mapping.orderInfo.getOrderExpListByDate";
         Map<String, Object> param=new HashMap<String, Object>();
         param.put("createuser",createuser);
         param.put("startdate",startDate);
         param.put("enddate",endDate);
-        List<HashMap> orderInfo = sqlSession.selectList(statement,param);
-        sqlSession.close();
-        return orderInfo;
+        return Database.Instance().selectList(statement,param);
     }
 
     public static boolean insertOrderInfo(OrderInfo orderInfo) {
-        SqlSession sqlSession = Database.SqlSessionFactory().openSession();
-        String statement = "com.weixin.database.mapping.orderInfo.insertOrderInfo";
-        int result = sqlSession.insert(statement, orderInfo);
-        sqlSession.commit();
-        sqlSession.close();
-        return result == 1;
+        String statement = "com.database.weixin.mapping.orderInfo.insertOrderInfo";
+        return Database.Instance().insert(statement, orderInfo) == 1;
     }
 
     public long getId() {

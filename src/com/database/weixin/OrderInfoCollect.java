@@ -1,4 +1,4 @@
-package com.weixin.database;
+package com.database.weixin;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -12,15 +12,12 @@ public class OrderInfoCollect
     }
 
     public static OrderInfoCollect collectOrderInfoByDate(String createUser, String startDate, String endDate) {
-        SqlSession sqlSession = com.weixin.database.Database.SqlSessionFactory().openSession();
-        String statement = "com.weixin.database.mapping.orderInfo.collectOrderInfoByDate";
+        String statement = "com.database.weixin.mapping.orderInfo.collectOrderInfoByDate";
         Map<String, Object> param=new HashMap<String, Object>();
         param.put("createUser", createUser);
         param.put("startDate", startDate);
         param.put("endDate", endDate);
-        OrderInfoCollect orderInfoCollect = sqlSession.selectOne(statement,param);
-        sqlSession.close();
-        return orderInfoCollect;
+        return Database.Instance().selectOne(statement,param);
     }
 
     public int getInfoCount() {

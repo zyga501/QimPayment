@@ -2,9 +2,9 @@ package com.weixin.action;
 
 import com.framework.action.AjaxActionSupport;
 import com.framework.utils.StringUtils;
-import com.merchant.database.IdMapUUID;
-import com.merchant.database.SubMerchantInfo;
-import com.merchant.database.SubMerchantUser;
+import com.database.merchant.IdMapUUID;
+import com.database.merchant.SubMerchantInfo;
+import com.database.merchant.SubMerchantUser;
 
 import java.io.ByteArrayInputStream;
 
@@ -49,7 +49,10 @@ public class WebpagePayAction extends AjaxActionSupport {
          storeName = subMerchantUser.getStoreName();
          userName = subMerchantUser.getUserName();
          subMerchantId = new Long(subMerchantUser.getSubMerchantId()).toString();
-         subMerchantLogo = new ByteArrayInputStream(SubMerchantInfo.getSubMerchantLogoById(subMerchantUser.getSubMerchantId()));
+         byte[] logo = SubMerchantInfo.getSubMerchantLogoById(subMerchantUser.getSubMerchantId());
+         if (logo != null) {
+             subMerchantLogo = new ByteArrayInputStream(logo);
+         }
         return SCANPAY;
     }
 }

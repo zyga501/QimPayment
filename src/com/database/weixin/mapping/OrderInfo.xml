@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.weixin.database.mapping.orderInfo">
+<mapper namespace="com.database.weixin.mapping.orderInfo">
     <select id="getOrderInfo" resultMap="orderInfoResult">
         SELECT * FROM  OrderInfo
     </select>
@@ -21,11 +21,11 @@
         SELECT count(*) as infoCount,sum(totalFee) as sumFee FROM OrderInfo WHERE createUser=#{createUser}
         and createTime between #{startDate} and #{endDate}
     </select>
-    <resultMap type="com.weixin.database.OrderInfoCollect" id="orderInfoCollect">
+    <resultMap type="com.database.weixin.OrderInfoCollect" id="orderInfoCollect">
         <result property="infoCount" column="infoCount" jdbcType="INTEGER" />
         <result property="sumFee" column="sumFee" jdbcType="INTEGER" />
     </resultMap>
-    <resultMap type="com.weixin.database.OrderInfo" id="orderInfoResult">
+    <resultMap type="com.database.weixin.OrderInfo" id="orderInfoResult">
         <id property="id" column="id" jdbcType="BIGINT" />
         <result property="appid" column="appid" jdbcType="VARCHAR"/>
         <result property="mchId" column="mchId" jdbcType="VARCHAR"/>
@@ -38,7 +38,7 @@
         <result property="timeEnd" column="timeEnd" jdbcType="VARCHAR" />
         <result property="openId" column="openId" jdbcType="VARCHAR" />
     </resultMap>
-    <insert id="insertOrderInfo" parameterType="com.weixin.database.OrderInfo">
+    <insert id="insertOrderInfo" parameterType="com.database.weixin.OrderInfo">
         INSERT INTO OrderInfo(appid,mchid,subMchId,body,transactionId,outTradeNo,bankType,totalFee,timeEnd,createUser,openId)
         VALUE (#{appid},#{mchId},#{subMchId},#{body},#{transactionId},#{outTradeNo},#{bankType},#{totalFee},#{timeEnd},#{createUser},#{openId})
     </insert>

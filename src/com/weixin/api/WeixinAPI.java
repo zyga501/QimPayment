@@ -2,6 +2,7 @@ package com.weixin.api;
 
 import com.framework.utils.HttpUtils;
 import com.framework.utils.Logger;
+import org.apache.commons.collections.functors.ExceptionClosure;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -20,16 +21,14 @@ public abstract class WeixinAPI {
         if (apiUri.isEmpty()) {
             return false;
         }
-        Logger.info("Request Url:\r\n" + apiUri);
+        Logger.debug("Request Url:\r\n" + apiUri);
 
-        CloseableHttpClient httpClient = HttpUtils.Instance();
-        HttpGet httpGet = new HttpGet(apiUri);
-        CloseableHttpResponse response = httpClient.execute(httpGet);
-        HttpEntity entity = response.getEntity();
-        String responseString = EntityUtils.toString(entity, "UTF-8");
-        response.close();
+        String responseString = HttpUtils.GetRequest(new HttpGet(apiUri), (HttpEntity httpEntity)->
+        {
+            return EntityUtils.toString(httpEntity, "UTF-8");
+        });
 
-        Logger.info("Response Data:\r\n" + responseString);
+        Logger.debug("Response Data:\r\n" + responseString);
 
         return handlerResponse(responseString);
     }
@@ -39,10 +38,10 @@ public abstract class WeixinAPI {
         if (apiUri.isEmpty()) {
             return false;
         }
-        Logger.info("Request Url:\r\n" + apiUri);
+        Logger.debug("Request Url:\r\n" + apiUri);
 
         postData_ = postData;
-        Logger.info("Reqest Data:\r\n" + postData);
+        Logger.debug("Reqest Data:\r\n" + postData);
 
         HttpPost httpPost = new HttpPost(apiUri);
         StringEntity postEntity = new StringEntity(postData, "UTF-8");
@@ -50,25 +49,16 @@ public abstract class WeixinAPI {
 
         String responseString = new String();
         try {
-            CloseableHttpClient httpClient = HttpUtils.Instance();
-            CloseableHttpResponse response = httpClient.execute(httpPost);
-            HttpEntity entity = response.getEntity();
-            responseString = EntityUtils.toString(entity, "UTF-8");
-            response.close();
-        }
-        catch (ConnectionPoolTimeoutException e) {
-        }
-        catch (ConnectTimeoutException e) {
-        }
-        catch (SocketTimeoutException e) {
-        }
-        catch (Exception e) {
+            responseString = HttpUtils.PostRequest(httpPost, (HttpEntity httpEntity)->
+            {
+                return EntityUtils.toString(httpEntity, "UTF-8");
+            });
         }
         finally {
             httpPost.abort();
         }
 
-        Logger.info("Response Data:\r\n" + responseString);
+        Logger.debug("Response Data:\r\n" + responseString);
 
         return handlerResponse(responseString);
     }

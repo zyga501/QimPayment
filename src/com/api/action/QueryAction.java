@@ -1,8 +1,8 @@
 package com.api.action;
 
 import com.framework.action.AjaxActionSupport;
-import com.weixin.database.OrderInfo;
-import com.weixin.database.OrderInfoCollect;
+import com.database.weixin.OrderInfo;
+import com.database.weixin.OrderInfoCollect;
 
 import java.util.HashMap;
 import java.util.List;

@@ -1,7 +1,7 @@
 package com.weixin.api;
 
 import com.framework.utils.Logger;
-import com.weixin.database.MerchantInfo;
+import com.database.weixin.MerchantInfo;
 import net.sf.json.JSONObject;
 
 import java.util.HashMap;

@@ -38,11 +38,11 @@ public abstract class WeixinAPIWithSign extends WeixinAPI {
         if (apiUri.isEmpty()) {
             return false;
         }
-        Logger.info("Request Url:\r\n" + apiUri);
+        Logger.debug("Request Url:\r\n" + apiUri);
 
         XStream xStreamForRequestPostData = new XStream(new DomDriver("UTF-8", new XmlFriendlyNameCoder("-_", "_")));
         String postDataXML = xStreamForRequestPostData.toXML(requestData_);
-        Logger.info("Reqest Data:\r\n" + postDataXML);
+        Logger.debug("Reqest Data:\r\n" + postDataXML);
 
         HttpPost httpPost = new HttpPost(apiUri);
         StringEntity postEntity = new StringEntity(postDataXML, "UTF-8");
@@ -51,25 +51,16 @@ public abstract class WeixinAPIWithSign extends WeixinAPI {
 
         String responseString = new String();
         try {
-            CloseableHttpClient httpClient = HttpUtils.Instance();
-            CloseableHttpResponse response = httpClient.execute(httpPost);
-            HttpEntity entity = response.getEntity();
-            responseString = EntityUtils.toString(entity, "UTF-8");
-            response.close();
-        }
-        catch (ConnectionPoolTimeoutException e) {
-        }
-        catch (ConnectTimeoutException e) {
-        }
-        catch (SocketTimeoutException e) {
-        }
-        catch (Exception e) {
+            responseString = HttpUtils.PostRequest(httpPost, (HttpEntity httpEntity)->
+            {
+                return EntityUtils.toString(httpEntity, "UTF-8");
+            });
         }
         finally {
             httpPost.abort();
         }
 
-        Logger.info("Response Data:\r\n" + responseString);
+        Logger.debug("Response Data:\r\n" + responseString);
 
         responseResult_ = XMLParser.convertMapFromXML(responseString);
         if (!Signature.checkSignValid(responseResult_, apiKey)) {

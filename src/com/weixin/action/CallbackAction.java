@@ -5,8 +5,8 @@ import com.framework.utils.Logger;
 import com.framework.utils.UdpSocket;
 import com.framework.utils.XMLParser;
 import com.message.WeixinMessage;
-import com.weixin.database.MerchantInfo;
-import com.weixin.database.OrderInfo;
+import com.database.weixin.MerchantInfo;
+import com.database.weixin.OrderInfo;
 import com.weixin.utils.Signature;
 import net.sf.json.JSONObject;
 
