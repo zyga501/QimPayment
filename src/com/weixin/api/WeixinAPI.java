@@ -2,18 +2,11 @@ package com.weixin.api;
 
 import com.framework.utils.HttpUtils;
 import com.framework.utils.Logger;
-import org.apache.commons.collections.functors.ExceptionClosure;
 import org.apache.http.HttpEntity;
-import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.conn.ConnectTimeoutException;
-import org.apache.http.conn.ConnectionPoolTimeoutException;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
-
-import java.net.SocketTimeoutException;
 
 public abstract class WeixinAPI {
     public boolean getRequest() throws Exception {
@@ -23,8 +16,7 @@ public abstract class WeixinAPI {
         }
         Logger.debug("Request Url:\r\n" + apiUri);
 
-        String responseString = HttpUtils.GetRequest(new HttpGet(apiUri), (HttpEntity httpEntity)->
-        {
+        String responseString = HttpUtils.GetRequest(new HttpGet(apiUri), (HttpEntity httpEntity) -> {
             return EntityUtils.toString(httpEntity, "UTF-8");
         });
 
@@ -49,8 +41,7 @@ public abstract class WeixinAPI {
 
         String responseString = new String();
         try {
-            responseString = HttpUtils.PostRequest(httpPost, (HttpEntity httpEntity)->
-            {
+            responseString = HttpUtils.PostRequest(httpPost, (HttpEntity httpEntity) -> {
                 return EntityUtils.toString(httpEntity, "UTF-8");
             });
         }

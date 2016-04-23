@@ -1,11 +1,7 @@
 package com.database.weixin;
 
-import com.framework.database.DatabaseFramework;
-import org.apache.ibatis.session.SqlSession;
+import com.database.DatabaseFramework;
 import org.apache.ibatis.session.SqlSessionFactory;
-
-import javax.xml.crypto.Data;
-import java.util.List;
 
 public class Database extends DatabaseFramework {
     public static void main(String[] args) throws Exception {

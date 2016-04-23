@@ -1,7 +1,6 @@
-package com.framework.database;
+package com.database;
 
 import org.apache.ibatis.io.Resources;
-import org.apache.ibatis.javassist.tools.Callback;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;

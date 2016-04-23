@@ -9,15 +9,10 @@ import com.thoughtworks.xstream.io.xml.XmlFriendlyNameCoder;
 import com.weixin.api.RequestData.RequestData;
 import com.weixin.utils.Signature;
 import org.apache.http.HttpEntity;
-import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.conn.ConnectTimeoutException;
-import org.apache.http.conn.ConnectionPoolTimeoutException;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
 
-import java.net.SocketTimeoutException;
 import java.util.Map;
 
 public abstract class WeixinAPIWithSign extends WeixinAPI {
@@ -51,8 +46,7 @@ public abstract class WeixinAPIWithSign extends WeixinAPI {
 
         String responseString = new String();
         try {
-            responseString = HttpUtils.PostRequest(httpPost, (HttpEntity httpEntity)->
-            {
+            responseString = HttpUtils.PostRequest(httpPost, (HttpEntity httpEntity) -> {
                 return EntityUtils.toString(httpEntity, "UTF-8");
             });
         }
