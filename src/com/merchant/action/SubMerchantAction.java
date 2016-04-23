@@ -55,7 +55,9 @@ public class SubMerchantAction extends AjaxActionSupport {
         if (subMerchantInfo != null) {
             MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
             if (merchantInfo != null) {
-                String redirect_uri = getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + "merchant/bindSubMerchant.jsp";
+                String redirect_uri = getRequest().getRequestURL().toString();
+                redirect_uri = redirect_uri.substring(0, redirect_uri.lastIndexOf('/'));
+                redirect_uri = redirect_uri.substring(0, redirect_uri.lastIndexOf('/') + 1) + "merchant/bindSubMerchant.jsp";
                 String perPayUri = String.format("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" +
                                 "%s&redirect_uri=%s&response_type=code&scope=snsapi_base&state=%s#wechat_redirect",
                         merchantInfo.getAppid(), redirect_uri, subMerchantId);

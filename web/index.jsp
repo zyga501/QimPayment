@@ -106,7 +106,7 @@
     function updateUserWeixinIdByUId() {
       $.ajax({
         type: 'post',
-        url: 'merchant/SubMerchantUser!updateWeixinIdById',
+        url: 'merchant/SubMerchantUser!preUpdateWeixinIdById',
         dataType:"json",
         data:$("form").serialize(),
         success: function (data) {
@@ -116,10 +116,10 @@
       })
     }
 
-    function updateSubMerchantWeixinIdByUId() {
+    function updateSubMerchantWeixinIdById() {
       $.ajax({
         type: 'post',
-        url: 'merchant/SubMerchant!updateWeixinIdById',
+        url: 'merchant/SubMerchant!preUpdateWeixinIdById',
         dataType:"json",
         data:$("form").serialize(),
         success: function (data) {
@@ -254,7 +254,7 @@
       <input type="button" onclick="updateUserWeixinIdById()" value="更新员工微信号"/>
     </td>
     <td>
-      <input type="button" onclick="updateSubMerchantWeixinIdByUId()" value="更新商户微信号"/>
+      <input type="button" onclick="updateSubMerchantWeixinIdById()" value="更新商户微信号"/>
     </td>
     <td>
       <input type="button" onclick="updateStoreNameById()" value="更新店名"/>
