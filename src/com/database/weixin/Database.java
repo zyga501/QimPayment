@@ -1,6 +1,6 @@
 package com.database.weixin;
 
-import com.database.DatabaseFramework;
+import com.framework.database.DatabaseFramework;
 import org.apache.ibatis.session.SqlSessionFactory;
 
 public class Database extends DatabaseFramework {
