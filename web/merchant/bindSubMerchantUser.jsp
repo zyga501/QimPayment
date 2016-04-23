@@ -12,10 +12,10 @@
                 success: function (data) {
                     var json = eval("(" + data + ")");
                     if (json.resultCode == 'Succeed') {
-                        $('#Message').html("绑定成功！");
+                        $('#Message').val("绑定成功！");
                     }
                     else {
-                        $('#Message').html("绑定失败!");
+                        $('#Message').val("绑定失败!");
                     }
                 }
             })
