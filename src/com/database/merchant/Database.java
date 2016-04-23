@@ -1,7 +1,6 @@
 package com.database.merchant;
 
-import com.framework.database.DatabaseFramework;
-import org.apache.ibatis.session.SqlSession;
+import com.database.DatabaseFramework;
 import org.apache.ibatis.session.SqlSessionFactory;
 
 public class Database extends DatabaseFramework {

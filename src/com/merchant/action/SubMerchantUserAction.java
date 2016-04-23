@@ -1,14 +1,13 @@
 package com.merchant.action;
 
+import com.database.merchant.SubMerchantInfo;
+import com.database.merchant.SubMerchantUser;
+import com.database.weixin.MerchantInfo;
 import com.framework.ProjectSettings;
 import com.framework.action.AjaxActionSupport;
 import com.framework.utils.IdWorker;
 import com.framework.utils.Logger;
-import com.database.merchant.SubMerchantInfo;
-import com.database.merchant.SubMerchantUser;
 import com.weixin.api.OpenId;
-import com.database.weixin.MerchantInfo;
-import org.apache.ibatis.session.SqlSession;
 
 import java.io.IOException;
 
@@ -27,7 +26,9 @@ public class SubMerchantUserAction extends AjaxActionSupport {
             if (subMerchantInfo != null) {
                 MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
                 if (merchantInfo != null) {
-                    String redirect_uri = getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + "merchant/bindSubMerchantUser.jsp";
+                    String redirect_uri = getRequest().getRequestURL().toString();
+                    redirect_uri = redirect_uri.substring(0, redirect_uri.lastIndexOf('/'));
+                    redirect_uri = redirect_uri.substring(0, redirect_uri.lastIndexOf('/') + 1) + "merchant/bindSubMerchantUser.jsp";
                     String perPayUri = String.format("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" +
                                     "%s&redirect_uri=%s&response_type=code&scope=snsapi_base&state=%s#wechat_redirect",
                             merchantInfo.getAppid(), redirect_uri, subMerchantUserId);
