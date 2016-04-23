@@ -56,10 +56,9 @@ public class SubMerchantUserAction extends AjaxActionSupport {
                 if (merchantInfo != null) {
                     OpenId openId = new OpenId(merchantInfo.getAppid(), merchantInfo.getAppsecret(), code);
                     if (openId.getRequest()) {
-                        String weixinId = code;
                         subMerchantUser = new SubMerchantUser();
                         subMerchantUser.setId(id);
-                        subMerchantUser.setWeixinId(weixinId);
+                        subMerchantUser.setWeixinId(openId.getOpenId());
                         if (SubMerchantUser.updateWeixinIdById(subMerchantUser)) {
                             return AjaxActionComplete(true);
                         }

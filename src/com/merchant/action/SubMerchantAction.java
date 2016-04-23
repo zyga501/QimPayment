@@ -82,10 +82,9 @@ public class SubMerchantAction extends AjaxActionSupport {
             if (merchantInfo != null) {
                 OpenId openId = new OpenId(merchantInfo.getAppid(), merchantInfo.getAppsecret(), code);
                 if (openId.getRequest()) {
-                    String weixinId = code;
                     subMerchantInfo = new SubMerchantInfo();
                     subMerchantInfo.setId(id);
-                    subMerchantInfo.setWeixinId(weixinId);
+                    subMerchantInfo.setWeixinId(openId.getOpenId());
                     if (SubMerchantInfo.updateWeixinIdById(subMerchantInfo)) {
                         return AjaxActionComplete(true);
                     }
