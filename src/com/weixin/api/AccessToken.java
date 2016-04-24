@@ -1,5 +1,6 @@
 package com.weixin.api;
 
+import com.database.weixin.SubMerchantInfo;
 import com.framework.utils.Logger;
 import com.database.weixin.MerchantInfo;
 import net.sf.json.JSONObject;
@@ -45,9 +46,20 @@ public class AccessToken extends WeixinAPI{
 
     public static void updateAccessToken(String appid) throws Exception {
         synchronized(accessTokenMap_) {
+            String appsecret = new String();
             MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoByAppId(appid);
             if (merchantInfo != null) {
-                AccessToken accessToken = new AccessToken(merchantInfo.getAppid(), merchantInfo.getAppsecret());
+                appsecret = merchantInfo.getAppsecret();
+            }
+            else {
+                SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoByAppId(appid);
+                if (subMerchantInfo != null) {
+                    appsecret = subMerchantInfo.getAppsecret();
+                }
+            }
+
+            if (!appsecret.isEmpty()) {
+                AccessToken accessToken = new AccessToken(appid, appsecret);
                 if (accessToken.getRequest()) {
                     accessTokenMap_.put(appid, accessToken.getAccessToken());
                 }
@@ -60,14 +72,8 @@ public class AccessToken extends WeixinAPI{
             if (!accessTokenMap_.containsValue(invalidAccessToken)) {
                 return getAccessToken(appid);
             }
-            MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoByAppId(appid);
-            if (merchantInfo != null) {
-                AccessToken accessToken = new AccessToken(merchantInfo.getAppid(), merchantInfo.getAppsecret());
-                if (accessToken.getRequest()) {
-                    accessTokenMap_.put(appid, accessToken.getAccessToken());
-                }
-            }
 
+            updateAccessToken(appid);
             return getAccessToken(appid);
         }
     }

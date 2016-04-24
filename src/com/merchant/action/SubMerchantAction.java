@@ -130,10 +130,12 @@ public class SubMerchantAction extends AjaxActionSupport {
     public String updateSubMerchantWeixinInfo() {
         SubMerchantInfo subMerchantInfo = new SubMerchantInfo();
         subMerchantInfo.setId(Long.parseLong(getParameter("id").toString()));
-        subMerchantInfo.setAppid(getParameter("appid").toString());
-        subMerchantInfo.setAppsecret(getParameter("appsecret").toString());
         subMerchantInfo.setTemplateId(getParameter("templateId").toString());
         if (SubMerchantInfo.updateWeixinInfoById(subMerchantInfo)) {
+            com.database.weixin.SubMerchantInfo subMerchantWeixinInfo = new com.database.weixin.SubMerchantInfo();
+            subMerchantWeixinInfo.setId(Long.parseLong(getParameter("id").toString()));
+            subMerchantWeixinInfo.setAppid(getParameter("appid").toString());
+            subMerchantWeixinInfo.setAppsecret(getParameter("appsecret").toString());
             return AjaxActionComplete(true);
         }
 

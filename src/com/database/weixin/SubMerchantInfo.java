@@ -1,7 +1,5 @@
 package com.database.weixin;
 
-import org.apache.ibatis.session.SqlSession;
-
 public class SubMerchantInfo {
     public static void main(String[] args) throws Exception {
     }
@@ -24,6 +22,11 @@ public class SubMerchantInfo {
     public static long getSubMerchantIdByCompatibleId(String compatibleId) {
         String statement = "com.database.weixin.mapping.subMerchantInfo.getSubMerchantIdByCompatibleId";
         return Database.Instance().selectOne(statement, compatibleId);
+    }
+
+    public static SubMerchantInfo getSubMerchantInfoByAppId(String subId) {
+        String statement = "com.database.weixin.mapping.subMerchantInfo.getSubMerchantInfoByAppId";
+        return Database.Instance().selectOne(statement, subId);
     }
 
     public long getId() {
@@ -50,7 +53,25 @@ public class SubMerchantInfo {
         this.subId_ = subId;
     }
 
+    public String getAppid() {
+        return appid_;
+    }
+
+    public void setAppid(String appid) {
+        this.appid_ = appid;
+    }
+
+    public String getAppsecret() {
+        return appsecret_;
+    }
+
+    public void setAppsecret(String appsecret) {
+        this.appsecret_ = appsecret;
+    }
+
     private long id_;
     private long merchantId_;
     private String subId_;
+    private String appid_;
+    private String appsecret_;
 }

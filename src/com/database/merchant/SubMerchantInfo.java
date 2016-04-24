@@ -22,6 +22,11 @@ public class SubMerchantInfo {
         return Database.Instance().selectOne(statement, id);
     }
 
+    public static SubMerchantInfo getSubMerchantInfoByAppId(String subId) {
+        String statement = "com.database.merchant.mapping.subMerchantInfo.getSubMerchantInfoByAppId";
+        return Database.Instance().selectOne(statement, subId);
+    }
+
     public static boolean insertSubMerchantInfo(SubMerchantInfo subMerchantInfo, Callable<Boolean> callable) {
         String statement = "com.database.merchant.mapping.subMerchantInfo.insertSubMerchantInfo";
         return Database.Instance().insert(statement, subMerchantInfo, callable) == 1;
@@ -114,22 +119,6 @@ public class SubMerchantInfo {
         this.address_ = address;
     }
 
-    public String getAppid() {
-        return appid_;
-    }
-
-    public void setAppid(String appid) {
-        this.appid_ = appid;
-    }
-
-    public String getAppsecret() {
-        return appsecret_;
-    }
-
-    public void setAppsecret(String appsecret) {
-        this.appsecret_ = appsecret;
-    }
-
     private long id_;
     private long merchantId_;
     private String name_;
@@ -139,6 +128,4 @@ public class SubMerchantInfo {
     private String weixinId_;
     private String templateId_;
     private String address_;
-    private String appid_;
-    private String appsecret_;
 }
