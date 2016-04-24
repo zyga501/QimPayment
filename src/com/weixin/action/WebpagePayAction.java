@@ -49,9 +49,14 @@ public class WebpagePayAction extends AjaxActionSupport {
          storeName = subMerchantUser.getStoreName();
          userName = subMerchantUser.getUserName();
          subMerchantId = new Long(subMerchantUser.getSubMerchantId()).toString();
-         byte[] logo = SubMerchantInfo.getSubMerchantLogoById(subMerchantUser.getSubMerchantId());
-         if (logo != null) {
-             subMerchantLogo = new ByteArrayInputStream(logo);
+         try {
+             byte[] logo = SubMerchantInfo.getSubMerchantLogoById(subMerchantUser.getSubMerchantId());
+             if (logo != null) {
+                 subMerchantLogo = new ByteArrayInputStream(logo);
+             }
+         }
+         catch (Exception e){
+             return SCANPAY;
          }
         return SCANPAY;
     }
