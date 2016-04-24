@@ -109,7 +109,7 @@ public class SubMerchantUserAction extends AjaxActionSupport {
         return AjaxActionComplete(SubMerchantUser.insertSubMerchantUserInfo(subMerchantUser, null));
     }
     public void oldBindMsg() throws IOException {
-        if ((null == getParameter("method"))|| (getParameter("method").toString().equals("bindmsg"))){
+        if ((null == getParameter("method"))|| (! getParameter("method").toString().equals("bindmsg"))){
             return;
         }
         if (null == getParameter("bingencode")){
@@ -118,7 +118,7 @@ public class SubMerchantUserAction extends AjaxActionSupport {
         String bingencode = getParameter("bingencode").toString();
         String submchid = bingencode.split("_")[0];
         String ucode = bingencode.split("_")[1];
-        SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoBySubId(submchid);
+        com.database.weixin.SubMerchantInfo subMerchantInfo = com.database.weixin.SubMerchantInfo.getSubMerchantInfoBySubId(submchid);
         List<SubMerchantUser> subMerchantUserList =  SubMerchantUser.getSubMerchantUserBySubMerchantId(subMerchantInfo.getId());
         for (SubMerchantUser submerchantuser: subMerchantUserList) {
             if  (submerchantuser.getUserName().equals(ucode)){
