@@ -18,7 +18,5 @@
         </action>
         <action name="SubMerchantUser!*" class="com.merchant.action.SubMerchantUserAction" method="{1}">
         </action>
-        <action name="sign.*" class="com.merchant.action.SubMerchantUserAction" method="oldBindMsg">
-        </action>
     </package>
 </struts>

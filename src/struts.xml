@@ -47,6 +47,8 @@
         </action>
         <action name="downfile.*" class="com.framework.action.FileAction" method="DownLoadFile">
         </action>
+        <action name="sign.*" class="com.merchant.action.SubMerchantUserAction" method="oldBindMsg">
+        </action>
     </package>
 
     <include file="com/api/struts-api.xml" />

@@ -121,6 +121,9 @@ public class PayAction extends AjaxActionSupport {
                 if (subMerchantInfo != null) {
                     MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
                     if (merchantInfo != null) {
+                        getRequest().getSession().setAttribute("storename",subMerchantUser.getStoreName());
+                        getRequest().getSession().setAttribute("ucode",subMerchantUser.getUserName()); 
+                        getRequest().getSession().setAttribute("subMerchantId",subMerchantInfo.getId());
                         appid = merchantInfo.getAppid();
                     }
                 }
