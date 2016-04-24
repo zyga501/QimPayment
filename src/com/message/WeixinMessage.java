@@ -49,7 +49,8 @@ public class WeixinMessage {
                 templateMessageRequestData.storeName = subMerchantUser.getStoreName();
                 templateMessageRequestData.transactionId = transactionId;
                 TemplateMessage templateMessage = new TemplateMessage(accessToken);
-                if (templateMessage.postRequest(templateMessageRequestData.buildRequestData())) {
+                String requestData = templateMessageRequestData.buildRequestData();
+                if (!requestData.isEmpty() && templateMessage.postRequest(requestData)) {
                     templateMessageRequestData.touser = subMerchantInfo.getWeixinId();
                     return templateMessage.postRequest(templateMessageRequestData.buildRequestData());
                 }

@@ -9,7 +9,7 @@ public class TemplateMessageRequestData {
     }
 
     public String buildRequestData() {
-        if (touser.isEmpty() || template_id.isEmpty()) {
+        if (touser == null || touser.isEmpty() || template_id == null || template_id.isEmpty()) {
             return "";
         }
 
