@@ -10,6 +10,7 @@ import com.framework.utils.Logger;
 import com.weixin.api.OpenId;
 
 import java.io.IOException;
+import java.util.List;
 
 public class SubMerchantUserAction extends AjaxActionSupport {
     public String getInfoByWeixinSubMerchantId() {
@@ -19,7 +20,10 @@ public class SubMerchantUserAction extends AjaxActionSupport {
     }
 
     public void preUpdateWeixinIdById() throws IOException {
-        String subMerchantUserId = getParameter("id").toString();
+        preUpdateWeixinId(getParameter("id").toString());
+    }
+
+    private void  preUpdateWeixinId(String subMerchantUserId) throws IOException {
         SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(subMerchantUserId));
         if (subMerchantUser != null) {
             SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
@@ -36,7 +40,6 @@ public class SubMerchantUserAction extends AjaxActionSupport {
                 }
             }
         }
-
         Logger.error("UpdateWeixinIdById Error!");
     }
 
@@ -104,5 +107,25 @@ public class SubMerchantUserAction extends AjaxActionSupport {
         subMerchantUser.setUserPwd(getParameter("userPwd").toString());
         subMerchantUser.setStoreName(getParameter("storeName").toString());
         return AjaxActionComplete(SubMerchantUser.insertSubMerchantUserInfo(subMerchantUser, null));
+    }
+    public void oldBindMsg() throws IOException {
+        if ((null == getParameter("method"))|| (getParameter("method").toString().equals("bindmsg"))){
+            return;
+        }
+        if (null == getParameter("bingencode")){
+            return;
+        }
+        String bingencode = getParameter("bingencode").toString();
+        String submchid = bingencode.split("_")[0];
+        String ucode = bingencode.split("_")[1];
+        SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoBySubId(submchid);
+        List<SubMerchantUser> subMerchantUserList =  SubMerchantUser.getSubMerchantUserBySubMerchantId(subMerchantInfo.getId());
+        for (SubMerchantUser submerchantuser: subMerchantUserList) {
+            if  (submerchantuser.getUserName().equals(ucode)){
+                preUpdateWeixinId(String.valueOf(submerchantuser.getId()));
+                return;
+            }
+        }
+
     }
 }
