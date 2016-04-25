@@ -49,7 +49,7 @@ public class CommonAction extends AjaxActionSupport {
     public String OrderInsert() throws Exception {
         parseRequestBuffer();
         String mode = StringUtils.convertNullableString(requestBuffer_.get("mode"));
-        return handlerResult(createMode(mode).orderQuery());
+        return handlerResult(createMode(mode).orderInsert());
     }
 
     private void parseRequestBuffer() throws IOException, ParserConfigurationException, IOException, SAXException {
