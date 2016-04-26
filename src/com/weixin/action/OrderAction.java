@@ -78,24 +78,31 @@ public class OrderAction extends AjaxActionSupport {
     }
 
     public String insertOrder() throws Exception {
-        OrderInfo orderInfo = new OrderInfo();
-        orderInfo = new OrderInfo();
-        orderInfo.setAppid("0xFFFFFF");
-        orderInfo.setMchId(getParameter("mch_id").toString());
-        orderInfo.setSubMchId(getParameter("sub_mch_id").toString());
-        orderInfo.setBody(getParameter("body").toString());
-        if (getParameter("transaction_id") != null) {
-            orderInfo.setTransactionId(getParameter("transaction_id").toString());
+        try {
+            OrderInfo orderInfo = new OrderInfo();
+            orderInfo.setAppid("0xFFFFFF");
+            orderInfo.setMchId(getParameter("mch_id").toString());
+            orderInfo.setSubMchId(getParameter("sub_mch_id").toString());
+            orderInfo.setBody(getParameter("body").toString());
+            if (getParameter("transaction_id") != null) {
+                if (OrderInfo.getOrderInfoByTransactionId(getParameter("transaction_id").toString()) != null) {
+                    return AjaxActionComplete(false);
+                }
+                orderInfo.setTransactionId(getParameter("transaction_id").toString());
+            }
+            if (getParameter("out_trade_no") != null) {
+                orderInfo.setTransactionId(getParameter("out_trade_no").toString());
+            }
+            orderInfo.setBankType(getParameter("bank_type").toString());
+            orderInfo.setTotalFee(Integer.parseInt(getParameter("total_fee").toString()));
+            orderInfo.setTimeEnd(getParameter("time_end").toString());
+            orderInfo.setOpenId("0xFFFFFF");
+            orderInfo.setCreateUser(0xFFFFFF);
+            OrderInfo.insertOrderInfo(orderInfo);
+            return AjaxActionComplete(true);
         }
-        if (getParameter("out_trade_no") != null) {
-            orderInfo.setTransactionId(getParameter("out_trade_no").toString());
+        catch (Exception exception) {
+            return AjaxActionComplete(false);
         }
-        orderInfo.setBankType(getParameter("bank_type").toString());
-        orderInfo.setTotalFee(Integer.parseInt(getParameter("total_fee").toString()));
-        orderInfo.setTimeEnd(getParameter("time_end").toString());
-        orderInfo.setOpenId("0xFFFFFF");
-        orderInfo.setCreateUser(0xFFFFFF);
-        OrderInfo.insertOrderInfo(orderInfo);
-        return AjaxActionComplete();
     }
 }
