@@ -14,9 +14,17 @@ public class SubMerchantInfo {
         return Database.Instance().selectOne(statement, subId);
     }
 
+    public static SubMerchantInfo getSubMerchantIdBySubIdAndMerchantId(SubMerchantInfo subMerchantInfo) {
+        String statement = "com.database.weixin.mapping.subMerchantInfo.getSubMerchantInfoBySubId";
+        return Database.Instance().selectOne(statement, subMerchantInfo);
+    }
+
     public static boolean insertSubMerchantInfo(SubMerchantInfo subMerchantInfo) {
-        String statement = "com.database.weixin.mapping.subMerchantInfo.insertSubMerchantInfo";
-        return Database.Instance().insert(statement, subMerchantInfo) == 1;
+        if (getSubMerchantIdBySubIdAndMerchantId(subMerchantInfo) == null) {
+            String statement = "com.database.weixin.mapping.subMerchantInfo.insertSubMerchantInfo";
+            return Database.Instance().insert(statement, subMerchantInfo) == 1;
+        }
+        return false;
     }
 
     public static long getSubMerchantIdByCompatibleId(String compatibleId) {

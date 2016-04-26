@@ -23,9 +23,17 @@ public class SubMerchantUser {
         return Database.Instance().selectList(statement, subMerchantId);
     }
 
+    public static SubMerchantUser getSubMerchantUserBySubMerchantIdAndUserName(SubMerchantUser subMerchantUser) {
+        String statement = "com.database.merchant.mapping.subMerchantUser.getSubMerchantUserBySubMerchantId";
+        return Database.Instance().selectOne(statement, subMerchantUser);
+    }
+
     public static boolean insertSubMerchantUserInfo(SubMerchantUser subMerchantUser, Callable<Boolean> callable) {
-        String statement = "com.database.merchant.mapping.subMerchantUser.insertSubMerchantUserInfo";
-        return Database.Instance().insert(statement, subMerchantUser, callable) == 1;
+        if (getSubMerchantUserBySubMerchantIdAndUserName(subMerchantUser) == null) {
+            String statement = "com.database.merchant.mapping.subMerchantUser.insertSubMerchantUserInfo";
+            return Database.Instance().insert(statement, subMerchantUser, callable) == 1;
+        }
+        return false;
     }
 
     public static boolean updateWeixinIdById(SubMerchantUser subMerchantUser) {

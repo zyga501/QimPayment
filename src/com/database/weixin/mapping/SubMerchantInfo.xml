@@ -15,6 +15,9 @@
         INNER JOIN submerchantinfo ON compatibleidmapsubid.subid = submerchantinfo.subId
         where compatibleidmapsubid.id=#{id}
     </select>
+    <select id="getSubMerchantIdBySubIdAndMerchantId" parameterType="com.database.weixin.SubMerchantInfo" resultType="subMerchantInfoResult">
+        SELECT * FROM SubMerchantInfo WHERE subId=#{subId} and merchantId=#{merchantId}
+    </select>
     <select id="getSubMerchantInfoByAppId" parameterType="String" resultMap="subMerchantInfoResult">
         SELECT * FROM SubMerchant WHERE appid=#{appid}
     </select>
