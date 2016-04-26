@@ -109,6 +109,7 @@ public class SubMerchantUserAction extends AjaxActionSupport {
         subMerchantUser.setStoreName(getParameter("storeName").toString());
         return AjaxActionComplete(SubMerchantUser.insertSubMerchantUserInfo(subMerchantUser, null));
     }
+
     public void oldBindMsg() throws IOException {
         if ((null == getParameter("method"))|| (! getParameter("method").toString().equals("bindmsg"))){
             return;
@@ -127,6 +128,5 @@ public class SubMerchantUserAction extends AjaxActionSupport {
                 return;
             }
         }
-
     }
 }
