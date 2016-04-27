@@ -35,7 +35,6 @@ public class WeixinMessage {
 
             if (!accessToken.isEmpty()) {
                 TemplateMessageRequestData templateMessageRequestData = new TemplateMessageRequestData();
-                templateMessageRequestData.touser = subMerchantUser.getWeixinId();
                 templateMessageRequestData.template_id = subMerchantInfo.getTemplateId();
                 UserInfo userInfo = new UserInfo(accessToken, orderInfo.getOpenId());
                 if (userInfo.getRequest()) {
@@ -48,12 +47,17 @@ public class WeixinMessage {
                 templateMessageRequestData.totalFee = orderInfo.getTotalFee() / 100.0;
                 templateMessageRequestData.storeName = subMerchantUser.getStoreName();
                 templateMessageRequestData.transactionId = transactionId;
+
                 TemplateMessage templateMessage = new TemplateMessage(accessToken);
-                String requestData = templateMessageRequestData.buildRequestData();
-                if (!requestData.isEmpty() && templateMessage.postRequest(requestData)) {
-                    templateMessageRequestData.touser = subMerchantInfo.getWeixinId();
-                    return templateMessage.postRequest(templateMessageRequestData.buildRequestData());
+                if (!subMerchantUser.getWeixinId().isEmpty()) {
+                    templateMessageRequestData.touser = subMerchantUser.getWeixinId();
+                    templateMessage.postRequest(templateMessageRequestData.buildRequestData());
                 }
+                if (!subMerchantInfo.getWeixinId().isEmpty()) {
+                    templateMessageRequestData.touser = subMerchantInfo.getWeixinId();
+                    templateMessage.postRequest(templateMessageRequestData.buildRequestData());
+                }
+                return true;
             }
         }
 

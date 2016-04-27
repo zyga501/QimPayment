@@ -36,6 +36,7 @@ public class TemplateMessage extends WeixinAPI {
                 }
                 default: {
                     Logger.error("UnHandler Exception!");
+                    Logger.debug("Request Url:\r\n" + getAPIUri() + "\r\nRequest Data:\r\n" + postData_ + "\r\nResponse Data:\r\n" + responseResult);
                     return false;
                 }
             }

@@ -33,11 +33,11 @@ public abstract class WeixinAPIWithSign extends WeixinAPI {
         if (apiUri.isEmpty()) {
             return false;
         }
-        Logger.info("Request Url:\r\n" + apiUri);
+        Logger.debug("Request Url:\r\n" + apiUri);
 
         XStream xStreamForRequestPostData = new XStream(new DomDriver("UTF-8", new XmlFriendlyNameCoder("-_", "_")));
         String postDataXML = xStreamForRequestPostData.toXML(requestData_);
-        Logger.info("Reqest Data:\r\n" + postDataXML);
+        Logger.debug("Reqest Data:\r\n" + postDataXML);
 
         HttpPost httpPost = new HttpPost(apiUri);
         StringEntity postEntity = new StringEntity(postDataXML, "UTF-8");
@@ -54,7 +54,7 @@ public abstract class WeixinAPIWithSign extends WeixinAPI {
             httpPost.abort();
         }
 
-        Logger.info("Response Data:\r\n" + responseString);
+        Logger.debug("Response Data:\r\n" + responseString);
 
         responseResult_ = XMLParser.convertMapFromXML(responseString);
         if (!Signature.checkSignValid(responseResult_, apiKey)) {
