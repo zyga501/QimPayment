@@ -15,8 +15,13 @@ import java.util.List;
 public class SubMerchantUserAction extends AjaxActionSupport {
     public String getInfoByWeixinSubMerchantId() {
         String sub_mch_id = getParameter("sub_mch_id").toString();
+        String merchantid = getParameter("merchantId").toString();
         com.database.weixin.SubMerchantInfo subMerchantInfo = com.database.weixin.SubMerchantInfo.getSubMerchantInfoBySubId(sub_mch_id);
-        return AjaxActionComplete(SubMerchantUser.getSubMerchantUserBySubMerchantId(subMerchantInfo.getId()));
+         if ((null!=subMerchantInfo) && (merchantid.equals(String.valueOf(subMerchantInfo.getMerchantId())))) {
+                 return AjaxActionComplete(SubMerchantUser.getSubMerchantUserBySubMerchantId(subMerchantInfo.getId()));
+             }
+         else
+             return AjaxActionComplete(false);
     }
 
     public void preUpdateWeixinIdById() throws IOException {
