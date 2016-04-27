@@ -8,7 +8,7 @@
         SELECT * FROM SubMerchantUser WHERE subMerchantId=#{subMerchantId} and userName=#{userName} and  userPwd= #{userPwd}
     </select>
     <select id="getSubMerchantUserBySubMerchantId"  parameterType="long" resultMap="subMerchantUserResult">
-        SELECT * FROM SubMerchantUser WHERE subMerchantId=#{submerchantid}
+        SELECT * FROM SubMerchantUser WHERE subMerchantId=#{submerchantId}
     </select>
     <select id="getSubMerchantUserBySubMerchantIdAndUserName" parameterType="com.database.merchant.SubMerchantUser" resultMap="subMerchantUserResult">
         SELECT * FROM SubMerchantUser WHERE subMerchantId=#{subMerchantId} AND userName=#{userName}
