@@ -15,7 +15,7 @@ public class SubMerchantInfo {
     }
 
     public static SubMerchantInfo getSubMerchantIdBySubIdAndMerchantId(SubMerchantInfo subMerchantInfo) {
-        String statement = "com.database.weixin.mapping.subMerchantInfo.getSubMerchantInfoBySubId";
+        String statement = "com.database.weixin.mapping.subMerchantInfo.getSubMerchantIdBySubIdAndMerchantId";
         return Database.Instance().selectOne(statement, subMerchantInfo);
     }
 

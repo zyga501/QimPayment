@@ -5,7 +5,8 @@ import java.util.concurrent.Callable;
 
 public class SubMerchantUser {
     public static void main(String[] args) throws Exception {
-
+        SubMerchantUser subMerchantUser = new SubMerchantUser();
+        SubMerchantUser.getSubMerchantUserBySubMerchantIdAndUserName(subMerchantUser);
     }
 
     public static SubMerchantUser getSubMerchantUserById(long id) {
@@ -24,7 +25,7 @@ public class SubMerchantUser {
     }
 
     public static SubMerchantUser getSubMerchantUserBySubMerchantIdAndUserName(SubMerchantUser subMerchantUser) {
-        String statement = "com.database.merchant.mapping.subMerchantUser.getSubMerchantUserBySubMerchantId";
+        String statement = "com.database.merchant.mapping.subMerchantUser.getSubMerchantUserBySubMerchantIdAndUserName";
         return Database.Instance().selectOne(statement, subMerchantUser);
     }
 
