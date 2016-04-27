@@ -62,6 +62,7 @@ public class SubMerchantAction extends AjaxActionSupport {
                                 "%s&redirect_uri=%s&response_type=code&scope=snsapi_base&state=%s#wechat_redirect",
                         merchantInfo.getAppid(), redirect_uri, subMerchantId);
                 getResponse().sendRedirect(perPayUri);
+                return;
             }
         }
 

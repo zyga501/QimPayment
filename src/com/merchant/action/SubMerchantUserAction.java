@@ -38,6 +38,7 @@ public class SubMerchantUserAction extends AjaxActionSupport {
                             merchantInfo.getAppid(), redirect_uri, subMerchantUserId);
                     System.out.print(perPayUri);
                     getResponse().sendRedirect(perPayUri);
+                    return;
                 }
             }
         }
