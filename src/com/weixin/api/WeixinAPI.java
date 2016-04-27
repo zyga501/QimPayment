@@ -20,7 +20,7 @@ public abstract class WeixinAPI {
             return EntityUtils.toString(httpEntity, "UTF-8");
         });
 
-        Logger.debug("Response Data:\r\n" + responseString);
+        Logger.info("Response Data:\r\n" + responseString);
 
         return handlerResponse(responseString);
     }
@@ -49,7 +49,7 @@ public abstract class WeixinAPI {
             httpPost.abort();
         }
 
-        Logger.debug("Response Data:\r\n" + responseString);
+        Logger.info("Response Data:\r\n" + responseString);
 
         return handlerResponse(responseString);
     }
