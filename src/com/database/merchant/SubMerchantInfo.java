@@ -27,7 +27,7 @@ public class SubMerchantInfo {
         return Database.Instance().selectOne(statement, subId);
     }
 
-    public static SubMerchantUser getSubMerchantInfoByMerchantIdAndName(SubMerchantInfo subMerchantInfo) {
+    public static SubMerchantInfo getSubMerchantInfoByMerchantIdAndName(SubMerchantInfo subMerchantInfo) {
         String statement = "com.database.merchant.mapping.subMerchantInfo.getSubMerchantInfoByMerchantIdAndName";
         return Database.Instance().selectOne(statement, subMerchantInfo);
     }
