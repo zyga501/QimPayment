@@ -23,6 +23,6 @@ public class Logger {
     }
 
     static {
-        PropertyConfigurator.configureAndWatch(Logger.class.getResource("/").getPath().substring(1) + "log4j.properties", 60000);
+        PropertyConfigurator.configureAndWatch(Logger.class.getResource("/").getPath().substring(1).replaceAll("%20", " ") + "log4j.properties", 60000);
     }
 }
