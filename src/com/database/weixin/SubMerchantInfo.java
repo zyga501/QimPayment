@@ -37,6 +37,11 @@ public class SubMerchantInfo {
         return Database.Instance().selectOne(statement, subId);
     }
 
+    public static boolean updateWeixinInfoById(SubMerchantInfo subMerchantInfo) {
+        String statement = "com.database.weixin.mapping.subMerchantInfo.updateWeixinInfoById";
+        return Database.Instance().update(statement, subMerchantInfo) == 1;
+    }
+
     public long getId() {
         return id_;
     }

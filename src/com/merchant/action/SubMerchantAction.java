@@ -137,7 +137,7 @@ public class SubMerchantAction extends AjaxActionSupport {
             subMerchantWeixinInfo.setId(Long.parseLong(getParameter("id").toString()));
             subMerchantWeixinInfo.setAppid(getParameter("appid").toString());
             subMerchantWeixinInfo.setAppsecret(getParameter("appsecret").toString());
-            return AjaxActionComplete(true);
+            return AjaxActionComplete(com.database.weixin.SubMerchantInfo.updateWeixinInfoById(subMerchantWeixinInfo));
         }
 
         return AjaxActionComplete(false);

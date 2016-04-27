@@ -32,4 +32,9 @@
         INSERT INTO SubMerchantInfo(id,subId,merchantId)
         VALUE (#{id},#{subId},#{merchantId})
     </insert>
+    <update id="updateWeixinInfoById" parameterType="com.database.merchant.SubMerchantInfo">
+        UPDATE SubMerchant
+        SET appid = #{appid}, appsecret=#{appsecret}
+        WHERE id = #{id}
+    </update>
 </mapper>
