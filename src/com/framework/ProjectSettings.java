@@ -40,6 +40,19 @@ public class ProjectSettings {
         return 0;
     }
 
+    public static long getName() {
+        try {
+            if (projectSettings_ != null && projectSettings_.get("name") != null) {
+                return Long.parseLong(projectSettings_.get("name").toString());
+            }
+        }
+        catch (NumberFormatException exception) {
+
+        }
+
+        return 0;
+    }
+
     public static long getIdWorkerSeed() {
         try {
             if (projectSettings_ != null && projectSettings_.get("idWorkerSeed") != null) {
