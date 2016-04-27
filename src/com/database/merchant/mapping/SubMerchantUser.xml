@@ -11,7 +11,7 @@
         SELECT * FROM SubMerchantUser WHERE subMerchantId=#{submerchantid}
     </select>
     <select id="getSubMerchantUserBySubMerchantIdAndUserName" parameterType="com.database.merchant.SubMerchantUser" resultMap="subMerchantUserResult">
-        SELECT * FROM SubMerchantUser WHERE subMerchantId=#{subMerchantId} AND userName=#{userName}
+        SELECT * FROM SubMerchantUser WHERE id=#{id} AND userName=#{userName}
     </select>
     <resultMap type="com.database.merchant.SubMerchantUser" id="subMerchantUserResult">
         <id property="id" column="id" jdbcType="BIGINT" />
