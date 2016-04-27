@@ -34,7 +34,7 @@ public class PayAction extends AjaxActionSupport {
                     microPayRequestData.sub_mch_id = subMerchantInfo.getSubId();
                     microPayRequestData.body = getParameter("body").toString();
                     microPayRequestData.attach = "{ 'id':'" + subMerchantUser.getId() + "', 'body':'" + microPayRequestData.body + "'}";
-                    microPayRequestData.total_fee = Integer.parseInt(getParameter("total_fee").toString());
+                    microPayRequestData.total_fee = (int)Double.parseDouble(getParameter("total_fee").toString());
                     microPayRequestData.auth_code = getParameter("auth_code").toString();
                     if (!StringUtils.convertNullableString(getParameter("out_trade_no")).isEmpty()) {
                         microPayRequestData.out_trade_no = getParameter("out_trade_no").toString();
@@ -80,7 +80,7 @@ public class PayAction extends AjaxActionSupport {
                     unifiedOrderRequestData.sub_mch_id = subMerchantInfo.getSubId();
                     unifiedOrderRequestData.body = getParameter("body").toString();
                     unifiedOrderRequestData.attach = "{ 'id':'" + getParameter("id").toString() + "', 'body':'" + unifiedOrderRequestData.body + "'}";
-                    unifiedOrderRequestData.total_fee = Integer.parseInt(getParameter("total_fee").toString());
+                    unifiedOrderRequestData.total_fee = (int)Double.parseDouble(getParameter("total_fee").toString());
                     unifiedOrderRequestData.product_id = getParameter("product_id").toString();
                     unifiedOrderRequestData.trade_type = "NATIVE";
                     String requestUrl = getRequest().getRequestURL().toString();
@@ -177,7 +177,7 @@ public class PayAction extends AjaxActionSupport {
                     unifiedOrderRequestData.sub_mch_id = subMerchantInfo.getSubId();
                     unifiedOrderRequestData.body = getParameter("body").toString();
                     unifiedOrderRequestData.attach = "{ 'id':'" + subMerchantUserId + "', 'body':'" + unifiedOrderRequestData.body + "'}";
-                    unifiedOrderRequestData.total_fee = Integer.parseInt(getParameter("total_fee").toString());
+                    unifiedOrderRequestData.total_fee = (int)Double.parseDouble(getParameter("total_fee").toString());
                     unifiedOrderRequestData.trade_type = "JSAPI";
                     OpenId openId = new OpenId(merchantInfo.getAppid(), merchantInfo.getAppsecret(), code);
                     if (openId.getRequest()) {
