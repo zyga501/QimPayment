@@ -4,7 +4,6 @@ import com.database.merchant.SubMerchantInfo;
 import com.database.merchant.SubMerchantUser;
 import com.database.weixin.SubMerchantAct;
 import com.framework.action.AjaxActionSupport;
-import com.framework.utils.Logger;
 import com.weixin.api.OpenId;
 
 import java.io.IOException;
@@ -23,7 +22,6 @@ public class MerchantAction extends AjaxActionSupport {
             map.put("openid",openId.getOpenId());
         }
         else {
-            Logger.warn(this.getClass().getName() + " Get OpenId Failed!");
             return AjaxActionComplete();
         }
         return AjaxActionComplete(map);

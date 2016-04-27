@@ -49,6 +49,8 @@
         </action>
         <action name="sign.*" class="com.merchant.action.SubMerchantUserAction" method="oldBindMsg">
         </action>
+        <action name="interface.*" class="com.weixin.action.OrderAction" method="invalidQuery">
+        </action>
     </package>
 
     <include file="com/api/struts-api.xml" />

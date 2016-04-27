@@ -1,9 +1,7 @@
 package com.weixin.api;
 
-import com.framework.utils.HttpUtils;
+import com.framework.utils.Logger;
 import net.sf.json.JSONObject;
-
-import java.util.Map;
 
 public class OpenId extends WeixinAPI {
     private final static String OPENID_API = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code";
@@ -28,6 +26,9 @@ public class OpenId extends WeixinAPI {
             openid_ = jsonParse.get("openid").toString();
             return true;
         }
+
+        Logger.error(this.getClass().getName() + " Get OpenId Failed!");
+        Logger.error("Request Url:\r\n" + getAPIUri() + "\r\nResponse Data:\r\n" + responseResult);
         return false;
     }
 

@@ -105,4 +105,8 @@ public class OrderAction extends AjaxActionSupport {
             return AjaxActionComplete(false);
         }
     }
+
+    public String invalidQuery() {
+        return AjaxActionComplete(false);
+    }
 }
