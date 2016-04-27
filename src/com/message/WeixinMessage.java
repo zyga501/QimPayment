@@ -4,6 +4,7 @@ import com.database.merchant.SubMerchantInfo;
 import com.database.merchant.SubMerchantUser;
 import com.database.weixin.MerchantInfo;
 import com.database.weixin.OrderInfo;
+import com.framework.utils.StringUtils;
 import com.weixin.api.AccessToken;
 import com.weixin.api.RequestData.TemplateMessageRequestData;
 import com.weixin.api.TemplateMessage;
@@ -49,11 +50,11 @@ public class WeixinMessage {
                 templateMessageRequestData.transactionId = transactionId;
 
                 TemplateMessage templateMessage = new TemplateMessage(accessToken);
-                if (!subMerchantUser.getWeixinId().isEmpty()) {
+                if (!StringUtils.convertNullableString(subMerchantUser.getWeixinId()).isEmpty()) {
                     templateMessageRequestData.touser = subMerchantUser.getWeixinId();
                     templateMessage.postRequest(templateMessageRequestData.buildRequestData());
                 }
-                if (!subMerchantInfo.getWeixinId().isEmpty()) {
+                if (!StringUtils.convertNullableString(subMerchantInfo.getWeixinId()).isEmpty()) {
                     templateMessageRequestData.touser = subMerchantInfo.getWeixinId();
                     templateMessage.postRequest(templateMessageRequestData.buildRequestData());
                 }
