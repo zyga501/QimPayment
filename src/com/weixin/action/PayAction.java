@@ -17,6 +17,8 @@ import com.weixin.utils.Signature;
 import net.sf.json.JSONObject;
 
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -150,17 +152,18 @@ public class PayAction extends AjaxActionSupport {
         }
 
         String redirect_uri = getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + "weixin/oauthpay.jsp";
-        if (!StringUtils.convertNullableString(getParameter("redirect_uri")).isEmpty()) {
-            redirect_uri = getParameter("redirect_uri").toString();
-        }
+        String state = String.format("{'subMerchantUserId':'%s','redirect_uri':'%s'}",
+                subMerchantUserId, StringUtils.convertNullableString(getParameter("redirect_uri")));
         String perPayUri = String.format("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" +
                         "%s&redirect_uri=%s&response_type=code&scope=snsapi_base&state=%s#wechat_redirect",
-                appid, redirect_uri, subMerchantUserId);
+                appid, redirect_uri, URLEncoder.encode(state, "utf-8"));
         getResponse().sendRedirect(perPayUri);
     }
 
     public String brandWCPay() throws Exception {
-        String subMerchantUserId = getParameter("state").toString();
+        JSONObject jsonObject = JSONObject.fromObject(URLDecoder.decode(getParameter("state").toString(), "utf-8"));
+        String subMerchantUserId = jsonObject.get("subMerchantUserId").toString();
+        String redirect_uri = jsonObject.get("redirect_uri").toString();
         String code = getParameter("code").toString();
         if (subMerchantUserId.isEmpty() || code.isEmpty()) {
             return AjaxActionComplete();
@@ -177,7 +180,8 @@ public class PayAction extends AjaxActionSupport {
                     unifiedOrderRequestData.mch_id = merchantInfo.getMchId();
                     unifiedOrderRequestData.sub_mch_id = subMerchantInfo.getSubId();
                     unifiedOrderRequestData.body = getParameter("body").toString();
-                    unifiedOrderRequestData.attach = "{ 'id':'" + subMerchantUserId + "', 'body':'" + unifiedOrderRequestData.body + "'}";
+                    unifiedOrderRequestData.attach = String.format("{ 'id':'%s','body':'%s','redirect_uri':'%s'}",
+                            subMerchantUserId, unifiedOrderRequestData.body, redirect_uri);
                     Logger.info("unifiedOrderRequestData.attach:" + unifiedOrderRequestData.attach);
                     unifiedOrderRequestData.total_fee = (int)Double.parseDouble(getParameter("total_fee").toString());
                     unifiedOrderRequestData.trade_type = "JSAPI";
