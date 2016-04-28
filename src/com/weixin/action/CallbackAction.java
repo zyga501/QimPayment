@@ -1,14 +1,16 @@
 package com.weixin.action;
 
-import com.framework.action.AjaxActionSupport;
-import com.framework.utils.Logger;
-import com.framework.utils.UdpSocket;
-import com.framework.utils.XMLParser;
-import com.message.WeixinMessage;
 import com.database.weixin.MerchantInfo;
 import com.database.weixin.OrderInfo;
+import com.framework.action.AjaxActionSupport;
+import com.framework.utils.*;
+import com.message.WeixinMessage;
 import com.weixin.utils.Signature;
 import net.sf.json.JSONObject;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.util.EntityUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -55,9 +57,17 @@ public class CallbackAction extends AjaxActionSupport {
             }
         }
 
+        if (responseResult.get("attach") != null) {
+            JSONObject jsonObject = JSONObject.fromObject(responseResult.get("attach").toString());
+            responseResult.put("id", jsonObject.get("id").toString());
+            responseResult.put("body", jsonObject.get("body").toString());
+            responseResult.put("redirect_uri", jsonObject.get("redirect_uri").toString());
+        }
+
         boolean ret = saveOrderToDb(responseResult);
         if (ret) {
             notifyClientToPrint(responseResult);
+            notifyClientOrderInfo(responseResult);
             WeixinMessage.sendTemplateMessage(responseResult.get("transaction_id").toString());
             return true;
         }
@@ -72,30 +82,56 @@ public class CallbackAction extends AjaxActionSupport {
             return false;
         }
         orderInfo = new OrderInfo();
-        JSONObject jsonObject = JSONObject.fromObject(responseResult.get("attach").toString());
         orderInfo.setAppid(responseResult.get("appid").toString());
         orderInfo.setMchId(responseResult.get("mch_id").toString());
         orderInfo.setSubMchId(responseResult.get("sub_mch_id").toString());
-        orderInfo.setBody(jsonObject.get("body").toString());
+        orderInfo.setBody(responseResult.get("body").toString());
         orderInfo.setTransactionId(responseResult.get("transaction_id").toString());
         orderInfo.setOutTradeNo(responseResult.get("out_trade_no").toString());
         orderInfo.setBankType(responseResult.get("bank_type").toString());
         orderInfo.setTotalFee(Integer.parseInt(responseResult.get("total_fee").toString()));
         orderInfo.setTimeEnd(responseResult.get("time_end").toString());
-        orderInfo.setCreateUser(Long.parseLong(jsonObject.get("id").toString()));
+        orderInfo.setCreateUser(Long.parseLong(responseResult.get("id").toString()));
         orderInfo.setOpenId(responseResult.get("openid").toString());
         return OrderInfo.insertOrderInfo(orderInfo);
     }
 
     private void notifyClientToPrint(Map<String,Object> responseResult) throws IOException {
         Map<String, String> map = new HashMap<>();
-        JSONObject jsonObject = JSONObject.fromObject(responseResult.get("attach").toString());
-        map.put("body", jsonObject.get("body").toString());
+        map.put("body", responseResult.get("body").toString());
         map.put("transaction_id",responseResult.get("transaction_id").toString());
         map.put("out_trade_no", responseResult.get("out_trade_no").toString());
         map.put("bank_type", responseResult.get("bank_type").toString());
         map.put("total_fee", responseResult.get("total_fee").toString());
         map.put("time_end", responseResult.get("time_end").toString());
-        new UdpSocket("127.0.0.1", 8848).send(jsonObject.get("id").toString().concat("@").concat(JSONObject.fromObject(map).toString()).getBytes());
+        new UdpSocket("127.0.0.1", 8848).send(responseResult.get("id").toString().concat("@").concat(JSONObject.fromObject(map).toString()).getBytes());
+    }
+
+    private void notifyClientOrderInfo(Map<String, Object> responseResult) throws Exception {
+        if (!StringUtils.convertNullableString(responseResult.get("redirect_uri")).isEmpty()) {
+            String redirect_uri = responseResult.get("redirect_uri").toString();
+            Map<String, String> map = new HashMap<>();
+            map.put("body", responseResult.get("body").toString());
+            map.put("transaction_id",responseResult.get("transaction_id").toString());
+            map.put("out_trade_no", responseResult.get("out_trade_no").toString());
+            map.put("bank_type", responseResult.get("bank_type").toString());
+            map.put("total_fee", responseResult.get("total_fee").toString());
+            map.put("time_end", responseResult.get("time_end").toString());
+            HttpPost httpPost = new HttpPost(redirect_uri);
+            StringEntity postEntity = new StringEntity(JSONObject.fromObject(map).toString(), "UTF-8");
+            httpPost.addHeader("Content-Type", "text/json");
+            httpPost.setEntity(postEntity);
+
+            String responseString = new String();
+            try {
+                responseString = HttpUtils.PostRequest(httpPost, (HttpEntity httpEntity)->
+                {
+                    return EntityUtils.toString(httpEntity, "UTF-8");
+                });
+            }
+            finally {
+                httpPost.abort();
+            }
+        }
     }
 }

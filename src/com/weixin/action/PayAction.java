@@ -79,7 +79,8 @@ public class PayAction extends AjaxActionSupport {
                     unifiedOrderRequestData.mch_id = merchantInfo.getMchId();
                     unifiedOrderRequestData.sub_mch_id = subMerchantInfo.getSubId();
                     unifiedOrderRequestData.body = getParameter("body").toString();
-                    unifiedOrderRequestData.attach = "{ 'id':'" + getParameter("id").toString() + "', 'body':'" + unifiedOrderRequestData.body + "'}";
+                    unifiedOrderRequestData.attach = String.format("{ 'id':'%s','body':'%s','redirect_uri':'%s'}",
+                            StringUtils.convertNullableString(getParameter("id")), unifiedOrderRequestData.body, StringUtils.convertNullableString(getParameter("redirect_uri")));
                     unifiedOrderRequestData.total_fee = (int)Double.parseDouble(getParameter("total_fee").toString());
                     unifiedOrderRequestData.product_id = getParameter("product_id").toString();
                     unifiedOrderRequestData.trade_type = "NATIVE";
@@ -149,17 +150,18 @@ public class PayAction extends AjaxActionSupport {
         }
 
         String redirect_uri = getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + "weixin/oauthpay.jsp";
-        if (!StringUtils.convertNullableString(getParameter("redirect_uri")).isEmpty()) {
-            redirect_uri = getParameter("redirect_uri").toString();
-        }
+        String state = String.format("{'subMerchantUserId':'%s','redirect_uri':'%s'}",
+                subMerchantUserId, StringUtils.convertNullableString(getParameter("redirect_uri")));
         String perPayUri = String.format("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" +
                 "%s&redirect_uri=%s&response_type=code&scope=snsapi_base&state=%s#wechat_redirect",
-                appid, redirect_uri, subMerchantUserId);
+                appid, redirect_uri, state);
         getResponse().sendRedirect(perPayUri);
     }
 
     public String brandWCPay() throws Exception {
-        String subMerchantUserId = getParameter("state").toString();
+        JSONObject jsonObject = JSONObject.fromObject(getParameter("state").toString());
+        String subMerchantUserId = jsonObject.get("subMerchantUserId").toString();
+        String redirect_uri = jsonObject.get("redirect_uri").toString();
         String code = getParameter("code").toString();
         if (subMerchantUserId.isEmpty() || code.isEmpty()) {
             return AjaxActionComplete();
@@ -176,7 +178,8 @@ public class PayAction extends AjaxActionSupport {
                     unifiedOrderRequestData.mch_id = merchantInfo.getMchId();
                     unifiedOrderRequestData.sub_mch_id = subMerchantInfo.getSubId();
                     unifiedOrderRequestData.body = getParameter("body").toString();
-                    unifiedOrderRequestData.attach = "{ 'id':'" + subMerchantUserId + "', 'body':'" + unifiedOrderRequestData.body + "'}";
+                    unifiedOrderRequestData.attach = String.format("{ 'id':'%s','body':'%s','redirect_uri':'%s'}",
+                            StringUtils.convertNullableString(getParameter("id")), unifiedOrderRequestData.body, redirect_uri);
                     unifiedOrderRequestData.total_fee = (int)Double.parseDouble(getParameter("total_fee").toString());
                     unifiedOrderRequestData.trade_type = "JSAPI";
                     OpenId openId = new OpenId(merchantInfo.getAppid(), merchantInfo.getAppsecret(), code);

@@ -10,7 +10,7 @@
         type: 'post',
         url: 'api/TestPay!microPay',
         dataType:"json",
-        data:$("form").serialize() + '<xml>234243234243234</xml>',
+        data:$("form").serialize(),
         success: function (data) {
         }
       })
@@ -30,6 +30,17 @@
           var dom=document.createElement('DIV');
           dom.innerHTML = qr.createImgTag();
           $("#QRCode")[0].appendChild(dom);
+        }
+      })
+    }
+
+    function prePay() {
+      $.ajax({
+        type: 'post',
+        url: 'api/TestPay!prePay',
+        dataType:"json",
+        data:$("form").serialize(),
+        success: function (data) {
         }
       })
     }
@@ -237,6 +248,9 @@
       </td>
       <td>
         <input type="button" onclick="scanPay()" value="扫码支付"/>
+      </td>
+      <td>
+        <input type="button" onclick="prePay()" value="公众号预支付"/>
       </td>
       <td>
         <input type="button" onclick="brandWCPay()" value="公众号支付"/>
