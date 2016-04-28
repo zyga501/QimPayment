@@ -1,6 +1,7 @@
 package com.api.test;
 
 import com.api.test.RequestData.MicroPayRequestData;
+import com.api.test.RequestData.PrePayData;
 import com.api.test.RequestData.ScanPayRequestData;
 import com.framework.action.AjaxActionSupport;
 import com.framework.utils.HttpUtils;
@@ -10,16 +11,10 @@ import com.thoughtworks.xstream.io.xml.XmlFriendlyNameCoder;
 import com.weixin.utils.Signature;
 import net.sf.json.JSONObject;
 import org.apache.http.HttpEntity;
-import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.conn.ConnectTimeoutException;
-import org.apache.http.conn.ConnectionPoolTimeoutException;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
 
-import java.net.SocketTimeoutException;
-import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -86,7 +81,28 @@ public class TestPayAction extends AjaxActionSupport {
         return AjaxActionComplete(map);
     }
 
-    public String prePay() {
+    public String prePay() throws Exception {
+        PrePayData prePayData = new PrePayData();
+        prePayData.id = getParameter("id").toString();
+        prePayData.redirect_uri = "";
+        prePayData.sign = Signature.generateSign(prePayData, prePayData.id);
+        XStream xStreamForRequestPostData = new XStream(new DomDriver("UTF-8", new XmlFriendlyNameCoder("-_", "_")));
+        String postDataXML = xStreamForRequestPostData.toXML(prePayData);
+        HttpPost httpPost = new HttpPost(getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + "PrePay");
+        StringEntity postEntity = new StringEntity(postDataXML, "UTF-8");
+        httpPost.addHeader("Content-Type", "text/xml");
+        httpPost.setEntity(postEntity);
+
+        String responseString = new String();
+        try {
+            responseString = HttpUtils.PostRequest(httpPost, (HttpEntity httpEntity)->
+            {
+                return EntityUtils.toString(httpEntity, "UTF-8");
+            });
+        }
+        finally {
+            httpPost.abort();
+        }
         return AjaxActionComplete();
     }
 
