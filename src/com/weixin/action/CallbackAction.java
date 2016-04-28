@@ -61,7 +61,7 @@ public class CallbackAction extends AjaxActionSupport {
             JSONObject jsonObject = JSONObject.fromObject(responseResult.get("attach").toString());
             responseResult.put("id", jsonObject.get("id").toString());
             responseResult.put("body", jsonObject.get("body").toString());
-            responseResult.put("redirect_uri", jsonObject.get("redirect_uri").toString());
+            responseResult.put("redirect_uri", StringUtils.convertNullableString(jsonObject.get("redirect_uri")));
         }
 
         boolean ret = saveOrderToDb(responseResult);
