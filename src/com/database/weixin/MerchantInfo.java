@@ -66,9 +66,18 @@ public class MerchantInfo {
         this.apiKey_ = apiKey;
     }
 
+    public String getTemplateId() {
+        return templateid_;
+    }
+
+    public void setTemplateId(String templateid_) {
+        this.templateid_ = templateid_;
+    }
+
     private Long id_;
     private String appid_;
     private String appsecret_;
     private String mchId_;
     private String apiKey_;
+    private String templateid_;
 }

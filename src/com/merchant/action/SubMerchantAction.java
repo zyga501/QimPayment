@@ -27,6 +27,8 @@ public class SubMerchantAction extends AjaxActionSupport {
         subMerchantInfo.setMerchantId(merchantId);
         subMerchantInfo.setName(storeName);
         subMerchantInfo.setAddress(address);
+        com.database.weixin.MerchantInfo merchantInfo = com.database.weixin.MerchantInfo.getMerchantInfoById(merchantId);
+        subMerchantInfo.setTemplateId(merchantInfo.getTemplateId());
         return AjaxActionComplete(SubMerchantInfo.insertSubMerchantInfo(subMerchantInfo, () -> {
                 // insert default user
                 SubMerchantUser subMerchantUser = new SubMerchantUser();
