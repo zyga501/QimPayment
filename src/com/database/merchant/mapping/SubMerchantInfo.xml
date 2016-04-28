@@ -25,8 +25,8 @@
         <result property="appsecret" column="appsecret" jdbcType="VARCHAR"/>
     </resultMap>
     <insert id="insertSubMerchantInfo" parameterType="com.database.merchant.SubMerchantInfo">
-        INSERT INTO SubMerchant(id,merchantId,name,address)
-        VALUE (#{id},#{merchantId},#{name},#{address})
+        INSERT INTO SubMerchant(id,merchantId,name,address,templateId)
+        VALUE (#{id},#{merchantId},#{name},#{address},#{templateId})
     </insert>
     <update id="updateWeixinIdById" parameterType="com.database.merchant.SubMerchantInfo">
         UPDATE SubMerchant
