@@ -123,7 +123,7 @@ public class PayAction extends AjaxActionSupport {
                     MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
                     if (merchantInfo != null) {
                         getRequest().getSession().setAttribute("storename",subMerchantUser.getStoreName());
-                        getRequest().getSession().setAttribute("ucode",subMerchantUser.getUserName()); 
+                        getRequest().getSession().setAttribute("ucode",subMerchantUser.getUserName());
                         getRequest().getSession().setAttribute("subMerchantId",subMerchantInfo.getId());
                         appid = merchantInfo.getAppid();
                     }
@@ -131,17 +131,17 @@ public class PayAction extends AjaxActionSupport {
             }
         }
         else { // compatible old api
-           IdMapUUID idMapUUID= IdMapUUID.getMappingByUUID( getParameter("odod").toString());
-           if (idMapUUID != null) {
-               subMerchantUserId = String.valueOf(idMapUUID.getId());
-               SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(idMapUUID.getId());
-               getRequest().getSession().setAttribute("storename",subMerchantUser.getStoreName());
-               getRequest().getSession().setAttribute("ucode",subMerchantUser.getUserName());
-               SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
-               MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
-               getRequest().getSession().setAttribute("subMerchantId",subMerchantInfo.getId());
-               appid = merchantInfo.getAppid();
-           }
+            IdMapUUID idMapUUID= IdMapUUID.getMappingByUUID( getParameter("odod").toString());
+            if (idMapUUID != null) {
+                subMerchantUserId = String.valueOf(idMapUUID.getId());
+                SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(idMapUUID.getId());
+                getRequest().getSession().setAttribute("storename",subMerchantUser.getStoreName());
+                getRequest().getSession().setAttribute("ucode",subMerchantUser.getUserName());
+                SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
+                MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
+                getRequest().getSession().setAttribute("subMerchantId",subMerchantInfo.getId());
+                appid = merchantInfo.getAppid();
+            }
         }
 
         if (appid.isEmpty()) {
@@ -150,18 +150,17 @@ public class PayAction extends AjaxActionSupport {
         }
 
         String redirect_uri = getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + "weixin/oauthpay.jsp";
-        String state = String.format("{'subMerchantUserId':'%s','redirect_uri':'%s'}",
-                subMerchantUserId, StringUtils.convertNullableString(getParameter("redirect_uri")));
+        if (!StringUtils.convertNullableString(getParameter("redirect_uri")).isEmpty()) {
+            redirect_uri = getParameter("redirect_uri").toString();
+        }
         String perPayUri = String.format("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" +
-                "%s&redirect_uri=%s&response_type=code&scope=snsapi_base&state=%s#wechat_redirect",
-                appid, redirect_uri, state);
+                        "%s&redirect_uri=%s&response_type=code&scope=snsapi_base&state=%s#wechat_redirect",
+                appid, redirect_uri, subMerchantUserId);
         getResponse().sendRedirect(perPayUri);
     }
 
     public String brandWCPay() throws Exception {
-        JSONObject jsonObject = JSONObject.fromObject(getParameter("state").toString());
-        String subMerchantUserId = jsonObject.get("subMerchantUserId").toString();
-        String redirect_uri = jsonObject.get("redirect_uri").toString();
+        String subMerchantUserId = getParameter("state").toString();
         String code = getParameter("code").toString();
         if (subMerchantUserId.isEmpty() || code.isEmpty()) {
             return AjaxActionComplete();
@@ -178,8 +177,8 @@ public class PayAction extends AjaxActionSupport {
                     unifiedOrderRequestData.mch_id = merchantInfo.getMchId();
                     unifiedOrderRequestData.sub_mch_id = subMerchantInfo.getSubId();
                     unifiedOrderRequestData.body = getParameter("body").toString();
-                    unifiedOrderRequestData.attach = String.format("{ 'id':'%s','body':'%s','redirect_uri':'%s'}",
-                            StringUtils.convertNullableString(getParameter("id")), unifiedOrderRequestData.body, redirect_uri);
+                    unifiedOrderRequestData.attach = "{ 'id':'" + subMerchantUserId + "', 'body':'" + unifiedOrderRequestData.body + "'}";
+                    Logger.info("unifiedOrderRequestData.attach:" + unifiedOrderRequestData.attach);
                     unifiedOrderRequestData.total_fee = (int)Double.parseDouble(getParameter("total_fee").toString());
                     unifiedOrderRequestData.trade_type = "JSAPI";
                     OpenId openId = new OpenId(merchantInfo.getAppid(), merchantInfo.getAppsecret(), code);

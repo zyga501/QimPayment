@@ -209,13 +209,6 @@
         <input type="text" id="refund_fee" name="refund_fee"/>
       </td>
     </tr>
-    <tr>
-      <td>
-        <div  id="QRCode">
-          二维码
-        </div>
-      </td>
-    </tr>
     <tr><td>微信子商户ID:</td>
       <td>
         <input type="text" id="sub_mch_id" name="sub_mch_id"/>
@@ -236,12 +229,25 @@
         <input type="text" id="merchantId" name="merchantId" value="1596082254858240"/>
       </td>
     </tr>
-    <tr><td>微信Id:</td>
+    <tr>
+      <td>微信Id:</td>
       <td>
         <input type="text" id="weixinId" name="weixinId"/>
       </td>
     </tr>
     <tr>
+      <td>跳转Url:</td>
+      <td>
+        <input type="text" id="redirect_uri" name="redirect_uri"/>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div  id="QRCode">
+          二维码
+        </div>
+      </td>
+    </tr>
     <tr>
       <td>
         <input type="button" onclick="microPay()" value="刷卡提交"/>

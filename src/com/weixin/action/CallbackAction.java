@@ -41,7 +41,7 @@ public class CallbackAction extends AjaxActionSupport {
     private boolean handlerCallback() throws Exception {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(getRequest().getInputStream(), "utf-8"));
         StringBuilder stringBuilder = new StringBuilder();
-        String lineBuffer = null;
+        String lineBuffer;
         while ((lineBuffer = bufferedReader.readLine()) != null) {
             stringBuilder.append(lineBuffer);
         }
@@ -57,18 +57,16 @@ public class CallbackAction extends AjaxActionSupport {
             }
         }
 
-        if (responseResult.get("attach") != null) {
-            JSONObject jsonObject = JSONObject.fromObject(responseResult.get("attach").toString());
-            responseResult.put("id", jsonObject.get("id").toString());
-            responseResult.put("body", jsonObject.get("body").toString());
-            responseResult.put("redirect_uri", StringUtils.convertNullableString(jsonObject.get("redirect_uri")));
-        }
+        JSONObject jsonObject = JSONObject.fromObject(responseResult.get("attach").toString());
+        responseResult.put("id", jsonObject.get("id").toString());
+        responseResult.put("body", jsonObject.get("body").toString());
+        responseResult.put("redirect_uri", StringUtils.convertNullableString(jsonObject.get("redirect_uri")));
 
         boolean ret = saveOrderToDb(responseResult);
         if (ret) {
             notifyClientToPrint(responseResult);
-            notifyClientOrderInfo(responseResult);
             WeixinMessage.sendTemplateMessage(responseResult.get("transaction_id").toString());
+            notifyClientOrderInfo(responseResult);
             return true;
         }
 
@@ -81,7 +79,10 @@ public class CallbackAction extends AjaxActionSupport {
         if (orderInfo != null) {
             return false;
         }
+
+        Logger.info(responseResult.get("attach").toString());
         orderInfo = new OrderInfo();
+        JSONObject jsonObject = JSONObject.fromObject(responseResult.get("attach").toString());
         orderInfo.setAppid(responseResult.get("appid").toString());
         orderInfo.setMchId(responseResult.get("mch_id").toString());
         orderInfo.setSubMchId(responseResult.get("sub_mch_id").toString());

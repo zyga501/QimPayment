@@ -51,11 +51,11 @@ public class WeixinMessage {
                 templateMessageRequestData.transactionId = transactionId;
 
                 TemplateMessage templateMessage = new TemplateMessage(accessToken);
-                if (!StringUtils.convertNullableString(subMerchantUser.getWeixinId()).isEmpty()) {
+                if (!StringUtils.convertNullableString(subMerchantUser.getWeixinId()).trim().isEmpty()) {
                     templateMessageRequestData.touser = subMerchantUser.getWeixinId();
                     templateMessage.postRequest(templateMessageRequestData.buildRequestData());
                 }
-                if (!StringUtils.convertNullableString(subMerchantInfo.getWeixinId()).isEmpty()) {
+                if (!StringUtils.convertNullableString(subMerchantInfo.getWeixinId()).trim().isEmpty()) {
                     templateMessageRequestData.touser = subMerchantInfo.getWeixinId();
                     templateMessage.postRequest(templateMessageRequestData.buildRequestData());
                 }

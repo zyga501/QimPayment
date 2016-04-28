@@ -7,4 +7,5 @@ public class ScanPayRequestData {
     public Integer total_fee; // 总金额 订单总金额，单位为分，只能为整数
     public String product_id;
     public String sign;
+    public String redirect_uri;
 }

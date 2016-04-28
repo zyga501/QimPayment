@@ -53,6 +53,7 @@ public class TestPayAction extends AjaxActionSupport {
         scanPayRequestData.total_fee = Integer.parseInt(getParameter("total_fee").toString());
         scanPayRequestData.product_id = getParameter("product_id").toString();
         scanPayRequestData.mode = getParameter("mode").toString();
+        scanPayRequestData.redirect_uri = getParameter("redirect_uri").toString();
         scanPayRequestData.sign = Signature.generateSign(scanPayRequestData, scanPayRequestData.id);
         XStream xStreamForRequestPostData = new XStream(new DomDriver("UTF-8", new XmlFriendlyNameCoder("-_", "_")));
         String postDataXML = xStreamForRequestPostData.toXML(scanPayRequestData);
