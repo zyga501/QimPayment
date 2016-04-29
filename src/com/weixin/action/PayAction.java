@@ -134,7 +134,7 @@ public class PayAction extends AjaxActionSupport {
         }
 
         String redirect_uri = getRequest().getScheme()+"://" + getRequest().getServerName() + getRequest().getContextPath() + "/weixin/jsPayCallback.jsp";
-        String state = String.format("{'id':'%s','body':'%s','fee':'%s','no':'%s','url':'%s'}",
+        String data = String.format("{'id':'%s','body':'%s','fee':'%s','no':'%s','url':'%s'}",
                 subMerchantUserId,
                 new String(StringUtils.convertNullableString(getParameter("body")).getBytes("iso-8859-1"), "utf-8"),
                 StringUtils.convertNullableString(getParameter("total_fee")),
@@ -144,7 +144,7 @@ public class PayAction extends AjaxActionSupport {
                         "%s&redirect_uri=%s&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect",
                 appid, redirect_uri, subMerchantUserId);
         // save session data, state is too short
-        getRequest().getSession().setAttribute("data", Zip.zip(state));
+        getRequest().getSession().setAttribute("data", Zip.zip(data));
         getResponse().sendRedirect(jspayUri);
     }
 
