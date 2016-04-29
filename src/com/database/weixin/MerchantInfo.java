@@ -1,14 +1,11 @@
 package com.database.weixin;
 
-import org.apache.ibatis.session.SqlSession;
-
 import java.util.List;
 
 public class MerchantInfo {
     public static void main(String[] args) throws Exception {
         String statement = "com.database.weixin.mapping.merchantInfo.getMerchantInfoByAppId";
         MerchantInfo merchantInfo = Database.Instance().selectOne(statement, "wx0bfa8f7ec59b1f33");
-
     }
 
     public static List<MerchantInfo> getAllMerchantInfo() {

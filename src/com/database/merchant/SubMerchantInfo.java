@@ -19,7 +19,7 @@ public class SubMerchantInfo {
 
     public static byte[] getSubMerchantLogoById(long id) {
         String statement = "com.database.merchant.mapping.subMerchantInfo.getSubMerchantLogoById";
-        return Database.Instance().selectOne(statement, id);
+        return ((SubMerchantInfo)Database.Instance().selectOne(statement, id)).getLogo();
     }
 
     public static SubMerchantInfo getSubMerchantInfoByAppId(String subId) {
