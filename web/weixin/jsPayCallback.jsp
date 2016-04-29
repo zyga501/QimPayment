@@ -48,8 +48,7 @@
 <form >
     <input type="hidden" value="<%=request.getParameter("state")%>" name="state"/>
     <input type="hidden" value="<%=request.getParameter("code")%>" name="code"/>
-    <input type="hidden" value="<%=request.getParameter("body")%>" name="body"/>
-    <input type="hidden" value="" name="total_fee" id="total_fee"/>
+    <input type="hidden" value="${data}" name="data"/>
     <input type="button" class="but" id="butpaynum"  disabled="disabled" value="正在支付"/>
 </form>
 </body>

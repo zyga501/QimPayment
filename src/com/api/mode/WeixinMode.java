@@ -5,8 +5,7 @@ import com.weixin.utils.Signature;
 public class WeixinMode extends BaseMode  {
     private final static String WeixinMicroPay = "WeixinMicroPay";
     private final static String WeixinScanPay = "WeixinScanPay";
-    private final static String WeixinPrePay = "WeixinPrePay";
-    private final static String WeixinBrandWCPay = "WeixinBrandWCPay";
+    private final static String WeixinJsPay = "WeixinJsPay";
     private final static String WeixinOrderQuery = "WeixinOrderQuery";
     private final static String WeixinOrderInsert = "WeixinOrderInsert";
 
@@ -26,20 +25,12 @@ public class WeixinMode extends BaseMode  {
         return WeixinScanPay;
     }
 
-    public String prePay() {
+    public String jsPay() {
         if (!Signature.checkSignValid(requestBuffer_, requestBuffer_.get("id").toString())) {
-            return super.prePay();
+            return super.jsPay();
         }
 
-        return WeixinPrePay;
-    }
-
-    public String brandWCPay() {
-        if (!Signature.checkSignValid(requestBuffer_, requestBuffer_.get("id").toString())) {
-            return super.brandWCPay();
-        }
-
-        return WeixinBrandWCPay;
+        return WeixinJsPay;
     }
 
     public String orderQuery() {

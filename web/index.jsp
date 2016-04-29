@@ -34,45 +34,13 @@
       })
     }
 
-    function prePay() {
+    function jsPay() {
       $.ajax({
         type: 'post',
-        url: 'api/TestPay!prePay',
+        url: 'api/TestPay!jsPay',
         dataType:"json",
         data:$("form").serialize(),
         success: function (data) {
-        }
-      })
-    }
-
-    function brandWCPay() {
-      $.ajax({
-        type: 'post',
-        url: '<%=request.getContextPath()%>/api/TestPay!brandWCPay',
-        dataType:"json",
-        data:$("form").serialize(),
-        success: function (data) {
-          if (typeof (WeixinJSBridge) == "undefined") {
-            alert("请在微信客户端打开该网页");
-          }
-          else {
-            var json = eval("(" + data + ")");
-            WeixinJSBridge.invoke(
-                    'getBrandWCPayRequest',
-                    {
-                      "appId" : json.appId,           //公众号名称，由商户传入
-                      "timeStamp" : json.timeStamp,  //时间戳，自1970年以来的秒数
-                      "nonceStr" : json.nonceStr,    //随机串
-                      "package" : json.package,      //统一下单返回
-                      "signType" : json.signType,    //微信签名方式
-                      "paySign" : json.paySign       //微信签名
-                    }
-                    , function(result) {
-                      if (result.err_msg == "get_brand_wcpay_request:ok") {
-                        alert("购买成功！");
-                      }
-                    });
-          }
         }
       })
     }
@@ -168,7 +136,7 @@
     <tr>
       <td>子商户员工号:</td>
       <td>
-        <input type="text" id="id" name="id" value="1596144387655680"/>
+        <input type="text" id="id" name="id" value="1629719047000001"/>
       </td>
     </tr>
     <tr>
@@ -256,10 +224,7 @@
         <input type="button" onclick="scanPay()" value="扫码支付"/>
       </td>
       <td>
-        <input type="button" onclick="prePay()" value="公众号预支付"/>
-      </td>
-      <td>
-        <input type="button" onclick="brandWCPay()" value="公众号支付"/>
+        <input type="button" onclick="jsPay()" value="公众号支付"/>
       </td>
       <td>
         <input type="button" onclick="refund()" value="申请退款"/>
