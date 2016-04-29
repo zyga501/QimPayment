@@ -111,53 +111,6 @@ public class PayAction extends AjaxActionSupport {
         return AjaxActionComplete();
     }
 
-    public void prePay() throws IOException {
-        String appid = new String();
-        String subMerchantUserId = new String();
-        if (!StringUtils.convertNullableString(getParameter("id")).isEmpty()) {
-            subMerchantUserId = getParameter("id").toString();
-            SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(subMerchantUserId));
-            if (subMerchantUser != null) {
-                SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
-                if (subMerchantInfo != null) {
-                    MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
-                    if (merchantInfo != null) {
-                        getRequest().getSession().setAttribute("storename",subMerchantUser.getStoreName());
-                        getRequest().getSession().setAttribute("ucode",subMerchantUser.getUserName());
-                        getRequest().getSession().setAttribute("subMerchantId",subMerchantInfo.getId());
-                        appid = merchantInfo.getAppid();
-                    }
-                }
-            }
-        }
-        else { // compatible old api
-            IdMapUUID idMapUUID= IdMapUUID.getMappingByUUID( getParameter("odod").toString());
-            if (idMapUUID != null) {
-                subMerchantUserId = String.valueOf(idMapUUID.getId());
-                SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(idMapUUID.getId());
-                getRequest().getSession().setAttribute("storename",subMerchantUser.getStoreName());
-                getRequest().getSession().setAttribute("ucode",subMerchantUser.getUserName());
-                SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
-                MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
-                getRequest().getSession().setAttribute("subMerchantId",subMerchantInfo.getId());
-                appid = merchantInfo.getAppid();
-            }
-        }
-
-        if (appid.isEmpty()) {
-            Logger.warn("PrePay Failed!");
-            return;
-        }
-
-        String redirect_uri = getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + "weixin/oauthpay.jsp";
-        String state = String.format("{'subMerchantUserId':'%s','redirect_uri':'%s'}",
-                subMerchantUserId, StringUtils.convertNullableString(getParameter("redirect_uri")));
-        String perPayUri = String.format("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" +
-                        "%s&redirect_uri=%s&response_type=code&scope=snsapi_base&state=%s#wechat_redirect",
-                appid, redirect_uri, URLEncoder.encode(state, "utf-8"));
-        getResponse().sendRedirect(perPayUri);
-    }
-
     public void jsPay() throws IOException {
         String appid = new String();
         String subMerchantUserId = new String();
