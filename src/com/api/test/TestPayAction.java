@@ -1,7 +1,7 @@
 package com.api.test;
 
 import com.api.test.RequestData.MicroPayRequestData;
-import com.api.test.RequestData.PrePayData;
+import com.api.test.RequestData.JsPayData;
 import com.api.test.RequestData.ScanPayRequestData;
 import com.framework.action.AjaxActionSupport;
 import com.framework.utils.HttpUtils;
@@ -82,14 +82,16 @@ public class TestPayAction extends AjaxActionSupport {
         return AjaxActionComplete(map);
     }
 
-    public String prePay() throws Exception {
-        PrePayData prePayData = new PrePayData();
-        prePayData.id = getParameter("id").toString();
-        prePayData.redirect_uri = "";
-        prePayData.sign = Signature.generateSign(prePayData, prePayData.id);
+    public String jsPay() throws Exception {
+        JsPayData jsPayData = new JsPayData();
+        jsPayData.id = getParameter("id").toString();
+        jsPayData.body = getParameter("body").toString();
+        jsPayData.total_fee = getParameter("total_fee").toString();
+        jsPayData.redirect_uri = "";
+        jsPayData.sign = Signature.generateSign(jsPayData, jsPayData.id);
         XStream xStreamForRequestPostData = new XStream(new DomDriver("UTF-8", new XmlFriendlyNameCoder("-_", "_")));
-        String postDataXML = xStreamForRequestPostData.toXML(prePayData);
-        HttpPost httpPost = new HttpPost(getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + "PrePay");
+        String postDataXML = xStreamForRequestPostData.toXML(jsPayData);
+        HttpPost httpPost = new HttpPost(getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + "JsPay");
         StringEntity postEntity = new StringEntity(postDataXML, "UTF-8");
         httpPost.addHeader("Content-Type", "text/xml");
         httpPost.setEntity(postEntity);

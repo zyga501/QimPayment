@@ -6,6 +6,7 @@ import com.framework.utils.StringUtils;
 import com.framework.utils.UdpSocket;
 import com.database.merchant.IdMapUUID;
 import com.database.merchant.SubMerchantUser;
+import com.framework.utils.Zip;
 import com.message.WeixinMessage;
 import com.weixin.api.*;
 import com.weixin.api.RequestData.MicroPayRequestData;
@@ -94,9 +95,6 @@ public class PayAction extends AjaxActionSupport {
                     if (!StringUtils.convertNullableString(getParameter("out_trade_no")).isEmpty()) {
                         unifiedOrderRequestData.out_trade_no = getParameter("out_trade_no").toString();
                     }
-                    if (!StringUtils.convertNullableString(getParameter("goods_tag")).isEmpty()) {
-                        unifiedOrderRequestData.goods_tag = getParameter("goods_tag").toString();
-                    }
                     UnifiedOrder unifiedOrder = new UnifiedOrder(unifiedOrderRequestData);
 
                     if (!unifiedOrder.postRequest(merchantInfo.getApiKey())) {
@@ -113,7 +111,7 @@ public class PayAction extends AjaxActionSupport {
         return AjaxActionComplete();
     }
 
-    public void prePay() throws IOException {
+    public void jsPay() throws IOException {
         String appid = new String();
         String subMerchantUserId = new String();
         if (!StringUtils.convertNullableString(getParameter("id")).isEmpty()) {
@@ -124,25 +122,9 @@ public class PayAction extends AjaxActionSupport {
                 if (subMerchantInfo != null) {
                     MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
                     if (merchantInfo != null) {
-                        getRequest().getSession().setAttribute("storename",subMerchantUser.getStoreName());
-                        getRequest().getSession().setAttribute("ucode",subMerchantUser.getUserName());
-                        getRequest().getSession().setAttribute("subMerchantId",subMerchantInfo.getId());
                         appid = merchantInfo.getAppid();
                     }
                 }
-            }
-        }
-        else { // compatible old api
-            IdMapUUID idMapUUID= IdMapUUID.getMappingByUUID( getParameter("odod").toString());
-            if (idMapUUID != null) {
-                subMerchantUserId = String.valueOf(idMapUUID.getId());
-                SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(idMapUUID.getId());
-                getRequest().getSession().setAttribute("storename",subMerchantUser.getStoreName());
-                getRequest().getSession().setAttribute("ucode",subMerchantUser.getUserName());
-                SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
-                MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
-                getRequest().getSession().setAttribute("subMerchantId",subMerchantInfo.getId());
-                appid = merchantInfo.getAppid();
             }
         }
 
@@ -151,20 +133,32 @@ public class PayAction extends AjaxActionSupport {
             return;
         }
 
-        String redirect_uri = getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + "weixin/oauthpay.jsp";
-        String state = String.format("{'subMerchantUserId':'%s','redirect_uri':'%s'}",
-                subMerchantUserId, StringUtils.convertNullableString(getParameter("redirect_uri")));
-        String perPayUri = String.format("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" +
-                        "%s&redirect_uri=%s&response_type=code&scope=snsapi_base&state=%s#wechat_redirect",
-                appid, redirect_uri, URLEncoder.encode(state, "utf-8"));
-        getResponse().sendRedirect(perPayUri);
+        String redirect_uri = getRequest().getScheme()+"://" + getRequest().getServerName() + getRequest().getContextPath() + ":" + getRequest().getServerPort() + "/weixin/jsPayCallback.jsp";
+        String state = String.format("{'id':'%s','body':'%s','fee','%s','no':'%s','url':'%s'}",
+                subMerchantUserId,
+                StringUtils.convertNullableString(getParameter("body")),
+                StringUtils.convertNullableString(getParameter("total_fee")),
+                StringUtils.convertNullableString(getParameter("out_trade_no")),
+                StringUtils.convertNullableString(getParameter("redirect_uri")));
+        String jspayUri = String.format("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" +
+                        "%s&redirect_uri=%s&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect",
+                appid, redirect_uri, subMerchantUserId);
+        // save session data, state is too short
+        getRequest().getSession().setAttribute("data", Zip.zip(state));
+        getResponse().sendRedirect(jspayUri);
     }
 
     public String brandWCPay() throws Exception {
-        JSONObject jsonObject = JSONObject.fromObject(URLDecoder.decode(getParameter("state").toString(), "utf-8"));
-        String subMerchantUserId = jsonObject.get("subMerchantUserId").toString();
-        String redirect_uri = jsonObject.get("redirect_uri").toString();
+        // get session data and remove data
+        JSONObject jsonObject = JSONObject.fromObject(Zip.unZip(getParameter("data").toString()));
+        getRequest().getSession().removeAttribute("data");
+        String subMerchantUserId = jsonObject.get("id").toString();
+        String body = jsonObject.get("body").toString();
+        int total_fee = (int)Double.parseDouble(jsonObject.get("fee").toString());
+        String out_trade_no = jsonObject.get("no").toString();
+        String redirect_uri = jsonObject.get("url").toString();
         String code = getParameter("code").toString();
+
         if (subMerchantUserId.isEmpty() || code.isEmpty()) {
             return AjaxActionComplete();
         }
@@ -179,11 +173,11 @@ public class PayAction extends AjaxActionSupport {
                     unifiedOrderRequestData.appid = merchantInfo.getAppid();
                     unifiedOrderRequestData.mch_id = merchantInfo.getMchId();
                     unifiedOrderRequestData.sub_mch_id = subMerchantInfo.getSubId();
-                    unifiedOrderRequestData.body = getParameter("body").toString();
+                    unifiedOrderRequestData.body = body;
                     unifiedOrderRequestData.attach = String.format("{ 'id':'%s','body':'%s','redirect_uri':'%s'}",
                             subMerchantUserId, unifiedOrderRequestData.body, redirect_uri);
                     Logger.info("unifiedOrderRequestData.attach:" + unifiedOrderRequestData.attach);
-                    unifiedOrderRequestData.total_fee = (int)Double.parseDouble(getParameter("total_fee").toString());
+                    unifiedOrderRequestData.total_fee = total_fee;
                     unifiedOrderRequestData.trade_type = "JSAPI";
                     OpenId openId = new OpenId(merchantInfo.getAppid(), merchantInfo.getAppsecret(), code);
                     if (openId.getRequest()) {
@@ -197,11 +191,8 @@ public class PayAction extends AjaxActionSupport {
                     requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/') + 1) + "weixin/"
                             + CallbackAction.BRANDWCPAYCALLBACK;
                     unifiedOrderRequestData.notify_url = requestUrl;
-                    if (!StringUtils.convertNullableString(getParameter("out_trade_no")).isEmpty()) {
-                        unifiedOrderRequestData.out_trade_no = getParameter("out_trade_no").toString();
-                    }
-                    if (!StringUtils.convertNullableString(getParameter("goods_tag")).isEmpty()) {
-                        unifiedOrderRequestData.goods_tag = getParameter("goods_tag").toString();
+                    if (!out_trade_no.isEmpty()) {
+                        unifiedOrderRequestData.out_trade_no = out_trade_no;
                     }
 
                     UnifiedOrder unifiedOrder = new UnifiedOrder(unifiedOrderRequestData);

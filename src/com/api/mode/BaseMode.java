@@ -9,8 +9,7 @@ public abstract class BaseMode {
 
     public String microPay() { return ""; }
     public String scanPay()  { return ""; }
-    public String prePay()  { return ""; }
-    public String brandWCPay()  { return ""; }
+    public String jsPay()  { return ""; }
     public String orderQuery()  { return ""; }
     public String orderInsert() { return ""; }
 

@@ -68,7 +68,6 @@ public class UnifiedOrderRequestData extends RequestData {
     public String detail; // 商品详情 商品名称明细列表
     public String attach; // 附加数据 在查询API和支付通知中原样返回，该字段主要用于商户携带订单的自定义数据
     public String fee_type; // 货币类型 符合ISO 4217标准的三位字母代码，默认人民币：CNY
-    public String goods_tag; // 商品标记 商品标记，代金券或立减优惠功能的参数
     public String limit_pay; // 指定支付方式 no_credit--指定不能使用信用卡支付
     public String time_start; // 交易起始时间 订单生成时间，格式为yyyyMMddHHmmss
     public String time_expire; // 交易结束时间 订单失效时间，格式为yyyyMMddHHmmss

@@ -28,16 +28,10 @@ public class CommonAction extends AjaxActionSupport {
         return handlerResult(createMode(mode).scanPay());
     }
 
-    public String PrePay() throws Exception {
+    public String JsPay() throws Exception {
         parseRequestBuffer();
         String mode = StringUtils.convertNullableString(requestBuffer_.get("mode"));
-        return handlerResult(createMode(mode).prePay());
-    }
-
-    public String BrandWCPay() throws Exception {
-        parseRequestBuffer();
-        String mode = StringUtils.convertNullableString(requestBuffer_.get("mode"));
-        return handlerResult(createMode(mode).brandWCPay());
+        return handlerResult(createMode(mode).jsPay());
     }
 
     public String OrderQuery() throws Exception {

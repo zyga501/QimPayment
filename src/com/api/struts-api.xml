@@ -24,15 +24,9 @@
                 <param name="namespace">/weixin</param>
             </result>
         </action>
-        <action name="PrePay" class="com.api.action.CommonAction" method="PrePay">
-            <result name="WeixinPrePay" type="chain">
-                <param name="actionName">Pay!prePay</param>
-                <param name="namespace">/weixin</param>
-            </result>
-        </action>
-        <action name="BrandWCPay" class="com.api.action.CommonAction" method="BrandWCPay">
-            <result name="WeixinBrandWCPay" type="chain">
-                <param name="actionName">Pay!brandWCPay</param>
+        <action name="JsPay" class="com.api.action.CommonAction" method="JsPay">
+            <result name="WeixinJsPay" type="chain">
+                <param name="actionName">Pay!jsPay</param>
                 <param name="namespace">/weixin</param>
             </result>
         </action>
