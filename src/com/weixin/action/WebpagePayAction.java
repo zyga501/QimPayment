@@ -1,12 +1,15 @@
 package com.weixin.action;
 
+import com.database.weixin.MerchantInfo;
 import com.framework.action.AjaxActionSupport;
+import com.framework.utils.Logger;
 import com.framework.utils.StringUtils;
 import com.database.merchant.IdMapUUID;
 import com.database.merchant.SubMerchantInfo;
 import com.database.merchant.SubMerchantUser;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 
 public class WebpagePayAction extends AjaxActionSupport {
     private final static String SCANPAY = "scanPay";
@@ -32,7 +35,32 @@ public class WebpagePayAction extends AjaxActionSupport {
         return subMerchantLogo;
     }
 
-     public String scanPay(){
+    public void prePay() throws IOException, IOException {
+        String appid = new String();
+        String subMerchantUserId = new String();
+            IdMapUUID idMapUUID= IdMapUUID.getMappingByUUID( getParameter("odod").toString());
+            if (idMapUUID != null) {
+                subMerchantUserId = String.valueOf(idMapUUID.getId());
+                SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(idMapUUID.getId());
+                getRequest().getSession().setAttribute("storename",subMerchantUser.getStoreName());
+                getRequest().getSession().setAttribute("ucode",subMerchantUser.getUserName());
+                SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
+                MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
+                getRequest().getSession().setAttribute("id",subMerchantUser.getId());
+                getRequest().getSession().setAttribute("subMerchantId",subMerchantInfo.getId());
+                appid = merchantInfo.getAppid();
+            }
+
+        if (appid.isEmpty()) {
+            Logger.warn("prePay Failed!");
+            return;
+        }
+
+        String redirect_uri = getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + "weixin/jspay.jsp";
+        getResponse().sendRedirect(redirect_uri);
+    }
+
+    public String scanPay(){
          String subMerchantUserId = new String();
          if (!StringUtils.convertNullableString(getParameter("id")).isEmpty()) {
              subMerchantUserId = getParameter("id").toString();
