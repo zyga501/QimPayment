@@ -93,7 +93,7 @@ public class Zip {
             out = new ByteArrayOutputStream();
             zout = new ZipOutputStream(out);
             zout.putNextEntry(new ZipEntry("0"));
-            zout.write(string.getBytes());
+            zout.write(string.getBytes("utf-8"));
             zout.closeEntry();
             compressed = out.toByteArray();
             compressedStr = new sun.misc.BASE64Encoder().encodeBuffer(compressed);
