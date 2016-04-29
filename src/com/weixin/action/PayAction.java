@@ -129,7 +129,7 @@ public class PayAction extends AjaxActionSupport {
         }
 
         if (appid.isEmpty()) {
-            Logger.warn("PrePay Failed!");
+            Logger.warn("jsPay Failed!");
             return;
         }
 
