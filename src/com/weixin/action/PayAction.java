@@ -136,7 +136,7 @@ public class PayAction extends AjaxActionSupport {
         String redirect_uri = getRequest().getScheme()+"://" + getRequest().getServerName() + getRequest().getContextPath() + "/weixin/jsPayCallback.jsp";
         String state = String.format("{'id':'%s','body':'%s','fee','%s','no':'%s','url':'%s'}",
                 subMerchantUserId,
-                StringUtils.convertNullableString(getParameter("body")),
+                new String(StringUtils.convertNullableString(getParameter("body")).getBytes("iso-8859-1"), "utf-8"),
                 StringUtils.convertNullableString(getParameter("total_fee")),
                 StringUtils.convertNullableString(getParameter("out_trade_no")),
                 StringUtils.convertNullableString(getParameter("redirect_uri")));
