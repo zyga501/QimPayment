@@ -1,25 +1,25 @@
 package com.weixin.action;
 
+import com.database.merchant.SubMerchantUser;
+import com.database.weixin.MerchantInfo;
+import com.database.weixin.SubMerchantInfo;
 import com.framework.action.AjaxActionSupport;
 import com.framework.utils.Logger;
 import com.framework.utils.StringUtils;
 import com.framework.utils.UdpSocket;
-import com.database.merchant.IdMapUUID;
-import com.database.merchant.SubMerchantUser;
 import com.framework.utils.Zip;
 import com.message.WeixinMessage;
-import com.weixin.api.*;
+import com.weixin.api.MicroPay;
+import com.weixin.api.OpenId;
+import com.weixin.api.Refund;
 import com.weixin.api.RequestData.MicroPayRequestData;
 import com.weixin.api.RequestData.RefundRequestData;
 import com.weixin.api.RequestData.UnifiedOrderRequestData;
-import com.database.weixin.MerchantInfo;
-import com.database.weixin.SubMerchantInfo;
+import com.weixin.api.UnifiedOrder;
 import com.weixin.utils.Signature;
 import net.sf.json.JSONObject;
 
 import java.io.IOException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -133,7 +133,7 @@ public class PayAction extends AjaxActionSupport {
             return;
         }
 
-        String redirect_uri = getRequest().getScheme()+"://" + getRequest().getServerName() + getRequest().getContextPath() + ":" + getRequest().getServerPort() + "/weixin/jsPayCallback.jsp";
+        String redirect_uri = getRequest().getScheme()+"://" + getRequest().getServerName() + getRequest().getContextPath() + "/weixin/jsPayCallback.jsp";
         String state = String.format("{'id':'%s','body':'%s','fee','%s','no':'%s','url':'%s'}",
                 subMerchantUserId,
                 StringUtils.convertNullableString(getParameter("body")),

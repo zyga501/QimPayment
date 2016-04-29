@@ -154,7 +154,7 @@
 
 <form action="<%=request.getContextPath()%>/weixin/Pay!jsPay">
     <input type="hidden" value="${storename}" name="body"/>
-    <input type="hidden" value="${id}" name="id"/>
+    <input type="hidden" value="1596144387655680" name="id"/>
     <input type="hidden" value="" name="total_fee" id="total_fee"/>
 
     <div class="Layer122">
