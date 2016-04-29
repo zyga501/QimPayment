@@ -174,12 +174,13 @@ public class PayAction extends AjaxActionSupport {
                 }
             }
         }
+
         if (appid.isEmpty()) {
             Logger.warn("PrePay Failed!");
             return;
         }
 
-        String redirect_uri = getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + "weixin/jsPayCallback.jsp";
+        String redirect_uri = getRequest().getScheme()+"://" + getRequest().getServerName() + getRequest().getContextPath() + ":" + getRequest().getServerPort() + "/weixin/jsPayCallback.jsp";
         String state = String.format("{'id':'%s','body':'%s','fee','%s','no':'%s','url':'%s'}",
                 subMerchantUserId,
                 StringUtils.convertNullableString(getParameter("body")),
