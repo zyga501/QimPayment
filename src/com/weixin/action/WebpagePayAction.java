@@ -38,19 +38,37 @@ public class WebpagePayAction extends AjaxActionSupport {
     public void prePay() throws IOException, IOException {
         String appid = new String();
         String subMerchantUserId = new String();
-            IdMapUUID idMapUUID= IdMapUUID.getMappingByUUID( getParameter("odod").toString());
+        if (!StringUtils.convertNullableString(getParameter("id")).isEmpty()) {
+            subMerchantUserId = getParameter("id").toString();
+            SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(subMerchantUserId));
+            if (subMerchantUser != null) {
+                SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
+                if (subMerchantInfo != null) {
+                    MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
+                    if (merchantInfo != null) {
+                        getRequest().getSession().setAttribute("storename",subMerchantUser.getStoreName());
+                        getRequest().getSession().setAttribute("ucode",subMerchantUser.getUserName());
+                        getRequest().getSession().setAttribute("subMerchantId",subMerchantInfo.getId());
+                        getRequest().getSession().setAttribute("id", subMerchantUser.getId());
+                        appid = merchantInfo.getAppid();
+                    }
+                }
+            }
+        }
+        else {
+            IdMapUUID idMapUUID = IdMapUUID.getMappingByUUID(getParameter("odod").toString());
             if (idMapUUID != null) {
                 subMerchantUserId = String.valueOf(idMapUUID.getId());
                 SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(idMapUUID.getId());
-                getRequest().getSession().setAttribute("storename",subMerchantUser.getStoreName());
-                getRequest().getSession().setAttribute("ucode",subMerchantUser.getUserName());
+                getRequest().getSession().setAttribute("storename", subMerchantUser.getStoreName());
+                getRequest().getSession().setAttribute("ucode", subMerchantUser.getUserName());
                 SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
                 MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
-                getRequest().getSession().setAttribute("id",subMerchantUser.getId());
-                getRequest().getSession().setAttribute("subMerchantId",subMerchantInfo.getId());
+                getRequest().getSession().setAttribute("id", subMerchantUser.getId());
+                getRequest().getSession().setAttribute("subMerchantId", subMerchantInfo.getId());
                 appid = merchantInfo.getAppid();
             }
-
+        }
         if (appid.isEmpty()) {
             Logger.warn("prePay Failed!");
             return;
