@@ -6,6 +6,7 @@ import com.database.weixin.SubMerchantAct;
 import com.framework.action.AjaxActionSupport;
 import com.weixin.api.OpenId;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -73,7 +74,16 @@ public class MerchantAction extends AjaxActionSupport {
             }
         }
         catch (Exception e){
-
+            byte[] buffer = new byte[1024];
+            FileInputStream fileInputStream = new FileInputStream(getRequest()
+                    .getServletContext().getRealPath("/")
+                    + "image/defaultlogo.jpg");
+            int readSize = fileInputStream.read(buffer);
+            while (readSize != -1) {
+                getResponse().getOutputStream().write(buffer, 0, readSize);
+                readSize = fileInputStream.read(buffer);
+            }
+            fileInputStream.close();
         }
         super.getResponse().getOutputStream().flush();
         super.getResponse().getOutputStream().close();

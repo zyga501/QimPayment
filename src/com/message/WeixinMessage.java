@@ -18,7 +18,7 @@ public class WeixinMessage {
         }
 
         SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(orderInfo.getCreateUser());
-        if (subMerchantUser != null) {
+        if ((subMerchantUser != null)&&(!subMerchantUser.getUserName().equals("999"))) {
             SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
             String accessToken = new String();
             if (subMerchantInfo != null) {
