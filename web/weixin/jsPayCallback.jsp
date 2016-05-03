@@ -3,7 +3,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-    <title>安全支付中心
+    <title>微信安全支付中心
     </title>
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 
@@ -14,7 +14,7 @@
     <input type="hidden" value="<%=request.getParameter("state")%>" name="state"/>
     <input type="hidden" value="<%=request.getParameter("code")%>" name="code"/>
     <input type="hidden" value="${data}" name="data"/>
-</form><center><h1 style="color: #06af3f">正在支付</h1>
+</form><center><h3 style="color: #06af3f">正在支付,请稍后...</h3>
 <img id="imgid" src="<%=request.getContextPath()%>/image/loading.gif"></center>
 </body >
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery/1.9.1/jquery.min.js"></script>
