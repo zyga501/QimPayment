@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.database.merchant.mapping.oAuthLogin">
+    <select id="getOAuthLoginByOpenid" parameterType="String" resultMap="oAuthloginResult">
+      SELECT * FROM OAuthlogin WHERE openid=#{openid}
+    </select>
+    <select id="getOAuthLoginByRmdno"  parameterType="String" resultMap="oAuthloginResult">
+      SELECT * FROM OAuthlogin WHERE rmdno=#{rmdno}
+    </select>
+    <resultMap type="com.database.merchant.OAuthLogin" id="oAuthloginResult">
+        <id property="id" column="id" jdbcType="BIGINT" />
+        <result property="openid" column="openid" jdbcType="VARCHAR" />
+        <result property="rmdno" column="rmdno" jdbcType="VARCHAR" />
+        <result property="inserttime" column="inserttime" />
+    </resultMap>
+    <insert id="insertOAuthLogin" parameterType="com.database.merchant.OAuthLogin">
+        INSERT INTO OAuthLogin(openid,rmdno,inserttime)
+        VALUE (#{openid},#{rmdno},#{inserttime})
+    </insert>
+</mapper>

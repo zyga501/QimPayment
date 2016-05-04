@@ -39,12 +39,16 @@ public class OrderAction extends AjaxActionSupport {
 
                     Map<String, String> map = new HashMap<>();
                     if (null != orderQuery.getResponseResult().get("attach")) {
-                        JSONObject jsonObject = JSONObject.fromObject(orderQuery.getResponseResult().get("attach").toString());
-                        if (jsonObject.get("body") != null) {
-                            map.put("body", jsonObject.get("body").toString());
+                        try {
+                            JSONObject jsonObject = JSONObject.fromObject(orderQuery.getResponseResult().get("attach").toString());
+                            if (jsonObject.get("body") != null) {
+                                map.put("body", jsonObject.get("body").toString());
+                            } else {
+                                map.put("body", orderQuery.getResponseResult().get("attach").toString());
+                            }
                         }
-                        else {
-                            map.put("body", orderQuery.getResponseResult().get("attach").toString());
+                        catch(Exception e){
+                            map.put("body", "");
                         }
                     }
                     else {
