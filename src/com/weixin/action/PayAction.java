@@ -142,7 +142,7 @@ public class PayAction extends AjaxActionSupport {
                 StringUtils.convertNullableString(getParameter("redirect_uri")));
         String jspayUri = String.format("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" +
                         "%s&redirect_uri=%s&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect",
-                appid, redirect_uri, subMerchantUserId);
+                appid, redirect_uri);
         // save session data, state is too short
         getRequest().getSession().setAttribute("data", Zip.zip(data));
         getResponse().sendRedirect(jspayUri);
