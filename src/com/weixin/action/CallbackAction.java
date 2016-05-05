@@ -22,11 +22,7 @@ public class CallbackAction extends AjaxActionSupport {
     public final static String SCANPAYCALLBACK = "Callback!scanPay";
     public final static String BRANDWCPAYCALLBACK = "Callback!brandWCPay";
     public final static String WEIXINCALLBACKSUCCESS = "" +
-            "<xml>" +
-            "<return_code><![CDATA[SUCCESS]]></return_code>" +
-            "<return_msg><![CDATA[OK]]></return_msg>" +
-            "<result_code><![CDATA[SUCCESS]]></result_code>" +
-            "</xml>";
+            "SUCCESS";
 
     public void scanPay() throws Exception {
         handlerCallback();

@@ -52,12 +52,13 @@ public class TestPayAction extends AjaxActionSupport {
         scanPayRequestData.body = getParameter("body").toString();
         scanPayRequestData.total_fee = Integer.parseInt(getParameter("total_fee").toString());
         scanPayRequestData.product_id = getParameter("product_id").toString();
+        scanPayRequestData.out_trade_no = getParameter("out_trade_no").toString();
         scanPayRequestData.mode = getParameter("mode").toString();
         scanPayRequestData.redirect_uri = getParameter("redirect_uri").toString();
         scanPayRequestData.sign = Signature.generateSign(scanPayRequestData, scanPayRequestData.id);
         XStream xStreamForRequestPostData = new XStream(new DomDriver("UTF-8", new XmlFriendlyNameCoder("-_", "_")));
         String postDataXML = xStreamForRequestPostData.toXML(scanPayRequestData);
-        HttpPost httpPost = new HttpPost(getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + "ScanPay");
+        HttpPost httpPost = new HttpPost("http://www.qimpay.com/qlpay/api/ScanPay");
         StringEntity postEntity = new StringEntity(postDataXML, "UTF-8");
         httpPost.addHeader("Content-Type", "text/xml");
         httpPost.setEntity(postEntity);
@@ -69,7 +70,7 @@ public class TestPayAction extends AjaxActionSupport {
                 return EntityUtils.toString(httpEntity, "UTF-8");
             });
         }
-        finally {
+            finally {
             httpPost.abort();
         }
 
