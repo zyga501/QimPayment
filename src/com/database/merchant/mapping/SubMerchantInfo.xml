@@ -43,5 +43,10 @@
         SET templateId=#{templateId}
         WHERE id = #{id}
     </update>
+    <update id="updateAdsById" parameterType="com.database.merchant.SubMerchantInfo">
+        UPDATE SubMerchant
+        SET ads=#{ads}
+        WHERE id = #{id}
+    </update>
 
 </mapper>

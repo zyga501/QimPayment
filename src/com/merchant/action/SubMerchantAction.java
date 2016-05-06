@@ -11,6 +11,7 @@ import com.weixin.api.OpenId;
 import com.database.weixin.MerchantInfo;
 
 import java.io.DataInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -145,6 +146,14 @@ public class SubMerchantAction extends AjaxActionSupport {
         return AjaxActionComplete(false);
     }
 
+
+    public String updateSubMerchantAds() {
+        SubMerchantInfo subMerchantInfo = new SubMerchantInfo();
+        subMerchantInfo.setId(Long.parseLong(getParameter("id").toString()));
+        subMerchantInfo.setAds(getParameter("ads").toString());
+        return AjaxActionComplete(SubMerchantInfo.updateAdsById(subMerchantInfo));
+    }
+
     public String getSubMerchantInfo() {
         long subMerchantId = Long.parseLong(getParameter("id").toString());
         SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantId);
@@ -158,5 +167,32 @@ public class SubMerchantAction extends AjaxActionSupport {
         Map<String, Long> resultMap = new HashMap<>();
         resultMap.put("subMerchantId", subMerchantId);
         return AjaxActionComplete(resultMap);
+    }
+
+    public void FetchLogo() throws IOException {
+        super.getResponse().setHeader("Pragma", "No-cache");
+        super.getResponse().setHeader("Cache-Control", "no-cache");
+        super.getResponse().setDateHeader("Expires", 0);
+        super.getResponse().setContentType("image/jpeg");
+        try {
+            byte[] logo = SubMerchantInfo.getSubMerchantLogoById(Long.parseLong(getParameter("id").toString()));
+            if (logo != null) {
+                super.getResponse().getOutputStream().write(logo);
+            }
+        }
+        catch (Exception e){
+            byte[] buffer = new byte[1024];
+            FileInputStream fileInputStream = new FileInputStream(getRequest()
+                    .getServletContext().getRealPath("/")
+                    + "image/defaultlogo.jpg");
+            int readSize = fileInputStream.read(buffer);
+            while (readSize != -1) {
+                getResponse().getOutputStream().write(buffer, 0, readSize);
+                readSize = fileInputStream.read(buffer);
+            }
+            fileInputStream.close();
+        }
+        super.getResponse().getOutputStream().flush();
+        super.getResponse().getOutputStream().close();
     }
 }
