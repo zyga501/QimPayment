@@ -8,8 +8,6 @@ import com.database.weixin.SubMerchantAct;
 import com.framework.action.AjaxActionSupport;
 import com.weixin.api.OpenId;
 import net.sf.json.JSONObject;
-
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
@@ -46,6 +44,7 @@ public class MerchantAction extends AjaxActionSupport {
     public String wx() throws Exception {
         String appid = "";
         String appsecret = "";
+        System.out.println("openId="+getRequest().getSession().getAttribute("datajson"));
         JSONObject jsonObject = JSONObject.fromObject( getRequest().getSession().getAttribute("datajson"));
         com.database.weixin.SubMerchantInfo subMerchantInfo = com.database.weixin.SubMerchantInfo.getSubMerchantInfoById(jsonObject.getLong("mid"));
         if (subMerchantInfo != null) {
@@ -54,6 +53,7 @@ public class MerchantAction extends AjaxActionSupport {
                 appid =  merchantInfo.getAppid();
                 appsecret =  merchantInfo.getAppsecret();
                 OpenId openId = new OpenId(appid, appsecret, getParameter("code").toString());
+                System.out.println("openId="+openId.getOpenId());
                 if (openId.getRequest()) {
                     List<SubMerchantUser> subMerchantUserList = SubMerchantUser.getSubMerchantUserBySubMerchantId(jsonObject.getLong("mid"));
                     for (SubMerchantUser submerchantuser: subMerchantUserList) {
@@ -116,30 +116,4 @@ public class MerchantAction extends AjaxActionSupport {
         return AjaxActionComplete(false);
     }
 
-    public void FetchLogo() throws IOException {
-        super.getResponse().setHeader("Pragma", "No-cache");
-        super.getResponse().setHeader("Cache-Control", "no-cache");
-        super.getResponse().setDateHeader("Expires", 0);
-        super.getResponse().setContentType("image/jpeg");
-        try {
-            byte[] logo = SubMerchantInfo.getSubMerchantLogoById(Long.parseLong(getParameter("id").toString()));
-            if (logo != null) {
-                super.getResponse().getOutputStream().write(logo);
-            }
-        }
-        catch (Exception e){
-            byte[] buffer = new byte[1024];
-            FileInputStream fileInputStream = new FileInputStream(getRequest()
-                    .getServletContext().getRealPath("/")
-                    + "image/defaultlogo.jpg");
-            int readSize = fileInputStream.read(buffer);
-            while (readSize != -1) {
-                getResponse().getOutputStream().write(buffer, 0, readSize);
-                readSize = fileInputStream.read(buffer);
-            }
-            fileInputStream.close();
-        }
-        super.getResponse().getOutputStream().flush();
-        super.getResponse().getOutputStream().close();
-    }
 }

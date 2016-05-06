@@ -55,6 +55,11 @@ public class SubMerchantInfo {
         return Database.Instance().update(statement, subMerchantInfo) == 1;
     }
 
+    public static boolean updateAdsById(SubMerchantInfo subMerchantInfo) {
+        String statement = "com.database.merchant.mapping.subMerchantInfo.updateAdsById";
+        return Database.Instance().update(statement, subMerchantInfo) == 1;
+    }
+
     public long getId() {
         return id_;
     }
