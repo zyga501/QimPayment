@@ -4,7 +4,7 @@ import com.api.test.RequestData.MicroPayRequestData;
 import com.api.test.RequestData.JsPayData;
 import com.api.test.RequestData.ScanPayRequestData;
 import com.framework.action.AjaxActionSupport;
-import com.framework.utils.HttpUtils;
+import com.framework.utils.HttpClient;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.thoughtworks.xstream.io.xml.XmlFriendlyNameCoder;
@@ -36,7 +36,7 @@ public class TestPayAction extends AjaxActionSupport {
 
         String responseString = new String();
         try {
-            responseString = HttpUtils.PostRequest(httpPost, (HttpEntity httpEntity)->
+            responseString = HttpClient.PostRequest(httpPost, (HttpEntity httpEntity)->
             {
                 return EntityUtils.toString(httpEntity, "UTF-8");
             });
@@ -65,7 +65,7 @@ public class TestPayAction extends AjaxActionSupport {
 
         String responseString = new String();
         try {
-            responseString = HttpUtils.PostRequest(httpPost, (HttpEntity httpEntity)->
+            responseString = HttpClient.PostRequest(httpPost, (HttpEntity httpEntity)->
             {
                 return EntityUtils.toString(httpEntity, "UTF-8");
             });
@@ -99,7 +99,7 @@ public class TestPayAction extends AjaxActionSupport {
 
         String responseString = new String();
         try {
-            responseString = HttpUtils.PostRequest(httpPost, (HttpEntity httpEntity)->
+            responseString = HttpClient.PostRequest(httpPost, (HttpEntity httpEntity)->
             {
                 return EntityUtils.toString(httpEntity, "UTF-8");
             });

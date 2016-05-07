@@ -1,6 +1,6 @@
 package com.alipay.api;
 
-import com.framework.utils.HttpUtils;
+import com.framework.utils.HttpClient;
 import com.framework.utils.Logger;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.HttpGet;
@@ -16,7 +16,7 @@ public abstract class AliPayAPI {
         }
         Logger.debug("Request Url:\r\n" + apiUri);
 
-        String responseString = HttpUtils.GetRequest(new HttpGet(apiUri), (HttpEntity httpEntity) -> {
+        String responseString = HttpClient.GetRequest(new HttpGet(apiUri), (HttpEntity httpEntity) -> {
             return EntityUtils.toString(httpEntity, "UTF-8");
         });
 
@@ -41,7 +41,7 @@ public abstract class AliPayAPI {
 
         String responseString = new String();
         try {
-            responseString = HttpUtils.PostRequest(httpPost, (HttpEntity httpEntity) -> {
+            responseString = HttpClient.PostRequest(httpPost, (HttpEntity httpEntity) -> {
                 return EntityUtils.toString(httpEntity, "UTF-8");
             });
         }

@@ -1,6 +1,6 @@
 package com.weixin.api;
 
-import com.framework.utils.HttpUtils;
+import com.framework.utils.HttpClient;
 import com.framework.utils.Logger;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.HttpGet;
@@ -16,7 +16,7 @@ public abstract class WeixinAPI {
         }
         Logger.debug("Request Url:\r\n" + apiUri);
 
-        String responseString = HttpUtils.GetRequest(new HttpGet(apiUri), (HttpEntity httpEntity) -> {
+        String responseString = HttpClient.GetRequest(new HttpGet(apiUri), (HttpEntity httpEntity) -> {
             return EntityUtils.toString(httpEntity, "UTF-8");
         });
 
@@ -32,7 +32,6 @@ public abstract class WeixinAPI {
         }
         Logger.debug("Request Url:\r\n" + apiUri);
 
-        postData_ = postData;
         Logger.debug("Reqest Data:\r\n" + postData);
 
         HttpPost httpPost = new HttpPost(apiUri);
@@ -41,7 +40,7 @@ public abstract class WeixinAPI {
 
         String responseString = new String();
         try {
-            responseString = HttpUtils.PostRequest(httpPost, (HttpEntity httpEntity) -> {
+            responseString = HttpClient.PostRequest(httpPost, (HttpEntity httpEntity) -> {
                 return EntityUtils.toString(httpEntity, "UTF-8");
             });
         }
@@ -59,6 +58,4 @@ public abstract class WeixinAPI {
     protected boolean handlerResponse(String responseResult) throws Exception {
         return true;
     }
-
-    protected String postData_;
 }

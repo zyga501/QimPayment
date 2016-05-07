@@ -1,6 +1,5 @@
 package com.framework.utils;
 
-import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.AuthSchemes;
@@ -9,8 +8,6 @@ import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.*;
 import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
-import org.apache.http.conn.ConnectTimeoutException;
-import org.apache.http.conn.ConnectionPoolTimeoutException;
 import org.apache.http.conn.routing.HttpRoute;
 import org.apache.http.conn.socket.ConnectionSocketFactory;
 import org.apache.http.conn.socket.LayeredConnectionSocketFactory;
@@ -19,17 +16,15 @@ import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
-import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.net.InetAddress;
-import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 
-public class HttpUtils {
+public class HttpClient {
     public static void main(String[] args) throws Exception {
-        CloseableHttpClient httpClient = HttpUtils.Instance();
+        CloseableHttpClient httpClient = HttpClient.Instance();
         HttpGet httpGet = new HttpGet("https://github.com/VonChenPlus");
         CloseableHttpResponse response = httpClient.execute(httpGet);
         System.out.print(response.getStatusLine().toString());
@@ -50,7 +45,7 @@ public class HttpUtils {
     }
 
     private static <T> T DoRequest(HttpRequestBase requestBase, HttpCallback<T> httpCallback) {
-        CloseableHttpClient httpClient = HttpUtils.Instance();
+        CloseableHttpClient httpClient = HttpClient.Instance();
         CloseableHttpResponse closeableHttpResponse = null;
         try {
             closeableHttpResponse = httpClient.execute(requestBase);
