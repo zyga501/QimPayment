@@ -124,7 +124,7 @@ public class CallbackAction extends AjaxActionSupport {
 
             String responseString = new String();
             try {
-                responseString = HttpClient.PostRequest(httpPost, (HttpEntity httpEntity)->
+                responseString = HttpUtils.PostRequest(httpPost, (HttpEntity httpEntity)->
                 {
                     return EntityUtils.toString(httpEntity, "UTF-8");
                 });

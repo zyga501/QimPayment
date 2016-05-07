@@ -1,6 +1,6 @@
 package com.weixin.api;
 
-import com.framework.utils.HttpClient;
+import com.framework.utils.HttpUtils;
 import com.framework.utils.Logger;
 import com.framework.utils.XMLParser;
 import com.thoughtworks.xstream.XStream;
@@ -46,7 +46,7 @@ public abstract class WeixinAPIWithSign extends WeixinAPI {
 
         String responseString = new String();
         try {
-            responseString = HttpClient.PostRequest(httpPost, (HttpEntity httpEntity) -> {
+            responseString = HttpUtils.PostRequest(httpPost, (HttpEntity httpEntity) -> {
                 return EntityUtils.toString(httpEntity, "UTF-8");
             });
         }
