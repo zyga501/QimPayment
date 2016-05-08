@@ -79,31 +79,32 @@ public class WebpagePayAction extends AjaxActionSupport {
     }
 
     public String scanPay(){
-         String subMerchantUserId = new String();
-         if (!StringUtils.convertNullableString(getParameter("id")).isEmpty()) {
-             subMerchantUserId = getParameter("id").toString();
-         }
-         else { // compatible old api
-             IdMapUUID idMapUUID = IdMapUUID.getMappingByUUID( getParameter("odod").toString());
-             if (idMapUUID != null){
-                 subMerchantUserId = String.valueOf(idMapUUID.getId());
-             }
-         }
+        String subMerchantUserId = new String();
+        if (!StringUtils.convertNullableString(getParameter("id")).isEmpty()) {
+            subMerchantUserId = getParameter("id").toString();
+        }
+        else { // compatible old api
+            IdMapUUID idMapUUID = IdMapUUID.getMappingByUUID( getParameter("odod").toString());
+            if (idMapUUID != null){
+                subMerchantUserId = String.valueOf(idMapUUID.getId());
+            }
+        }
 
-         SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(subMerchantUserId));
-         getRequest().getSession().setAttribute("id",subMerchantUser.getId());
-         storeName = subMerchantUser.getStoreName();
-         userName = subMerchantUser.getUserName();
-         subMerchantId = new Long(subMerchantUser.getSubMerchantId()).toString();
-         try {
-             byte[] logo = SubMerchantInfo.getSubMerchantLogoById(subMerchantUser.getSubMerchantId());
-             if (logo != null) {
-                 subMerchantLogo = new ByteArrayInputStream(logo);
-             }
-         }
-         catch (Exception e){
-             return SCANPAY;
-         }
+        SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(subMerchantUserId));
+        getRequest().getSession().setAttribute("id",subMerchantUser.getId());
+        storeName = subMerchantUser.getStoreName();
+        userName = subMerchantUser.getUserName();
+        subMerchantId = new Long(subMerchantUser.getSubMerchantId()).toString();
+        try {
+            byte[] logo = SubMerchantInfo.getSubMerchantLogoById(subMerchantUser.getSubMerchantId());
+            if (logo != null) {
+                subMerchantLogo = new ByteArrayInputStream(logo);
+            }
+        }
+        catch (Exception e){
+            return SCANPAY;
+        }
         return SCANPAY;
     }
+
 }
