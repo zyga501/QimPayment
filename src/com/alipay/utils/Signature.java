@@ -1,7 +1,6 @@
 package com.alipay.utils;
 
 import com.framework.utils.ClassUtils;
-import com.framework.utils.MD5;
 
 import javax.xml.bind.DatatypeConverter;
 import java.lang.reflect.Field;
@@ -12,9 +11,11 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Map;
 
 public class Signature {
-    public static String generateSign(Object o, String key) throws IllegalAccessException {
+    public static String generateSign(Object o, String privateKey) throws IllegalAccessException {
         ArrayList<String> list = new ArrayList<String>();
         Class cls = o.getClass();
         ArrayList<Field> fields = new ArrayList<Field>();
@@ -33,15 +34,14 @@ public class Signature {
             sb.append(arrayToSort[i]);
         }
         String result = sb.toString();
-        result += "key=" + key;
-        result = MD5.MD5Encode(result).toUpperCase();
+        result = rsaSign(result, privateKey);
         return result;
     }
 
-    private String rsaSign(String content, String key) {
+    public static String rsaSign(String content, String privateKey) {
         try {
             java.security.Signature signature = java.security.Signature.getInstance("SHA1WithRSA");
-            signature.initSign(initPrivateKey(key));
+            signature.initSign(initPrivateKey(privateKey));
             signature.update(content.getBytes(Charset.forName("utf-8")));
             byte[] signed = signature.sign();
             return DatatypeConverter.printBase64Binary(signed);
@@ -58,15 +58,34 @@ public class Signature {
         return null;
     }
 
-    protected boolean rsaVerify(String content, String sign, String key) {
+    protected static boolean rsaVerify(Map<String,Object> map , String publicKey) {
         try {
+            String sign = new String();
+            if (map.containsKey("sign")) {
+                sign = map.get("sign").toString();
+                map.remove("sign");
+            }
+            if (map.containsKey("sign_type"))
+                map.remove("sign_type");
+
+            StringBuffer content = new StringBuffer();
+            ArrayList keys = new ArrayList(map.keySet());
+            Collections.sort(keys);
+
+            for(int i = 0; i < keys.size(); ++i) {
+                String key = (String)keys.get(i);
+                String value = (String)map.get(key);
+                content.append((i == 0?"":"&") + key + "=" + value);
+            }
+
             java.security.Signature signature = java.security.Signature.getInstance("SHA1WithRSA");
-            signature.initVerify(initPublicKey(key));
-            signature.update(content.getBytes(Charset.forName("utf-8")));
+            signature.initVerify(initPublicKey(publicKey));
+            signature.update(content.toString().getBytes(Charset.forName("utf-8")));
 
             boolean bverify = signature.verify(DatatypeConverter.parseBase64Binary(sign));
             return bverify;
-        } catch (NoSuchAlgorithmException e) {
+        }
+        catch (NoSuchAlgorithmException e) {
 
         }
         catch (InvalidKeyException e) {
@@ -78,7 +97,7 @@ public class Signature {
         return false;
     }
 
-    private PublicKey initPublicKey(String key) {
+    private static PublicKey initPublicKey(String key) {
         try {
             KeyFactory keyFactory = KeyFactory.getInstance("RSA");
             byte[] encodedKey = DatatypeConverter.parseBase64Binary(key);
@@ -94,7 +113,7 @@ public class Signature {
         return null;
     }
 
-    private PrivateKey initPrivateKey(String key) {
+    private static PrivateKey initPrivateKey(String key) {
         try {
             byte[] keyBytes = DatatypeConverter.parseBase64Binary(key);
             PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(keyBytes);
