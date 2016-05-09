@@ -20,6 +20,14 @@ public class MerchantInfo {
         this.id_ = id;
     }
 
+    public String getAppid() {
+        return appid_;
+    }
+
+    public void setAppid(String appid) {
+        this.appid_ = appid;
+    }
+
     public String getPrivateKey() {
         return privateKey_;
     }
@@ -37,6 +45,7 @@ public class MerchantInfo {
     }
 
     private long id_;
+    public String appid_;
     private String privateKey_;
     private String publicKey_;
 }

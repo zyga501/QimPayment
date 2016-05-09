@@ -6,6 +6,7 @@
     </select>
     <resultMap type="com.database.alipay.MerchantInfo" id="merchantInfoResult">
         <id property="id" column="id" jdbcType="BIGINT" />
+        <result property="appid" column="appid" jdbcType="VARCHAR"/>
         <result property="privateKey" column="privateKey" jdbcType="VARCHAR"/>
         <result property="publicKey" column="publicKey" jdbcType="VARCHAR"/>
     </resultMap>

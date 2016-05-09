@@ -1,10 +1,16 @@
 package com.alipay.api.RequestData;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
+
 public class RequestData {
     RequestData() {
         charset = "utf-8";
         sign_type = "RSA";
-        timestamp = String.valueOf(System.currentTimeMillis() / 1000);
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        df.setTimeZone(TimeZone.getTimeZone("GMT+8"));
+        timestamp = df.format(new Date(Long.valueOf(System.currentTimeMillis()).longValue()));
         version = "1.0";
     }
 
