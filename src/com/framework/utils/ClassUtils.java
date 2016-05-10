@@ -7,20 +7,28 @@ import java.util.Map;
 
 public class ClassUtils {
     public static void getBeanFields(Class cls, ArrayList<Field> fields) {
+        getBeanFields(cls, fields, true);
+    }
+
+    public static void getBeanFields(Class cls, ArrayList<Field> fields, boolean recursive) {
         for (int index = 0; index < cls.getDeclaredFields().length; ++index) {
             fields.add(cls.getDeclaredFields()[index]);
         }
-        if(cls.getSuperclass()!=null){
+
+        if(recursive && cls.getSuperclass()!=null) {
             Class clsSup = cls.getSuperclass();
             getBeanFields(clsSup, fields);
         }
     }
 
-
     public static Map<String,Object> convertToMap(Object object) {
+        return convertToMap(object, true);
+    }
+
+    public static Map<String,Object> convertToMap(Object object, boolean recursive) {
         Map<String,Object> map = new HashMap<String, Object>();
         ArrayList<Field> fields = new ArrayList<Field>();
-        ClassUtils.getBeanFields(object.getClass(), fields);
+        ClassUtils.getBeanFields(object.getClass(), fields, recursive);
         for (Field field : fields) {
             Object obj;
             try {

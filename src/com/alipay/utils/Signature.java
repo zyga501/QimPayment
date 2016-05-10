@@ -38,7 +38,7 @@ public class Signature {
         return result;
     }
 
-    public static String rsaSign(String content, String privateKey) {
+    protected static String rsaSign(String content, String privateKey) {
         try {
             java.security.Signature signature = java.security.Signature.getInstance("SHA1WithRSA");
             signature.initSign(initPrivateKey(privateKey));
