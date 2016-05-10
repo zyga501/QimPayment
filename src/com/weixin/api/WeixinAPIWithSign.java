@@ -20,6 +20,7 @@ public abstract class WeixinAPIWithSign extends WeixinAPI {
         return responseResult_;
     }
 
+    @Override
     public boolean postRequest(String apiKey) throws Exception {
         if (!requestData_.checkParameter() || apiKey.isEmpty()) {
             Logger.warn(this.getClass().getName() + " CheckParameter Failed!");

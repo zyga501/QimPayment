@@ -7,6 +7,7 @@ import com.framework.utils.Logger;
 import java.util.Map;
 
 public abstract class AliPayAPIWithSign extends AliPayAPI {
+    @Override
     public boolean postRequest(String privateKey) throws Exception {
         if (!requestData_.checkParameter() || privateKey.isEmpty()) {
             Logger.warn(this.getClass().getName() + " CheckParameter Failed!");
