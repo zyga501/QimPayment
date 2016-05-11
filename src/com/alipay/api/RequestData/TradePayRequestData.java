@@ -34,6 +34,10 @@ public class TradePayRequestData extends RequestData {
     }
 
     public boolean checkParameter() {
+        if (!super.checkParameter()) {
+            return false;
+        }
+
         try {
             return !out_trade_no.isEmpty()
                     && !scene.isEmpty()
@@ -50,7 +54,8 @@ public class TradePayRequestData extends RequestData {
 
     @Override
     public String buildRequestData() {
-        return JSONArray.fromObject(ClassUtils.convertToMap(this, false)).toString();
+        String requestData = JSONArray.fromObject(ClassUtils.convertToMap(this, false)).toString().substring(1);
+        return requestData.substring(0, requestData.length() - 1);
     }
 
     public String out_trade_no; // 商户订单号,64个字符以内
@@ -62,8 +67,6 @@ public class TradePayRequestData extends RequestData {
     public String body; // 订单描述
     public String seller_id; // 如果该值为空，则默认为商户签约账号对应的支付宝用户ID
     public double total_amount; // 订单总金额，单位为元，精确到小数点后两位
-    public double discountable_amount; // 参与优惠计算的金额
-    public double undiscountable_amount; // 不参与优惠计算的金额
     public String goods_detail; // 订单包含的商品列表信息，Json格式
     public String operator_id; // 商户操作员编号
     public String store_id; // 商户门店编号

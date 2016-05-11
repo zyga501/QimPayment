@@ -19,7 +19,7 @@ public class Signature {
         ArrayList<String> list = new ArrayList<String>();
         Class cls = o.getClass();
         ArrayList<Field> fields = new ArrayList<Field>();
-        ClassUtils.getBeanFields(cls, fields);
+        ClassUtils.getBeanFields(cls, fields, false);
         for (Field f : fields) {
             f.setAccessible(true);
             if (f.get(o) != null && f.get(o) != "") {
@@ -34,7 +34,7 @@ public class Signature {
             sb.append(arrayToSort[i]);
         }
         String result = sb.toString();
-        result = rsaSign(result, privateKey);
+        result = rsaSign(result.substring(0, result.length() - 1), privateKey);
         return result;
     }
 

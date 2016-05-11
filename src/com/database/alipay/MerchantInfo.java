@@ -9,7 +9,7 @@ public class MerchantInfo {
 
     public static MerchantInfo getMerchantInfoById(long id) {
         String statement = "com.database.alipay.mapping.merchantInfo.getMerchantInfoById";
-        return com.database.weixin.Database.Instance().selectOne(statement, id);
+        return com.database.alipay.Database.Instance().selectOne(statement, id);
     }
 
     public long getId() {
@@ -45,7 +45,7 @@ public class MerchantInfo {
     }
 
     private long id_;
-    public String appid_;
+    private String appid_;
     private String privateKey_;
     private String publicKey_;
 }

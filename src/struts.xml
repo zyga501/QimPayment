@@ -58,4 +58,6 @@
 
     <constant name="struts.custom.i18n.resources" value="com/weixin/mui/resources"/>
     <include file="com/weixin/struts-weixin.xml" />
+    
+    <include file="com/alipay/struts-alipay.xml" />
 </struts>

@@ -15,7 +15,7 @@ public abstract class AliPayAPIWithSign extends AliPayAPI {
         }
 
         requestData_.biz_content = requestData_.buildRequestData();
-        requestData_.sign = Signature.generateSign(requestData_, privateKey);
+        requestData_.sign = Signature.generateSign(new RequestData(requestData_), privateKey);
 
         return false;
     }

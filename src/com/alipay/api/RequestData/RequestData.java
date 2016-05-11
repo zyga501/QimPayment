@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.TimeZone;
 
 public class RequestData {
-    RequestData() {
+    public RequestData() {
         charset = "utf-8";
         sign_type = "RSA";
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -14,13 +14,22 @@ public class RequestData {
         version = "1.0";
     }
 
+    public RequestData(RequestData requestData) {
+        this.app_id = requestData.app_id;
+        this.method = requestData.method;
+        this.charset = requestData.charset;
+        this.sign_type = requestData.sign_type;
+        this.timestamp = requestData.timestamp;
+        this.version = requestData.version;
+        this.biz_content = requestData.biz_content;
+    }
+
     public boolean checkParameter() {
         try {
             return !app_id.isEmpty()
                     && !method.isEmpty()
                     && !charset.isEmpty()
                     && !sign_type.isEmpty()
-                    && !sign.isEmpty()
                     && !timestamp.isEmpty()
                     && !version.isEmpty();
         }
