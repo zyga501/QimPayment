@@ -1,6 +1,7 @@
 package com.framework.utils;
 
 import java.lang.reflect.Field;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,5 +44,30 @@ public class ClassUtils {
             }
         }
         return map;
+    }
+
+    public static String convertToQuery(Object object, String charset, boolean recursive) throws Exception {
+        StringBuilder query = new StringBuilder();
+        boolean hasParam = false;
+        ArrayList<Field> fields = new ArrayList<Field>();
+        ClassUtils.getBeanFields(object.getClass(), fields, recursive);
+        for (Field field : fields) {
+            Object obj = field.get(object);
+            if (obj != null) {
+                String name = field.getName();
+                String value = obj.toString();
+                if (!value.isEmpty()) {
+                    if (hasParam) {
+                        query.append("&");
+                    } else {
+                        hasParam = true;
+                    }
+
+                    query.append(name).append("=").append(URLEncoder.encode(value, charset));
+                }
+            }
+        }
+
+        return query.toString();
     }
 }

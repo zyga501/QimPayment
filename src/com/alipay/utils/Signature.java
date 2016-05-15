@@ -58,16 +58,8 @@ public class Signature {
         return null;
     }
 
-    protected static boolean rsaVerify(Map<String,Object> map , String publicKey) {
+    public static boolean rsaVerify(Map<String,Object> map, String sign, String publicKey) {
         try {
-            String sign = new String();
-            if (map.containsKey("sign")) {
-                sign = map.get("sign").toString();
-                map.remove("sign");
-            }
-            if (map.containsKey("sign_type"))
-                map.remove("sign_type");
-
             StringBuffer content = new StringBuffer();
             ArrayList keys = new ArrayList(map.keySet());
             Collections.sort(keys);
