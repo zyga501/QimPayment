@@ -12,16 +12,21 @@ public class RequestData {
         df.setTimeZone(TimeZone.getTimeZone("GMT+8"));
         timestamp = df.format(new Date(Long.valueOf(System.currentTimeMillis()).longValue()));
         version = "1.0";
+        alipay_sdk = "alipay-sdk-java-dynamicVersionNo";
+        format = "json";
     }
 
     public RequestData(RequestData requestData) {
         this.app_id = requestData.app_id;
         this.method = requestData.method;
         this.charset = requestData.charset;
+        this.sign = requestData.sign;
         this.sign_type = requestData.sign_type;
         this.timestamp = requestData.timestamp;
         this.version = requestData.version;
         this.biz_content = requestData.biz_content;
+        this.alipay_sdk = requestData.alipay_sdk;
+        this.format = requestData.format;
     }
 
     public boolean checkParameter() {
@@ -52,6 +57,8 @@ public class RequestData {
     public String timestamp; // 发送请求的时间，格式"yyyy-MM-dd HH:mm:ss"
     public String version; // 调用的接口版本，固定为：1.0
     public String biz_content;
+    public String alipay_sdk;
+    public String format;
 
     // option
     public String app_auth_token; // 详见应用授权概述

@@ -11,6 +11,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
 
+import java.net.URLEncoder;
 import java.util.Map;
 
 public abstract class AliPayAPIWithSign extends AliPayAPI {
@@ -21,17 +22,20 @@ public abstract class AliPayAPIWithSign extends AliPayAPI {
         }
 
         requestData_.biz_content = requestData_.buildRequestData();
-        requestData_.sign = Signature.generateSign(new RequestData(requestData_), privateKey);
+        RequestData buildObject = new RequestData(requestData_);
+        requestData_.sign = Signature.generateSign(buildObject, privateKey);
+        buildObject.sign = requestData_.sign;
 
         String apiUri = getAPIUri();
         if (apiUri.isEmpty()) {
             return false;
         }
-        apiUri.concat("?" + ClassUtils.convertToQuery(new RequestData(requestData_), "utf-8", false));
+        buildObject.biz_content = null;
+        apiUri += "?" + ClassUtils.convertToQuery(buildObject, "utf-8", false);
         Logger.debug("Request Url:\r\n" + apiUri);
 
         HttpPost httpPost = new HttpPost(apiUri);
-        StringEntity postEntity = new StringEntity(ClassUtils.convertToQuery(requestData_, "utf-8", false), "UTF-8");
+        StringEntity postEntity = new StringEntity("biz_content=" + URLEncoder.encode(requestData_.biz_content, "utf-8"), "UTF-8");
         httpPost.addHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
         httpPost.addHeader("Accept", "text/xml,text/javascript,text/html");
         httpPost.setEntity(postEntity);

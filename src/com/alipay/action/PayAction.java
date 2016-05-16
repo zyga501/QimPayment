@@ -22,7 +22,7 @@ public class PayAction extends AjaxActionSupport {
                     tradePayRequestData.total_amount = Double.parseDouble(getParameter("total_amount").toString());
                     tradePayRequestData.subject = getParameter("subject").toString();
                     TradePay tradePay = new TradePay(tradePayRequestData);
-                    tradePay.postRequest(merchantInfo.getPrivateKey());
+                    tradePay.postRequest(merchantInfo.getPrivateKey(), merchantInfo.getPublicKey());
                 }
             }
         }
