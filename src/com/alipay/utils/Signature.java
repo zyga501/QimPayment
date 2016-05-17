@@ -11,8 +11,6 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Map;
 
 public class Signature {
     public static String generateSign(Object o, String privateKey) throws IllegalAccessException {
@@ -58,18 +56,8 @@ public class Signature {
         return null;
     }
 
-    public static boolean rsaVerify(Map<String,Object> map, String sign, String publicKey) {
+    public static boolean verifySign(String content, String sign, String publicKey) {
         try {
-            StringBuffer content = new StringBuffer();
-            ArrayList keys = new ArrayList(map.keySet());
-            Collections.sort(keys);
-
-            for(int i = 0; i < keys.size(); ++i) {
-                String key = (String)keys.get(i);
-                String value = (String)map.get(key);
-                content.append((i == 0?"":"&") + key + "=" + value);
-            }
-
             java.security.Signature signature = java.security.Signature.getInstance("SHA1WithRSA");
             signature.initVerify(initPublicKey(publicKey));
             signature.update(content.toString().getBytes(Charset.forName("utf-8")));

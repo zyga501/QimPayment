@@ -37,7 +37,7 @@
         </tr>
         <tr><td>总金额:</td>
           <td>
-            <input type="text" id="total_amount" name="total_amount" value="1"/>
+            <input type="text" id="total_amount" name="total_amount" value="0.01"/>
           </td>
         </tr>
         <tr><td>二维码字符串:</td>

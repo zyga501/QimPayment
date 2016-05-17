@@ -1,15 +1,14 @@
 package com.alipay.api;
 
+import com.alipay.api.RequestData.QueryData;
 import com.alipay.api.RequestData.RequestData;
 import com.alipay.utils.Signature;
 import com.framework.utils.ClassUtils;
 import com.framework.utils.HttpUtils;
+import com.framework.utils.JsonUtils;
 import com.framework.utils.Logger;
-import com.framework.utils.StringUtils;
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
 
@@ -24,15 +23,13 @@ public abstract class AliPayAPIWithSign extends AliPayAPI {
         }
 
         requestData_.biz_content = requestData_.buildRequestData();
-        RequestData buildObject = new RequestData(requestData_);
-        buildObject.sign = requestData_.sign = Signature.generateSign(buildObject, privateKey);
+        requestData_.sign = Signature.generateSign(new RequestData(requestData_), privateKey);
 
         String apiUri = getAPIUri();
         if (apiUri.isEmpty()) {
             return false;
         }
-        buildObject.biz_content = null;
-        apiUri += "?" + ClassUtils.convertToQuery(buildObject, "utf-8", false);
+        apiUri += "?" + ClassUtils.convertToQuery(new QueryData(requestData_), "utf-8", true);
         Logger.debug("Request Url:\r\n" + apiUri);
 
         HttpPost httpPost = new HttpPost(apiUri);
@@ -53,11 +50,11 @@ public abstract class AliPayAPIWithSign extends AliPayAPI {
 
         Logger.debug("Response Data:\r\n" + responseString);
 
-        responseResult_ = StringUtils.jsonToMap(responseString);
+        responseResult_ = JsonUtils.toMap(responseString, true);
 
         String rootNode = requestData_.method.replace('.', '_') + "_response";
         if (responseResult_.containsKey("sign") && responseResult_.containsKey(rootNode)) {
-            if (!Signature.rsaVerify(StringUtils.jsonToMap(responseResult_.get(rootNode).toString()),
+            if (!Signature.verifySign(getSignSourceData(rootNode, responseString),
                     responseResult_.get("sign").toString(),
                     publicKey))
                 return false;
@@ -69,6 +66,25 @@ public abstract class AliPayAPIWithSign extends AliPayAPI {
     protected boolean handlerResponse(Map<String, Object> responseResult) throws Exception {
         return true;
     }
+
+    private String getSignSourceData(String rootNode, String responseString) {
+        String errorRootNode = "error_response";
+        int indexOfRootNode = responseString.indexOf(rootNode);
+        int indexOfErrorRoot = responseString.indexOf(errorRootNode);
+        return indexOfRootNode > 0?this.parseSignSourceData(responseString, rootNode, indexOfRootNode):(indexOfErrorRoot > 0?this.parseSignSourceData(responseString, errorRootNode, indexOfErrorRoot):null);
+    }
+
+    private String parseSignSourceData(String body, String rootNode, int indexOfRootNode) {
+        int signDataStartIndex = indexOfRootNode + rootNode.length() + 2;
+        int indexOfSign = body.indexOf("\"sign\"");
+        if(indexOfSign < 0) {
+            return null;
+        } else {
+            int signDataEndIndex = indexOfSign - 1;
+            return body.substring(signDataStartIndex, signDataEndIndex);
+        }
+    }
+
     protected RequestData requestData_;
     protected Map<String, Object> responseResult_;
 }

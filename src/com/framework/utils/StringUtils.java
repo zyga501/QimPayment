@@ -1,10 +1,5 @@
 package com.framework.utils;
 
-import net.sf.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 import java.util.Random;
 
 public class StringUtils {
@@ -33,18 +28,5 @@ public class StringUtils {
             sb.append(base.charAt(number));
         }
         return sb.toString();
-    }
-
-    public static Map<String, Object> jsonToMap(String jsonString) {
-        Map<String, Object> result = new HashMap<>();
-        JSONObject jsonObject = JSONObject.fromObject(jsonString);
-        Iterator it = jsonObject.keys();
-        while (it.hasNext()) {
-            String key = String.valueOf(it.next());
-            String value = (String) jsonObject.get(key);
-            result.put(key, value);
-        }
-
-        return result;
     }
 }
