@@ -1,8 +1,10 @@
 package com.framework.utils;
 
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
 
@@ -14,8 +16,8 @@ public abstract class HttpClient {
         }
         Logger.debug("Request Url:\r\n" + apiUri);
 
-        String responseString = HttpUtils.GetRequest(new HttpGet(apiUri), (HttpEntity httpEntity) -> {
-            return EntityUtils.toString(httpEntity, "UTF-8");
+        String responseString = HttpUtils.GetRequest(new HttpGet(apiUri), (HttpResponse httpResponse) -> {
+            return EntityUtils.toString(httpResponse.getEntity(), "UTF-8");
         });
 
         Logger.debug("Response Data:\r\n" + responseString);
@@ -38,8 +40,8 @@ public abstract class HttpClient {
 
         String responseString = new String();
         try {
-            responseString = HttpUtils.PostRequest(httpPost, (HttpEntity httpEntity) -> {
-                return EntityUtils.toString(httpEntity, "UTF-8");
+            responseString = HttpUtils.PostRequest(httpPost, (HttpResponse httpResponse) -> {
+                return EntityUtils.toString(httpResponse.getEntity(), "UTF-8");
             });
         }
         finally {

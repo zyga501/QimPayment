@@ -10,9 +10,14 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.thoughtworks.xstream.io.xml.XmlFriendlyNameCoder;
 import com.weixin.utils.Signature;
 import net.sf.json.JSONObject;
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultRedirectStrategy;
+import org.apache.http.impl.client.RedirectLocations;
 import org.apache.http.util.EntityUtils;
 
 import java.util.HashMap;
@@ -36,9 +41,9 @@ public class TestPayAction extends AjaxActionSupport {
 
         String responseString = new String();
         try {
-            responseString = HttpUtils.PostRequest(httpPost, (HttpEntity httpEntity)->
+            responseString = HttpUtils.PostRequest(httpPost, (HttpResponse httpResponse)->
             {
-                return EntityUtils.toString(httpEntity, "UTF-8");
+                return EntityUtils.toString(httpResponse.getEntity(), "UTF-8");
             });
         }
         finally {
@@ -65,9 +70,9 @@ public class TestPayAction extends AjaxActionSupport {
 
         String responseString = new String();
         try {
-            responseString = HttpUtils.PostRequest(httpPost, (HttpEntity httpEntity)->
+            responseString = HttpUtils.PostRequest(httpPost, (HttpResponse httpResponse)->
             {
-                return EntityUtils.toString(httpEntity, "UTF-8");
+                return EntityUtils.toString(httpResponse.getEntity(), "UTF-8");
             });
         }
             finally {
@@ -83,7 +88,7 @@ public class TestPayAction extends AjaxActionSupport {
         return AjaxActionComplete(map);
     }
 
-    public String jsPay() throws Exception {
+    public void jsPay() throws Exception {
         JsPayData jsPayData = new JsPayData();
         jsPayData.id = getParameter("id").toString();
         jsPayData.body = getParameter("body").toString();
@@ -97,17 +102,18 @@ public class TestPayAction extends AjaxActionSupport {
         httpPost.addHeader("Content-Type", "text/xml");
         httpPost.setEntity(postEntity);
 
-        String responseString = new String();
         try {
-            responseString = HttpUtils.PostRequest(httpPost, (HttpEntity httpEntity)->
+            HttpUtils.PostRequest(httpPost, (HttpResponse httpResponse)->
             {
-                return EntityUtils.toString(httpEntity, "UTF-8");
+                Header[] headers = httpResponse.getHeaders("Location");
+                if (headers.length != 0)
+                    getResponse().sendRedirect(headers[0].getValue());
+                return null;
             });
         }
         finally {
             httpPost.abort();
         }
-        return AjaxActionComplete();
     }
 
     public String brandWCPay() {

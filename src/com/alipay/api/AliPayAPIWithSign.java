@@ -7,7 +7,9 @@ import com.framework.utils.HttpUtils;
 import com.framework.utils.Logger;
 import com.framework.utils.StringUtils;
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
 
@@ -41,8 +43,8 @@ public abstract class AliPayAPIWithSign extends AliPayAPI {
 
         String responseString = new String();
         try {
-            responseString = HttpUtils.PostRequest(httpPost, (HttpEntity httpEntity) -> {
-                return EntityUtils.toString(httpEntity, "UTF-8");
+            responseString = HttpUtils.PostRequest(httpPost, (HttpResponse httpResponse) -> {
+                return EntityUtils.toString(httpResponse.getEntity(), "UTF-8");
             });
         }
         finally {

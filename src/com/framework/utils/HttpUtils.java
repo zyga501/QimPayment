@@ -2,10 +2,12 @@ package com.framework.utils;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
+import org.apache.http.HttpResponse;
 import org.apache.http.client.config.AuthSchemes;
 import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.*;
+import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
 import org.apache.http.conn.routing.HttpRoute;
@@ -31,7 +33,7 @@ public class HttpUtils {
     }
 
     public interface HttpCallback<V> {
-        V call(HttpEntity httpEntity) throws Exception;
+        V call(HttpResponse httpResponse) throws Exception;
     }
 
     public static CloseableHttpClient Instance() { return httpClient_; }
@@ -49,7 +51,7 @@ public class HttpUtils {
         CloseableHttpResponse closeableHttpResponse = null;
         try {
             closeableHttpResponse = httpClient.execute(requestBase);
-            return httpCallback.call(closeableHttpResponse.getEntity());
+            return httpCallback.call(closeableHttpResponse);
         }
         catch (Exception exception) {
             exception.printStackTrace();
