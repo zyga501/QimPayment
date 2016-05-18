@@ -14,5 +14,7 @@
 
         <action name="Pay!*" class="com.alipay.action.PayAction"  method="{1}">
         </action>
+        <action name="Callback!*" class="com.alipay.action.CallbackAction" method="{1}">
+        </action>
     </package>
 </struts>

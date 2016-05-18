@@ -56,6 +56,7 @@ public class RequestData {
     public String sign; // 商户请求参数的签名串
     public String timestamp; // 发送请求的时间，格式"yyyy-MM-dd HH:mm:ss"
     public String version; // 调用的接口版本，固定为：1.0
+    public String notify_url;
     public String biz_content;
     public String alipay_sdk;
     public String format;

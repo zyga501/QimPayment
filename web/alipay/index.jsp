@@ -16,6 +16,24 @@
           }
         })
       }
+
+      function scanPay() {
+        $.ajax({
+          type: 'post',
+          url: 'Pay!tradePreCreate',
+          dataType:"json",
+          data:$("form").serialize(),
+          success: function (data) {
+            var json = eval("(" + data + ")");
+            var qr = qrcode(10, 'Q');
+            qr.addData(json.qr_code);
+            qr.make();
+            var dom=document.createElement('DIV');
+            dom.innerHTML = qr.createImgTag();
+            $("#QRCode")[0].appendChild(dom);
+          }
+        })
+      }
     </script>
   </head>
   <body>
@@ -47,7 +65,17 @@
         </tr>
         <tr>
           <td>
+            <div  id="QRCode">
+              二维码
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
             <input type="button" onclick="microPay()" value="刷卡提交"/>
+          </td>
+          <td>
+            <input type="button" onclick="scanPay()" value="扫码支付"/>
           </td>
         </tr>
       </table>
