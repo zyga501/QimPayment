@@ -1,6 +1,6 @@
 package com.alipay.api.RequestData;
 
-import com.framework.ProjectSettings;
+import com.framework.base.ProjectSettings;
 import com.framework.utils.ClassUtils;
 import com.framework.utils.IdWorker;
 import net.sf.json.JSONArray;

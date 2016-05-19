@@ -1,6 +1,6 @@
 package com.merchant.action;
 
-import com.framework.ProjectSettings;
+import com.framework.base.ProjectSettings;
 import com.framework.action.AjaxActionSupport;
 import com.framework.utils.ClassUtils;
 import com.framework.utils.IdWorker;

@@ -1,7 +1,7 @@
 package com.api.test;
 
-import com.api.test.RequestData.MicroPayRequestData;
 import com.api.test.RequestData.JsPayData;
+import com.api.test.RequestData.MicroPayRequestData;
 import com.api.test.RequestData.ScanPayRequestData;
 import com.framework.action.AjaxActionSupport;
 import com.framework.utils.HttpUtils;
@@ -11,13 +11,9 @@ import com.thoughtworks.xstream.io.xml.XmlFriendlyNameCoder;
 import com.weixin.utils.Signature;
 import net.sf.json.JSONObject;
 import org.apache.http.Header;
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultRedirectStrategy;
-import org.apache.http.impl.client.RedirectLocations;
 import org.apache.http.util.EntityUtils;
 
 import java.util.HashMap;
@@ -63,7 +59,7 @@ public class TestPayAction extends AjaxActionSupport {
         scanPayRequestData.sign = Signature.generateSign(scanPayRequestData, scanPayRequestData.id);
         XStream xStreamForRequestPostData = new XStream(new DomDriver("UTF-8", new XmlFriendlyNameCoder("-_", "_")));
         String postDataXML = xStreamForRequestPostData.toXML(scanPayRequestData);
-        HttpPost httpPost = new HttpPost("http://www.qimpay.com/qlpay/api/ScanPay");
+        HttpPost httpPost = new HttpPost(getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + "ScanPay");
         StringEntity postEntity = new StringEntity(postDataXML, "UTF-8");
         httpPost.addHeader("Content-Type", "text/xml");
         httpPost.setEntity(postEntity);
