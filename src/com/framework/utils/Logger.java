@@ -1,6 +1,6 @@
 package com.framework.utils;
 
-import com.framework.ProjectSettings;
+import com.framework.base.ProjectSettings;
 import org.apache.log4j.PropertyConfigurator;
 
 public class Logger {

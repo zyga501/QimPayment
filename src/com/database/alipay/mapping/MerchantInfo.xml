@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.database.alipay.mapping.merchantInfo">
+    <select id="getMerchantInfoById" parameterType="long" resultMap="merchantInfoResult">
+      SELECT * FROM MerchantInfo WHERE id=#{id}
+    </select>
+    <resultMap type="com.database.alipay.MerchantInfo" id="merchantInfoResult">
+        <id property="id" column="id" jdbcType="BIGINT" />
+        <result property="appid" column="appid" jdbcType="VARCHAR"/>
+        <result property="privateKey" column="privateKey" jdbcType="VARCHAR"/>
+        <result property="publicKey" column="publicKey" jdbcType="VARCHAR"/>
+    </resultMap>
+</mapper>

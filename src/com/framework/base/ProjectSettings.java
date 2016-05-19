@@ -1,4 +1,4 @@
-package com.framework;
+package com.framework.base;
 
 import com.framework.utils.Logger;
 import com.framework.utils.XMLParser;

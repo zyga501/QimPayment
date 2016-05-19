@@ -11,6 +11,12 @@ public class TemplateMessage extends WeixinAPI {
     }
 
     @Override
+    public boolean postRequest(String postData) throws Exception {
+        postData_ = postData;
+        return super.postRequest(postData);
+    }
+
+    @Override
     protected String getAPIUri() {
         return String.format(SEND_MESSAGE, accessToken_);
     }
@@ -45,4 +51,5 @@ public class TemplateMessage extends WeixinAPI {
     }
 
     private String accessToken_;
+    protected String postData_;
 }

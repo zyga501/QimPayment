@@ -1,6 +1,6 @@
 package com.weixin.api.RequestData;
 
-import com.framework.ProjectSettings;
+import com.framework.base.ProjectSettings;
 import com.framework.utils.IdWorker;
 
 import java.net.InetAddress;

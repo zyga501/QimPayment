@@ -123,7 +123,7 @@
   </script>
 </head>
 <body>
-<form class="form form-horizontal" >
+<form class="form form-horizontal" action="api/TestPay!jsPay">
   <input id="code" name="code" type="hidden" value="<%=request.getParameter("code")%>" />
   <input id="state" name="state" type="hidden" value="<%=request.getParameter("state")%>" />
   <table>
@@ -136,7 +136,7 @@
     <tr>
       <td>子商户员工号:</td>
       <td>
-        <input type="text" id="id" name="id" value="1629719047000001"/>
+        <input type="text" id="id" name="id" value="1596144387655680"/>
       </td>
     </tr>
     <tr>
@@ -224,7 +224,7 @@
         <input type="button" onclick="scanPay()" value="扫码支付"/>
       </td>
       <td>
-        <input type="button" onclick="jsPay()" value="公众号支付"/>
+        <input type="submit" value="公众号支付"/>
       </td>
       <td>
         <input type="button" onclick="refund()" value="申请退款"/>

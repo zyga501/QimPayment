@@ -1,6 +1,6 @@
 package com.weixin.servlet;
 
-import com.framework.ProjectSettings;
+import com.framework.base.ProjectSettings;
 import com.weixin.api.AccessToken;
 import com.database.weixin.MerchantInfo;
 

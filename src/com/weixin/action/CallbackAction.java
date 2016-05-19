@@ -8,7 +8,9 @@ import com.message.WeixinMessage;
 import com.weixin.utils.Signature;
 import net.sf.json.JSONObject;
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
 
@@ -22,10 +24,9 @@ public class CallbackAction extends AjaxActionSupport {
     public final static String SCANPAYCALLBACK = "Callback!scanPay";
     public final static String BRANDWCPAYCALLBACK = "Callback!brandWCPay";
     public final static String WEIXINCALLBACKSUCCESS = "" +
-            "<xml>" +
-            "<return_code><![CDATA[SUCCESS]]></return_code>" +
-            "<return_msg><![CDATA[OK]]></return_msg>" +
-            "<result_code><![CDATA[SUCCESS]]></result_code>" +
+            "<xml>\n" +
+            "  <return_code><![CDATA[SUCCESS]]></return_code>\n" +
+            "  <return_msg><![CDATA[OK]]></return_msg>\n" +
             "</xml>";
 
     public void scanPay() throws Exception {
@@ -125,9 +126,9 @@ public class CallbackAction extends AjaxActionSupport {
 
             String responseString = new String();
             try {
-                responseString = HttpUtils.PostRequest(httpPost, (HttpEntity httpEntity)->
+                responseString = HttpUtils.PostRequest(httpPost, (HttpResponse httpResponse)->
                 {
-                    return EntityUtils.toString(httpEntity, "UTF-8");
+                    return EntityUtils.toString(httpResponse.getEntity(), "UTF-8");
                 });
             }
             finally {

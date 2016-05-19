@@ -3,7 +3,7 @@ package com.merchant.action;
 import com.database.merchant.SubMerchantInfo;
 import com.database.merchant.SubMerchantUser;
 import com.database.weixin.MerchantInfo;
-import com.framework.ProjectSettings;
+import com.framework.base.ProjectSettings;
 import com.framework.action.AjaxActionSupport;
 import com.framework.utils.IdWorker;
 import com.framework.utils.Logger;

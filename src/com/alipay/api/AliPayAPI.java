@@ -1,8 +1,8 @@
-package com.weixin.api;
+package com.alipay.api;
 
 import com.framework.utils.HttpClient;
 
-public abstract class WeixinAPI extends HttpClient {
+public abstract class AliPayAPI extends HttpClient {
     protected boolean handlerResponse(String responseResult) throws Exception {
         return true;
     }

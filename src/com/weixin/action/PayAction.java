@@ -4,6 +4,7 @@ import com.database.merchant.SubMerchantUser;
 import com.database.weixin.MerchantInfo;
 import com.database.weixin.SubMerchantInfo;
 import com.framework.action.AjaxActionSupport;
+import com.framework.base.SessionCache;
 import com.framework.utils.Logger;
 import com.framework.utils.StringUtils;
 import com.framework.utils.UdpSocket;
@@ -134,24 +135,47 @@ public class PayAction extends AjaxActionSupport {
         }
 
         String redirect_uri = getRequest().getScheme()+"://" + getRequest().getServerName() + getRequest().getContextPath() + "/weixin/jsPayCallback.jsp";
-        String state = String.format("{'id':'%s','body':'%s','fee':'%s','no':'%s','url':'%s'}",
+        String data = String.format("{'id':'%s','body':'%s','fee':'%s','no':'%s','url':'%s'}",
                 subMerchantUserId,
                 new String(StringUtils.convertNullableString(getParameter("body")).getBytes("iso-8859-1"), "utf-8"),
                 StringUtils.convertNullableString(getParameter("total_fee")),
                 StringUtils.convertNullableString(getParameter("out_trade_no")),
                 StringUtils.convertNullableString(getParameter("redirect_uri")));
+        String sessionId = getRequest().getSession().getId();
+        String zipData = Zip.zip(data);
         String jspayUri = String.format("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" +
-                        "%s&redirect_uri=%s&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect",
-                appid, redirect_uri);
+                        "%s&redirect_uri=%s&response_type=code&scope=snsapi_base&state=%s#wechat_redirect",
+                appid, redirect_uri, sessionId);
         // save session data, state is too short
-        getRequest().getSession().setAttribute("data", Zip.zip(state));
+        getRequest().getSession().setAttribute("data", zipData);
+        SessionCache.setSessionData(sessionId, zipData);
         getResponse().sendRedirect(jspayUri);
     }
 
     public String brandWCPay() throws Exception {
         // get session data and remove data
-        JSONObject jsonObject = JSONObject.fromObject(Zip.unZip(getParameter("data").toString()));
+        JSONObject jsonObject = null;
+        if (!StringUtils.convertNullableString(getParameter("data")).isEmpty()) {
+            jsonObject = JSONObject.fromObject(Zip.unZip(getParameter("data").toString()));
+        }
+
+        String sessionId = StringUtils.convertNullableString(getParameter("state"));
+        if (jsonObject == null && !sessionId.isEmpty()) {
+            String sesseionData = SessionCache.getSessionData(sessionId).toString();
+            if (!sesseionData.isEmpty()) {
+                jsonObject = JSONObject.fromObject(Zip.unZip(sesseionData));
+            }
+        }
+
         getRequest().getSession().removeAttribute("data");
+        if (!sessionId.isEmpty())
+            SessionCache.clearSessionData(sessionId);
+
+        if (jsonObject == null) {
+            Logger.warn("BrandWCPay Failed! Session Data Is Miss!");
+            return AjaxActionComplete(false);
+        }
+
         String subMerchantUserId = jsonObject.get("id").toString();
         String body = jsonObject.get("body").toString();
         int total_fee = (int)Double.parseDouble(jsonObject.get("fee").toString());
