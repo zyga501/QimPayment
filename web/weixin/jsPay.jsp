@@ -162,7 +162,7 @@
         <br>
 
         <div align="center" class="STYLE3"><img style="width:90px;height:90px;border-radius:8px"
-                                                src="<%=request.getContextPath()%>/merchant/Merchant!FetchLogo?id=${subMerchantId}"></div>
+                                                src="<%=request.getContextPath()%>/merchant/SubMerchant!FetchLogo?id=${subMerchantId}"></div>
         <br>
 
         <div align="center" class="STYLE5"><%=request.getSession().getAttribute("storename")%>
