@@ -38,9 +38,8 @@
                             "paySign" : json.paySign       //微信签名
                         }
                         , function(result) {
-                            if (result.err_msg == "get_brand_wcpay_request:ok") {
-                                WeixinJSBridge.call('closeWindow');
-                            }
+                            var errMsg = result.err_msg; // get_brand_wcpay_request:ok
+                            WeixinJSBridge.call('closeWindow');
                         });
             }
         })
