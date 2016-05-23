@@ -152,7 +152,7 @@
 <body>
 <input type="hidden" name="hideparam" id="hideparam" value=""/>
 
-<form action="<%=request.getContextPath()%>/weixin/Pay!jsPay">
+<form action="<%=request.getContextPath()%>/weixin/Pay!jsPay" method="post">
     <input type="hidden" value="${storename}" name="body"/>
     <input type="hidden" value="${id}" name="id"/>
     <input type="hidden" value="" name="total_fee" id="total_fee"/>
