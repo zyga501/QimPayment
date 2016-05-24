@@ -46,6 +46,9 @@
                             opt.name = "result";
                             opt.value = result.err_msg;
                             formRequest.appendChild(opt);
+                            opt.name= "data";
+                            opt.value = json.data;
+                            formRequest.appendChild(opt);
                             document.body.appendChild(formRequest);
                             formRequest.submit();
                             WeixinJSBridge.call('closeWindow');

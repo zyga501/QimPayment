@@ -135,12 +135,13 @@ public class PayAction extends AjaxActionSupport {
         }
 
         String redirect_uri = getRequest().getScheme()+"://" + getRequest().getServerName() + getRequest().getContextPath() + "/weixin/jsPayCallback.jsp";
-        String data = String.format("{'id':'%s','body':'%s','fee':'%s','no':'%s','url':'%s'}",
+        String data = String.format("{'id':'%s','body':'%s','fee':'%s','no':'%s','url':'%s','data':'%s'}",
                 subMerchantUserId,
                 StringUtils.convertNullableString(getParameter("body")),
                 StringUtils.convertNullableString(getParameter("total_fee")),
                 StringUtils.convertNullableString(getParameter("out_trade_no")),
-                StringUtils.convertNullableString(getParameter("redirect_uri")));
+                StringUtils.convertNullableString(getParameter("redirect_uri")),
+                StringUtils.convertNullableString(getParameter("data")));
         String sessionId = getRequest().getSession().getId();
         String zipData = Zip.zip(data);
         String jspayUri = String.format("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" +
@@ -181,6 +182,7 @@ public class PayAction extends AjaxActionSupport {
         int total_fee = (int)Double.parseDouble(jsonObject.get("fee").toString());
         String out_trade_no = jsonObject.get("no").toString();
         String redirect_uri = jsonObject.get("url").toString();
+        String data = jsonObject.get("data").toString();
         String code = getParameter("code").toString();
 
         if (subMerchantUserId.isEmpty() || code.isEmpty()) {
@@ -198,8 +200,8 @@ public class PayAction extends AjaxActionSupport {
                     unifiedOrderRequestData.mch_id = merchantInfo.getMchId();
                     unifiedOrderRequestData.sub_mch_id = subMerchantInfo.getSubId();
                     unifiedOrderRequestData.body = body;
-                    unifiedOrderRequestData.attach = String.format("{ 'id':'%s','body':'%s','redirect_uri':'%s'}",
-                            subMerchantUserId, unifiedOrderRequestData.body, redirect_uri);
+                    unifiedOrderRequestData.attach = String.format("{ 'id':'%s','body':'%s','redirect_uri':'%s','data':'%s'}",
+                            subMerchantUserId, unifiedOrderRequestData.body, redirect_uri, data);
                     Logger.info("unifiedOrderRequestData.attach:" + unifiedOrderRequestData.attach);
                     unifiedOrderRequestData.total_fee = total_fee;
                     unifiedOrderRequestData.trade_type = "JSAPI";
@@ -233,6 +235,7 @@ public class PayAction extends AjaxActionSupport {
                     map.put("signType", "MD5");
                     map.put("paySign", Signature.generateSign(map, merchantInfo.getApiKey()));
                     map.put("redirect_uri", redirect_uri);
+                    map.put("data", data);
                     return AjaxActionComplete(map);
                 }
             }
