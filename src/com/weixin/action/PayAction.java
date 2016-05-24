@@ -232,6 +232,7 @@ public class PayAction extends AjaxActionSupport {
                     map.put("package", "prepay_id=" + unifiedOrder.getResponseResult().get("prepay_id").toString());
                     map.put("signType", "MD5");
                     map.put("paySign", Signature.generateSign(map, merchantInfo.getApiKey()));
+                    map.put("redirect_uri", redirect_uri);
                     return AjaxActionComplete(map);
                 }
             }
