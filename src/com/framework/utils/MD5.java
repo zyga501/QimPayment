@@ -36,4 +36,22 @@ public class MD5 {
         }
         return resultString;
     }
+
+    public static String md5LowerCase(String text, String salt)
+            throws Exception {
+        byte[] bytes = (text + salt).getBytes();
+
+        MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+        messageDigest.update(bytes);
+        bytes = messageDigest.digest();
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < bytes.length; i++) {
+            if ((bytes[i] & 0xff) < 0x10) {
+                sb.append("0");
+            }
+            sb.append(Long.toString(bytes[i] & 0xff, 16));
+        }
+        return sb.toString().toLowerCase();
+    }
 }
