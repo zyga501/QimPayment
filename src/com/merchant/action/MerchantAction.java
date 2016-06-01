@@ -102,6 +102,24 @@ public class MerchantAction extends AjaxActionSupport {
         subMerchantUser = SubMerchantUser.getSubMerchantUserByAccount(subMerchantUser);
         Map<String, String> resultMap = new HashMap<>();
         if (null != subMerchantUser) {
+            com.database.weixin.SubMerchantInfo subMerchantInfo = com.database.weixin.SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
+            if (null == subMerchantInfo){
+                resultMap.put("hasweixin", "0");
+            }else {
+                resultMap.put("hasweixin", "1");
+            }
+            com.database.jdpay.MerchantInfo merchantInfo = com.database.jdpay.MerchantInfo.getMerchantInfoById(subMerchantUser.getSubMerchantId());
+            if (null == merchantInfo){
+                resultMap.put("hasjdpay", "0");
+            }else {
+                resultMap.put("hasjdpay", "1");
+            }
+            com.database.alipay.MerchantInfo alimerchantInfo = com.database.alipay.MerchantInfo.getMerchantInfoById(subMerchantUser.getSubMerchantId());
+            if (null == alimerchantInfo){
+                resultMap.put("hasalipay", "0");
+            }else {
+                resultMap.put("hasalipay", "1");
+            }
             resultMap.put("uid", String.valueOf(subMerchantUser.getId()));
             resultMap.put("storename",subMerchantUser.getStoreName());
             resultMap.put("uname",subMerchantUser.getUserName());

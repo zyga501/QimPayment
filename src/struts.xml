@@ -60,4 +60,5 @@
     <include file="com/weixin/struts-weixin.xml" />
     
     <include file="com/alipay/struts-alipay.xml" />
+    <include file="com/jdpay/struts-jdpay.xml" />
 </struts>

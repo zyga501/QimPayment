@@ -39,7 +39,7 @@ public class MD5 {
 
     public static String md5LowerCase(String text, String salt)
             throws Exception {
-        byte[] bytes = (text + salt).getBytes();
+        byte[] bytes = (text + salt).getBytes("utf8");
 
         MessageDigest messageDigest = MessageDigest.getInstance("MD5");
         messageDigest.update(bytes);

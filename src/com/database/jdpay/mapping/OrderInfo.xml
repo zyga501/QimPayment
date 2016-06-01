@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.database.jdpay.mapping.orderInfo">
+    <insert id="insertOrderInfo" parameterType="java.util.HashMap">
+        INSERT INTO OrderInfo(amount,merchant_no,order_no,pay_time,promotionAmount,sub_mer,term_no,trade_no,user)
+        VALUE (#{amount},#{merchant_no},#{order_no},#{pay_time},#{promotionAmount},#{sub_mer},#{term_no},#{trade_no},#{user})
+    </insert>
+</mapper>
