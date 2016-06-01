@@ -1,6 +1,7 @@
 package com.jdpay.api;
 
 
+import com.framework.utils.JsonUtils;
 import com.jdpay.api.RequestData.TokenPayRequestData;
 
 import java.util.Map;
@@ -19,18 +20,9 @@ public class TokenOrder extends JDAPIWithSign {
 
     @Override
     protected boolean handlerResponse(Map<String,Object> responseResult) {
-        switch (responseResult.get("trade_type").toString()) {
-            case "NATIVE": {
-                if (responseResult.get("code_url") != null) {
+                if (responseResult.get("data").toString().contains("qrcode")) {
                     return true;
                 }
-            }
-            case "JSAPI": {
-                if (responseResult.get("prepay_id") != null) {
-                    return true;
-                }
-            }
-        }
 
         return false;
     }

@@ -23,7 +23,7 @@ public class PayAction extends AjaxActionSupport {
         if (subMerchantUser != null) {
             SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
             if (subMerchantInfo != null) {
-                MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
+                MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getId());
                 if (merchantInfo != null) {
                     TradePayRequestData tradePayRequestData = new TradePayRequestData();
                     tradePayRequestData.app_id = merchantInfo.getAppid();
@@ -45,7 +45,7 @@ public class PayAction extends AjaxActionSupport {
         if (subMerchantUser != null) {
             SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
             if (subMerchantInfo != null) {
-                MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
+                MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getId());
                 if (merchantInfo != null) {
                     TradePreCreateRequestData tradePreCreateRequestData = new TradePreCreateRequestData();
                     tradePreCreateRequestData.app_id = merchantInfo.getAppid();

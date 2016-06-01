@@ -48,31 +48,6 @@ public abstract class JDAPIWithSign extends JDAPI {
         Logger.debug("Reqest Data:\r\n" + postDataXML);
 
         List<NameValuePair> list = new ArrayList<NameValuePair>();
-        /*NameValuePair amountPair = new BasicNameValuePair("amount", requestData_.amount + "");
-        NameValuePair merchantPair = new BasicNameValuePair("merchant_no",
-                requestData_.merchant_no);
-        NameValuePair orderNumberPair = new BasicNameValuePair("order_no",
-                requestData_.order_no);
-        NameValuePair seedPair = new BasicNameValuePair("seed", requestData_.seed);
-        NameValuePair notifyUrlPair = new BasicNameValuePair("notify_url",
-                requestData_.notify_url);
-        NameValuePair signPair = new BasicNameValuePair("sign", requestData_.sign);
-        NameValuePair tradeDescriblePair = new BasicNameValuePair(
-                "trade_describle", requestData_.trade_describle);
-        NameValuePair tradeNamePair = new BasicNameValuePair("trade_name",
-                requestData_.trade_name);
-        NameValuePair subMerPair = new BasicNameValuePair("sub_mer", requestData_.sub_mer);
-        NameValuePair termNoPair = new BasicNameValuePair("term_no", requestData_.term_no);
-        list.add(amountPair);
-        list.add(merchantPair);
-        list.add(notifyUrlPair);
-        list.add(seedPair);
-        list.add(orderNumberPair);
-        list.add(signPair);
-        list.add(tradeDescriblePair);
-        list.add(tradeNamePair);
-        list.add(subMerPair);
-        list.add(termNoPair);*/
         list = Signature.mapToNameValuePairList(requestData_);
         HttpPost httpPost = new HttpPost(apiUri);
         HttpEntity postEntity = new UrlEncodedFormEntity(list, "utf-8");
@@ -89,13 +64,7 @@ public abstract class JDAPIWithSign extends JDAPI {
         }
 
         System.out.println("Response Data:\r\n" + responseString);
-
         responseResult_ = JsonUtils.toMap(responseString,true);
-        if (!Signature.checkSignValid(responseResult_, apiKey)) {
-            Logger.warn(this.getClass().getName() + " CheckSignValid Failed!");
-            return false;
-        }
-
         return handlerResponse(responseResult_);
     }
 

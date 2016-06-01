@@ -8,43 +8,29 @@ import com.framework.action.AjaxActionSupport;
 import com.framework.base.ProjectSettings;
 import com.framework.utils.IdWorker;
 import com.framework.utils.Logger;
-import com.jdpay.api.MicroPay;
+import com.framework.utils.StringUtils;
 import com.jdpay.api.RequestData.MicroPayRequestData;
 import com.jdpay.api.RequestData.TokenPayRequestData;
+import com.jdpay.api.MicroPay;
 import com.jdpay.api.TokenOrder;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class PayAction extends AjaxActionSupport {
 
     public static void main(String[] args) throws Exception {
-        /**
-         * 商户号
-         */
         String merchant_no = "110205060002";//"110123395001";
         String md5Key ="bipy5w9rGn0rCGheaszUieiyIvFoKyUr";// "ohqppqKpOyJrFuagiAbsQnlfluisZUvo";bipy5w9rGn0rCGheaszUieiyIvFoKyUr
-        /**
-         * 商户订单号 每次请求支付必须不相同。
-         */
-        String order_no = "201605251453123452";
-        /**
-         * 用户付款码二维码内容
-         */
+        String order_no = "20160528010101111";
         //String seed = "185778393910356286";
         long expire_ = 5;
-        /**
-         * 扣款成功通知回调地址
-         */
         String notify_url = "http://www.jd.com";
-        /**
-         * 测试商户号单笔风控限制不超过10元
-         */
         double amount = 0.01;
-
-        String trade_name = "测试交易"; // 必传递
-        String trade_describle = "测试交易交易描述";
-
-        String sub_mer = "1";
+        String trade_name = "交易标题"; // 必传递
+        String trade_describle = "交易描述";
+        String sub_mer = "企盟科技演示商户1";
         String term_no = "2";
-
         TokenPayRequestData tokenPayRequestData = new TokenPayRequestData();
         tokenPayRequestData.order_no = order_no;
         tokenPayRequestData.expire = expire_;
@@ -53,10 +39,9 @@ public class PayAction extends AjaxActionSupport {
         tokenPayRequestData.notify_url = notify_url;
         tokenPayRequestData.amount = amount;
         tokenPayRequestData.trade_name = trade_name;
-        tokenPayRequestData.trade_name = "交易标题"; // 必传递
         tokenPayRequestData.trade_describle = "交易描述";
-        tokenPayRequestData.sub_mer = "1";
-        tokenPayRequestData.term_no = "2";
+        tokenPayRequestData.sub_mer = "企盟科技演示商户1";
+        tokenPayRequestData.term_no = "1";
         TokenOrder tokenOrder = new TokenOrder(tokenPayRequestData);
         if (!tokenOrder.postRequest(md5Key)){
             Logger.warn("TokenPay EWM Failed!");
@@ -84,7 +69,7 @@ public class PayAction extends AjaxActionSupport {
 //        }
 //        else {
 //            Logger.info("MicroPay Succeed!");
-//        }
+//        }*/
     }
 
     public String microPay() throws Exception {
@@ -92,7 +77,7 @@ public class PayAction extends AjaxActionSupport {
         if (subMerchantUser != null) {
             SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
             if (subMerchantInfo != null) {
-                MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
+                MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getId());
                 if (merchantInfo != null) {
                     MicroPayRequestData microPayRequestData = new MicroPayRequestData();
                     microPayRequestData.order_no = getParameter("orderno").toString();
@@ -101,14 +86,14 @@ public class PayAction extends AjaxActionSupport {
                     microPayRequestData.order_no = String.valueOf(new IdWorker(ProjectSettings.getIdWorkerSeed()).nextId());
                     String requestUrl = getRequest().getRequestURL().toString();
                     requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/'));
-                    requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/') + 1) + "weixin/"
+                    requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/') + 1) + "jdpay/"
                             + CallbackAction.CODEPAY;;
-                    microPayRequestData.notify_url = requestUrl;
-                    microPayRequestData.amount = Float.parseFloat(getParameter("price").toString());//0.01
+                    microPayRequestData.notify_url = "http://7c0888cf.ngrok.io/jdpay/Callback!codePay";//requestUrl;
+                    microPayRequestData.amount = Double.parseDouble(getParameter("price").toString());//0.01
                     microPayRequestData.trade_name =  getParameter("goodsname").toString();
                     microPayRequestData.trade_describle =  getParameter("goodsmemo").toString();
-                    microPayRequestData.sub_mer = "1";
-                    microPayRequestData.term_no = "2";
+                    microPayRequestData.sub_mer =  getParameter("storename").toString();
+                    microPayRequestData.term_no = subMerchantUser.getUserName();
                     MicroPay microPay = new MicroPay(microPayRequestData);
                     if (!microPay.postRequest(merchantInfo.getPaycodemd5key())) {
                         Logger.warn("MicroPay Failed!");
@@ -123,8 +108,41 @@ public class PayAction extends AjaxActionSupport {
         return AjaxActionComplete(false);
     }
 
-    public String tokenPay(){
-
+    public String tokenPay() throws Exception {
+        SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(getParameter("id").toString()));
+        if (subMerchantUser != null) {
+            SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
+            if (subMerchantInfo != null) {
+                MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getId());
+                if (merchantInfo != null) {
+                    TokenPayRequestData tokenPayRequestData = new TokenPayRequestData();
+                    tokenPayRequestData.expire =  5;
+                    tokenPayRequestData.merchant_no = merchantInfo.getScanmerchantno();
+                    tokenPayRequestData.order_no =  StringUtils.convertNullableString(getParameter("orderno"),String.valueOf(new IdWorker(ProjectSettings.getIdWorkerSeed()).nextId()));
+                    String requestUrl = getRequest().getRequestURL().toString();
+                    requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/'));
+                    requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/') + 1) + "jdpay/"
+                            + CallbackAction.CODEPAY;;
+                    tokenPayRequestData.notify_url = requestUrl;
+                    tokenPayRequestData.amount =Double.parseDouble(getParameter("price").toString());
+                    tokenPayRequestData.trade_name = StringUtils.convertNullableString(getParameter("goodsname"), subMerchantUser.getStoreName());
+                    if (null!=getParameter("goodsmemo"))
+                    tokenPayRequestData.trade_describle =   StringUtils.convertNullableString(getParameter("goodsmemo"),"描述");
+                    tokenPayRequestData.sub_mer = subMerchantUser.getStoreName();
+                    tokenPayRequestData.term_no = subMerchantUser.getUserName();
+                    TokenOrder tokenOrder = new TokenOrder(tokenPayRequestData);
+                    if (!tokenOrder.postRequest(merchantInfo.getScanmd5key())) {
+                        Logger.warn("return TokenPay code_url Failed!");
+                        return AjaxActionComplete(false);
+                    } else {
+                        Logger.info("return TokenPay code_url Succeed!");
+                        Map<String, String> map = new HashMap<>();
+                        map.put("code_url",  ((Map<String,String>)(tokenOrder.getResponseResult().get("data"))).get("qrcode"));
+                        return AjaxActionComplete(map);
+                    }
+                }
+            }
+        }
         return AjaxActionComplete(false);
     }
 }

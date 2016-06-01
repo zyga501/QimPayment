@@ -43,6 +43,8 @@
             </result>
         </action>
 
+        <action name="SpecialInteface!*" class="com.api.action.SpecialAction"  method="{1}">
+        </action>
         <action name="Query!*" class="com.api.action.QueryAction"  method="{1}">
         </action>
         <!--- test action -->

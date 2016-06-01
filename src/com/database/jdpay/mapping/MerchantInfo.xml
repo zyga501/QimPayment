@@ -10,5 +10,6 @@
         <result property="paycodemd5key" column="paycodemd5key" jdbcType="VARCHAR"/>
         <result property="scanmerchantno" column="scanmerchantno" jdbcType="VARCHAR"/>
         <result property="scanmd5key" column="scanmd5key" jdbcType="VARCHAR"/>
+        <result property="merchantid" column="merchantid" jdbcType="VARCHAR"/>
     </resultMap>
 </mapper>

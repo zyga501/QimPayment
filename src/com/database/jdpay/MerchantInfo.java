@@ -51,7 +51,16 @@ public class MerchantInfo {
         this.scanmd5key_ = scanmd5key;
     }
 
+    public long getMerchantid() {
+        return merchantid_;
+    }
+
+    public void setMerchantid(long merchantid_) {
+        this.merchantid_ = merchantid_;
+    }
+
     private long id_;
+    private long merchantid_;
     private String paycodemerchantno_;
     private String paycodemd5key_;
     private String scanmerchantno_;
