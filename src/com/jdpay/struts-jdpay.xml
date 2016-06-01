@@ -14,8 +14,6 @@
 
         <action name="Pay!*" class="com.jdpay.action.PayAction"  method="{1}">
         </action>
-        <action name="Order!*" class="com.jdpay.action.OrderAction" method="{1}">
-        </action>
         <action name="Callback!*" class="com.jdpay.action.CallbackAction" method="{1}">
         </action>
     </package>

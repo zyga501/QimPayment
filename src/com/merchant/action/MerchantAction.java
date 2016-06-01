@@ -6,6 +6,7 @@ import com.database.merchant.SubMerchantUser;
 import com.database.weixin.MerchantInfo;
 import com.database.weixin.SubMerchantAct;
 import com.framework.action.AjaxActionSupport;
+import com.framework.base.Readconfig;
 import com.weixin.api.OpenId;
 import net.sf.json.JSONObject;
 import java.io.IOException;
@@ -120,6 +121,8 @@ public class MerchantAction extends AjaxActionSupport {
             }else {
                 resultMap.put("hasalipay", "1");
             }
+            String yzf = Readconfig.yzfconfig(String.valueOf(subMerchantUser.getSubMerchantId()));
+            resultMap.put("yzfstring", yzf);
             resultMap.put("uid", String.valueOf(subMerchantUser.getId()));
             resultMap.put("storename",subMerchantUser.getStoreName());
             resultMap.put("uname",subMerchantUser.getUserName());
