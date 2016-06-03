@@ -1,7 +1,7 @@
 package com.jdpay.api.RequestData;
 
-public class RequestData {
-    public RequestData() {
+public class QueryRequestData extends RequestData {
+    public QueryRequestData() {
     }
 
     public boolean checkParameter() {
@@ -16,8 +16,8 @@ public class RequestData {
         return false;
     }
 
-    public String merchant_no; // 商户号 微信支付分配的商户号
-    public String order_no; // 随机字符串，不长于32位。
-    public String sign;
+
+//    public String order_no ;
+//    public String merchant_no  ;
 
 }
