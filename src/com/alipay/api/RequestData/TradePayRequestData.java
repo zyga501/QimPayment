@@ -40,6 +40,7 @@ public class TradePayRequestData extends RequestData {
     public String scene; // 支付场景 条码支付，取值：bar_code 声波支付，取值：wave_code
     public String auth_code; // 支付授权码
     public String subject; // 订单标题
+    public long mchId;
 
     // option
     public String body; // 订单描述

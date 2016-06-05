@@ -21,5 +21,6 @@
 
     <mappers>
         <mapper resource="com/database/alipay/mapping/MerchantInfo.xml" />
+        <mapper resource="com/database/alipay/mapping/OrderInfo.xml" />
     </mappers>
 </configuration>

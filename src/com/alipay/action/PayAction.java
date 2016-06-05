@@ -27,11 +27,12 @@ public class PayAction extends AjaxActionSupport {
                 if (merchantInfo != null) {
                     TradePayRequestData tradePayRequestData = new TradePayRequestData();
                     tradePayRequestData.app_id = merchantInfo.getAppid();
+                    tradePayRequestData.mchId = merchantInfo.getId();
                     tradePayRequestData.scene = "bar_code";
                     tradePayRequestData.auth_code = getParameter("auth_code").toString();
                     tradePayRequestData.total_amount = Double.parseDouble(getParameter("total_amount").toString());
                     tradePayRequestData.subject = getParameter("subject").toString();
-                    TradePay tradePay = new TradePay(tradePayRequestData);
+                    TradePay tradePay = new TradePay(tradePayRequestData, subMerchantUser.getId());
                     return AjaxActionComplete(tradePay.postRequest(merchantInfo.getPrivateKey(), merchantInfo.getPublicKey()));
                 }
             }

@@ -6,17 +6,6 @@
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery/1.9.1/jquery.min.js"></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/qrcode.js"></script>
     <script type="text/javascript">
-      function orderquery() {
-        $.ajax({
-          type: 'post',
-          url: '<%=request.getContextPath()%>/jdpay/Pay!queryPay',
-          dataType:"json",
-          data:$("form").serialize(),
-          success: function (data) {
-          }
-        })
-      }
-
       function microPay() {
         $.ajax({
           type: 'post',
@@ -34,16 +23,6 @@
           url: '<%=request.getContextPath()%>/jdpay/Callback!codePay',
           dataType:"json",
           data:$("form").serialize(),
-          success: function (data) {
-          }
-        })
-      }
-      function SpecialInteface() {
-        $.ajax({
-          type: 'post',
-          url: '<%=request.getContextPath()%>/api/SpecialInteface!OrderInert',
-          dataType: "json",
-          data: $("form").serialize(),
           success: function (data) {
           }
         })
@@ -110,9 +89,8 @@
         </tr>
         <tr>
           <td>
-            <input type="text" id="data" name="data" value=""/>
-            <input name="sign" value="524d24e4f148df5cbef4c2e2c8fd84fb">
-            <input type="hidden" name="roleid" value="bojin">
+            <input type="text" id="data" name="DATA" value="eyJhbW91bnQiOiIwLjAxMDAiLCJkZXNjIjoi5pSv5LuY5oiQ5YqfIiwibWVyY2hhbnRfbm8iOiIxMTAyMDUwNjAwMDIiLCJvcmRlcl9ubyI6IkUxNjA1MzExMzI1NDkiLCJwYXlfdGltZSI6IjIwMTYtMDUtMzEgMTM6MjY6NDIiLCJwcm9tb3Rpb25BbW91bnQiOiIwLjAwMDAiLCJzdGF0dXMiOiIwIiwic3ViX21lciI6IuS8geebn+enkeaKgOa8lOekuuWVhuaItzEiLCJ0ZXJtX25vIjoiMSIsInRyYWRlX25vIjoiMjAxNjA1MzExMTAwMTEwMDc1MTcwMTgyMCIsInVzZXIiOiLpmYgqKiJ9"/>
+            <input name="SIGN" value="929b4a7e999c47194467f3c2f999242b">
           </td>
         </tr>
         <tr>
@@ -122,8 +100,6 @@
           <td>
             <input type="button" onclick="scanPay()" value="扫码支付"/>
             <input type="button" onclick="calback()" value="calback"/>
-            <input type="button" onclick="SpecialInteface()" value="SpecialInteface"/>
-            <input type="button" onclick="orderquery()" value="orderquery"/>
           </td>
         </tr>
       </table>

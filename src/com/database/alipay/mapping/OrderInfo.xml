@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.database.alipay.mapping.orderInfo">
+    <select id="getOrderInfo" resultMap="orderInfoResult">
+        SELECT * FROM  OrderInfo
+    </select>
+    <select id="getOrderInfoById" parameterType="long" resultMap="orderInfoResult">
+        SELECT * FROM OrderInfo WHERE id=#{id}
+    </select>
+    <resultMap type="com.database.alipay.OrderInfo" id="orderInfoResult">
+        <id property="id" column="id" jdbcType="BIGINT" />
+        <result property="appid" column="appid" jdbcType="VARCHAR"/>
+        <result property="mchId" column="mchId" jdbcType="VARCHAR"/>
+        <result property="subject" column="subject" jdbcType="VARCHAR" />
+        <result property="tradeNo" column="tradeNo" jdbcType="VARCHAR"/>
+        <result property="outTradeNo" column="outTradeNo" jdbcType="VARCHAR"/>
+        <result property="fundChannel" column="fundChannel" jdbcType="VARCHAR"/>
+        <result property="totalAmount" column="totalAmount" jdbcType="INTEGER" />
+        <result property="gmtPayment" column="gmtPayment" jdbcType="VARCHAR" />
+        <result property="openId" column="openId" jdbcType="VARCHAR" />
+    </resultMap>
+    <insert id="insertOrderInfo" parameterType="com.database.alipay.OrderInfo">
+        INSERT INTO OrderInfo(appid,mchid,subject,tradeNo,outTradeNo,fundChannel,totalAmount,gmtPayment,createUser,openId)
+        VALUE (#{appid},#{mchId},#{subject},#{tradeNo},#{outTradeNo},#{fundChannel},#{totalAmount},#{gmtPayment},#{createUser},#{openId})
+    </insert>
+</mapper>

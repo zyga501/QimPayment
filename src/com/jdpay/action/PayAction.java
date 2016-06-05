@@ -9,9 +9,7 @@ import com.framework.base.ProjectSettings;
 import com.framework.utils.IdWorker;
 import com.framework.utils.Logger;
 import com.framework.utils.StringUtils;
-import com.jdpay.api.OrderQuery;
 import com.jdpay.api.RequestData.MicroPayRequestData;
-import com.jdpay.api.RequestData.QueryRequestData;
 import com.jdpay.api.RequestData.TokenPayRequestData;
 import com.jdpay.api.MicroPay;
 import com.jdpay.api.TokenOrder;
@@ -90,7 +88,7 @@ public class PayAction extends AjaxActionSupport {
                     requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/'));
                     requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/') + 1) + "jdpay/"
                             + CallbackAction.CODEPAY;;
-                    microPayRequestData.notify_url = requestUrl;
+                    microPayRequestData.notify_url = "http://7c0888cf.ngrok.io/jdpay/Callback!codePay";//requestUrl;
                     microPayRequestData.amount = Double.parseDouble(getParameter("price").toString());//0.01
                     microPayRequestData.trade_name =  getParameter("goodsname").toString();
                     microPayRequestData.trade_describle =  getParameter("goodsmemo").toString();
@@ -98,8 +96,10 @@ public class PayAction extends AjaxActionSupport {
                     microPayRequestData.term_no = subMerchantUser.getUserName();
                     MicroPay microPay = new MicroPay(microPayRequestData);
                     if (!microPay.postRequest(merchantInfo.getPaycodemd5key())) {
+                        Logger.warn("MicroPay Failed!");
                         return AjaxActionComplete(false);
                     } else {
+                        Logger.info("MicroPay Succeed!");
                         return AjaxActionComplete(microPay.getResponseResult());
                     }
                 }
@@ -132,8 +132,10 @@ public class PayAction extends AjaxActionSupport {
                     tokenPayRequestData.term_no = subMerchantUser.getUserName();
                     TokenOrder tokenOrder = new TokenOrder(tokenPayRequestData);
                     if (!tokenOrder.postRequest(merchantInfo.getScanmd5key())) {
+                        Logger.warn("return TokenPay code_url Failed!");
                         return AjaxActionComplete(false);
                     } else {
+                        Logger.info("return TokenPay code_url Succeed!");
                         Map<String, String> map = new HashMap<>();
                         map.put("code_url",  ((Map<String,String>)(tokenOrder.getResponseResult().get("data"))).get("qrcode"));
                         return AjaxActionComplete(map);
@@ -143,36 +145,4 @@ public class PayAction extends AjaxActionSupport {
         }
         return AjaxActionComplete(false);
     }
-
-    public String queryPay() throws Exception {
-        SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(getParameter("id").toString()));
-        if (subMerchantUser != null) {
-            SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
-            if (subMerchantInfo != null) {
-                MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getId());
-                if (merchantInfo != null) {
-                    QueryRequestData queryRequestData  = new QueryRequestData();
-                    queryRequestData.order_no = getParameter("orderno").toString();
-                    queryRequestData.merchant_no = merchantInfo.getPaycodemerchantno();
-                    OrderQuery orderQuery = new OrderQuery(queryRequestData);
-                    if (!orderQuery.postRequest(merchantInfo.getPaycodemd5key())) {
-                        QueryRequestData queryRequestData2  = new QueryRequestData();
-                        queryRequestData2.order_no = getParameter("orderno").toString();
-                        queryRequestData2.merchant_no = merchantInfo.getScanmerchantno();
-                        OrderQuery orderQuery2 = new OrderQuery(queryRequestData2);
-                        if (orderQuery2.postRequest(merchantInfo.getScanmd5key())) {
-                            System.out.println(orderQuery2.getResponseResult().get("data"));
-                            return AjaxActionComplete(orderQuery2.getResponseResult());
-                        }else
-                            return AjaxActionComplete(false);
-                    } else {
-                        System.out.println(orderQuery.getResponseResult().get("data"));
-                        return AjaxActionComplete(orderQuery.getResponseResult());
-                    }
-                }
-            }
-        }
-        return AjaxActionComplete(false);
-    }
-
 }
