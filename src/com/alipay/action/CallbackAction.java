@@ -1,6 +1,7 @@
 package com.alipay.action;
 
 import com.framework.action.AjaxActionSupport;
+import com.framework.utils.Logger;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -9,6 +10,7 @@ public class CallbackAction extends AjaxActionSupport {
     public final static String TRADEPRECREATE = "Callback!tradePreCreate";
 
     public String tradePreCreate() throws Exception {
+        Logger.warn("tradePreCreate Callback");
         handlerCallback();
         return AjaxActionComplete();
     }

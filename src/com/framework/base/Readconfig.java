@@ -2,16 +2,11 @@ package com.framework.base;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream; 
+import java.io.InputStream;
 import java.util.Iterator;
 import java.util.Properties; 
 
 public class Readconfig {
-	  public static void main(String[] args) {
-	        System.out.println(Readconfig.class.getResource("").getPath());
-	        System.out.println(Readconfig.class.getResource("/").getPath().substring(1));
-	    }
     public static String fetchspecialinfo(String keyname) {
         Properties prop = new Properties();
         try{

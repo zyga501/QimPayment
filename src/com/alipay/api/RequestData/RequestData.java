@@ -24,6 +24,7 @@ public class RequestData {
         this.sign_type = requestData.sign_type;
         this.timestamp = requestData.timestamp;
         this.version = requestData.version;
+        this.notify_url = requestData.notify_url;
         this.biz_content = requestData.biz_content;
         this.alipay_sdk = requestData.alipay_sdk;
         this.format = requestData.format;
