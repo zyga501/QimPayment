@@ -11,5 +11,9 @@
         <result property="scanmerchantno" column="scanmerchantno" jdbcType="VARCHAR"/>
         <result property="scanmd5key" column="scanmd5key" jdbcType="VARCHAR"/>
         <result property="merchantid" column="merchantid" jdbcType="VARCHAR"/>
+        <result property="h5merchantno" column="h5merchantno" jdbcType="VARCHAR"/>
+        <result property="h5md5key" column="h5md5key" jdbcType="VARCHAR"/>
+        <result property="h5rsapublickey" column="h5rsapublickey" jdbcType="VARCHAR"/>
+        <result property="h5rsaprivatekey" column="h5rsaprivatekey" jdbcType="VARCHAR"/>
     </resultMap>
 </mapper>

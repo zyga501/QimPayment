@@ -1,7 +1,5 @@
 package com.database.jdpay;
 
-import com.database.jdpay.*;
-
 public class MerchantInfo {
     public static void main(String[] args) throws Exception {
     }
@@ -59,10 +57,47 @@ public class MerchantInfo {
         this.merchantid_ = merchantid_;
     }
 
+    public String getH5merchantno() {
+        return h5merchantno_;
+    }
+
+    public void setH5merchantno(String h5merchantno_) {
+        this.h5merchantno_ = h5merchantno_;
+    }
+
+    public String getH5md5key() {
+        return h5md5key_;
+    }
+
+    public void setH5md5key(String h5md5key_) {
+        this.h5md5key_ = h5md5key_;
+    }
+
+    public String getH5rsapublickey() {
+        return h5rsapublickey_;
+    }
+
+    public void setH5rsapublickey(String h5RSAPublicKey_) {
+        h5rsapublickey_ = h5RSAPublicKey_;
+    }
+
+    public String getH5rsaprivatekey() {
+        return h5rsaprivatekey_;
+    }
+
+    public void setH5rsaprivatekey(String h5RSAPrivateKey_) {
+        h5rsaprivatekey_ = h5RSAPrivateKey_;
+    }
+
     private long id_;
     private long merchantid_;
     private String paycodemerchantno_;
     private String paycodemd5key_;
     private String scanmerchantno_;
     private String scanmd5key_;
+    private String h5merchantno_;
+    private String h5md5key_;
+    private String h5rsapublickey_;
+    private String h5rsaprivatekey_;
+
 }

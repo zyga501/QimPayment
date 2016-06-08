@@ -5,6 +5,7 @@
   <title>Weixin</title>
   <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery/1.9.1/jquery.min.js"></script>
   <script type="text/javascript" src="<%=request.getContextPath()%>/js/qrcode.js"></script>
+  <script type="text/javascript" src="<%=request.getContextPath()%>/js/jdpay/h5pay.js"></script>
   <script type="text/javascript">
     function orderquery() {
       $.ajax({
@@ -23,6 +24,22 @@
         dataType:"json",
         data:$("form").serialize(),
         success: function (data) {
+        }
+      })
+    }
+    function h5Pay() {
+      $.ajax({
+        type: 'post',
+        url: '<%=request.getContextPath()%>/jdpay/Pay!h5Pay',
+        dataType:"json",
+        data:$("form").serialize(),
+        success: function (data) {
+          var json = eval("(" + data + ")");
+          alert(data);
+          if ('Y'== json.is_success){
+            alert(JSON.stringify(json.paystr))
+            pay(json.paystr);
+          }
         }
       })
     }
@@ -95,7 +112,7 @@
     </tr>
     <tr><td>二维码字符串:</td>
       <td>
-        <input type="text" id="auth_code" name="auth_code"/>
+        <input type="text" id="auth_code" name="auth_code" value="1629719047000007"/>
       </td>
     </tr>
     <tr>
@@ -121,6 +138,7 @@
         <input type="button" onclick="calback()" value="calback"/>
         <input type="button" onclick="SpecialInteface()" value="SpecialInteface"/>
         <input type="button" onclick="orderquery()" value="orderquery"/>
+        <input type="button" onclick="h5Pay()" value="h5Pay"/>
       </td>
     </tr>
   </table>

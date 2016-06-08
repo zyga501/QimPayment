@@ -2,27 +2,23 @@ package com.api.action;
 
 import com.database.merchant.SubMerchantUser;
 import com.database.weixin.OrderInfo;
-import com.database.weixin.OrderInfoCollect;
 import com.database.weixin.SubMerchantInfo;
 import com.framework.action.AjaxActionSupport;
 import com.framework.base.Readconfig;
 import com.framework.utils.MD5;
 import net.sf.json.JSONObject;
 
-import java.rmi.server.ExportException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 public class SpecialAction extends AjaxActionSupport {
-    public String OrderInert() throws Exception {
+    public void OrderInert() throws Exception {
         String data = getParameter("data").toString();
-        String sign = getParameter("sign").toString();
+        String sign = getParameter("sign").toString().toLowerCase();
         String id = getParameter("roleid").toString();
-        //String rtn = getParameter("rtn").toString();
+        String rtn = "";
+        if (null!=getParameter("retstr"))
+            rtn = getParameter("retstr").toString();
         String key = Readconfig.fetchspecialinfo(id);
         if (!MD5.md5LowerCase(data,key).equals(sign))
-            return AjaxActionComplete(false);
+            return ;
         try {
             JSONObject jsonObject = JSONObject.fromObject(data);
             SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoBySubId(jsonObject.getString("sub_mch_id"));
@@ -45,8 +41,11 @@ public class SpecialAction extends AjaxActionSupport {
             OrderInfo.insertOrderInfo(orderInfo);
         }
         catch (Exception e){
-            return AjaxActionComplete(false);
+            e.printStackTrace();;
+            return ;
         }
-        return AjaxActionComplete(true);
+        getResponse().getWriter().write(rtn);
+        getResponse().getWriter().flush();
+        getResponse().getWriter().close();
     }
 }
