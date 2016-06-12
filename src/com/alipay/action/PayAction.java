@@ -55,7 +55,7 @@ public class PayAction extends AjaxActionSupport {
                     String requestUrl = getRequest().getRequestURL().toString();
                     requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/'));
                     requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/') + 1) + "alipay/"
-                            + CallbackAction.TRADEPRECREATE;
+                            + CallbackAction.TRADEPRECREATE + "?mchId=" + merchantInfo.getId() + "&createUser=" + subMerchantUser.getId();
                     tradePreCreateRequestData.notify_url = requestUrl;
                     TradePreCreate tradePreCreate = new TradePreCreate(tradePreCreateRequestData);
                     if (tradePreCreate.postRequest(merchantInfo.getPrivateKey(), merchantInfo.getPublicKey())) {

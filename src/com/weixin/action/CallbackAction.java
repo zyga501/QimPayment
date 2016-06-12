@@ -7,10 +7,8 @@ import com.framework.utils.*;
 import com.message.WeixinMessage;
 import com.weixin.utils.Signature;
 import net.sf.json.JSONObject;
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
 
@@ -62,6 +60,7 @@ public class CallbackAction extends AjaxActionSupport {
         responseResult.put("id", jsonObject.get("id").toString());
         responseResult.put("body", jsonObject.get("body").toString());
         responseResult.put("redirect_uri", StringUtils.convertNullableString(jsonObject.get("redirect_uri")));
+        responseResult.put("data", jsonObject.get("data").toString());
 
         boolean ret = saveOrderToDb(responseResult);
         if (ret) {
@@ -83,7 +82,6 @@ public class CallbackAction extends AjaxActionSupport {
 
         Logger.info(responseResult.get("attach").toString());
         orderInfo = new OrderInfo();
-        JSONObject jsonObject = JSONObject.fromObject(responseResult.get("attach").toString());
         orderInfo.setAppid(responseResult.get("appid").toString());
         orderInfo.setMchId(responseResult.get("mch_id").toString());
         orderInfo.setSubMchId(responseResult.get("sub_mch_id").toString());
@@ -119,6 +117,7 @@ public class CallbackAction extends AjaxActionSupport {
             map.put("bank_type", responseResult.get("bank_type").toString());
             map.put("total_fee", responseResult.get("total_fee").toString());
             map.put("time_end", responseResult.get("time_end").toString());
+            map.put("data", responseResult.get("data").toString());
             HttpPost httpPost = new HttpPost(redirect_uri);
             StringEntity postEntity = new StringEntity(JSONObject.fromObject(map).toString(), "UTF-8");
             httpPost.addHeader("Content-Type", "text/json");
