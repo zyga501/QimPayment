@@ -202,7 +202,6 @@ public class PayAction extends AjaxActionSupport {
                     unifiedOrderRequestData.body = body;
                     unifiedOrderRequestData.attach = String.format("{ 'id':'%s','body':'%s','redirect_uri':'%s','data':'%s'}",
                             subMerchantUserId, unifiedOrderRequestData.body, redirect_uri, data);
-                    Logger.info("unifiedOrderRequestData.attach:" + unifiedOrderRequestData.attach);
                     unifiedOrderRequestData.total_fee = total_fee;
                     unifiedOrderRequestData.trade_type = "JSAPI";
                     OpenId openId = new OpenId(merchantInfo.getAppid(), merchantInfo.getAppsecret(), code);

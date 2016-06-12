@@ -1,5 +1,6 @@
 package com.weixin.api;
 
+import com.framework.utils.Logger;
 import com.weixin.api.RequestData.MicroPayRequestData;
 import com.weixin.api.RequestData.OrderQueryData;
 import com.database.weixin.OrderInfo;
@@ -53,6 +54,10 @@ public class MicroPay extends WeixinAPIWithSign {
                             saveOrderToDb(orderQuery.getResponseResult());
                             responseResult_ = orderQuery.getResponseResult();
                             return true;
+                        }
+                        default: {
+                            Logger.warn(String.format("MicroPay UnHandler Exception, errorCode:%s", errorCode));
+                            break;
                         }
                     }
                 }

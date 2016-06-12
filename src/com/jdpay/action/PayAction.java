@@ -7,15 +7,14 @@ import com.database.merchant.SubMerchantUser;
 import com.framework.action.AjaxActionSupport;
 import com.framework.base.ProjectSettings;
 import com.framework.utils.IdWorker;
-import com.framework.utils.Logger;
 import com.framework.utils.StringUtils;
 import com.jdpay.api.H5Pay;
+import com.jdpay.api.MicroPay;
 import com.jdpay.api.OrderQuery;
 import com.jdpay.api.RequestData.H5PayRequestData;
 import com.jdpay.api.RequestData.MicroPayRequestData;
 import com.jdpay.api.RequestData.QueryRequestData;
 import com.jdpay.api.RequestData.TokenPayRequestData;
-import com.jdpay.api.MicroPay;
 import com.jdpay.api.TokenOrder;
 import com.jdpay.utils.Signature;
 import net.sf.json.JSONObject;
@@ -24,60 +23,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PayAction extends AjaxActionSupport {
-
-    public static void main(String[] args) throws Exception {
-        String merchant_no = "110205060002";//"110123395001";
-        String md5Key ="bipy5w9rGn0rCGheaszUieiyIvFoKyUr";// "ohqppqKpOyJrFuagiAbsQnlfluisZUvo";bipy5w9rGn0rCGheaszUieiyIvFoKyUr
-        String order_no = "20160528010101111";
-        //String seed = "185778393910356286";
-        long expire_ = 5;
-        String notify_url = "http://www.jd.com";
-        double amount = 0.01;
-        String trade_name = "交易标题"; // 必传递
-        String trade_describle = "交易描述";
-        String sub_mer = "企盟科技演示商户1";
-        String term_no = "2";
-        TokenPayRequestData tokenPayRequestData = new TokenPayRequestData();
-        tokenPayRequestData.order_no = order_no;
-        tokenPayRequestData.expire = expire_;
-        tokenPayRequestData.merchant_no = merchant_no;
-        tokenPayRequestData.order_no = order_no;
-        tokenPayRequestData.notify_url = notify_url;
-        tokenPayRequestData.amount = amount;
-        tokenPayRequestData.trade_name = trade_name;
-        tokenPayRequestData.trade_describle = "交易描述";
-        tokenPayRequestData.sub_mer = "企盟科技演示商户1";
-        tokenPayRequestData.term_no = "1";
-        TokenOrder tokenOrder = new TokenOrder(tokenPayRequestData);
-        if (!tokenOrder.postRequest(md5Key)){
-            Logger.warn("TokenPay EWM Failed!");
-            return;
-        }
-        else {
-            Logger.info("TokenPay EWM Succeed!");
-        }
-//        MicroPayRequestData microPayRequestData = new MicroPayRequestData();
-//        microPayRequestData.order_no = order_no;
-//        microPayRequestData.seed = seed;
-//        microPayRequestData.merchant_no = merchant_no;
-//        microPayRequestData.order_no = order_no;
-//        microPayRequestData.notify_url = notify_url;
-//        microPayRequestData.amount = amount;
-//        microPayRequestData.trade_name = trade_name;
-//        microPayRequestData.trade_name = "交易标题"; // 必传递
-//        microPayRequestData.trade_describle = "交易描述";
-//        microPayRequestData.sub_mer = "1";
-//        microPayRequestData.term_no = "2";
-//        MicroPay microPay =new MicroPay(microPayRequestData);
-//        if (!microPay.postRequest(md5Key)){
-//            Logger.warn("MicroPay Failed!");
-//            return;// return AjaxActionComplete(false);
-//        }
-//        else {
-//            Logger.info("MicroPay Succeed!");
-//        }*/
-    }
-
     public String microPay() throws Exception {
         SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(getParameter("id").toString()));
         if (subMerchantUser != null) {
