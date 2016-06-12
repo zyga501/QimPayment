@@ -140,7 +140,7 @@ public class PayAction extends AjaxActionSupport {
                     requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/'));
                     requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/') + 1) + "jdpay/"
                             + CallbackAction.CODEPAY;;
-                    h5RequestData.notify_url = requestUrl;
+                    h5RequestData.notify_url = "http://www.qimpay.com/qlpay/jdpay/Callback!codePay";//requestUrl;
                     h5RequestData.amount =Double.parseDouble(getParameter("price").toString());
                     H5Pay h5Pay = new H5Pay(h5RequestData);
                     if (!h5Pay.postRequest(merchantInfo.getH5md5key())) {
@@ -148,15 +148,15 @@ public class PayAction extends AjaxActionSupport {
                     } else {
                         System.out.println(h5Pay.getResponseResult().toString());
                         JSONObject jsonObject = JSONObject.fromObject(h5Pay.getResponseResult());
-                        JSONObject jsonObject2 =jsonObject.fromObject(jsonObject.get("data"));
+                        JSONObject jsonObject2 = jsonObject.fromObject(jsonObject.get("data"));
                         Map map = new HashMap<>();
-                        map.put("merchantNotifyUrl",requestUrl);
+                        map.put("merchantNotifyUrl","http://www.qimpay.com/qlpay/jdpay/Callback!codePay");
                         map.put("merchantNum",merchantInfo.getH5merchantno());
                         map.put("merchantOuterOrderNum",jsonObject2.get("order_no"));
-                        map.put("merchantTradeAmount",Double.valueOf(jsonObject2.get("amount").toString())*100);
+                        map.put("merchantTradeAmount",(int)(Double.valueOf(jsonObject2.get("amount").toString())*100));
                         map.put("merchantTradeNum",jsonObject2.get("order_no"));
                         map.put("merchantTradeTime",jsonObject2.get("trade_time"));
-                        map.put("merchantSign", Signature.generateRSASign(map,merchantInfo.getH5rsapublickey()));
+                        map.put("merchantSign", Signature.generateRSASign(map,merchantInfo.getH5rsaprivatekey()));
                         map.put("merchantToken",(""));
                         map.put("merchantUserId",getParameter("id").toString());
                         map.put("merchantMobile","");
@@ -165,7 +165,7 @@ public class PayAction extends AjaxActionSupport {
                         map.put("merchantTradeDescription","");
                         map.put("merchantCurrency","CNY");
                         map.put("data",(""));
-                        map.put("cpTradeNum",(""));
+                        map.put("cpTradeNum",jsonObject2.get("trade_no"));
                         Map rstmap = new HashMap<>();
                         rstmap.put("is_success","Y");
                         rstmap.put("paystr",map);
