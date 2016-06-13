@@ -5,4 +5,7 @@
         INSERT INTO OrderInfo(amount,merchant_no,order_no,pay_time,promotionAmount,sub_mer,term_no,trade_no,user)
         VALUE (#{amount},#{merchant_no},#{order_no},#{pay_time},#{promotionAmount},#{sub_mer},#{term_no},#{trade_no},#{user})
     </insert>
+    <select id="getOrderInfoBytermno" parameterType="String" resultType="java.util.HashMap">
+        select * from orderinfo  where  trade_no = #{tradeno}
+    </select>
 </mapper>

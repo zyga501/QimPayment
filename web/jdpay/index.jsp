@@ -37,11 +37,17 @@
           var json = eval("(" + data + ")");
           alert(data);
           if ('Y'== json.is_success){
-            alert(JSON.stringify(json.paystr))
-            pay(json.paystr);
+            $("#paystr").val(JSON.stringify(json.paystr))
+            alert( $("#paystr").val() );
+            pay(eval("(" + $("#paystr").val() + ")"));
           }
         }
       })
+    }
+    function h5Pay22() {
+      var sss =eval("(" + $("#paystr").val() + ")")
+      alert(sss.merchantTradeAmount);
+      pay(sss);
     }
     function calback() {
       $.ajax({
@@ -90,13 +96,13 @@
     <tr>
       <td>子商户员工号:</td>
       <td>
-        <input type="text" id="id" name="id" value="1596144387655680"/>
+        <input type="text" id="id" name="id" value="1629719047000007"/>
       </td>
     </tr>
     <tr>
       <td>orderno:</td>
       <td>
-        <input type="text" id="orderno" name="orderno" value="20160528010101111"/>
+        <input type="text" id="orderno" name="orderno" value="a25"/>
       </td>
     </tr>
     <tr>
@@ -114,6 +120,7 @@
       <td>
         <input type="text" id="auth_code" name="auth_code" value="1629719047000007"/>
       </td>
+      <td><textarea id="paystr" rows="6"></textarea></td>
     </tr>
     <tr>
       <td>
@@ -134,10 +141,11 @@
         <input type="button" onclick="microPay()" value="刷卡提交"/>
       </td>
       <td>
-        <input type="button" onclick="scanPay()" value="扫码支付"/>
+        <!--input type="button" onclick="scanPay()" value="扫码支付"/>
         <input type="button" onclick="calback()" value="calback"/>
         <input type="button" onclick="SpecialInteface()" value="SpecialInteface"/>
         <input type="button" onclick="orderquery()" value="orderquery"/>
+        <input type="button" onclick="h5Pay22()" value="h5Pay22"/-->
         <input type="button" onclick="h5Pay()" value="h5Pay"/>
       </td>
     </tr>

@@ -7,20 +7,22 @@ import com.database.merchant.SubMerchantUser;
 import com.framework.action.AjaxActionSupport;
 import com.framework.base.ProjectSettings;
 import com.framework.utils.IdWorker;
+import com.framework.utils.Logger;
 import com.framework.utils.StringUtils;
 import com.jdpay.api.H5Pay;
-import com.jdpay.api.MicroPay;
 import com.jdpay.api.OrderQuery;
 import com.jdpay.api.RequestData.H5PayRequestData;
 import com.jdpay.api.RequestData.MicroPayRequestData;
 import com.jdpay.api.RequestData.QueryRequestData;
 import com.jdpay.api.RequestData.TokenPayRequestData;
+import com.jdpay.api.MicroPay;
 import com.jdpay.api.TokenOrder;
 import com.jdpay.utils.Signature;
 import net.sf.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+
 
 public class PayAction extends AjaxActionSupport {
     public String microPay() throws Exception {
@@ -44,7 +46,7 @@ public class PayAction extends AjaxActionSupport {
                     microPayRequestData.trade_name =  getParameter("goodsname").toString();
                     microPayRequestData.trade_describle =  getParameter("goodsmemo").toString();
                     microPayRequestData.sub_mer =  getParameter("storename").toString();
-                    microPayRequestData.term_no = subMerchantUser.getUserName();
+                    microPayRequestData.term_no = String.valueOf(subMerchantUser.getId());
                     MicroPay microPay = new MicroPay(microPayRequestData);
                     if (!microPay.postRequest(merchantInfo.getPaycodemd5key())) {
                         return AjaxActionComplete(false);
@@ -78,7 +80,7 @@ public class PayAction extends AjaxActionSupport {
                     if (null!=getParameter("goodsmemo"))
                         tokenPayRequestData.trade_describle =   StringUtils.convertNullableString(getParameter("goodsmemo"),"描述");
                     tokenPayRequestData.sub_mer = subMerchantUser.getStoreName();
-                    tokenPayRequestData.term_no = subMerchantUser.getUserName();
+                    tokenPayRequestData.term_no = String.valueOf(subMerchantUser.getId());
                     TokenOrder tokenOrder = new TokenOrder(tokenPayRequestData);
                     if (!tokenOrder.postRequest(merchantInfo.getScanmd5key())) {
                         return AjaxActionComplete(false);
@@ -148,7 +150,7 @@ public class PayAction extends AjaxActionSupport {
                     } else {
                         System.out.println(h5Pay.getResponseResult().toString());
                         JSONObject jsonObject = JSONObject.fromObject(h5Pay.getResponseResult());
-                        JSONObject jsonObject2 = jsonObject.fromObject(jsonObject.get("data"));
+                        JSONObject jsonObject2 =jsonObject.fromObject(jsonObject.get("data"));
                         Map map = new HashMap<>();
                         map.put("merchantNotifyUrl","http://www.qimpay.com/qlpay/jdpay/Callback!codePay");
                         map.put("merchantNum",merchantInfo.getH5merchantno());

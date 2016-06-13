@@ -7,5 +7,6 @@ public class JsPayData
     public String total_fee;
     public String out_trade_no;
     public String redirect_uri;
+    public String data;
     public String sign;
 }

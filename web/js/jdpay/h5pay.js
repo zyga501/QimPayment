@@ -71,13 +71,12 @@ b.prototype = {
 window.b = b;
 var jdp = new b();
 function pay(data){
+    alert(JSON.stringify(data.merchantNotifyUrl));
     jdp.getInfo(function(json) {
         var datasjson =data;// eval("(" + data + ")");
-        alert(datasjson.merchantOuterOrderNum);
         var json = JSON.parse(json);
         var data = {
             "merchantToken": datasjson.merchantToken,
-            "merchantJdPin": '',
             "merchantOuterOrderNum": datasjson.merchantOuterOrderNum,
             "merchantUserId": datasjson.merchantUserId,
             "merchantMobile": datasjson.merchantMobile,

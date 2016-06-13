@@ -11,6 +11,8 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.message.WeixinMessage.sendJDTemplateMessage;
+
 public class CallbackAction extends AjaxActionSupport {
     public final static String CODEPAY = "Callback!codePay";
 
@@ -20,7 +22,7 @@ public class CallbackAction extends AjaxActionSupport {
     }
 
     private boolean handlerCallback() throws Exception {
-         {
+        {
             String data = "";
             String sign;
             if (null != getParameter("DATA")) {
@@ -34,7 +36,19 @@ public class CallbackAction extends AjaxActionSupport {
             if (null != getParameter("SIGN")) {
                 System.out.println("SIGN:" + getParameter("SIGN").toString());
             }
-            saveOrderToDb(data);
+            JSONObject jsonObject = JSONObject.fromObject(data);
+            Map map =new HashMap();
+            map.put("amount",jsonObject.get("amount"));
+            map.put("merchant_no",jsonObject.get("merchant_no"));
+            map.put("order_no",jsonObject.get("order_no"));
+            map.put("pay_time",jsonObject.get("pay_time"));
+            map.put("promotionAmount",jsonObject.get("promotionAmount"));
+            map.put("sub_mer",jsonObject.get("sub_mer"));
+            map.put("term_no",jsonObject.get("term_no"));
+            map.put("trade_no",jsonObject.get("trade_no"));
+            map.put("user",jsonObject.get("user"));
+            if ( saveOrderToDb(map))
+                sendJDTemplateMessage(map.get("trade_no").toString());
             return true;
         }
 //        catch (Exception e){
@@ -42,18 +56,7 @@ public class CallbackAction extends AjaxActionSupport {
 //        }
     }
 
-    public static boolean saveOrderToDb(String data){
-        JSONObject jsonObject = JSONObject.fromObject(data);
-        Map map =new HashMap();
-        map.put("amount",jsonObject.get("amount"));
-        map.put("merchant_no",jsonObject.get("merchant_no"));
-        map.put("order_no",jsonObject.get("order_no"));
-        map.put("pay_time",jsonObject.get("pay_time"));
-        map.put("promotionAmount",jsonObject.get("promotionAmount"));
-        map.put("sub_mer",jsonObject.get("sub_mer"));
-        map.put("term_no",jsonObject.get("term_no"));
-        map.put("trade_no",jsonObject.get("trade_no"));
-        map.put("user",jsonObject.get("user"));
+    public static boolean saveOrderToDb(Map map){
         return OrderInfo.insertOrderInfo(map);
     }
 }
