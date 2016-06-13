@@ -83,8 +83,11 @@ public class PayAction extends AjaxActionSupport {
                     unifiedOrderRequestData.mch_id = merchantInfo.getMchId();
                     unifiedOrderRequestData.sub_mch_id = subMerchantInfo.getSubId();
                     unifiedOrderRequestData.body = getParameter("body").toString();
-                    unifiedOrderRequestData.attach = String.format("{ 'id':'%s','body':'%s','redirect_uri':'%s'}",
-                            StringUtils.convertNullableString(getParameter("id")), unifiedOrderRequestData.body, StringUtils.convertNullableString(getParameter("redirect_uri")));
+                    unifiedOrderRequestData.attach = String.format("{'id':'%s','body':'%s','redirect_uri':'%s','data':'%s'}",
+                            StringUtils.convertNullableString(getParameter("id")), 
+                            unifiedOrderRequestData.body, 
+                            StringUtils.convertNullableString(getParameter("redirect_uri")),
+                            StringUtils.convertNullableString(getParameter("data")));
                     unifiedOrderRequestData.total_fee = (int)Double.parseDouble(getParameter("total_fee").toString());
                     unifiedOrderRequestData.product_id = getParameter("product_id").toString();
                     unifiedOrderRequestData.trade_type = "NATIVE";
@@ -200,7 +203,7 @@ public class PayAction extends AjaxActionSupport {
                     unifiedOrderRequestData.mch_id = merchantInfo.getMchId();
                     unifiedOrderRequestData.sub_mch_id = subMerchantInfo.getSubId();
                     unifiedOrderRequestData.body = body;
-                    unifiedOrderRequestData.attach = String.format("{ 'id':'%s','body':'%s','redirect_uri':'%s','data':'%s'}",
+                    unifiedOrderRequestData.attach = String.format("{'id':'%s','body':'%s','redirect_uri':'%s','data':'%s'}",
                             subMerchantUserId, unifiedOrderRequestData.body, redirect_uri, data);
                     unifiedOrderRequestData.total_fee = total_fee;
                     unifiedOrderRequestData.trade_type = "JSAPI";
