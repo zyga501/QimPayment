@@ -26,6 +26,7 @@ public class CallbackAction extends AjaxActionSupport {
             "  <return_code><![CDATA[SUCCESS]]></return_code>\n" +
             "  <return_msg><![CDATA[OK]]></return_msg>\n" +
             "</xml>";
+    public final static Object syncObject = new Object();
 
     public void scanPay() throws Exception {
         handlerCallback();
@@ -74,26 +75,28 @@ public class CallbackAction extends AjaxActionSupport {
     }
 
     private boolean saveOrderToDb(Map<String,Object> responseResult) {
-        String transactionId = responseResult.get("transaction_id").toString();
-        OrderInfo orderInfo = OrderInfo.getOrderInfoByTransactionId(transactionId);
-        if (orderInfo != null) {
-            return false;
-        }
+        synchronized (syncObject) {
+            String transactionId = responseResult.get("transaction_id").toString();
+            OrderInfo orderInfo = OrderInfo.getOrderInfoByTransactionId(transactionId);
+            if (orderInfo != null) {
+                return false;
+            }
 
-        Logger.info(responseResult.get("attach").toString());
-        orderInfo = new OrderInfo();
-        orderInfo.setAppid(responseResult.get("appid").toString());
-        orderInfo.setMchId(responseResult.get("mch_id").toString());
-        orderInfo.setSubMchId(responseResult.get("sub_mch_id").toString());
-        orderInfo.setBody(responseResult.get("body").toString());
-        orderInfo.setTransactionId(responseResult.get("transaction_id").toString());
-        orderInfo.setOutTradeNo(responseResult.get("out_trade_no").toString());
-        orderInfo.setBankType(responseResult.get("bank_type").toString());
-        orderInfo.setTotalFee(Integer.parseInt(responseResult.get("total_fee").toString()));
-        orderInfo.setTimeEnd(responseResult.get("time_end").toString());
-        orderInfo.setCreateUser(Long.parseLong(responseResult.get("id").toString()));
-        orderInfo.setOpenId(responseResult.get("openid").toString());
-        return OrderInfo.insertOrderInfo(orderInfo);
+            Logger.info(responseResult.get("attach").toString());
+            orderInfo = new OrderInfo();
+            orderInfo.setAppid(responseResult.get("appid").toString());
+            orderInfo.setMchId(responseResult.get("mch_id").toString());
+            orderInfo.setSubMchId(responseResult.get("sub_mch_id").toString());
+            orderInfo.setBody(responseResult.get("body").toString());
+            orderInfo.setTransactionId(responseResult.get("transaction_id").toString());
+            orderInfo.setOutTradeNo(responseResult.get("out_trade_no").toString());
+            orderInfo.setBankType(responseResult.get("bank_type").toString());
+            orderInfo.setTotalFee(Integer.parseInt(responseResult.get("total_fee").toString()));
+            orderInfo.setTimeEnd(responseResult.get("time_end").toString());
+            orderInfo.setCreateUser(Long.parseLong(responseResult.get("id").toString()));
+            orderInfo.setOpenId(responseResult.get("openid").toString());
+            return OrderInfo.insertOrderInfo(orderInfo);
+        }
     }
 
     private void notifyClientToPrint(Map<String,Object> responseResult) throws IOException {
