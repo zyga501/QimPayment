@@ -49,7 +49,7 @@ public class PayAction extends AjaxActionSupport {
                     microPayRequestData.term_no = String.valueOf(subMerchantUser.getId());
                     MicroPay microPay = new MicroPay(microPayRequestData);
                     if (!microPay.postRequest(merchantInfo.getPaycodemd5key())) {
-                        return AjaxActionComplete(false);
+                        return AjaxActionComplete(microPay.getResponseResult());
                     } else {
                         return AjaxActionComplete(microPay.getResponseResult());
                     }
@@ -134,16 +134,15 @@ public class PayAction extends AjaxActionSupport {
                 MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getId());
                 if (merchantInfo != null) {
                     H5PayRequestData h5RequestData  = new H5PayRequestData();
-                    h5RequestData.order_no = getParameter("orderno").toString();
                     h5RequestData.merchant_no = merchantInfo.getH5merchantno();
-                    h5RequestData.currency = "CNY";
+                    //h5RequestData.currency = "CNY";
                     h5RequestData.order_no =  StringUtils.convertNullableString(getParameter("orderno"),String.valueOf(new IdWorker(ProjectSettings.getIdWorkerSeed()).nextId()));
                     String requestUrl = getRequest().getRequestURL().toString();
                     requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/'));
                     requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/') + 1) + "jdpay/"
                             + CallbackAction.CODEPAY;;
-                    h5RequestData.notify_url = "http://www.qimpay.com/qlpay/jdpay/Callback!codePay";//requestUrl;
-                    h5RequestData.amount =Double.parseDouble(getParameter("price").toString());
+                    h5RequestData.notify_url = requestUrl;//"http://www.qimpay.com/qlpay/jdpay/Callback!codePay";//requestUrl;
+                    h5RequestData.amount =Double.parseDouble(getParameter("amount").toString());
                     H5Pay h5Pay = new H5Pay(h5RequestData);
                     if (!h5Pay.postRequest(merchantInfo.getH5md5key())) {
                         return AjaxActionComplete(false);
@@ -152,7 +151,7 @@ public class PayAction extends AjaxActionSupport {
                         JSONObject jsonObject = JSONObject.fromObject(h5Pay.getResponseResult());
                         JSONObject jsonObject2 =jsonObject.fromObject(jsonObject.get("data"));
                         Map map = new HashMap<>();
-                        map.put("merchantNotifyUrl","http://www.qimpay.com/qlpay/jdpay/Callback!codePay");
+                        map.put("merchantNotifyUrl",requestUrl);
                         map.put("merchantNum",merchantInfo.getH5merchantno());
                         map.put("merchantOuterOrderNum",jsonObject2.get("order_no"));
                         map.put("merchantTradeAmount",(int)(Double.valueOf(jsonObject2.get("amount").toString())*100));

@@ -73,33 +73,23 @@ var jdp = new b();
 function pay(data){
     alert(JSON.stringify(data.merchantNotifyUrl));
     jdp.getInfo(function(json) {
-        var datasjson =data;// eval("(" + data + ")");
         var json = JSON.parse(json);
-        var data = {
-            "merchantToken": datasjson.merchantToken,
-            "merchantOuterOrderNum": datasjson.merchantOuterOrderNum,
-            "merchantUserId": datasjson.merchantUserId,
-            "merchantMobile": datasjson.merchantMobile,
-            "merchantNum": datasjson.merchantNum,
-            "merchantRemark":datasjson.merchantRemark,
-            "merchantTradeNum":datasjson.merchantTradeNum,
-            "merchantTradeName": datasjson.merchantTradeName,
-            "merchantTradeDescription": datasjson.merchantTradeDescription,
-            "merchantTradeTime": datasjson.merchantTradeTime,
-            "merchantTradeAmount": datasjson.merchantTradeAmount,
-            "merchantCurrency": "CNY",
-            "merchantNotifyUrl": datasjson.merchantNotifyUrl,
-            "merchantSign": datasjson.merchantSign,
-            "data": datasjson.data,
-            "cpTradeNum": datasjson.cpTradeNum
-        };
-
         if (json.isLogin) {
             jdp.pay({
                 params: data,
                 callback: function(data) {
-                    // 回调处理
-                    jdp.alert(data);
+                    if ("0" == result) {
+                        $('.payBtn').removeAttr('disabled');
+                        return;
+                    }
+
+                    var jdmmodel = eval("(" + result + ")");
+                    if ("SUCCESS" == jdmmodel.status) {
+                        jdp.alert("支付成功");
+                        $("#paynum").text("");
+                    } else {
+                        jdp.alert(jdmmodel.msgTitle);
+                    }
                 }
             })
         } else {

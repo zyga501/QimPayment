@@ -19,10 +19,12 @@ public class TemplateMessageRequestData {
                 template_id,
                 topcolor,
                 nickName, "#173177",
-                timeEnd, "#173177",
                 totalFee.toString(), "#FF0FFF",
                 storeName, "#173177",
-                transactionId, "#173177");
+                paytype, "#173177",
+                orderno, "#173177",
+                timeEnd, "#173177",
+                remark, "#173177");
 
         return reqeustData;
     }
@@ -36,4 +38,7 @@ public class TemplateMessageRequestData {
     public Double totalFee;
     public String storeName;
     public String transactionId;
+    public String paytype;
+    public String orderno;
+    public String remark;
 }
