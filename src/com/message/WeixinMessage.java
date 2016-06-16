@@ -43,16 +43,13 @@ public class WeixinMessage {
                 TemplateMessageRequestData templateMessageRequestData = new TemplateMessageRequestData();
                 templateMessageRequestData.template_id = subMerchantInfo.getTemplateId();
                 UserInfo userInfo = new UserInfo(accessToken, orderInfo.getOpenId());
-                if (userInfo.getRequest()) {
-                    templateMessageRequestData.nickName = userInfo.getNickname();
-                }
-                else {
-                    templateMessageRequestData.nickName = "匿名消费者";
-                }
+                templateMessageRequestData.nickName = "尊敬的 微信 商户，您成功收到"+(userInfo.getRequest()?userInfo.getNickname():"消费者")+"的消费付款：";
                 templateMessageRequestData.timeEnd = orderInfo.getTimeEnd();
                 templateMessageRequestData.totalFee = orderInfo.getTotalFee() / 100.0;
                 templateMessageRequestData.storeName = subMerchantUser.getStoreName();
-                templateMessageRequestData.transactionId = transactionId;
+                templateMessageRequestData.paytype = "微信";
+                templateMessageRequestData.orderno = orderInfo.getOutTradeNo();
+                templateMessageRequestData.remark = ("收银员："+subMerchantUser.getUserName()+"\\n"+subMerchantInfo.getAds()).replaceAll("\r\n","\\\\n");
 
                 TemplateMessage templateMessage = new TemplateMessage(accessToken);
                 if (!StringUtils.convertNullableString(subMerchantUser.getWeixinId()).trim().isEmpty()) {
@@ -93,15 +90,16 @@ public class WeixinMessage {
                     }
                 }
             }
-
             if (!accessToken.isEmpty()) {
                 TemplateMessageRequestData templateMessageRequestData = new TemplateMessageRequestData();
                 templateMessageRequestData.template_id = subMerchantInfo.getTemplateId();
-                templateMessageRequestData.nickName = "京东消费者";
+                templateMessageRequestData.nickName = "尊敬的 京东 商户，您成功收到消费付款：";
                 templateMessageRequestData.timeEnd = orderInfo.get("pay_time").toString();
                 templateMessageRequestData.totalFee = Double.parseDouble(orderInfo.get("amount").toString());
                 templateMessageRequestData.storeName = subMerchantUser.getStoreName();
-                templateMessageRequestData.transactionId = transactionId;
+                templateMessageRequestData.paytype = "京东钱包";
+                templateMessageRequestData.orderno = orderInfo.get("order_no").toString();
+                templateMessageRequestData.remark = ("收银员："+subMerchantUser.getUserName()+"\\n"+subMerchantInfo.getAds()).replaceAll("\r\n","\\\\n");
 
                 TemplateMessage templateMessage = new TemplateMessage(accessToken);
                 if (!StringUtils.convertNullableString(subMerchantUser.getWeixinId()).trim().isEmpty()) {

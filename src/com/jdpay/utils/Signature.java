@@ -62,7 +62,7 @@ public class Signature {
         return result;
     }
 
-    public static String generateRSASign(Map<String,Object> map, String key){
+    public static String generateRSASign(Map<String,Object> map, String key) throws Exception {
         ArrayList<String> list = new ArrayList<String>();
         for(Map.Entry<String,Object> entry:map.entrySet()){
             if(entry.getValue()!=""){
@@ -77,30 +77,38 @@ public class Signature {
             sb.append(arrayToSort[i]);
         }
         String result = sb.toString();
-        result += "key=" + key;
-        byte[] rtbyte = new byte[0];
-        try {
-            rtbyte= result.getBytes("utf-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+        if (result.endsWith("&")) {
+            result = result.substring(0, result.length() - 1);
         }
-        String rsartn = "";
-        try {
-            for (int i = 0; i < rtbyte.length; i +=100) {
-                byte[] doFinal =RSACoder.encryptByPublicKey(ArrayUtils.subarray(rtbyte, i,
-                        i + 100),key);
-                rsartn+=(new String(doFinal));
-            }
-            //   result = RSACoder.encryptBASE64(RSACoder.encryptByPublicKey(result.getBytes("utf-8"), key));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
-            return RSACoder.encryptBASE64(rsartn.getBytes());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "";
+        //System.out.println("签名源串1。。。。。。。。。"+result);
+        String sha256SourceSignString = SHAUtil.Encrypt(result,null);
+        //System.out.println("256数据1。。。。。。。。。"+sha256SourceSignString);
+
+        byte[] newsks = RSACoder.encryptByPrivateKey(sha256SourceSignString.getBytes("UTF-8"), key);
+        return RSACoder.encryptBASE64(newsks);
+//        byte[] rtbyte = new byte[0];
+//        try {
+//            rtbyte= result.getBytes("utf-8");
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//        }
+//        String rsartn = "";
+//        try {
+////            for (int i = 0; i < rtbyte.length; i +=100) {
+////                byte[] doFinal =RSACoder.encryptByPrivateKey(ArrayUtils.subarray(rtbyte, i,
+////                        i + 100),key);
+////                rsartn+=(new String(doFinal));
+////            }
+//            rsartn = RSACoder.encryptBASE64(RSACoder.encryptByPrivateKey(result.getBytes("utf-8"), key));
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        try {
+//            return RSACoder.encryptBASE64(rsartn.getBytes());
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return "";
     }
 
     public static boolean checkSignValid(String responseString, String key) throws ParserConfigurationException, IOException, SAXException {
