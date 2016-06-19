@@ -18,7 +18,7 @@ import java.util.Map;
 public abstract class AliPayAPIWithSign extends AliPayAPI {
     public boolean postRequest(String privateKey, String publicKey) throws Exception {
         if (!requestData_.checkParameter() || privateKey.isEmpty()) {
-            Logger.warn(this.getClass().getName() + " CheckParameter Failed!");
+            Logger.error(this.getClass().getName() + " CheckParameter Failed!");
             return false;
         }
 
@@ -30,7 +30,6 @@ public abstract class AliPayAPIWithSign extends AliPayAPI {
             return false;
         }
         apiUri += "?" + ClassUtils.convertToQuery(new QueryData(requestData_), "utf-8", true);
-        Logger.debug("Request Url:\r\n" + apiUri);
 
         HttpPost httpPost = new HttpPost(apiUri);
         StringEntity postEntity = new StringEntity("biz_content=" + URLEncoder.encode(requestData_.biz_content, "utf-8"), "UTF-8");
@@ -48,19 +47,25 @@ public abstract class AliPayAPIWithSign extends AliPayAPI {
             httpPost.abort();
         }
 
-        Logger.debug("Response Data:\r\n" + responseString);
-
         responseResult_ = JsonUtils.toMap(responseString, true);
 
+        boolean ret = true;
         String rootNode = requestData_.method.replace('.', '_') + "_response";
         if (responseResult_.containsKey("sign") && responseResult_.containsKey(rootNode)) {
             if (!Signature.verifySign(getSignSourceData(rootNode, responseString),
                     responseResult_.get("sign").toString(),
                     publicKey))
-                return false;
+                ret = false;
         }
 
-        return handlerResponse(responseResult_);
+        ret = ret && handlerResponse(responseResult_);
+
+        if (!ret) {
+            Logger.error("Request Url:\r\n" + apiUri);
+            Logger.error("Response Data:\r\n" + responseString);
+        }
+
+        return ret;
     }
 
     protected boolean handlerResponse(Map<String, Object> responseResult) throws Exception {

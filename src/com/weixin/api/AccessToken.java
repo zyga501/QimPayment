@@ -18,7 +18,6 @@ public class AccessToken extends WeixinAPI{
         synchronized(accessTokenMap_) {
             if (accessTokenMap_.containsValue(accessToken)) {
                 for (Map.Entry<String, String> entry : accessTokenMap_.entrySet()) {
-                    Logger.info(String.format("appid:%s, accesstoken:%s", entry.getKey(), entry.getValue()));
                     if (entry.getValue().compareTo(accessToken) == 0) {
                         return entry.getKey();
                     }
