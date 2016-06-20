@@ -121,8 +121,12 @@ public class MerchantAction extends AjaxActionSupport {
             }else {
                 resultMap.put("hasalipay", "1");
             }
+            try{
             String yzf = Readconfig.yzfconfig(String.valueOf(subMerchantUser.getSubMerchantId()));
             resultMap.put("yzfstring", yzf);
+            }catch (Exception e){
+
+            }
             resultMap.put("uid", String.valueOf(subMerchantUser.getId()));
             resultMap.put("storename",subMerchantUser.getStoreName());
             resultMap.put("uname",subMerchantUser.getUserName());

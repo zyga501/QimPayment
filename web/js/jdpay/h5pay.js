@@ -71,21 +71,21 @@ b.prototype = {
 window.b = b;
 var jdp = new b();
 function pay(data){
-    alert(JSON.stringify(data.merchantNotifyUrl));
     jdp.getInfo(function(json) {
         var json = JSON.parse(json);
         if (json.isLogin) {
             jdp.pay({
                 params: data,
-                callback: function(data) {
+                callback: function(result) {
+                    alert(result);
                     if ("0" == result) {
-                        $('.payBtn').removeAttr('disabled');
                         return;
                     }
 
                     var jdmmodel = eval("(" + result + ")");
                     if ("SUCCESS" == jdmmodel.status) {
                         jdp.alert("支付成功");
+                        $("#paynumbtn").val("");
                         $("#paynum").text("");
                     } else {
                         jdp.alert(jdmmodel.msgTitle);

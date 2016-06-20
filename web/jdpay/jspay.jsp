@@ -130,8 +130,7 @@
                 success: function (data) {
                     var json = eval("(" + data + ")");
                     if ('Y'== json.is_success){
-                        $("#paystr").val(JSON.stringify(json.paystr))
-                        pay(eval("(" + $("#paystr").val() + ")"));
+                        pay(json.paystr);
                     }
                 }
             })
@@ -147,7 +146,7 @@
                 var reg = new RegExp(regStrs[i][0]);
                 th.value = th.value.replace(reg, regStrs[i][1]);
             }
-            $("#total_fee").val(parseFloat(th.value)*100);
+            $("#total_fee").val(th.value);
             if (th.value == "") {
                 $("#paynum").text("");
             }
@@ -192,7 +191,7 @@
 	<span class="STYLE7">
   	  <label>消费总额: </label>
   	</span>
-            <input type="text" name="paynum" class="amount" maxlength=10 onkeyup="amount(this)" onpaste="return false;"
+            <input type="text" name="paynum" id="paynumbtn" class="amount" maxlength=10 onkeyup="amount(this)" onpaste="return false;"
                    autocomplete="off" placeholder="询问服务员后输入"/>
         </div>
     </div>
@@ -201,7 +200,7 @@
 	<span class="STYLE7">
   	  <label>实付金额: </label>
   	</span> <label id="paynum" class="paynum"></label><br><br>
-            <input type="button" onclick="h5Pay()" class="but" id="butpaynum"  disabled="disabled" value="京东支付"/>
+            <input type="button" class="but" id="butpaynum"  onclick="h5Pay()" disabled="disabled" value="京东支付"/>
         </div>
     </div>
 </form>

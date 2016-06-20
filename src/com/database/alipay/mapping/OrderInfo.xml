@@ -7,6 +7,9 @@
     <select id="getOrderInfoById" parameterType="long" resultMap="orderInfoResult">
         SELECT * FROM OrderInfo WHERE id=#{id}
     </select>
+    <select id="getOrderInfoByOrderNo" parameterType="String" resultMap="orderInfoResult">
+        SELECT * FROM OrderInfo WHERE outTradeNo=#{outtradeno}
+    </select>
     <resultMap type="com.database.alipay.OrderInfo" id="orderInfoResult">
         <id property="id" column="id" jdbcType="BIGINT" />
         <result property="appid" column="appid" jdbcType="VARCHAR"/>

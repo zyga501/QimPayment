@@ -6,6 +6,11 @@ public class OrderInfo {
         return Database.Instance().selectOne(statement, id);
     }
 
+    public static OrderInfo getOrderInfoByOrderNo(String on) {
+        String statement = "com.database.alipay.mapping.orderInfo.getOrderInfoByOrderNo";
+        return Database.Instance().selectOne(statement, on);
+    }
+
     public static boolean insertOrderInfo(OrderInfo orderInfo) {
         String statement = "com.database.alipay.mapping.orderInfo.insertOrderInfo";
         return Database.Instance().insert(statement, orderInfo) == 1;
