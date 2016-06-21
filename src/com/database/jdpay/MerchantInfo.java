@@ -1,7 +1,12 @@
 package com.database.jdpay;
 
+import net.sf.json.JSONObject;
+
 public class MerchantInfo {
     public static void main(String[] args) throws Exception {
+        JSONObject jsonObject = JSONObject.fromObject("{tm:12}");
+        System.out.println(jsonObject.get("term_no")==null?jsonObject.get("tm"):jsonObject.get("term_no"));
+        System.out.println(jsonObject.get("tm"));
     }
 
     public static MerchantInfo getMerchantInfoById(long id) {

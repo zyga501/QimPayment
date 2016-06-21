@@ -9,6 +9,7 @@ import org.apache.struts2.ServletActionContext;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -102,6 +103,11 @@ public class AjaxActionSupport extends ActionSupport {
         return AjaxActionComplete(resultMap);
     }
 
+    public void ResponseWrite(String rtnString) throws IOException {
+        getResponse().getWriter().print(rtnString);
+        getResponse().getWriter().flush();
+        getResponse().getWriter().close();
+    };
     private String ajaxActionResult_;
     private Map parameterMap_;
 }

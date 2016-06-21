@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 
 public class WebAction extends AjaxActionSupport {
-    public static String judgeUserAgent() throws IOException {
+    public  String judgeUserAgent() throws IOException {
         HttpServletRequest request = (HttpServletRequest) ActionContext.getContext().get(org.apache.struts2.StrutsStatics.HTTP_REQUEST);
         String userAgent = request.getHeader("User-Agent");
         System.out.println("Your Browser User-Agent is:"+userAgent);
@@ -24,6 +24,9 @@ public class WebAction extends AjaxActionSupport {
         }
         else if (userAgent.contains("walletclient")){
             return "JDJsPay";
+        }
+        else if (userAgent.contains("alipayclient")){
+            return "AliJsPay";
         }
         else
             return "";

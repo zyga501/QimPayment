@@ -140,9 +140,10 @@ public class PayAction extends AjaxActionSupport {
                     String requestUrl = getRequest().getRequestURL().toString();
                     requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/'));
                     requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/') + 1) + "jdpay/"
-                            + CallbackAction.CODEPAY;;
+                            + CallbackAction.H5PAY;
                     h5RequestData.notify_url = requestUrl;//"http://www.qimpay.com/qlpay/jdpay/Callback!codePay";//requestUrl;
-                    h5RequestData.amount =Double.parseDouble(getParameter("amount").toString());
+                    h5RequestData.amount =Double.parseDouble(getParameter("total_fee").toString());
+                    h5RequestData.note = String.valueOf(subMerchantUser.getId());
                     H5Pay h5Pay = new H5Pay(h5RequestData);
                     if (!h5Pay.postRequest(merchantInfo.getH5md5key())) {
                         return AjaxActionComplete(false);

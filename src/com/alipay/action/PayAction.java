@@ -5,6 +5,7 @@ import com.alipay.api.RequestData.TradePreCreateRequestData;
 import com.alipay.api.TradePay;
 import com.alipay.api.TradePreCreate;
 import com.database.alipay.MerchantInfo;
+import com.database.alipay.OrderInfo;
 import com.database.merchant.SubMerchantInfo;
 import com.database.merchant.SubMerchantUser;
 import com.framework.action.AjaxActionSupport;
@@ -12,9 +13,11 @@ import com.framework.base.SessionCache;
 import com.framework.utils.Logger;
 import com.framework.utils.StringUtils;
 import com.framework.utils.Zip;
+import com.sun.org.apache.bcel.internal.generic.NEW;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class PayAction extends AjaxActionSupport {
@@ -112,6 +115,24 @@ public class PayAction extends AjaxActionSupport {
     }
 
     public String wapPay() throws IOException {
+        return AjaxActionComplete();
+    }
+
+    public String queryOrder() throws Exception {
+        SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(getParameter("id").toString()));
+        if (subMerchantUser != null) {
+            SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
+            if (subMerchantInfo != null) {
+                MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
+                if (merchantInfo != null) {
+                    OrderInfo orderInfo = new OrderInfo();
+                    orderInfo = OrderInfo.getOrderInfoByOrderNo(getParameter("out_trade_no").toString());
+                    List list = null;
+                    list.add(orderInfo);
+                    return AjaxActionComplete(list);
+                }
+            }
+        }
         return AjaxActionComplete();
     }
 }

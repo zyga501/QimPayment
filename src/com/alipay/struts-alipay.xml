@@ -16,5 +16,8 @@
         </action>
         <action name="Callback!*" class="com.alipay.action.CallbackAction" method="{1}">
         </action>
+        <action name="WebpagePayAction!*" class="com.alipay.action.WebpagePayAction" method="{1}">
+            <result name="prePay">./alipay/jspay.jsp</result>
+        </action>
     </package>
 </struts>
