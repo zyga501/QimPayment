@@ -18,4 +18,7 @@
         </servlet-class>
         <load-on-startup>0</load-on-startup>
     </servlet>
+    <listener>
+        <listener-class>com.framework.socket.SocketServiceLoader</listener-class>
+    </listener>
 </web-app>
