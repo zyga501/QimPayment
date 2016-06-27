@@ -3,6 +3,7 @@ package com.weixin.action;
 import com.database.weixin.MerchantInfo;
 import com.database.weixin.OrderInfo;
 import com.framework.action.AjaxActionSupport;
+import com.framework.socket.Server;
 import com.framework.utils.*;
 import com.message.WeixinMessage;
 import com.weixin.utils.Signature;
@@ -108,7 +109,8 @@ public class CallbackAction extends AjaxActionSupport {
         map.put("bank_type", responseResult.get("bank_type").toString());
         map.put("total_fee", responseResult.get("total_fee").toString());
         map.put("time_end", responseResult.get("time_end").toString());
-        new UdpSocket("127.0.0.1", 8848).send(responseResult.get("id").toString().concat("@").concat(JSONObject.fromObject(map).toString()).getBytes());
+        //new UdpSocket("127.0.0.1", 8848).send(responseResult.get("id").toString().concat("@").concat(JSONObject.fromObject(map).toString()).getBytes());
+        Server.pushMessage(responseResult.get("id").toString().concat("@").concat(JSONObject.fromObject(map).toString()),Long.parseLong(responseResult.get("id").toString()));
     }
 
     private void notifyClientOrderInfo(Map<String, Object> responseResult) throws Exception {
