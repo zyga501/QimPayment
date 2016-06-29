@@ -17,7 +17,7 @@
         <action name="Callback!*" class="com.jdpay.action.CallbackAction" method="{1}">
         </action>
         <action name="WebpagePayAction!*" class="com.jdpay.action.WebpagePayAction" method="{1}">
-            <result name="prePay">./jdpay/jspay.jsp</result>
+            <result name="prePay">./jspay.jsp</result>
         </action>
     </package>
 </struts>
