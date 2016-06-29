@@ -7,6 +7,7 @@ import org.apache.http.cookie.Cookie;
 import android.content.Intent;
 import android.net.http.SslError;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.webkit.CookieManager;
@@ -20,6 +21,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import cn.qmpos.http.HttpRequest;
 import cn.qmpos.util.Constants;
+import cn.qmpos.R;
+
 
 public class WebViewActivity extends BaseActivity implements OnClickListener {
 
@@ -40,8 +43,7 @@ public class WebViewActivity extends BaseActivity implements OnClickListener {
 			initCookie(url);
 		}
 		webView.setWebViewClient(new WebViewClient() {
-			public void onReceivedSslError(WebView view,
-					SslErrorHandler handler, SslError error) {
+			public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
 				// handler.cancel(); // Android默认的处理方式
 				handler.proceed(); // 接受所有网站的证书
 				// handleMessage(Message msg); // 进行其他处理
@@ -49,19 +51,26 @@ public class WebViewActivity extends BaseActivity implements OnClickListener {
 		});
 		webView.getSettings().setJavaScriptEnabled(true);
 		webView.getSettings().setDefaultTextEncodingName("gb2312");
-
+		webView.getSettings().setSaveFormData(true);
+		webView.getSettings().setDomStorageEnabled(true);
 		webView.loadUrl(url);
 	}
 
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if ((keyCode == KeyEvent.KEYCODE_BACK) && webView.canGoBack()) {
+			webView.goBack(); // goBack()表示返回WebView的上一页面
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+
 	private void initCookie(String url) {
-		List<Cookie> cookies = HttpRequest.httpClient.getCookieStore()
-				.getCookies();
+		List<Cookie> cookies = HttpRequest.httpClient.getCookieStore().getCookies();
 		Cookie cookie = null;
 		if (!cookies.isEmpty()) {
 			for (int i = cookies.size(); i > 0; i--) {
 				Cookie sessionCookie = (Cookie) cookies.get(i - 1);
-				System.out.print(sessionCookie.getName() + ":"
-						+ sessionCookie.getValue());
+				System.out.print(sessionCookie.getName() + ":" + sessionCookie.getValue());
 				if ("JSESSIONID".equals(sessionCookie.getName())) {
 					cookie = sessionCookie;
 				}
@@ -70,8 +79,7 @@ public class WebViewActivity extends BaseActivity implements OnClickListener {
 		CookieSyncManager.createInstance(this);
 		CookieManager cookieManager = CookieManager.getInstance();
 		if (cookie != null) {
-			String cookieString = cookie.getName() + "=" + cookie.getValue()
-					+ "; domain=" + cookie.getDomain();
+			String cookieString = cookie.getName() + "=" + cookie.getValue() + "; domain=" + cookie.getDomain();
 			cookieManager.setCookie(Constants.server_host, cookieString);
 			CookieSyncManager.getInstance().sync();
 		}

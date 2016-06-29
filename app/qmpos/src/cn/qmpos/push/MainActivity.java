@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import cn.qmpos.R;
 
+
 public class MainActivity extends Activity {
 
 	public static final String KEY_MESSAGE = "message";

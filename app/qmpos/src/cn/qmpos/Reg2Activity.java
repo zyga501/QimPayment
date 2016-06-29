@@ -23,6 +23,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 import cn.qmpos.R;
+
 import cn.qmpos.http.HttpRequest;
 import cn.qmpos.util.Constants;
 import cn.qmpos.util.MD5Hash;
@@ -74,15 +75,11 @@ public class Reg2Activity extends BaseActivity implements OnClickListener {
 				if (count1 == 0) {
 					login_showpwd.setImageResource(R.drawable.xianshi);
 					count1 = 1;
-					editLoginPwd
-							.setTransformationMethod(HideReturnsTransformationMethod
-									.getInstance());
+					editLoginPwd.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
 				} else {
 					login_showpwd.setImageResource(R.drawable.yincang);
 					count1 = 0;
-					editLoginPwd
-							.setTransformationMethod(PasswordTransformationMethod
-									.getInstance());
+					editLoginPwd.setTransformationMethod(PasswordTransformationMethod.getInstance());
 				}
 				Editable etable = editLoginPwd.getText();
 				Selection.setSelection(etable, etable.length());
@@ -91,15 +88,11 @@ public class Reg2Activity extends BaseActivity implements OnClickListener {
 				if (count2 == 0) {
 					trading_showpwd.setImageResource(R.drawable.xianshi);
 					count2 = 1;
-					editTransPwd
-							.setTransformationMethod(HideReturnsTransformationMethod
-									.getInstance());
+					editTransPwd.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
 				} else {
 					trading_showpwd.setImageResource(R.drawable.yincang);
 					count2 = 0;
-					editTransPwd
-							.setTransformationMethod(PasswordTransformationMethod
-									.getInstance());
+					editTransPwd.setTransformationMethod(PasswordTransformationMethod.getInstance());
 				}
 				Editable etable2 = editTransPwd.getText();
 				Selection.setSelection(etable2, etable2.length());
@@ -130,8 +123,8 @@ public class Reg2Activity extends BaseActivity implements OnClickListener {
 			showToast("登录密码不能为空");
 			return;
 		}
-		if (!(loginPwd.length() <= 6)) {
-			showToast("登陆密码长度最少为6位");
+		if (loginPwd.length() != 6) {
+			showToast("登录密码长度必须为6位");
 			return;
 		}
 		String transPwd = editTransPwd.getText().toString().trim();
@@ -139,8 +132,8 @@ public class Reg2Activity extends BaseActivity implements OnClickListener {
 			showToast("交易密码不能为空");
 			return;
 		}
-		if (!(transPwd.length() <= 6)) {
-			showToast("交易密码的长度最少为6位");
+		if (transPwd.length() != 6) {
+			showToast("交易密码的长度必须为6位");
 			return;
 		}
 		if (loginPwd.equals(transPwd)) {
@@ -161,8 +154,8 @@ public class Reg2Activity extends BaseActivity implements OnClickListener {
 		MD5Hash m = new MD5Hash();
 
 		Reg2Task reg2Task = new Reg2Task();
-		reg2Task.execute(new String[] { realName, "", m.getMD5ofStr(loginPwd),
-				m.getMD5ofStr(transPwd), chnlId, mobile, smscode });
+		reg2Task.execute(new String[] { realName, "", m.getMD5ofStr(loginPwd), m.getMD5ofStr(transPwd), chnlId, mobile,
+				smscode });
 	}
 
 	class Reg2Task extends AsyncTask<String, Integer, HashMap<String, String>> {
@@ -186,8 +179,7 @@ public class Reg2Activity extends BaseActivity implements OnClickListener {
 				map.put("loginId", params[5]);
 				map.put("smsCode", params[6]);
 
-				String requestUrl = Constants.server_host
-						+ Constants.server_register_url;
+				String requestUrl = Constants.server_host + Constants.server_register_url;
 				String responseStr = HttpRequest.getResponse(requestUrl, map);
 				if (Constants.ERROR.equals(responseStr)) {
 					returnMap.put("respCode", Constants.SERVER_NETERR);
@@ -217,25 +209,20 @@ public class Reg2Activity extends BaseActivity implements OnClickListener {
 			String respDesc = resultMap.get("respDesc");
 			if (!Constants.SERVER_SUCC.equals(respCode)) {
 				dialog.hide();
-				Toast.makeText(reg2Activity, respDesc, Toast.LENGTH_SHORT)
-						.show();
+				Toast.makeText(reg2Activity, respDesc, Toast.LENGTH_SHORT).show();
 				return;
 			}
 
 			try {
-				AlertDialog.Builder builder = new AlertDialog.Builder(
-						reg2Activity);
-				builder.setTitle("注册成功");
+				AlertDialog.Builder builder = new AlertDialog.Builder(reg2Activity);
+				builder.setTitle("提示");
 				builder.setMessage("注册成功,系统跳转至登录界面!");
-				builder.setPositiveButton("确认",
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,
-									int which) {
-								Intent i = new Intent(reg2Activity,
-										LoginActivity.class);
-								reg2Activity.startActivity(i);
-							}
-						});
+				builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						Intent i = new Intent(reg2Activity, LoginActivity.class);
+						reg2Activity.startActivity(i);
+					}
+				});
 				builder.show();
 			} catch (Exception e) {
 				e.printStackTrace();

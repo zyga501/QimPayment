@@ -32,6 +32,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import cn.qmpos.R;
 
+
 import com.google.zxing.ResultPoint;
 
 /**

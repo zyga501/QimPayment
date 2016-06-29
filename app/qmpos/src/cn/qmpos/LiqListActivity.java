@@ -7,9 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,11 +18,12 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
-import cn.qmpos.R;
+import cn.qmpos.http.HttpRequest;
 import cn.qmpos.util.CommUtil;
 import cn.qmpos.util.Constants;
 import cn.qmpos.view.XListView;
 import cn.qmpos.view.XListView.IXListViewListener;
+import cn.qmpos.R;
 
 /**
  * 提现记录
@@ -32,8 +31,7 @@ import cn.qmpos.view.XListView.IXListViewListener;
  * @author Administrator
  * 
  */
-public class LiqListActivity extends BaseActivity implements OnClickListener,
-		IXListViewListener, OnItemClickListener {
+public class LiqListActivity extends BaseActivity implements OnClickListener, IXListViewListener, OnItemClickListener {
 
 	private Button btnBack;
 
@@ -80,26 +78,21 @@ public class LiqListActivity extends BaseActivity implements OnClickListener,
 		dataListView.setXListViewListener(this);
 		dataListView.setOnItemClickListener(this);
 
-		simpleAdapter = new SimpleAdapter(this, itemArr,
-				R.layout.list_item_liq, new String[] { "openAcctId",
-						"transAmt", "createDate", "transStat" }, new int[] {
-						R.id.list_item2_trans_seq_id,
-						R.id.list_item2_trans_amt,
-						R.id.list_item2_trans_create_date,
+		simpleAdapter = new SimpleAdapter(this, itemArr, R.layout.list_item_liq,
+				new String[] { "openAcctId", "transAmt", "createDate", "transStat" },
+				new int[] { R.id.list_item2_trans_seq_id, R.id.list_item2_trans_amt, R.id.list_item2_trans_create_date,
 						R.id.list_item2_trans_stat });
 		dataListView.setAdapter(simpleAdapter);
 
-		SharedPreferences mySharedPreferences = getSharedPreferences("qmpos",
-				Activity.MODE_PRIVATE);
-		merId = mySharedPreferences.getString("merId", "");
-		loginId = mySharedPreferences.getString("loginId", "");
-		sessionId = mySharedPreferences.getString("sessionId", "");
+		merId = sp.getString("merId", "");
+		loginId = sp.getString("loginId", "");
+		sessionId = sp.getString("sessionId", "");
 		endDate = CommUtil.getDate();
 		beginDate = CommUtil.getNextDate(endDate, -60);
 
 		LoadTask load = new LoadTask();
-		load.execute(new String[] { sessionId, merId, loginId, beginDate,
-				endDate, transStat, String.valueOf(pageNum), pageSize });
+		load.execute(new String[] { sessionId, merId, loginId, beginDate, endDate, transStat, String.valueOf(pageNum),
+				pageSize, "J" });
 	}
 
 	public void onClick(View v) {
@@ -122,8 +115,8 @@ public class LiqListActivity extends BaseActivity implements OnClickListener,
 		itemArr.clear();
 		Log.i("e", "刷新....");
 		LoadTask load = new LoadTask();
-		load.execute(new String[] { sessionId, merId, loginId, beginDate,
-				endDate, transStat, String.valueOf(pageNum), pageSize });
+		load.execute(new String[] { sessionId, merId, loginId, beginDate, endDate, transStat, String.valueOf(pageNum),
+				pageSize, "J" });
 		onLoad();
 	}
 
@@ -133,24 +126,22 @@ public class LiqListActivity extends BaseActivity implements OnClickListener,
 		pageNum++;
 		Log.i("e", "更多....");
 		LoadTask load = new LoadTask();
-		load.execute(new String[] { sessionId, merId, loginId, beginDate,
-				endDate, transStat, String.valueOf(pageNum), pageSize });
+		load.execute(new String[] { sessionId, merId, loginId, beginDate, endDate, transStat, String.valueOf(pageNum),
+				pageSize, "J" });
 		onLoad();
 	}
 
 	private void onLoad() {
 		dataListView.stopRefresh();
 		dataListView.stopLoadMore();
-		dataListView.setRefreshTime(CommUtil.addChineseToTimeString(CommUtil
-				.getTime()));
+		dataListView.setRefreshTime(CommUtil.addChineseToTimeString(CommUtil.getTime()));
 	}
 
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		// TODO Auto-generated method stub
 		// 取出所有值跳到下一页
-		HashMap<String, String> map = (HashMap<String, String>) liqListActivity.simpleAdapter
-				.getItem(arg2 - 1);
+		HashMap<String, String> map = (HashMap<String, String>) liqListActivity.simpleAdapter.getItem(arg2 - 1);
 
 		Intent i = new Intent(liqListActivity, LiqDescActivity.class);
 		i.putExtra("createDate", map.get("createDate"));
@@ -185,14 +176,13 @@ public class LiqListActivity extends BaseActivity implements OnClickListener,
 				map.put("transStat", params[5]);
 				map.put("pageNum", params[6]);
 				map.put("pageSize", params[7]);
+				map.put("cardType", params[8]);
 				map.put("clientModel", android.os.Build.MODEL);
 
 				returnMap.put("pageNum", params[6]);
 
-				String requestUrl = Constants.server_host
-						+ Constants.server_queryLiqList_url;
-				String responseStr = cn.qmpos.http.HttpRequest.getResponse(
-						requestUrl, map);
+				String requestUrl = Constants.server_host + Constants.server_queryLiqList_url;
+				String responseStr = HttpRequest.getResponse(requestUrl, map);
 				if (Constants.ERROR.equals(responseStr)) {
 					returnMap.put("respCode", Constants.SERVER_NETERR);
 					returnMap.put("respDesc", responseStr);
@@ -206,39 +196,23 @@ public class LiqListActivity extends BaseActivity implements OnClickListener,
 				String respDesc = jsonObj.getString("respDesc");
 				int recordSum = 0;
 				if (respCode.equals(Constants.SERVER_SUCC)) {
-					int totalNum = Integer.parseInt(jsonObj
-							.getString("totalNum"));
+					int totalNum = Integer.parseInt(jsonObj.getString("totalNum"));
 					if (totalNum > 0) {
-						JSONArray tempArray = jsonObj
-								.getJSONArray("ordersInfo");
+						JSONArray tempArray = jsonObj.getJSONArray("ordersInfo");
 						for (int i = 0; i < tempArray.length(); i++) {
 							JSONObject tempObj = tempArray.getJSONObject(i);
 							recordSum = tempArray.length();
 
 							HashMap<String, String> dataMap = new HashMap<String, String>();
-							dataMap.put(
-									"createDate",
-									CommUtil.addBarToDateString(tempObj
-											.getString("createDate"))
-											+ " "
-											+ CommUtil
-													.addColonToTimeString(tempObj
-															.getString("createTime")));
-							dataMap.put("transAmt",
-									tempObj.getString("transAmt"));
-							dataMap.put("transFee",
-									tempObj.getString("transFee"));
-							dataMap.put("transSeqId",
-									tempObj.getString("transSeqId"));
-							dataMap.put("transStat",
-									tempObj.getString("transStat"));
-							dataMap.put("openAcctId", CommUtil
-									.addBarToBankCardNo(tempObj
-											.getString("openAcctId")));
-							dataMap.put("openAcctName",
-									tempObj.getString("openAcctName"));
-							dataMap.put("failRemark",
-									tempObj.getString("failRemark"));
+							dataMap.put("createDate", CommUtil.addBarToDateString(tempObj.getString("createDate")) + " "
+									+ CommUtil.addColonToTimeString(tempObj.getString("createTime")));
+							dataMap.put("transAmt", tempObj.getString("transAmt"));
+							dataMap.put("transFee", tempObj.getString("transFee"));
+							dataMap.put("transSeqId", tempObj.getString("transSeqId"));
+							dataMap.put("transStat", tempObj.getString("transStat"));
+							dataMap.put("openAcctId", CommUtil.addBarToBankCardNo(tempObj.getString("openAcctId")));
+							dataMap.put("openAcctName", tempObj.getString("openAcctName"));
+							dataMap.put("failRemark", tempObj.getString("failRemark"));
 							itemArr.add(dataMap);
 						}
 					}
@@ -266,8 +240,7 @@ public class LiqListActivity extends BaseActivity implements OnClickListener,
 			String pageNum = resultMap.get("pageNum");
 
 			if (!Constants.SERVER_SUCC.equals(respCode)) {
-				Toast.makeText(liqListActivity, respDesc, Toast.LENGTH_SHORT)
-						.show();
+				Toast.makeText(liqListActivity, respDesc, Toast.LENGTH_SHORT).show();
 				return;
 			}
 			boolean isFirstPage = true;

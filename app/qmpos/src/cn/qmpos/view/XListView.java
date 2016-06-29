@@ -23,6 +23,7 @@ import android.widget.Scroller;
 import android.widget.TextView;
 import cn.qmpos.R;
 
+
 public class XListView extends ListView implements OnScrollListener {
 
 	private float mLastY = -1; // save event y

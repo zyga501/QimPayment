@@ -38,8 +38,7 @@ import cn.qmpos.util.Constants;
  * @author Administrator
  * 
  */
-public class AuthenticationActivity extends BaseActivity implements
-		OnClickListener {
+public class AuthenticationActivity extends BaseActivity implements OnClickListener {
 
 	private Button btnBack;
 	private Button btnNext;
@@ -124,8 +123,7 @@ public class AuthenticationActivity extends BaseActivity implements
 		textCardName.setOnClickListener(this);
 		editCardNo = (EditText) this.findViewById(R.id.auth_edit_card_no);
 
-		SharedPreferences mySharedPreferences = getSharedPreferences("qmpos",
-				Activity.MODE_PRIVATE);
+		SharedPreferences mySharedPreferences = getSharedPreferences("qmpos", Activity.MODE_PRIVATE);
 		String merId = mySharedPreferences.getString("merId", "");
 		String merName = mySharedPreferences.getString("merName", "");
 		String certId = mySharedPreferences.getString("certId", "");
@@ -134,24 +132,19 @@ public class AuthenticationActivity extends BaseActivity implements
 		textCardName.setText(merName);
 		editCertNo.setText(certId);
 		// 证件路径
-		String photoPath = Environment.getExternalStorageDirectory()
-				.getAbsolutePath() + "/DCIM/Camera/";
+		String photoPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera/";
 		String photoName = CommUtil.getDate() + CommUtil.getTime();
 		File tempFile = new File(photoPath);
 		if (!tempFile.exists())
 			tempFile.mkdirs();
 
 		cardPositiveFile = new File(photoPath + photoName + "_cardPositive.jpg");
-		cardPositiveView = (TextView) this
-				.findViewById(R.id.auth_cardPositiveView);
-		cardPositiveImage = (ImageView) this
-				.findViewById(R.id.auth_cardPositiveImage);
+		cardPositiveView = (TextView) this.findViewById(R.id.auth_cardPositiveView);
+		cardPositiveImage = (ImageView) this.findViewById(R.id.auth_cardPositiveImage);
 
 		cardReverseFile = new File(photoPath + photoName + "_cardReverse.jpg");
-		cardReverseView = (TextView) this
-				.findViewById(R.id.auth_cardReverseView);
-		cardReverseImage = (ImageView) this
-				.findViewById(R.id.auth_cardReverseImage);
+		cardReverseView = (TextView) this.findViewById(R.id.auth_cardReverseView);
+		cardReverseImage = (ImageView) this.findViewById(R.id.auth_cardReverseImage);
 
 		manCardFile = new File(photoPath + photoName + "_manCard.jpg");
 		manCardView = (TextView) this.findViewById(R.id.auth_manCardView);
@@ -180,8 +173,7 @@ public class AuthenticationActivity extends BaseActivity implements
 
 		// 初始化，判断当前状态
 		InitTask initTask = new InitTask();
-		initTask.execute(new String[] { merId, merName, certId, loginId,
-				sessionId });
+		initTask.execute(new String[] { merId, merName, certId, loginId, sessionId });
 	}
 
 	public void onClick(View v) {
@@ -216,8 +208,7 @@ public class AuthenticationActivity extends BaseActivity implements
 				break;
 			case R.id.photo_template:
 				Intent i = new Intent(this, WebViewActivity.class);
-				i.putExtra("url", "file:///android_asset/phototemplate"
-						+ Constants.server_agent_id + ".html");
+				i.putExtra("url", "file:///android_asset/phototemplate" + Constants.server_agent_id + ".html");
 				i.putExtra("title", "认证示例");
 				startActivity(i);
 				break;
@@ -230,16 +221,13 @@ public class AuthenticationActivity extends BaseActivity implements
 	private void showBankDialog() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle("请选择银行");
-		builder.setItems(R.array.bank_name,
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						String bankName = authenticationActivity.getResources()
-								.getStringArray(R.array.bank_name)[which];
-						bankCode = authenticationActivity.getResources()
-								.getStringArray(R.array.bank_code)[which];
-						textBankName.setText(bankName);
-					}
-				});
+		builder.setItems(R.array.bank_name, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				String bankName = authenticationActivity.getResources().getStringArray(R.array.bank_name)[which];
+				bankCode = authenticationActivity.getResources().getStringArray(R.array.bank_code)[which];
+				textBankName.setText(bankName);
+			}
+		});
 		builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 
@@ -306,17 +294,14 @@ public class AuthenticationActivity extends BaseActivity implements
 		// return;
 		// }
 		if (certNo.length() != 18 && certNo.length() != 15) {
-			Toast.makeText(this, "请输入18位或15位正确的身份证号", Toast.LENGTH_SHORT)
-					.show();
+			Toast.makeText(this, "请输入18位或15位正确的身份证号", Toast.LENGTH_SHORT).show();
 			return;
 		}
 
-		SharedPreferences mySharedPreferences = getSharedPreferences("qmpos",
-				Activity.MODE_PRIVATE);
+		SharedPreferences mySharedPreferences = getSharedPreferences("qmpos", Activity.MODE_PRIVATE);
 		String merId = mySharedPreferences.getString("merId", "");
 		AuthTask authTask = new AuthTask();
-		authTask.execute(new String[] { merId, bankCode, cardNo, cardName,
-				certNo });
+		authTask.execute(new String[] { merId, bankCode, cardNo, cardName, certNo, "J" });
 
 	}
 
@@ -349,28 +334,24 @@ public class AuthenticationActivity extends BaseActivity implements
 		if (requestCode == R.id.auth_cardPositive) {
 			// cardPositiveImage.setImageURI(Uri.fromFile(cardPositiveFile));
 			save(cardPositiveFile.getAbsolutePath(), cardPositiveFile);
-			System.out.println(cardPositiveFile.getAbsolutePath()
-					+ "---------------------");
-			cardPositiveImage.setImageBitmap(decodeSampledBitmapFromResource(
-					cardPositiveFile.getAbsolutePath(), 180, 180));
+			System.out.println(cardPositiveFile.getAbsolutePath() + "---------------------");
+			cardPositiveImage
+					.setImageBitmap(decodeSampledBitmapFromResource(cardPositiveFile.getAbsolutePath(), 180, 180));
 			cardPositiveImage.setVisibility(View.VISIBLE);
 			cardPositiveView.setVisibility(View.GONE);
 		} else if (requestCode == R.id.auth_cardReverse) {
 			save(cardReverseFile.getAbsolutePath(), cardReverseFile);
-			System.out.println(cardReverseFile.getAbsolutePath()
-					+ "---------------------");
+			System.out.println(cardReverseFile.getAbsolutePath() + "---------------------");
 			// cardReverseImage.setImageURI(Uri.fromFile(cardReverseFile));
-			cardReverseImage.setImageBitmap(decodeSampledBitmapFromResource(
-					cardReverseFile.getAbsolutePath(), 180, 180));
+			cardReverseImage
+					.setImageBitmap(decodeSampledBitmapFromResource(cardReverseFile.getAbsolutePath(), 180, 180));
 			cardReverseImage.setVisibility(View.VISIBLE);
 			cardReverseView.setVisibility(View.GONE);
 		} else if (requestCode == R.id.auth_manCard) {
 			// manCardImage.setImageURI(Uri.fromFile(manCardFile));
 			save(manCardFile.getAbsolutePath(), manCardFile);
-			System.out.println(manCardFile.getAbsolutePath()
-					+ "---------------------");
-			manCardImage.setImageBitmap(decodeSampledBitmapFromResource(
-					manCardFile.getAbsolutePath(), 180, 180));
+			System.out.println(manCardFile.getAbsolutePath() + "---------------------");
+			manCardImage.setImageBitmap(decodeSampledBitmapFromResource(manCardFile.getAbsolutePath(), 180, 180));
 			manCardImage.setVisibility(View.VISIBLE);
 			manCardView.setVisibility(View.GONE);
 		}
@@ -395,30 +376,26 @@ public class AuthenticationActivity extends BaseActivity implements
 		// }
 	}
 
-	public static Bitmap decodeSampledBitmapFromResource(String pathName,
-			int reqWidth, int reqHeight) {
+	public static Bitmap decodeSampledBitmapFromResource(String pathName, int reqWidth, int reqHeight) {
 		// 第一次解析将inJustDecodeBounds设置为true，来获取图片大小
 		final BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inJustDecodeBounds = true;
 		BitmapFactory.decodeFile(pathName, options);
 		// 调用上面定义的方法计算inSampleSize值
-		options.inSampleSize = calculateInSampleSize(options, reqWidth,
-				reqHeight);
+		options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
 		// 使用获取到的inSampleSize值再次解析图片
 		options.inJustDecodeBounds = false;
 		return BitmapFactory.decodeFile(pathName, options);
 	}
 
-	public static int calculateInSampleSize(BitmapFactory.Options options,
-			int reqWidth, int reqHeight) {
+	public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
 		// 源图片的高度和宽度
 		final int height = options.outHeight;
 		final int width = options.outWidth;
 		int inSampleSize = 1;
 		if (height > reqHeight || width > reqWidth) {
 			// 计算出实际宽高和目标宽高的比率
-			final int heightRatio = Math.round((float) height
-					/ (float) reqHeight);
+			final int heightRatio = Math.round((float) height / (float) reqHeight);
 			final int widthRatio = Math.round((float) width / (float) reqWidth);
 
 			// 选择宽和高中最小的比率作为inSampleSize的值，这样可以保证最终图片的宽和高
@@ -485,8 +462,7 @@ public class AuthenticationActivity extends BaseActivity implements
 				map.put("sessionId", params[4]);
 				map.put("clientModel", android.os.Build.MODEL);
 
-				String requestUrl = Constants.server_host
-						+ Constants.server_queryMerInfo_url;
+				String requestUrl = Constants.server_host + Constants.server_queryMerInfo_url;
 				String responseStr = HttpRequest.getResponse(requestUrl, map);
 				if (Constants.ERROR.equals(responseStr)) {
 					returnMap.put("respCode", Constants.SERVER_NETERR);
@@ -502,8 +478,7 @@ public class AuthenticationActivity extends BaseActivity implements
 				returnMap.put("respCode", respCode);
 				returnMap.put("respDesc", respDesc);
 				if (respCode.equals(Constants.SERVER_SUCC)) {
-					returnMap.put("isAuthentication",
-							jsonObj.getString("isAuthentication"));
+					returnMap.put("isAuthentication", jsonObj.getString("isAuthentication"));
 				}
 				return returnMap;
 			} catch (Exception e) {
@@ -519,19 +494,15 @@ public class AuthenticationActivity extends BaseActivity implements
 			String respCode = resultMap.get("respCode");
 			String respDesc = resultMap.get("respDesc");
 			if (!Constants.SERVER_SUCC.equals(respCode)) {
-				AlertDialog.Builder builder = new AlertDialog.Builder(
-						authenticationActivity);
+				AlertDialog.Builder builder = new AlertDialog.Builder(authenticationActivity);
 				builder.setTitle("系统异常");
 				builder.setMessage(respDesc);
-				builder.setPositiveButton("确认",
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,
-									int which) {
-								Intent i = new Intent(authenticationActivity,
-										LoginActivity.class);
-								authenticationActivity.startActivity(i);
-							}
-						});
+				builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						Intent i = new Intent(authenticationActivity, LoginActivity.class);
+						authenticationActivity.startActivity(i);
+					}
+				});
 				builder.show();
 				return;
 			}
@@ -540,33 +511,27 @@ public class AuthenticationActivity extends BaseActivity implements
 				String isAuthentication = resultMap.get("isAuthentication");
 
 				if ("S".equals(isAuthentication)) {
-					AlertDialog.Builder builder = new AlertDialog.Builder(
-							authenticationActivity);
+					AlertDialog.Builder builder = new AlertDialog.Builder(authenticationActivity);
 					builder.setTitle("提示");
 					builder.setMessage("您已经为实名状态！");
-					builder.setPositiveButton("确认",
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,
-										int which) {
-									finish();
-								}
-							});
+					builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int which) {
+							finish();
+						}
+					});
 					builder.show();
 					return;
 				}
 
 				if ("IT".indexOf(isAuthentication) != -1) {
-					AlertDialog.Builder builder = new AlertDialog.Builder(
-							authenticationActivity);
+					AlertDialog.Builder builder = new AlertDialog.Builder(authenticationActivity);
 					builder.setTitle("提示");
 					builder.setMessage("您的实名审核正在审核中！");
-					builder.setPositiveButton("确认",
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,
-										int which) {
-									finish();
-								}
-							});
+					builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int which) {
+							finish();
+						}
+					});
 					builder.show();
 					return;
 				}
@@ -615,10 +580,8 @@ public class AuthenticationActivity extends BaseActivity implements
 					// stringMap.put("attachName", "本人持卡.jpg");
 					// fileMap.put("attachPath", manBankFile);
 					// }
-					String requestUrl = Constants.server_host
-							+ Constants.server_uploadAttach_url;
-					String responseStr = HttpRequest.getResponse(requestUrl,
-							stringMap, fileMap);
+					String requestUrl = Constants.server_host + Constants.server_uploadAttach_url;
+					String responseStr = HttpRequest.getResponse(requestUrl, stringMap, fileMap);
 					if (Constants.ERROR.equals(responseStr)) {
 						returnMap.put("respCode", Constants.SERVER_NETERR);
 						returnMap.put("respDesc", "网络异常");
@@ -650,9 +613,8 @@ public class AuthenticationActivity extends BaseActivity implements
 				map.put("openBankId", params[1]);
 				map.put("openAcctId", params[2]);
 				map.put("openAcctName", params[3]);
-
-				String requestUrl = Constants.server_host
-						+ Constants.server_bankCardBind_url;
+				map.put("cardType", params[5]);
+				String requestUrl = Constants.server_host + Constants.server_bankCardBind_url;
 				String responseStr = HttpRequest.getResponse(requestUrl, map);
 				if (Constants.ERROR.equals(responseStr)) {
 					returnMap.put("respCode", Constants.SERVER_NETERR);
@@ -683,8 +645,7 @@ public class AuthenticationActivity extends BaseActivity implements
 				map.put("merName", params[3]);
 				map.put("certId", params[4]);
 
-				String requestUrl = Constants.server_host
-						+ Constants.server_applyAuthentication_url;
+				String requestUrl = Constants.server_host + Constants.server_applyAuthentication_url;
 				String responseStr = HttpRequest.getResponse(requestUrl, map);
 				if (Constants.ERROR.equals(responseStr)) {
 					returnMap.put("respCode", Constants.SERVER_NETERR);
@@ -713,21 +674,18 @@ public class AuthenticationActivity extends BaseActivity implements
 			String respDesc = resultMap.get("respDesc");
 			if (!Constants.SERVER_SUCC.equals(respCode)) {
 				dialog.hide();
-				Toast.makeText(authenticationActivity, respDesc,
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(authenticationActivity, respDesc, Toast.LENGTH_SHORT).show();
 				return;
 			}
 
-			AlertDialog.Builder builder = new AlertDialog.Builder(
-					authenticationActivity);
+			AlertDialog.Builder builder = new AlertDialog.Builder(authenticationActivity);
 			builder.setTitle("提示");
 			builder.setMessage("已提交绑定收款银行卡！");
-			builder.setPositiveButton("确认",
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int which) {
-							finish();
-						}
-					});
+			builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					finish();
+				}
+			});
 			builder.show();
 			return;
 		}

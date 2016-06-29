@@ -142,33 +142,28 @@ public class HttpRequest {
 
 	// 长地址转成短地址
 	public static String getShortConnection(String srcUrl) throws JSONException {
-		// return srcUrl;
-		String url = "http://dwz.cn/create.php";
-		HashMap<String, String> requestMap = new HashMap<String, String>();
-		requestMap.put("url", srcUrl);
-		String resultUrl = getResponseNor(url, requestMap);
-		if (resultUrl == Constants.ERROR) {
-			return srcUrl;
-		} else {
-			JSONObject jo = new JSONObject(resultUrl);
-			String str = "";
-			if (jo.get("tinyurl") != null || "".equals(jo.get("tinyurl"))) {
-				str = (String) jo.get("tinyurl");
+		try {
+			String url = "http://dwz.cn/create.php";
+			HashMap<String, String> requestMap = new HashMap<String, String>();
+			requestMap.put("url", srcUrl);
+			String resultUrl = getResponseNor(url, requestMap);
+			if (resultUrl == Constants.ERROR) {
+				return srcUrl;
 			} else {
-				str = srcUrl;
+				JSONObject jo = new JSONObject(resultUrl);
+				String str = "";
+				if (jo.get("tinyurl") != null || "".equals(jo.get("tinyurl"))) {
+					str = (String) jo.get("tinyurl");
+				} else {
+					str = srcUrl;
+				}
+				return str;
 			}
-			return str;
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		return srcUrl;
 	}
-
-//	public static void main(String args[]) {
-//		try {
-//			getShortConnection("http://www.q.com");
-//		} catch (JSONException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
 
 	// http异步请求
 	public static String getResponseNor(String url,

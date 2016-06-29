@@ -1,5 +1,6 @@
 package cn.qmpos;
 
+import cn.qmpos.R;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;

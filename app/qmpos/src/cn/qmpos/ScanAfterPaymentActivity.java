@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import cn.qmpos.R;
+
 import cn.qmpos.http.HttpRequest;
 import cn.qmpos.util.Constants;
 import cn.qmpos.util.MD5Hash;

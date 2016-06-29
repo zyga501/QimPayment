@@ -25,6 +25,8 @@ import cn.qmpos.util.CommUtil;
 import cn.qmpos.util.Constants;
 import cn.qmpos.view.XListView;
 import cn.qmpos.view.XListView.IXListViewListener;
+import cn.qmpos.R;
+
 
 /**
  * ×ªÕË¼ÇÂ¼

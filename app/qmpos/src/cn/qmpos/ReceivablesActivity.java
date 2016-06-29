@@ -12,6 +12,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import cn.qmpos.R;
+
 import cn.qmpos.util.CommUtil;
 import cn.qmpos.util.Constants;
 

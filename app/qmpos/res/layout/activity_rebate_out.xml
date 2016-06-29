@@ -57,6 +57,7 @@
                 android:id="@+id/rebate_out_rebate_amt"
                 style="@style/et_input_textview"
                 android:layout_marginLeft="10.0dip"
+                android:numeric="decimal"
                 android:hint="请输入转出金额" />
         </LinearLayout>
 

@@ -35,6 +35,8 @@ import android.widget.Toast;
 import cn.qmpos.http.HttpRequest;
 import cn.qmpos.util.CommUtil;
 import cn.qmpos.util.Constants;
+import cn.qmpos.R;
+
 
 /**
  * 普通充值
@@ -47,10 +49,8 @@ public class NorRecv1Activity extends BaseActivity implements OnClickListener {
 	private EditText editTransAmt, editOrdRemark;
 	private TextView textFeeInfo, tv_paychannel, tv_D0_T1;
 	private Button btnBack, btnSubmit;
-	private String liqType, gateId, receivablesi = "1", transAmt, ordRemark,
-			carNo;
-	private View putong_layout, duanxin_layout, erweima_layout,
-			downchoose_layout;
+	private String liqType, gateId, receivablesi = "1", transAmt, ordRemark, carNo;
+	private View putong_layout, duanxin_layout, erweima_layout, downchoose_layout;
 	private ImageView putong_type, duanxin_type, erweima_type, saoma_type;
 	private NorRecv1Activity norRecv1Activity;
 	private double longitude, latitude;
@@ -98,12 +98,11 @@ public class NorRecv1Activity extends BaseActivity implements OnClickListener {
 			Builder builder = new AlertDialog.Builder(norRecv1Activity);
 			builder.setTitle("提示");
 			builder.setMessage("你的收款功能被关闭");
-			builder.setPositiveButton("确认",
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int which) {
-							finish();
-						}
-					});
+			builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					finish();
+				}
+			});
 			builder.show();
 			return;
 		}
@@ -132,23 +131,20 @@ public class NorRecv1Activity extends BaseActivity implements OnClickListener {
 		// 使用费率信息的XML文件，隐藏掉标题
 		View top = view.findViewById(R.id.top);
 		top.setVisibility(View.GONE);
-		SimpleAdapter simpleAdapter = new SimpleAdapter(this, itemArr,
-				R.layout.list_item_rate, new String[] { "gateName", "liqType",
-						"feeRateT0" }, new int[] { R.id.tv_pay_type,
-						R.id.tv_t0_t1, R.id.tv_rate });
+		SimpleAdapter simpleAdapter = new SimpleAdapter(this, itemArr, R.layout.list_item_rate,
+				new String[] { "gateName", "liqType", "feeRateT0" },
+				new int[] { R.id.tv_pay_type, R.id.tv_t0_t1, R.id.tv_rate });
 		listView.setAdapter(simpleAdapter);
 		listView.setItemsCanFocus(false);
 		listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View views,
-					int position, long id) {
+			public void onItemClick(AdapterView<?> parent, View views, int position, long id) {
 
 				ListView lv = (ListView) parent;
 				@SuppressWarnings("unchecked")
-				HashMap<String, Object> person = (HashMap<String, Object>) lv
-						.getItemAtPosition(position);
+				HashMap<String, Object> person = (HashMap<String, Object>) lv.getItemAtPosition(position);
 				gateId = person.get("gateId").toString();
 				tv_paychannel.setText(person.get("gateName").toString());
 				tv_D0_T1.setText(person.get("liqType").toString());
@@ -256,8 +252,8 @@ public class NorRecv1Activity extends BaseActivity implements OnClickListener {
 		getGPS();
 		// 发起充值
 		NorRecvTask norRecvTask = new NorRecvTask();
-		norRecvTask.execute(new String[] { transAmt, ordRemark, liqType, "X",
-				receivablesi, longitude + "", latitude + "", gateId });
+		norRecvTask.execute(new String[] { transAmt, ordRemark, liqType, "X", receivablesi, longitude + "",
+				latitude + "", gateId });
 	}
 
 	// private void feeInfo(int liqTypei) {
@@ -291,8 +287,7 @@ public class NorRecv1Activity extends BaseActivity implements OnClickListener {
 	// // 单笔限额5万,单日不限,带银行积分,手续费
 	// }
 
-	class NorRecvTask extends
-			AsyncTask<String, Integer, HashMap<String, String>> {
+	class NorRecvTask extends AsyncTask<String, Integer, HashMap<String, String>> {
 
 		protected void onPreExecute() {
 			dialog.setMessage("系统处理中...");
@@ -324,8 +319,7 @@ public class NorRecv1Activity extends BaseActivity implements OnClickListener {
 				map.put("gateId", params[7]);
 				map.put("clientModel", Build.MODEL);
 
-				String requestUrl = Constants.server_host
-						+ Constants.server_createpay_url;
+				String requestUrl = Constants.server_host + Constants.server_createpay_url;
 				String responseStr = HttpRequest.getResponse(requestUrl, map);
 				if (Constants.ERROR.equals(responseStr)) {
 					returnMap.put("respCode", Constants.SERVER_NETERR);
@@ -366,8 +360,7 @@ public class NorRecv1Activity extends BaseActivity implements OnClickListener {
 				map.put("transSeqId", transSeqId);
 				map.put("credNo", credNo);
 
-				String requestUrl = Constants.server_host
-						+ Constants.server_doQrCode_url;
+				String requestUrl = Constants.server_host + Constants.server_doQrCode_url;
 				String responseStr = HttpRequest.getResponse(requestUrl, map);
 				if (Constants.ERROR.equals(responseStr)) {
 					returnMap.put("respCode", Constants.SERVER_NETERR);
@@ -404,14 +397,12 @@ public class NorRecv1Activity extends BaseActivity implements OnClickListener {
 			String respDesc = resultMap.get("respDesc");
 			if (!Constants.SERVER_SUCC.equals(respCode)) {
 				dialog.hide();
-				Toast.makeText(norRecv1Activity, respDesc, Toast.LENGTH_SHORT)
-						.show();
+				showToast(respDesc);
 				return;
 			}
 			try {
 				SharedPreferences.Editor editor = sp.edit();
-				editor.putString("sms_recv_transSeqId",
-						resultMap.get("transSeqId"));
+				editor.putString("sms_recv_transSeqId", resultMap.get("transSeqId"));
 				editor.putString("sms_recv_credNo", resultMap.get("credNo"));
 				editor.putString("sms_recv_transAmt", resultMap.get("transAmt"));
 				editor.putString("sms_recv_transFee", resultMap.get("transFee"));
@@ -425,13 +416,10 @@ public class NorRecv1Activity extends BaseActivity implements OnClickListener {
 			dialog.hide();
 			if (receivablesi == "1" && "weixin,alipay".indexOf(gateId) < 0) {
 				try {
-					String url = Constants.server_host
-							+ Constants.server_dopay_url + "?merId=" + merId
-							+ "&transSeqId=" + transSeqId + "&credNo=" + credNo
-							+ "&paySrc=nor";
+					String url = Constants.server_host + Constants.server_dopay_url + "?merId=" + merId + "&transSeqId="
+							+ transSeqId + "&credNo=" + credNo + "&paySrc=nor";
 
-					Intent i = new Intent(norRecv1Activity,
-							WebViewActivity.class);
+					Intent i = new Intent(norRecv1Activity, WebViewActivity.class);
 					i.putExtra("url", url);
 					norRecv1Activity.startActivity(i);
 				} catch (Exception e) {
@@ -440,12 +428,11 @@ public class NorRecv1Activity extends BaseActivity implements OnClickListener {
 
 			} else if ("weixin,alipay".indexOf(gateId) >= 0) {
 				String qrCodeUrl = resultMap.get("qrCodeUrl");
-				Intent i = new Intent(norRecv1Activity, WebViewActivity.class);
+				Intent i = new Intent(norRecv1Activity, WebViewMoreActivity.class);
 				i.putExtra("url", qrCodeUrl);
 				norRecv1Activity.startActivity(i);
 			} else if (receivablesi == "2") {
-				Intent intent = new Intent(norRecv1Activity,
-						SmsRecv1Activity.class);
+				Intent intent = new Intent(norRecv1Activity, SmsRecv1Activity.class);
 				intent.putExtra("showValue", transAmt);
 				intent.putExtra("ordRemark", ordRemark);
 				startActivity(intent);
@@ -459,10 +446,8 @@ public class NorRecv1Activity extends BaseActivity implements OnClickListener {
 				if (carNo == null || "null".equals(carNo)) {
 					carNo = "";
 				}
-				String url = Constants.server_host + Constants.server_dopay_url
-						+ "?merId=" + merId + "&transSeqId=" + transSeqId
-						+ "&credNo=" + credNo + "&paySrc=nor" + "&cardNo="
-						+ carNo;
+				String url = Constants.server_host + Constants.server_dopay_url + "?merId=" + merId + "&transSeqId="
+						+ transSeqId + "&credNo=" + credNo + "&paySrc=nor" + "&cardNo=" + carNo;
 
 				Intent i = new Intent(norRecv1Activity, WebViewActivity.class);
 				i.putExtra("url", url);
@@ -477,8 +462,7 @@ public class NorRecv1Activity extends BaseActivity implements OnClickListener {
 	void getGPS() {
 		LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-			Location location = locationManager
-					.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+			Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 			if (location != null) {
 				latitude = location.getLatitude();
 				longitude = location.getLongitude();
@@ -488,8 +472,7 @@ public class NorRecv1Activity extends BaseActivity implements OnClickListener {
 
 				// Provider的状态在可用、暂时不可用和无服务三个状态直接切换时触发此函数
 				@Override
-				public void onStatusChanged(String provider, int status,
-						Bundle extras) {
+				public void onStatusChanged(String provider, int status, Bundle extras) {
 
 				}
 
@@ -509,18 +492,13 @@ public class NorRecv1Activity extends BaseActivity implements OnClickListener {
 				@Override
 				public void onLocationChanged(Location location) {
 					if (location != null) {
-						Log.e("Map",
-								"Location changed : Lat: "
-										+ location.getLatitude() + " Lng: "
-										+ location.getLongitude());
+						Log.e("Map", "Location changed : Lat: " + location.getLatitude() + " Lng: "
+								+ location.getLongitude());
 					}
 				}
 			};
-			locationManager
-					.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
-							1000, 0, locationListener);
-			Location location = locationManager
-					.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+			locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0, locationListener);
+			Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 			if (location != null) {
 				latitude = location.getLatitude(); // 经度
 				longitude = location.getLongitude(); // 纬度
@@ -528,16 +506,14 @@ public class NorRecv1Activity extends BaseActivity implements OnClickListener {
 		}
 	}
 
-	class QueryMerFeeInfoTask extends
-			AsyncTask<String, Integer, HashMap<String, String>> {
+	class QueryMerFeeInfoTask extends AsyncTask<String, Integer, HashMap<String, String>> {
 
 		protected HashMap<String, String> doInBackground(String... params) {
 			HashMap<String, String> returnMap = new HashMap<String, String>();
 			try {
 				HashMap<String, String> map = new HashMap<String, String>();
 				map.put("merId", params[0]);
-				String requestUrl = Constants.server_host
-						+ Constants.server_queryMerFeeInfo_url;
+				String requestUrl = Constants.server_host + Constants.server_queryMerFeeInfo_url;
 				String responseStr = HttpRequest.getResponse(requestUrl, map);
 				if (Constants.ERROR.equals(responseStr)) {
 					returnMap.put("respCode", Constants.SERVER_NETERR);
@@ -553,11 +529,9 @@ public class NorRecv1Activity extends BaseActivity implements OnClickListener {
 
 				int recordSum = 0;
 				if (respCode.equals(Constants.SERVER_SUCC)) {
-					int totalNum = Integer.parseInt(jsonObj
-							.getString("totalNum"));
+					int totalNum = Integer.parseInt(jsonObj.getString("totalNum"));
 					if (totalNum > 0) {
-						JSONArray tempArray = jsonObj
-								.getJSONArray("merFeeInfo");
+						JSONArray tempArray = jsonObj.getJSONArray("merFeeInfo");
 						for (int i = 0; i < tempArray.length(); i++) {
 							JSONObject tempObj = tempArray.getJSONObject(i);
 							recordSum = tempArray.length();
@@ -567,20 +541,16 @@ public class NorRecv1Activity extends BaseActivity implements OnClickListener {
 							dataMap1.put("liqType", "D+0");
 							dataMap1.put("liqTypei", "T0");
 							dataMap1.put("t0Stat", tempObj.getString("t0Stat"));
-							dataMap1.put("gateName",
-									tempObj.getString("gateName"));
-							dataMap1.put("feeRateT0",
-									tempObj.getString("feeRateT0") + "%");
+							dataMap1.put("gateName", tempObj.getString("gateName"));
+							dataMap1.put("feeRateT0", tempObj.getString("feeRateT0") + "%");
 
 							HashMap<String, String> dataMap2 = new HashMap<String, String>();
 							dataMap2.put("gateId", tempObj.getString("gateId"));
 							dataMap2.put("liqType", "T+1");
 							dataMap2.put("liqTypei", "T1");
 							dataMap1.put("t0Stat", tempObj.getString("t1Stat"));
-							dataMap2.put("gateName",
-									tempObj.getString("gateName"));
-							dataMap2.put("feeRateT0",
-									tempObj.getString("feeRateT1") + "%");
+							dataMap2.put("gateName", tempObj.getString("gateName"));
+							dataMap2.put("feeRateT0", tempObj.getString("feeRateT1") + "%");
 
 							String t0Stat = tempObj.getString("t0Stat");
 							String t1Stat = tempObj.getString("t1Stat");
@@ -590,6 +560,16 @@ public class NorRecv1Activity extends BaseActivity implements OnClickListener {
 							if ("Y".equals(t1Stat)) {
 								itemArr.add(dataMap2);
 							}
+						}
+						// NFC隐藏
+						for (int i = 0; i < itemArr.size(); i++) {
+							HashMap<String, String> dataMap = itemArr.get(i);
+							String gateId = dataMap.get("gateId");
+							if (gateId != null && (gateId.equals("zlnfc"))) {
+								itemArr.remove(i);
+								i = -1;
+							}
+
 						}
 					}
 				}
@@ -617,13 +597,11 @@ public class NorRecv1Activity extends BaseActivity implements OnClickListener {
 				Builder builder = new AlertDialog.Builder(norRecv1Activity);
 				builder.setTitle("提示");
 				builder.setMessage("你的收款功能被关闭");
-				builder.setPositiveButton("确认",
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,
-									int which) {
-								finish();
-							}
-						});
+				builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						finish();
+					}
+				});
 				builder.show();
 			}
 			try {

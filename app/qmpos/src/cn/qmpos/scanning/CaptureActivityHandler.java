@@ -27,6 +27,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import cn.qmpos.R;
+
 import cn.qmpos.ScanningActivity;
 
 import com.google.zxing.BarcodeFormat;

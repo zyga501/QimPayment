@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.SimpleAdapter;
 import cn.qmpos.R;
 
+
 /**
  * ListView¸ôÐÐ±äÉ«
  * 

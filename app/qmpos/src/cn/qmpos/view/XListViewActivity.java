@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ArrayAdapter;
 import cn.qmpos.R;
+
 import cn.qmpos.util.Constants;
 import cn.qmpos.view.XListView.IXListViewListener;
 

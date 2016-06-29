@@ -11,6 +11,7 @@ import android.net.http.SslError;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.webkit.CookieManager;
@@ -25,14 +26,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 import cn.qmpos.http.HttpRequest;
 import cn.qmpos.util.Constants;
+import cn.qmpos.R;
+
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.Platform.ShareParams;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.wechat.friends.Wechat;
 
-public class WebViewMoreActivity extends BaseActivity implements
-		OnClickListener, PlatformActionListener {
+public class WebViewMoreActivity extends BaseActivity implements OnClickListener, PlatformActionListener {
 
 	private Button btnBack;
 	private WebView webView;
@@ -51,8 +53,7 @@ public class WebViewMoreActivity extends BaseActivity implements
 		ShareSDK.initSDK(webViewActivity);
 		// getWindow().requestFeature(Window.FEATURE_PROGRESS);
 		webView.setWebViewClient(new WebViewClient() {
-			public void onReceivedSslError(WebView view,
-					SslErrorHandler handler, SslError error) {
+			public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
 				// handler.cancel(); // Android默认的处理方式
 				handler.proceed(); // 接受所有网站的证书
 				// handleMessage(Message msg); // 进行其他处理
@@ -60,20 +61,27 @@ public class WebViewMoreActivity extends BaseActivity implements
 		});
 		webView.getSettings().setJavaScriptEnabled(true);
 		webView.getSettings().setDefaultTextEncodingName("gb2312");
-
+		webView.getSettings().setSaveFormData(true);
+		webView.getSettings().setDomStorageEnabled(true);
 		webView.loadUrl(url);
 
 	}
 
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if ((keyCode == KeyEvent.KEYCODE_BACK) && webView.canGoBack()) {
+			webView.goBack(); // goBack()表示返回WebView的上一页面
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+
 	private void initCookie(String url) {
-		List<Cookie> cookies = HttpRequest.httpClient.getCookieStore()
-				.getCookies();
+		List<Cookie> cookies = HttpRequest.httpClient.getCookieStore().getCookies();
 		Cookie cookie = null;
 		if (!cookies.isEmpty()) {
 			for (int i = cookies.size(); i > 0; i--) {
 				Cookie sessionCookie = (Cookie) cookies.get(i - 1);
-				System.out.print(sessionCookie.getName() + ":"
-						+ sessionCookie.getValue());
+				System.out.print(sessionCookie.getName() + ":" + sessionCookie.getValue());
 				if ("JSESSIONID".equals(sessionCookie.getName())) {
 					cookie = sessionCookie;
 				}
@@ -82,8 +90,7 @@ public class WebViewMoreActivity extends BaseActivity implements
 		CookieSyncManager.createInstance(this);
 		CookieManager cookieManager = CookieManager.getInstance();
 		if (cookie != null) {
-			String cookieString = cookie.getName() + "=" + cookie.getValue()
-					+ "; domain=" + cookie.getDomain();
+			String cookieString = cookie.getName() + "=" + cookie.getValue() + "; domain=" + cookie.getDomain();
 			cookieManager.setCookie(Constants.server_host, cookieString);
 			CookieSyncManager.getInstance().sync();
 		}
@@ -126,8 +133,7 @@ public class WebViewMoreActivity extends BaseActivity implements
 				spWechat.setTitle(this.getString(R.string.app_name));
 				spWechat.setText(url);
 				spWechat.setUrl(url);
-				spWechat.setImageData(BitmapFactory.decodeResource(
-						getResources(), R.drawable.ic_launcher));
+				spWechat.setImageData(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher1));
 				Platform wechat = ShareSDK.getPlatform(Wechat.NAME);
 				wechat.setPlatformActionListener(this);
 				// 执行图文分享

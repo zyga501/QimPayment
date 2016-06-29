@@ -106,6 +106,7 @@
                 android:id="@+id/liq1_edit_liq_amt"
                 style="@style/et_input_textview"
                 android:layout_marginLeft="10.0dip"
+                android:numeric="decimal"
                 android:hint="" />
         </LinearLayout>
 

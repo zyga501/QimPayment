@@ -19,6 +19,8 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import cn.qmpos.http.HttpRequest;
 import cn.qmpos.util.Constants;
+import cn.qmpos.R;
+
 
 /**
  * 费率信息

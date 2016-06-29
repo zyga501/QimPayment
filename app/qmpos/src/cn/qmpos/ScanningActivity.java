@@ -28,6 +28,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import cn.qmpos.R;
+
 import cn.qmpos.scanning.CameraManager;
 import cn.qmpos.scanning.CaptureActivityHandler;
 import cn.qmpos.scanning.InactivityTimer;

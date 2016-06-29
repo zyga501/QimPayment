@@ -84,8 +84,8 @@ public class FindLoginPwd2Activity extends BaseActivity implements
 		// return;
 		// }
 
-		if (!(newPwd.length() <= 6)) {
-			Toast.makeText(this, "登陆密码长度最少为6位", Toast.LENGTH_SHORT).show();
+		if (newPwd.length() != 6) {
+			Toast.makeText(this, "登录密码长度最少为6位", Toast.LENGTH_SHORT).show();
 			return;
 		}
 
@@ -165,7 +165,7 @@ public class FindLoginPwd2Activity extends BaseActivity implements
 			try {
 				AlertDialog.Builder builder = new AlertDialog.Builder(
 						findLoginPwd2Activity);
-				builder.setTitle("密码更新成功");
+				builder.setTitle("提示");
 				builder.setMessage("密码更新成功，请重新登录！");
 				builder.setPositiveButton("确认",
 						new DialogInterface.OnClickListener() {

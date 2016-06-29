@@ -32,9 +32,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import cn.qmpos.R;
+
 import cn.qmpos.LoginActivity;
 import cn.qmpos.MerListActivity;
 import cn.qmpos.WebViewActivity;
+import cn.qmpos.WebViewMoreActivity;
 import cn.qmpos.http.HttpRequest;
 import cn.qmpos.util.CommUtil;
 import cn.qmpos.util.Constants;
@@ -121,7 +123,7 @@ public class MainT3Fragment extends Fragment implements OnClickListener,
 				break;
 			// 分享二维码
 			case R.id.main_t2_share_3:
-				i = new Intent(this.getActivity(), WebViewActivity.class);
+				i = new Intent(this.getActivity(), WebViewMoreActivity.class);
 				String url = Constants.server_host
 						+ Constants.server_createtgqrcode_url + "?agentId="
 						+ Constants.server_agent_id + "&merId=" + merId
@@ -167,7 +169,7 @@ public class MainT3Fragment extends Fragment implements OnClickListener,
 				spWechat.setText(shareStr);
 				spWechat.setUrl(shareUrl);
 				spWechat.setImageData(BitmapFactory.decodeResource(
-						getResources(), R.drawable.ic_launcher));
+						getResources(), R.drawable.ic_launcher1));
 				Platform wechat = ShareSDK.getPlatform(Wechat.NAME);
 				wechat.setPlatformActionListener(this);
 				// 执行图文分享
@@ -183,7 +185,7 @@ public class MainT3Fragment extends Fragment implements OnClickListener,
 				spWxfriend.setText(shareStr);
 				spWxfriend.setUrl(shareUrl);
 				spWxfriend.setImageData(BitmapFactory.decodeResource(
-						getResources(), R.drawable.ic_launcher));
+						getResources(), R.drawable.ic_launcher1));
 				Platform wxfriend = ShareSDK.getPlatform(WechatMoments.NAME);
 				wxfriend.setPlatformActionListener(this);
 				// 执行图文分享

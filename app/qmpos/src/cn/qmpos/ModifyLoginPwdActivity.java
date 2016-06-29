@@ -21,8 +21,7 @@ import cn.qmpos.R;
 import cn.qmpos.util.Constants;
 import cn.qmpos.util.MD5Hash;
 
-public class ModifyLoginPwdActivity extends BaseActivity implements
-		OnClickListener {
+public class ModifyLoginPwdActivity extends BaseActivity implements OnClickListener {
 
 	private Button btnBack;
 	private Button btnSubmit;
@@ -44,17 +43,13 @@ public class ModifyLoginPwdActivity extends BaseActivity implements
 
 	private void init() {
 		btnBack = (Button) this.findViewById(R.id.modify_login_pwd_btn_back);
-		btnSubmit = (Button) this
-				.findViewById(R.id.modify_login_pwd_btn_submit);
+		btnSubmit = (Button) this.findViewById(R.id.modify_login_pwd_btn_submit);
 		btnBack.setOnClickListener(this);
 		btnSubmit.setOnClickListener(this);
 
-		editNowPwd = (EditText) this
-				.findViewById(R.id.modify_login_pwd_now_pwd);
-		editNewPwd = (EditText) this
-				.findViewById(R.id.modify_login_pwd_new_pwd);
-		editAgainPwd = (EditText) this
-				.findViewById(R.id.modify_login_pwd_again_pwd);
+		editNowPwd = (EditText) this.findViewById(R.id.modify_login_pwd_now_pwd);
+		editNewPwd = (EditText) this.findViewById(R.id.modify_login_pwd_new_pwd);
+		editAgainPwd = (EditText) this.findViewById(R.id.modify_login_pwd_again_pwd);
 
 		modifyLoginPwdActivity = this;
 	}
@@ -96,8 +91,8 @@ public class ModifyLoginPwdActivity extends BaseActivity implements
 		// return;
 		// }
 
-		if (!(newPwd.length() <= 6)) {
-			Toast.makeText(this, "登陆密码长度为6位", Toast.LENGTH_SHORT).show();
+		if (newPwd.length() != 6) {
+			Toast.makeText(this, "登录密码长度为6位", Toast.LENGTH_SHORT).show();
 			return;
 		}
 
@@ -106,20 +101,17 @@ public class ModifyLoginPwdActivity extends BaseActivity implements
 			return;
 		}
 
-		SharedPreferences mySharedPreferences = getSharedPreferences("qmpos",
-				Activity.MODE_PRIVATE);
+		SharedPreferences mySharedPreferences = getSharedPreferences("qmpos", Activity.MODE_PRIVATE);
 		String mobile = mySharedPreferences.getString("loginId", "");
 		String sessionId = mySharedPreferences.getString("sessionId", "");
 
 		MD5Hash m = new MD5Hash();
 
 		ModifyLoginPwdTask modifyLoginPwdTask = new ModifyLoginPwdTask();
-		modifyLoginPwdTask.execute(new String[] { sessionId, mobile,
-				m.getMD5ofStr(nowPwd), m.getMD5ofStr(newPwd) });
+		modifyLoginPwdTask.execute(new String[] { sessionId, mobile, m.getMD5ofStr(nowPwd), m.getMD5ofStr(newPwd) });
 	}
 
-	class ModifyLoginPwdTask extends
-			AsyncTask<String, Integer, HashMap<String, String>> {
+	class ModifyLoginPwdTask extends AsyncTask<String, Integer, HashMap<String, String>> {
 
 		protected void onPreExecute() {
 			dialog.setMessage("系统处理中...");
@@ -137,10 +129,8 @@ public class ModifyLoginPwdActivity extends BaseActivity implements
 				map.put("oldPwd", params[2]);
 				map.put("newPwd", params[3]);
 
-				String requestUrl = Constants.server_host
-						+ Constants.server_updateLoginPwd_url;
-				String responseStr = cn.qmpos.http.HttpRequest.getResponse(
-						requestUrl, map);
+				String requestUrl = Constants.server_host + Constants.server_updateLoginPwd_url;
+				String responseStr = cn.qmpos.http.HttpRequest.getResponse(requestUrl, map);
 				if (Constants.ERROR.equals(responseStr)) {
 					returnMap.put("respCode", Constants.SERVER_NETERR);
 					returnMap.put("respDesc", responseStr);
@@ -168,25 +158,20 @@ public class ModifyLoginPwdActivity extends BaseActivity implements
 			String respDesc = resultMap.get("respDesc");
 			if (!Constants.SERVER_SUCC.equals(respCode)) {
 				dialog.hide();
-				Toast.makeText(modifyLoginPwdActivity, respDesc,
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(modifyLoginPwdActivity, respDesc, Toast.LENGTH_SHORT).show();
 				return;
 			}
 
 			try {
-				AlertDialog.Builder builder = new AlertDialog.Builder(
-						modifyLoginPwdActivity);
+				AlertDialog.Builder builder = new AlertDialog.Builder(modifyLoginPwdActivity);
 				builder.setTitle("成功");
 				builder.setMessage("登录密码更改成功！");
-				builder.setPositiveButton("确认",
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,
-									int which) {
-								Intent i = new Intent(modifyLoginPwdActivity,
-										MainActivity.class);
-								modifyLoginPwdActivity.startActivity(i);
-							}
-						});
+				builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						Intent i = new Intent(modifyLoginPwdActivity, MainActivity.class);
+						modifyLoginPwdActivity.startActivity(i);
+					}
+				});
 				builder.show();
 			} catch (Exception e) {
 				e.printStackTrace();

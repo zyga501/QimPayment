@@ -89,8 +89,8 @@ public class ModifyTransPwdActivity extends BaseActivity implements
 			return;
 		}
 
-		if (!(newPwd.length() <= 6)) {
-			Toast.makeText(this, "密码的长度最少为6位", Toast.LENGTH_SHORT).show();
+		if (newPwd.length() != 6) {
+			Toast.makeText(this, "密码的长度必须为6位", Toast.LENGTH_SHORT).show();
 			return;
 		}
 
