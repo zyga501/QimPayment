@@ -1,5 +1,6 @@
 package com.framework.socket;
 import com.database.merchant.SubMerchantUser;
+import com.framework.base.ProjectSettings;
 import com.framework.utils.StringUtils;
 import net.sf.json.JSONObject;
 
@@ -19,20 +20,21 @@ public class Server extends Thread{
     private static ServerSocket serverSocket = null;
 
     public static void main(String[] args){
-        Server server=null;
-        {
-            try {
-                server=new Server();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            server.start();
-        }
     }
     public void run(){
+        int _serverport = ProjectSettings.getServerPort();
         try {
-            serverSocket = new ServerSocket(SERVER_PORT);
+            serverSocket = new ServerSocket(_serverport);
+            if (serverSocket==null) {
+                System.out.println("Socket Failed!");
+                return;
+            }
+            else
+                System.out.println("Socket opened!".concat(String.valueOf(_serverport)));
         }catch (Exception e) {
+            System.out.println("Socket Error!".concat(String.valueOf(_serverport)));
+            e.printStackTrace();
+            return;
         }
         while(!this.isInterrupted()){
             try {
