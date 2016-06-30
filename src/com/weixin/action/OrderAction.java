@@ -1,6 +1,7 @@
 package com.weixin.action;
 
 import com.framework.action.AjaxActionSupport;
+import com.framework.socket.Server;
 import com.framework.utils.Logger;
 import com.database.merchant.SubMerchantUser;
 import com.weixin.api.OrderQuery;
@@ -72,7 +73,6 @@ public class OrderAction extends AjaxActionSupport {
                     if (orderQuery.getResponseResult().get("trade_state") != null) {
                         map.put("trade_state", orderQuery.getResponseResult().get("trade_state").toString());
                     }
-
                     return AjaxActionComplete(map);
                 }
             }
