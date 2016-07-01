@@ -157,7 +157,8 @@ public class SubMerchantAction extends AjaxActionSupport {
     public String getSubMerchantInfo() {
         long subMerchantId = Long.parseLong(getParameter("id").toString());
         SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantId);
-        Map<String, Object> resultMap = ClassUtils.convertToMap(subMerchantInfo);
+        Map<String, Object> resultMap = new HashMap<>();//ClassUtils.convertToMap(subMerchantInfo);
+        resultMap.put("ads",subMerchantInfo!=null?subMerchantInfo.getAds():"");
         return AjaxActionComplete(resultMap);
     }
 
@@ -187,8 +188,13 @@ public class SubMerchantAction extends AjaxActionSupport {
                     + "image/defaultlogo.jpg");
             int readSize = fileInputStream.read(buffer);
             while (readSize != -1) {
-                getResponse().getOutputStream().write(buffer, 0, readSize);
-                readSize = fileInputStream.read(buffer);
+                try {
+                    getResponse().getOutputStream().write(buffer, 0, readSize);
+                    readSize = fileInputStream.read(buffer);
+                }
+                catch (Exception ee){
+                    break;
+                }
             }
             fileInputStream.close();
         }
