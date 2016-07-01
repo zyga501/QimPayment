@@ -34,7 +34,7 @@ public class OrderAction extends AjaxActionSupport {
                     }
                     OrderQuery orderQuery = new OrderQuery(orderQueryData);
                     if (!orderQuery.postRequest(merchantInfo.getApiKey())) {
-                        Logger.warn("Refund Failed!");
+                        Logger.warn("QueryOrder Failed!");
                         return AjaxActionComplete();
                     }
 

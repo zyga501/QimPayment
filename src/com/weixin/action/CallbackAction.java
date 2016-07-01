@@ -54,6 +54,7 @@ public class CallbackAction extends AjaxActionSupport {
         if (merchantInfo != null) {
             if (!Signature.checkSignValid(responseResult, merchantInfo.getApiKey())) {
                 Logger.warn(this.getClass().getName() + " CheckSignValid Failed!");
+                Logger.error(this.getClass().getName() + " " + responseString);
                 return false;
             }
         }

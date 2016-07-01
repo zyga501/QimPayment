@@ -37,6 +37,7 @@ public class ProjectSettings {
 
         }
 
+        Logger.error("ProjectSettings.getId() Failed!");
         return 0;
     }
 
@@ -50,6 +51,7 @@ public class ProjectSettings {
 
         }
 
+        Logger.error("ProjectSettings.getName() Failed!");
         return "";
     }
 
@@ -63,6 +65,7 @@ public class ProjectSettings {
 
         }
 
+        Logger.error("ProjectSettings.getIdWorkerSeed() Failed!");
         return 0;
     }
 
