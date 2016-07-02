@@ -9,13 +9,8 @@ import com.database.alipay.OrderInfo;
 import com.database.merchant.SubMerchantInfo;
 import com.database.merchant.SubMerchantUser;
 import com.framework.action.AjaxActionSupport;
-import com.framework.base.SessionCache;
-import com.framework.utils.Logger;
 import com.framework.utils.StringUtils;
-import com.framework.utils.Zip;
-import com.sun.org.apache.bcel.internal.generic.NEW;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -76,51 +71,6 @@ public class PayAction extends AjaxActionSupport {
         }
 
         return AjaxActionComplete(false);
-    }
-
-    public void jsPay() throws IOException {
-        String appid = new String();
-        String subMerchantUserId = new String();
-        if (!StringUtils.convertNullableString(getParameter("id")).isEmpty()) {
-            SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(getParameter("id").toString()));
-            subMerchantUserId = getParameter("id").toString();
-            if (subMerchantUser != null) {
-                SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
-                if (subMerchantInfo != null) {
-                    MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
-                    if (merchantInfo != null) {
-                        appid = merchantInfo.getAppid();
-                    }
-                }
-            }
-        }
-
-        if (appid.isEmpty()) {
-            Logger.warn("JsPay Failed!");
-            return;
-        }
-
-        String sessionId = getRequest().getSession().getId();
-        String redirect_uri = getRequest().getScheme()+"://" + getRequest().getServerName() + getRequest().getContextPath() + "/alipay/jsPayCallback.jsp";
-        redirect_uri += "?state=" + sessionId;
-        String jspayUri = String.format("https://openauth.alipay.com/oauth2/appToAppAuth.htm?app_id=%s&redirect_uri=%s",
-                appid, redirect_uri);
-
-        String data = String.format("{'id':'%s','body':'%s','fee':'%s','no':'%s','url':'%s','data':'%s'}",
-                subMerchantUserId,
-                StringUtils.convertNullableString(getParameter("body")),
-                StringUtils.convertNullableString(getParameter("total_fee")),
-                StringUtils.convertNullableString(getParameter("out_trade_no")),
-                StringUtils.convertNullableString(getParameter("redirect_uri")),
-                StringUtils.convertNullableString(getParameter("data")));
-        String zipData = Zip.zip(data);
-        getRequest().getSession().setAttribute("data", zipData);
-        SessionCache.setSessionData(sessionId, zipData);
-        getResponse().sendRedirect(jspayUri);
-    }
-
-    public String wapPay() throws IOException {
-        return AjaxActionComplete();
     }
 
     public String queryOrder() throws Exception {

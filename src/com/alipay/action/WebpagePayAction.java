@@ -73,7 +73,7 @@ public class WebpagePayAction extends AjaxActionSupport {
             return;
         }
 
-        String redirect_uri = getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + "alipay/jspay.jsp";
+        String redirect_uri = getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + "jsPay.jsp";
         getResponse().sendRedirect(redirect_uri);
     }
 

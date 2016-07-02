@@ -130,7 +130,7 @@
                 var reg = new RegExp(regStrs[i][0]);
                 th.value = th.value.replace(reg, regStrs[i][1]);
             }
-            $("#total_fee").val(parseFloat(th.value)*100);
+            $("#total_amount").val(parseFloat(th.value));
             if (th.value == "") {
                 $("#paynum").text("");
             }
@@ -152,11 +152,11 @@
 <body>
 <input type="hidden" name="hideparam" id="hideparam" value=""/>
 
-<form action="<%=request.getContextPath()%>/alipay/Pay!wapPay" method="post">
-    <input type="hidden" value="${storename}" name="body"/>
+<form action="<%=request.getContextPath()%>/alipay/Pay!tradePreCreate" method="post">
+    <input type="hidden" value="${storename}" name="subject"/>
     <input type="hidden" value="${id}" name="id"/>
-    <input type="hidden" value="" name="total_fee" id="total_fee"/>
-
+    <input type="hidden" value="" name="total_amount" id="total_amount"/>
+    <input type="hidden" id="auto_redirect" name="auto_redirect" value="true" />
     <div class="Layer122">
         <div align="center" class="STYLE3"></div>
         <br>
