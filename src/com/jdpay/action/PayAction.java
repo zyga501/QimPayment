@@ -155,7 +155,7 @@ public class PayAction extends AjaxActionSupport {
                         map.put("merchantNotifyUrl",requestUrl);
                         map.put("merchantNum",merchantInfo.getH5merchantno());
                         map.put("merchantOuterOrderNum",jsonObject2.get("order_no"));
-                        map.put("merchantTradeAmount",(int)(Double.valueOf(jsonObject2.get("amount").toString())*100));
+                        map.put("merchantTradeAmount",String.valueOf((int)(Double.valueOf(jsonObject2.get("amount").toString())*100)));
                         map.put("merchantTradeNum",jsonObject2.get("order_no"));
                         map.put("merchantTradeTime",jsonObject2.get("trade_time"));
                         map.put("merchantSign", Signature.generateRSASign(map,merchantInfo.getH5rsaprivatekey()));

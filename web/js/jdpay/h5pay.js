@@ -77,7 +77,6 @@ function pay(data){
             jdp.pay({
                 params: data,
                 callback: function(result) {
-                    alert(result);
                     if ("0" == result) {
                         return;
                     }
