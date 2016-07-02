@@ -184,7 +184,7 @@
 	<span class="STYLE7">
   	  <label>实付金额: </label>
   	</span> <label id="paynum" class="paynum"></label><br><br>
-            <input type="submit" class="but" id="butpaynum"  disabled="disabled" value="微信支付"/>
+            <input type="submit" class="but" id="butpaynum"  disabled="disabled" value="支付宝支付"/>
         </div>
     </div>
 </form>

@@ -5,4 +5,5 @@
     <name>PaymentFramWork</name>
     <serverAddress>127.0.0.1</serverAddress>
     <idWorkerSeed>0</idWorkerSeed>
+    <notifyPort>2016</notifyPort>
 </project>

@@ -69,10 +69,10 @@ public class ProjectSettings {
         return 0;
     }
 
-    public static int getServerPort(){
+    public static int getNotifyPort(){
         try {
-            if (projectSettings_ != null && projectSettings_.get("serverPort") != null) {
-                return Integer.parseInt(projectSettings_.get("serverPort").toString());
+            if (projectSettings_ != null && projectSettings_.get("notifyPort") != null) {
+                return Integer.parseInt(projectSettings_.get("notifyPort").toString());
             }
         }
         catch (NumberFormatException exception) {

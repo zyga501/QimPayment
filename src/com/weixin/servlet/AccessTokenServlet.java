@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AccessTokenServlet extends HttpServlet {
-    public class AccessTokenThread implements Runnable {
+    private class AccessTokenThread implements Runnable {
         public void run() {
             while (true) {
                 try {
