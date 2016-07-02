@@ -124,6 +124,7 @@
         -->
     </style>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath()%>/js/jskeyboard.js"></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/qrcode.js"></script>
     <script>
         function getQcode() {
@@ -193,7 +194,7 @@
 	<span class="STYLE7">
   	  <label>消费总额: </label>
   	</span>
-            <input type="text" name="productprice" id="productprice" class="amount" onkeyup="amount(this)"
+            <input type="text" name="productprice" id="productprice" class="amount" readonly="readonly" onclick="new KeyBoard(this);" onchange="amount(this)"
                    onpaste="return false;" autocomplete="off" onchange="clearimg()" placeholder="单位：￥（元）"/>
         </div>
     </div>

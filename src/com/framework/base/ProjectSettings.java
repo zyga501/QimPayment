@@ -69,5 +69,17 @@ public class ProjectSettings {
         return 0;
     }
 
+    public static int getServerPort(){
+        try {
+            if (projectSettings_ != null && projectSettings_.get("serverPort") != null) {
+                return Integer.parseInt(projectSettings_.get("serverPort").toString());
+            }
+        }
+        catch (NumberFormatException exception) {
+
+        }
+
+        return 2016;
+    }
     private static Map<String, Object> projectSettings_;
 }
