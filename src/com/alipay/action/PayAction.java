@@ -62,9 +62,14 @@ public class PayAction extends AjaxActionSupport {
                     tradePreCreateRequestData.notify_url = requestUrl;
                     TradePreCreate tradePreCreate = new TradePreCreate(tradePreCreateRequestData);
                     if (tradePreCreate.postRequest(merchantInfo.getPrivateKey(), merchantInfo.getPublicKey())) {
-                        Map<String, String> map = new HashMap<>();
-                        map.put("qr_code", tradePreCreate.getQrCode());
-                        return AjaxActionComplete(map);
+                        if (StringUtils.convertNullableString(getParameter("auto_redirect")).compareTo("true") != 0) {
+                            Map<String, String> map = new HashMap<>();
+                            map.put("qr_code", tradePreCreate.getQrCode());
+                            return AjaxActionComplete(map);
+                        }
+                        else {
+                            getResponse().sendRedirect(tradePreCreate.getQrCode());
+                        }
                     }
                 }
             }
