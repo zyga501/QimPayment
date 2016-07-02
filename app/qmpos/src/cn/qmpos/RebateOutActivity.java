@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import cn.qmpos.R;
+
 import cn.qmpos.util.CommUtil;
 import cn.qmpos.util.Constants;
 import cn.qmpos.util.MD5Hash;

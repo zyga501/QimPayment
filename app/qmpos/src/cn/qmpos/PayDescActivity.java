@@ -7,6 +7,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 import cn.qmpos.R;
+
 import cn.qmpos.util.CommUtil;
 
 public class PayDescActivity extends BaseActivity implements OnClickListener {

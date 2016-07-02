@@ -15,13 +15,12 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import cn.qmpos.R;
 import cn.qmpos.http.HttpRequest;
 import cn.qmpos.util.Constants;
 import cn.qmpos.util.MD5Hash;
+import cn.qmpos.R;
 
-public class FindTransPwd2Activity extends BaseActivity implements
-		OnClickListener {
+public class FindTransPwd2Activity extends BaseActivity implements OnClickListener {
 
 	private EditText editNewPwd;
 	private EditText editNewPwdAgain;
@@ -46,10 +45,8 @@ public class FindTransPwd2Activity extends BaseActivity implements
 		btnBack.setOnClickListener(this);
 		btnSubmit.setOnClickListener(this);
 
-		editNewPwd = (EditText) this
-				.findViewById(R.id.find_trans_pwd2_edit_new_pwd);
-		editNewPwdAgain = (EditText) this
-				.findViewById(R.id.find_trans_pwd2_edit_new_pwd_again);
+		editNewPwd = (EditText) this.findViewById(R.id.find_trans_pwd2_edit_new_pwd);
+		editNewPwdAgain = (EditText) this.findViewById(R.id.find_trans_pwd2_edit_new_pwd_again);
 
 		findTransPwd2Activity = this;
 	}
@@ -78,8 +75,8 @@ public class FindTransPwd2Activity extends BaseActivity implements
 			Toast.makeText(this, "新密码不能为空", Toast.LENGTH_SHORT).show();
 			return;
 		}
-		if (!(newPwd.length() <= 6)) {
-			Toast.makeText(this, "密码的长度最少是6位", Toast.LENGTH_SHORT).show();
+		if (newPwd.length() != 6) {
+			Toast.makeText(this, "密码的长度必须是6位", Toast.LENGTH_SHORT).show();
 			return;
 		}
 
@@ -95,13 +92,11 @@ public class FindTransPwd2Activity extends BaseActivity implements
 
 		MD5Hash m = new MD5Hash();
 		FindTransPwd2Task findTransPwd2Task = new FindTransPwd2Task();
-		findTransPwd2Task.execute(new String[] { mobile, smscode,
-				m.getMD5ofStr(newPwd) });
+		findTransPwd2Task.execute(new String[] { mobile, smscode, m.getMD5ofStr(newPwd) });
 
 	}
 
-	class FindTransPwd2Task extends
-			AsyncTask<String, Integer, HashMap<String, String>> {
+	class FindTransPwd2Task extends AsyncTask<String, Integer, HashMap<String, String>> {
 
 		protected void onPreExecute() {
 			dialog.setMessage("系统处理中...");
@@ -118,8 +113,7 @@ public class FindTransPwd2Activity extends BaseActivity implements
 				map.put("smsCode", params[1]);
 				map.put("newPwd", params[2]);
 
-				String requestUrl = Constants.server_host
-						+ Constants.server_updateTransPwd_url;
+				String requestUrl = Constants.server_host + Constants.server_updateTransPwd_url;
 				String responseStr = HttpRequest.getResponse(requestUrl, map);
 				if (Constants.ERROR.equals(responseStr)) {
 					returnMap.put("respCode", Constants.SERVER_NETERR);
@@ -149,25 +143,20 @@ public class FindTransPwd2Activity extends BaseActivity implements
 			String respDesc = resultMap.get("respDesc");
 			if (!Constants.SERVER_SUCC.equals(respCode)) {
 				dialog.hide();
-				Toast.makeText(findTransPwd2Activity, respDesc,
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(findTransPwd2Activity, respDesc, Toast.LENGTH_SHORT).show();
 				return;
 			}
 
 			try {
-				AlertDialog.Builder builder = new AlertDialog.Builder(
-						findTransPwd2Activity);
+				AlertDialog.Builder builder = new AlertDialog.Builder(findTransPwd2Activity);
 				builder.setTitle("成功");
 				builder.setMessage("交易密码更改成功！");
-				builder.setPositiveButton("确认",
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,
-									int which) {
-								Intent i = new Intent(findTransPwd2Activity,
-										MainActivity.class);
-								findTransPwd2Activity.startActivity(i);
-							}
-						});
+				builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						Intent i = new Intent(findTransPwd2Activity, MainActivity.class);
+						findTransPwd2Activity.startActivity(i);
+					}
+				});
 				builder.show();
 			} catch (Exception e) {
 				e.printStackTrace();

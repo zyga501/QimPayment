@@ -15,18 +15,18 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 import cn.qmpos.R;
+
 import cn.qmpos.http.HttpRequest;
 import cn.qmpos.util.CommUtil;
 import cn.qmpos.util.Constants;
 import cn.qmpos.util.MD5Hash;
 
-public class TurnOutMoney2Activity extends BaseActivity implements
-		OnClickListener {
+public class TurnOutMoney2Activity extends BaseActivity implements OnClickListener {
 
 	private TextView get_money_name, get_money_mobile;
-	private EditText edit_turn_out_money, edit_turn_out_remark,
-			edit_trading_pwd;
+	private EditText edit_turn_out_money, edit_turn_out_remark, edit_trading_pwd;
 	private Button btnBack, btnSubmit;
 	@SuppressWarnings("unused")
 	private SharedPreferences sp;
@@ -81,8 +81,7 @@ public class TurnOutMoney2Activity extends BaseActivity implements
 		// 判断金额，收款说明，交易密码是否输入
 		String turn_out_money = edit_turn_out_money.getText().toString().trim();
 		turn_out_money = CommUtil.getCurrencyFormt(turn_out_money);
-		String turn_out_remark = edit_turn_out_remark.getText().toString()
-				.trim();
+		String turn_out_remark = edit_turn_out_remark.getText().toString().trim();
 		String trading_pwd = edit_trading_pwd.getText().toString().trim();
 
 		if (turn_out_money == null || "".equals(turn_out_money)) {
@@ -91,6 +90,11 @@ public class TurnOutMoney2Activity extends BaseActivity implements
 		}
 		if (!CommUtil.isNumberCanWithDot(turn_out_money)) {
 			showToast("转账金额不是标准的金额格式！");
+			return;
+		}
+		float showValues = Float.parseFloat(turn_out_money);
+		if (showValues < Constants.DEFAULT_DOUBLE_ERROR) {
+			Toast.makeText(this, "金额不能小于0！", Toast.LENGTH_SHORT).show();
 			return;
 		}
 		if (turn_out_remark == null || "".equals(turn_out_remark)) {
@@ -105,13 +109,12 @@ public class TurnOutMoney2Activity extends BaseActivity implements
 		MD5Hash m = new MD5Hash();
 
 		TurnOutMoney2Task turnOutMoney2Task = new TurnOutMoney2Task();
-		turnOutMoney2Task.execute(new String[] { merId, othersMobile,
-				turn_out_money, turn_out_remark, m.getMD5ofStr(trading_pwd) });
+		turnOutMoney2Task.execute(
+				new String[] { merId, othersMobile, turn_out_money, turn_out_remark, m.getMD5ofStr(trading_pwd) });
 
 	}
 
-	class TurnOutMoney2Task extends
-			AsyncTask<String, Integer, HashMap<String, String>> {
+	class TurnOutMoney2Task extends AsyncTask<String, Integer, HashMap<String, String>> {
 
 		protected void onPreExecute() {
 			dialog.setMessage("系统处理中...");
@@ -132,8 +135,7 @@ public class TurnOutMoney2Activity extends BaseActivity implements
 				map.put("transPwd", params[4]);
 				map.put("clientModel", android.os.Build.MODEL);
 
-				String requestUrl = Constants.server_host
-						+ Constants.server_doTrfToMer_url;
+				String requestUrl = Constants.server_host + Constants.server_doTrfToMer_url;
 				String responseStr = HttpRequest.getResponse(requestUrl, map);
 				if (Constants.ERROR.equals(responseStr)) {
 					returnMap.put("respCode", Constants.SERVER_NETERR);
@@ -167,8 +169,7 @@ public class TurnOutMoney2Activity extends BaseActivity implements
 				return;
 			} else {
 				showToast("您向对方转账成功！");
-				Intent intent = new Intent(turnOutMoney2Activity,
-						MainActivity.class);
+				Intent intent = new Intent(turnOutMoney2Activity, MainActivity.class);
 				startActivity(intent);
 			}
 		}

@@ -113,5 +113,7 @@ public class Constants {
 	public static String server_queryScoreTotList_url = "queryScoreTotList.do";
 	// ÊÕ¿î¶þÎ¬Âë
 	public static String server_doRecvQrCode_url = "doRecvQrCode.do";
+	// NFC¿¨ºÅ
+	public static String server_queryMerTransCard_url = "queryMerTransCard.do";
 
 }

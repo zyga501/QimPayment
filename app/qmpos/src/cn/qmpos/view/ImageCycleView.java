@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import cn.qmpos.R;
 
+
 import com.loopj.android.image.SmartImageView;
 
 /*

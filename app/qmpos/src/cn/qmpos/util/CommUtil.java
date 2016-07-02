@@ -23,8 +23,7 @@ public class CommUtil {
 
 	public static boolean isMp(String mp) {
 		// "^((13[0-9])|(15[^4,\\D])|(17[^4,\\D])|(18[0-9]))\\d{8}$"
-		Pattern p = Pattern
-				.compile("^((13[0-9])|(14[0-9])|(15[^4,\\D])|(17[^4,\\D])|(18[0-9]))\\d{8}$");
+		Pattern p = Pattern.compile("^((13[0-9])|(14[0-9])|(15[^4,\\D])|(17[^4,\\D])|(18[0-9]))\\d{8}$");
 		Matcher m = p.matcher(mp);
 		System.out.println(m.matches() + "---");
 		return m.matches();
@@ -54,6 +53,23 @@ public class CommUtil {
 
 	}
 
+	// nfc银行卡号
+	public static String addBarToBankCard(String bankAccount) {
+		int length = bankAccount.length();
+		if (length < 13)
+			return bankAccount;
+		return bankAccount.substring(0, length - 11) + "******" + bankAccount.substring(length - 4);
+	}
+
+	// nfc银行卡号显示后四位
+	public static String addBarToBankCardWH(String bankAccount) {
+		int length = bankAccount.length();
+		if (length < 13)
+			return bankAccount;
+		return bankAccount.substring(length - 4);
+
+	}
+
 	public static String getTime() {
 		SimpleDateFormat formatter = new SimpleDateFormat("HHmmss");
 		java.util.Date dateCurrent = new java.util.Date();
@@ -70,10 +86,8 @@ public class CommUtil {
 			return dateStr;
 		}
 
-		retDateStr = dateStr.substring(0, 4) + "-" + dateStr.substring(4, 6)
-				+ "-" + dateStr.substring(6, 8) + " "
-				+ dateStr.substring(8, 10) + ":" + dateStr.substring(10, 12)
-				+ ":" + dateStr.substring(12);
+		retDateStr = dateStr.substring(0, 4) + "-" + dateStr.substring(4, 6) + "-" + dateStr.substring(6, 8) + " "
+				+ dateStr.substring(8, 10) + ":" + dateStr.substring(10, 12) + ":" + dateStr.substring(12);
 
 		return retDateStr;
 
@@ -112,12 +126,10 @@ public class CommUtil {
 			date = calender.get(java.util.Calendar.DATE);
 			// System.out.println("year[" + year + "]month[" + month + "]date["
 			// + date + "]ParamValue[" + ParamValue + "]");
-			String NextDate = leftPad("" + year, 4, '0')
-					+ leftPad("" + month, 2, '0') + leftPad("" + date, 2, '0');
+			String NextDate = leftPad("" + year, 4, '0') + leftPad("" + month, 2, '0') + leftPad("" + date, 2, '0');
 			return NextDate;
 		} catch (Exception e) {
-			System.out.println("Exception in getNextDate[" + e.getMessage()
-					+ "]");
+			System.out.println("Exception in getNextDate[" + e.getMessage() + "]");
 			return null;
 		}
 	}
@@ -134,8 +146,7 @@ public class CommUtil {
 			return dateStr;
 		}
 
-		retDateStr = dateStr.substring(0, 4) + "-" + dateStr.substring(4, 6)
-				+ "-" + dateStr.substring(6);
+		retDateStr = dateStr.substring(0, 4) + "-" + dateStr.substring(4, 6) + "-" + dateStr.substring(6);
 
 		return retDateStr;
 
@@ -153,8 +164,7 @@ public class CommUtil {
 			return timeStr;
 		}
 
-		retDateStr = timeStr.substring(0, 2) + ":" + timeStr.substring(2, 4)
-				+ ":" + timeStr.substring(4);
+		retDateStr = timeStr.substring(0, 2) + ":" + timeStr.substring(2, 4) + ":" + timeStr.substring(4);
 
 		return retDateStr;
 
@@ -172,8 +182,7 @@ public class CommUtil {
 			return timeStr;
 		}
 
-		retDateStr = timeStr.substring(0, 2) + "时" + timeStr.substring(2, 4)
-				+ "分" + timeStr.substring(4) + "秒";
+		retDateStr = timeStr.substring(0, 2) + "时" + timeStr.substring(2, 4) + "分" + timeStr.substring(4) + "秒";
 
 		return retDateStr;
 
@@ -187,8 +196,7 @@ public class CommUtil {
 		int length = bankAccount.length();
 		if (length < 13)
 			return bankAccount;
-		return bankAccount.substring(0, length - 11) + "******"
-				+ bankAccount.substring(length - 4);
+		return bankAccount.substring(0, length - 11) + "******" + bankAccount.substring(length - 4);
 	}
 
 	/*************************************************************
@@ -422,7 +430,7 @@ public class CommUtil {
 	 * @author
 	 * @param str
 	 *            判断的字符串
-	 * */
+	 */
 	public static boolean isEmpty(String str) {
 		if (str == null || str.equals("")) {
 			return true;
@@ -433,7 +441,7 @@ public class CommUtil {
 
 	/**
 	 * 是否安装SD卡
-	 * */
+	 */
 	public static boolean hasSDCard() {
 		String status = Environment.getExternalStorageState();
 		if (!status.equals(Environment.MEDIA_MOUNTED)) {
@@ -444,11 +452,10 @@ public class CommUtil {
 
 	/**
 	 * 获取根目录
-	 * */
+	 */
 	public static String getRootFilePath() {
 		if (hasSDCard()) {
-			return Environment.getExternalStorageDirectory().getAbsolutePath()
-					+ "/";// filePath:/sdcard/
+			return Environment.getExternalStorageDirectory().getAbsolutePath() + "/";// filePath:/sdcard/
 		} else {
 			return Environment.getDataDirectory().getAbsolutePath() + "/data/"; // filePath:
 																				// /data/data/
@@ -458,8 +465,7 @@ public class CommUtil {
 	/** 是否有网 */
 	public static boolean checkNetState(Context context) {
 		boolean netstate = false;
-		ConnectivityManager connectivity = (ConnectivityManager) context
-				.getSystemService(Context.CONNECTIVITY_SERVICE);
+		ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 		if (connectivity != null) {
 			NetworkInfo[] info = connectivity.getAllNetworkInfo();
 			if (info != null) {

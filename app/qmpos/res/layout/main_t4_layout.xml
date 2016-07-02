@@ -56,7 +56,6 @@
                         android:id="@+id/main_t3_mer_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="徐立华"
                         android:textColor="@color/text_color"
                         android:textSize="@dimen/text_size20" />
 
@@ -65,7 +64,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/page_margin"
-                        android:text="123123"
                         android:textColor="@color/text_color"
                         android:textSize="@dimen/text_size15" />
                 </LinearLayout>
@@ -85,51 +83,6 @@
                 android:layout_height="1dp"
                 android:background="@color/under_line_color"
                 android:contentDescription="@null" />
-
-            <RelativeLayout
-                android:id="@+id/main_t3_acct_info"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/img_width_height"
-                android:background="@color/whilte"
-                android:clickable="true"
-                android:visibility="gone" >
-
-                <ImageView
-                    android:id="@+id/icon_zhanghuxiangqing"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerInParent="true"
-                    android:layout_marginLeft="@dimen/margin_width_height"
-                    android:layout_marginTop="6dp"
-                    android:src="@drawable/zhanghuxiangqing" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/page_margin"
-                    android:layout_toRightOf="@+id/icon_zhanghuxiangqing"
-                    android:text="账户详情"
-                    android:textColor="@color/black_text"
-                    android:textSize="@dimen/text_size15" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_margin="10dp"
-                    android:contentDescription="@null"
-                    android:src="@drawable/hk_tab4_bg_jiantou" />
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/under_line_color"
-                    android:contentDescription="@null" />
-            </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/main_tuiguangjili"
@@ -265,50 +218,6 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/main_zhanghu15_list"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/img_width_height"
-                android:background="@color/whilte"
-                android:clickable="true" >
-
-                <ImageView
-                    android:id="@+id/icon_jiesuankaguanli"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerInParent="true"
-                    android:layout_marginLeft="@dimen/margin_width_height"
-                    android:layout_marginTop="6dp"
-                    android:src="@drawable/jiesuanguanli" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/page_margin"
-                    android:layout_toRightOf="@+id/icon_jiesuankaguanli"
-                    android:text="结算账户管理"
-                    android:textColor="@color/black_text"
-                    android:textSize="@dimen/text_size15" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_margin="10dp"
-                    android:contentDescription="@null"
-                    android:src="@drawable/hk_tab4_bg_jiantou" />
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/under_line_color"
-                    android:contentDescription="@null" />
-            </RelativeLayout>
-
-            <RelativeLayout
                 android:id="@+id/main_update_phone"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/img_width_height"
@@ -350,6 +259,53 @@
                     android:layout_alignParentBottom="true"
                     android:background="@color/under_line_color"
                     android:contentDescription="@null" />
+
+                <RelativeLayout
+                    android:id="@+id/main_zhanghu15_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/img_width_height"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:background="@color/whilte"
+                    android:clickable="true" >
+
+                    <ImageView
+                        android:id="@+id/icon_jiesuankaguanli"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="@dimen/margin_width_height"
+                        android:layout_marginTop="6dp"
+                        android:src="@drawable/jiesuanguanli" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/page_margin"
+                        android:layout_toRightOf="@+id/icon_jiesuankaguanli"
+                        android:text="结算账户管理"
+                        android:textColor="@color/black_text"
+                        android:textSize="@dimen/text_size15" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="10dp"
+                        android:contentDescription="@null"
+                        android:src="@drawable/hk_tab4_bg_jiantou" />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/under_line_color"
+                        android:contentDescription="@null" />
+                </RelativeLayout>
+
             </RelativeLayout>
 
             <RelativeLayout

@@ -10,6 +10,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import cn.qmpos.R;
 
+
 /**
  * 
  * @ClassName: CustomLoadingDialog

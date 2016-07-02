@@ -50,6 +50,7 @@ import cn.qmpos.MainActivity;
 import cn.qmpos.MerListActivity;
 import cn.qmpos.PwdMngActivity;
 import cn.qmpos.R;
+
 import cn.qmpos.RateInformationActivity;
 import cn.qmpos.UpdatePhoneActivity;
 import cn.qmpos.WebViewActivity;

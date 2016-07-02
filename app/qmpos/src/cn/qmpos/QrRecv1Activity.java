@@ -22,6 +22,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import cn.qmpos.R;
+
 import cn.qmpos.util.CommUtil;
 import cn.qmpos.util.Constants;
 

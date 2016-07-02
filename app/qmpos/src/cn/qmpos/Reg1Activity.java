@@ -30,6 +30,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import cn.qmpos.R;
+
 import cn.qmpos.async.SmsTask;
 import cn.qmpos.http.HttpRequest;
 import cn.qmpos.util.CommUtil;
@@ -188,7 +189,7 @@ public class Reg1Activity extends BaseActivity implements OnClickListener {
 			Toast.makeText(this, "手机号错误！", Toast.LENGTH_SHORT).show();
 			return;
 		}
-		if ("".equals(smsCode) || smsCode.length() < 4) {
+		if ("".equals(smsCode) || smsCode.length() != 4) {
 			Toast.makeText(this, "请输入正确的验证码！", Toast.LENGTH_SHORT).show();
 			return;
 		}

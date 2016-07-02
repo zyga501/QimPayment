@@ -5,10 +5,8 @@ import java.util.HashMap;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -16,10 +14,10 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import cn.qmpos.R;
 import cn.qmpos.http.HttpRequest;
 import cn.qmpos.util.CommUtil;
 import cn.qmpos.util.Constants;
+import cn.qmpos.R;
 
 /**
  * 添加银行卡
@@ -53,10 +51,8 @@ public class AddCardActivity extends BaseActivity implements OnClickListener {
 		textBankName.setOnClickListener(this);
 		auth_btn_next.setOnClickListener(this);
 
-		SharedPreferences mySharedPreferences = getSharedPreferences("qmpos",
-				Activity.MODE_PRIVATE);
 		// 账户名称
-		textCardName.setText(mySharedPreferences.getString("merName", ""));
+		textCardName.setText(sp.getString("merName", ""));
 	}
 
 	private void setCard() {
@@ -89,12 +85,9 @@ public class AddCardActivity extends BaseActivity implements OnClickListener {
 			return;
 		}
 
-		SharedPreferences mySharedPreferences = getSharedPreferences("qmpos",
-				Activity.MODE_PRIVATE);
-		String merId = mySharedPreferences.getString("merId", "");
+		String merId = sp.getString("merId", "");
 		BankCardBindTask bankCardBindTask = new BankCardBindTask();
-		bankCardBindTask.execute(new String[] { merId, bankCode, cardNo,
-				cardName });
+		bankCardBindTask.execute(new String[] { merId, bankCode, cardNo, cardName, "J" });
 	}
 
 	public void onClick(View v) {
@@ -118,16 +111,13 @@ public class AddCardActivity extends BaseActivity implements OnClickListener {
 	private void showBankDialog() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle("请选择银行");
-		builder.setItems(R.array.bank_name,
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						String bankName = getResources().getStringArray(
-								R.array.bank_name)[which];
-						bankCode = getResources().getStringArray(
-								R.array.bank_code)[which];
-						textBankName.setText(bankName);
-					}
-				});
+		builder.setItems(R.array.bank_name, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				String bankName = getResources().getStringArray(R.array.bank_name)[which];
+				bankCode = getResources().getStringArray(R.array.bank_code)[which];
+				textBankName.setText(bankName);
+			}
+		});
 		builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 
@@ -136,8 +126,7 @@ public class AddCardActivity extends BaseActivity implements OnClickListener {
 		builder.show();
 	}
 
-	class BankCardBindTask extends
-			AsyncTask<String, Integer, HashMap<String, String>> {
+	class BankCardBindTask extends AsyncTask<String, Integer, HashMap<String, String>> {
 
 		protected void onPreExecute() {
 			dialog.setMessage("正在添加,请稍候...");
@@ -155,9 +144,9 @@ public class AddCardActivity extends BaseActivity implements OnClickListener {
 				map.put("openBankId", params[1]);
 				map.put("openAcctId", params[2]);
 				map.put("openAcctName", params[3]);
+				map.put("cardType", params[4]);
 
-				String requestUrl = Constants.server_host
-						+ Constants.server_bankCardBind_url;
+				String requestUrl = Constants.server_host + Constants.server_bankCardBind_url;
 				String responseStr = HttpRequest.getResponse(requestUrl, map);
 				if (Constants.ERROR.equals(responseStr)) {
 					returnMap.put("respCode", Constants.SERVER_NETERR);
@@ -185,20 +174,20 @@ public class AddCardActivity extends BaseActivity implements OnClickListener {
 
 		protected void onPostExecute(HashMap<String, String> resultMap) {
 			String respCode = resultMap.get("respCode");
-			if (Constants.SERVER_SUCC.equals(respCode)) {
-				dialog.hide();
-				AlertDialog.Builder builder = new AlertDialog.Builder(
-						addCardActivity);
+			String respDesc = resultMap.get("respDesc");
+			dialog.hide();
+			if (!Constants.SERVER_SUCC.equals(respCode)) {
+				showToast(respDesc);
+			} else {
+				AlertDialog.Builder builder = new AlertDialog.Builder(addCardActivity);
 				builder.setTitle("提示");
 				builder.setMessage("添加银行卡成功！");
-				builder.setPositiveButton("确认",
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,
-									int which) {
-								setResult(RESULT_OK);
-								finish();
-							}
-						});
+				builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						setResult(RESULT_OK);
+						finish();
+					}
+				});
 				builder.show();
 				return;
 			}

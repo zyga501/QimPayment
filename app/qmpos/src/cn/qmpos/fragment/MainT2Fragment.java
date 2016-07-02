@@ -27,8 +27,10 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 import cn.qmpos.R;
+
 import cn.qmpos.NorRecv1Activity;
 import cn.qmpos.WebViewActivity;
+import cn.qmpos.WebViewMoreActivity;
 import cn.qmpos.http.HttpRequest;
 import cn.qmpos.util.CommUtil;
 import cn.qmpos.util.Constants;
@@ -177,6 +179,11 @@ public class MainT2Fragment extends Fragment implements OnClickListener {
 			Toast.makeText(mainActivity, "收款金额不是标准的金额格式！", Toast.LENGTH_SHORT)
 					.show();
 			tv_price.setFocusable(true);
+			return;
+		}
+		float showValues = Float.parseFloat(showValue);
+		if (showValues < Constants.DEFAULT_DOUBLE_ERROR) {
+			Toast.makeText(mainActivity, "金额不能小于0！", Toast.LENGTH_SHORT).show();
 			return;
 		}
 		showValue = CommUtil.getCurrencyFormt(showValue);
@@ -405,7 +412,7 @@ public class MainT2Fragment extends Fragment implements OnClickListener {
 			dialog.hide();
 			try {
 				String qrCodeUrl = resultMap.get("qrCodeUrl");
-				Intent i = new Intent(mainActivity, WebViewActivity.class);
+				Intent i = new Intent(mainActivity, WebViewMoreActivity.class);
 				i.putExtra("url", qrCodeUrl);
 				startActivity(i);
 			} catch (Exception e) {

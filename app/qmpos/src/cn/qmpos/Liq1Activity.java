@@ -6,7 +6,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,10 +20,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import cn.qmpos.R;
+import cn.qmpos.http.HttpRequest;
 import cn.qmpos.util.CommUtil;
 import cn.qmpos.util.Constants;
 import cn.qmpos.util.MD5Hash;
+import cn.qmpos.R;
 
 public class Liq1Activity extends BaseActivity implements OnClickListener {
 
@@ -71,14 +71,12 @@ public class Liq1Activity extends BaseActivity implements OnClickListener {
 		liq1Activity = this;
 
 		// 查询结算商户信息
-		SharedPreferences mySharedPreferences = getSharedPreferences("qmpos",
-				Activity.MODE_PRIVATE);
-		String merId = mySharedPreferences.getString("merId", "");
-		String loginId = mySharedPreferences.getString("loginId", "");
-		String sessionId = mySharedPreferences.getString("sessionId", "");
+		String merId = sp.getString("merId", "");
+		String loginId = sp.getString("loginId", "");
+		String sessionId = sp.getString("sessionId", "");
 
 		InitTask initTask = new InitTask();
-		initTask.execute(new String[] { merId, loginId, sessionId });
+		initTask.execute(new String[] { merId, loginId, sessionId, "J" });
 
 	}
 
@@ -111,14 +109,13 @@ public class Liq1Activity extends BaseActivity implements OnClickListener {
 	private void showLiqBankDialog() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle("请选择提现卡号");
-		builder.setSingleChoiceItems(liqCardNameArr, selLiqCardId,
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						selLiqCardId = which;
-						textCardInfo.setText(liqCardNameArr[which]);
-						dialog.dismiss();
-					}
-				});
+		builder.setSingleChoiceItems(liqCardNameArr, selLiqCardId, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				selLiqCardId = which;
+				textCardInfo.setText(liqCardNameArr[which]);
+				dialog.dismiss();
+			}
+		});
 		builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 
@@ -144,6 +141,11 @@ public class Liq1Activity extends BaseActivity implements OnClickListener {
 			editLiqAmt.setFocusable(true);
 			return;
 		}
+		float showValues = Float.parseFloat(liqAmt);
+		if (showValues < Constants.DEFAULT_DOUBLE_ERROR) {
+			Toast.makeText(this, "金额不能小于0！", Toast.LENGTH_SHORT).show();
+			return;
+		}
 		liqAmt = CommUtil.getCurrencyFormt(liqAmt);
 
 		if (transPwd == null || "".equals(transPwd)) {
@@ -153,16 +155,13 @@ public class Liq1Activity extends BaseActivity implements OnClickListener {
 		}
 
 		// 查询结算商户信息
-		SharedPreferences mySharedPreferences = getSharedPreferences("qmpos",
-				Activity.MODE_PRIVATE);
-		String merId = mySharedPreferences.getString("merId", "");
-		String sessionId = mySharedPreferences.getString("sessionId", "");
+		String merId = sp.getString("merId", "");
+		String sessionId = sp.getString("sessionId", "");
 
 		// 发起收款
 		MD5Hash m = new MD5Hash();
 		Liq1Task liq1Task = new Liq1Task();
-		liq1Task.execute(new String[] { merId, liqCardId, liqAmt,
-				m.getMD5ofStr(transPwd), sessionId });
+		liq1Task.execute(new String[] { merId, liqCardId, liqAmt, m.getMD5ofStr(transPwd), sessionId });
 
 	}
 
@@ -185,10 +184,8 @@ public class Liq1Activity extends BaseActivity implements OnClickListener {
 				map.put("sessionId", params[4]);
 				map.put("clientModel", android.os.Build.MODEL);
 
-				String requestUrl = Constants.server_host
-						+ Constants.server_doLiq_url;
-				String responseStr = cn.qmpos.http.HttpRequest.getResponse(
-						requestUrl, map);
+				String requestUrl = Constants.server_host + Constants.server_doLiq_url;
+				String responseStr = HttpRequest.getResponse(requestUrl, map);
 				if (Constants.ERROR.equals(responseStr)) {
 					returnMap.put("respCode", Constants.SERVER_NETERR);
 					returnMap.put("respDesc", responseStr);
@@ -217,22 +214,19 @@ public class Liq1Activity extends BaseActivity implements OnClickListener {
 			String respDesc = resultMap.get("respDesc");
 			if (!Constants.SERVER_SUCC.equals(respCode)) {
 				dialog.hide();
-				Toast.makeText(liq1Activity, respDesc, Toast.LENGTH_SHORT)
-						.show();
+				Toast.makeText(liq1Activity, respDesc, Toast.LENGTH_SHORT).show();
 				return;
 			}
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(liq1Activity);
 			builder.setTitle("提现成功");
 			builder.setMessage("你的提现申请已经成功，请注意银行资金账户变动。");
-			builder.setPositiveButton("确认",
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int which) {
-							Intent i = new Intent(liq1Activity,
-									MainActivity.class);
-							liq1Activity.startActivity(i);
-						}
-					});
+			builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					Intent i = new Intent(liq1Activity, MainActivity.class);
+					liq1Activity.startActivity(i);
+				}
+			});
 			builder.show();
 			return;
 		}
@@ -258,10 +252,8 @@ public class Liq1Activity extends BaseActivity implements OnClickListener {
 				map.put("sessionId", params[2]);
 				map.put("clientModel", android.os.Build.MODEL);
 
-				String requestUrl = Constants.server_host
-						+ Constants.server_queryMerInfo_url;
-				String responseStr = cn.qmpos.http.HttpRequest.getResponse(
-						requestUrl, map);
+				String requestUrl = Constants.server_host + Constants.server_queryMerInfo_url;
+				String responseStr = cn.qmpos.http.HttpRequest.getResponse(requestUrl, map);
 				if (Constants.ERROR.equals(responseStr)) {
 					returnMap.put("respCode", Constants.SERVER_NETERR);
 					returnMap.put("respDesc", "网络异常");
@@ -278,12 +270,9 @@ public class Liq1Activity extends BaseActivity implements OnClickListener {
 				returnMap.put("respDesc", respDesc);
 				if (respCode.equals(Constants.SERVER_SUCC)) {
 					isAuthentication = jsonObj.getString("isAuthentication");
-					returnMap.put("isAuthentication",
-							jsonObj.getString("isAuthentication"));
-					returnMap.put("feeRateLiq1",
-							jsonObj.getString("feeRateLiq1"));
-					returnMap.put("feeRateLiq2",
-							jsonObj.getString("feeRateLiq2"));
+					returnMap.put("isAuthentication", jsonObj.getString("isAuthentication"));
+					returnMap.put("feeRateLiq1", jsonObj.getString("feeRateLiq1"));
+					returnMap.put("feeRateLiq2", jsonObj.getString("feeRateLiq2"));
 					returnMap.put("totAmtT1", jsonObj.getString("totAmtT1"));
 				}
 				if (!"S".equals(isAuthentication))
@@ -298,15 +287,13 @@ public class Liq1Activity extends BaseActivity implements OnClickListener {
 			// 查询商户结算账号信息
 			try {
 				HashMap<String, String> map = new HashMap<String, String>();
-
 				map.put("merId", params[0]);
 				map.put("sessionId", params[2]);
+				map.put("cardType", params[3]);
 				map.put("clientModel", android.os.Build.MODEL);
 
-				String requestUrl = Constants.server_host
-						+ Constants.server_queryLiqCard_url;
-				String responseStr = cn.qmpos.http.HttpRequest.getResponse(
-						requestUrl, map);
+				String requestUrl = Constants.server_host + Constants.server_queryLiqCard_url;
+				String responseStr = cn.qmpos.http.HttpRequest.getResponse(requestUrl, map);
 				if (Constants.ERROR.equals(responseStr)) {
 					returnMap.put("respCode", Constants.SERVER_NETERR);
 					returnMap.put("respDesc", "网络异常");
@@ -321,22 +308,17 @@ public class Liq1Activity extends BaseActivity implements OnClickListener {
 				returnMap.put("respCode", respCode);
 				returnMap.put("respDesc", respDesc);
 				if (respCode.equals(Constants.SERVER_SUCC)) {
-					int totalNum = Integer.parseInt(jsonObj
-							.getString("totalNum"));
+					int totalNum = Integer.parseInt(jsonObj.getString("totalNum"));
 					returnMap.put("totalNum", jsonObj.getString("totalNum"));
 					if (totalNum > 0) {
 						liqCardIdArr = new String[totalNum];
 						liqCardNameArr = new String[totalNum];
-						JSONArray tempArray = jsonObj
-								.getJSONArray("ordersInfo");
+						JSONArray tempArray = jsonObj.getJSONArray("ordersInfo");
 						for (int i = 0; i < tempArray.length(); i++) {
 							JSONObject tempObj = tempArray.getJSONObject(i);
 							liqCardIdArr[i] = tempObj.getString("liqCardId");
-							liqCardNameArr[i] = tempObj
-									.getString("openBankName")
-									+ "\n"
-									+ CommUtil.addBarToBankCardNo(tempObj
-											.getString("openAcctId"));
+							liqCardNameArr[i] = tempObj.getString("openBankName") + "\n"
+									+ CommUtil.addBarToBankCardNo(tempObj.getString("openAcctId"));
 						}
 					}
 				}
@@ -354,10 +336,8 @@ public class Liq1Activity extends BaseActivity implements OnClickListener {
 				map.put("acctType", "PAY0");
 				map.put("sessionId", params[2]);
 
-				String requestUrl = Constants.server_host
-						+ Constants.server_queryMerBal_url;
-				String responseStr = cn.qmpos.http.HttpRequest.getResponse(
-						requestUrl, map);
+				String requestUrl = Constants.server_host + Constants.server_queryMerBal_url;
+				String responseStr = cn.qmpos.http.HttpRequest.getResponse(requestUrl, map);
 				if (Constants.ERROR.equals(responseStr)) {
 					returnMap.put("respCode", Constants.SERVER_NETERR);
 					returnMap.put("respDesc", "网络异常");
@@ -393,30 +373,23 @@ public class Liq1Activity extends BaseActivity implements OnClickListener {
 			String respCode = resultMap.get("respCode");
 			String respDesc = resultMap.get("respDesc");
 			if (!Constants.SERVER_SUCC.equals(respCode)) {
-				AlertDialog.Builder builder = new AlertDialog.Builder(
-						liq1Activity);
+				AlertDialog.Builder builder = new AlertDialog.Builder(liq1Activity);
 				builder.setTitle("系统异常");
 				builder.setMessage(respDesc);
-				builder.setPositiveButton("确认",
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,
-									int which) {
-								Intent i = new Intent(liq1Activity,
-										LoginActivity.class);
-								liq1Activity.startActivity(i);
-							}
-						});
+				builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						Intent i = new Intent(liq1Activity, LoginActivity.class);
+						liq1Activity.startActivity(i);
+					}
+				});
 				builder.show();
 				return;
 			}
 
 			try {
-				SharedPreferences mySharedPreferences = liq1Activity
-						.getSharedPreferences("qmpos", Activity.MODE_PRIVATE);
-				SharedPreferences.Editor editor = mySharedPreferences.edit();
+				SharedPreferences.Editor editor = sp.edit();
 				// 将登录后的商户信息保存
-				editor.putString("isAuthentication",
-						resultMap.get("isAuthentication"));
+				editor.putString("isAuthentication", resultMap.get("isAuthentication"));
 				editor.putString("feeRateLiq1", resultMap.get("feeRateLiq1"));
 				editor.putString("feeRateLiq2", resultMap.get("feeRateLiq2"));
 				editor.putString("totAmtT1", resultMap.get("totAmtT1"));
@@ -427,45 +400,33 @@ public class Liq1Activity extends BaseActivity implements OnClickListener {
 
 				String isAuthentication = resultMap.get("isAuthentication");
 				if ("I".equals(isAuthentication)) {
-					AlertDialog.Builder builder = new AlertDialog.Builder(
-							liq1Activity);
+					AlertDialog.Builder builder = new AlertDialog.Builder(liq1Activity);
 					builder.setTitle("提示");
 					builder.setMessage("您未绑定收款银行卡正在审核中，暂不可以提现！");
-					builder.setPositiveButton("回首页",
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,
-										int which) {
-									Intent i = new Intent(liq1Activity,
-											MainActivity.class);
-									liq1Activity.startActivity(i);
-								}
-							});
+					builder.setPositiveButton("回首页", new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int which) {
+							Intent i = new Intent(liq1Activity, MainActivity.class);
+							liq1Activity.startActivity(i);
+						}
+					});
 					builder.show();
 					return;
 				} else if (!"S".equals(isAuthentication)) {
-					AlertDialog.Builder builder = new AlertDialog.Builder(
-							liq1Activity);
+					AlertDialog.Builder builder = new AlertDialog.Builder(liq1Activity);
 					builder.setTitle("提示");
 					builder.setMessage("您未绑定收款银行卡，暂不可以提现！");
-					builder.setPositiveButton("回首页",
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,
-										int which) {
-									Intent i = new Intent(liq1Activity,
-											MainActivity.class);
-									liq1Activity.startActivity(i);
-								}
-							});
-					builder.setNegativeButton("我要实名",
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,
-										int which) {
-									Intent i = new Intent(
-											liq1Activity,
-											AuthenticationActivity.class);
-									liq1Activity.startActivity(i);
-								}
-							});
+					builder.setPositiveButton("回首页", new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int which) {
+							Intent i = new Intent(liq1Activity, MainActivity.class);
+							liq1Activity.startActivity(i);
+						}
+					});
+					builder.setNegativeButton("我要实名", new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int which) {
+							Intent i = new Intent(liq1Activity, AuthenticationActivity.class);
+							liq1Activity.startActivity(i);
+						}
+					});
 					builder.show();
 					return;
 				}
@@ -480,12 +441,9 @@ public class Liq1Activity extends BaseActivity implements OnClickListener {
 					liqAmt = 0;
 				}
 				textCardInfo.setText(liqCardNameArr[0]);
-				textFeeInfo.setText(Html.fromHtml("手续费五万以下<font color=#78b2ed>"
-						+ feeRateLiq1 + "</font>元/笔,五万以上<font color=#78b2ed>"
-						+ feeRateLiq2 + "</font>元/笔"));
-				editLiqAmt.setHint("当前可提现的金额"
-						+ CommUtil.getCurrencyFormt(String.valueOf(liqAmt))
-						+ "元");
+				textFeeInfo.setText(Html.fromHtml("手续费五万以下<font color=#78b2ed>" + feeRateLiq1
+						+ "</font>元/笔,五万以上<font color=#78b2ed>" + feeRateLiq2 + "</font>元/笔"));
+				editLiqAmt.setHint("当前可提现的金额" + CommUtil.getCurrencyFormt(String.valueOf(liqAmt)) + "元");
 
 				btnSubmit.setEnabled(true);
 			} catch (Exception e) {

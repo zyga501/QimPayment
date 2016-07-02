@@ -7,8 +7,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
-import cn.qmpos.R;
 import cn.qmpos.util.CommUtil;
+import cn.qmpos.R;
 
 public class AcctInfoActivity extends BaseActivity implements OnClickListener {
 
