@@ -5,6 +5,11 @@ import com.framework.action.AjaxActionSupport;
 import com.framework.utils.Logger;
 import net.sf.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.message.NotifyCenter.NoiftyMessage;
+
 public class CallbackAction extends AjaxActionSupport {
     public final static String TRADEPRECREATE = "Callback!tradePreCreate";
     public final static String SUCCESS = "success";
@@ -29,6 +34,13 @@ public class CallbackAction extends AjaxActionSupport {
         orderInfo.setGmtPayment(getParameter("gmt_payment").toString());
         orderInfo.setCreateUser(Long.parseLong(getParameter("createUser").toString()));
         orderInfo.setOpenId(getParameter("open_id").toString());
+        Map<String, String> map = new HashMap<>();
+        map.put("body",getParameter("subject").toString());
+        map.put("transaction_id",getParameter("trade_no").toString());
+        map.put("out_trade_no", getParameter("out_trade_no").toString());
+        map.put("total_fee", getParameter("total_amount").toString());
+        map.put("time_end", getParameter("gmt_payment").toString());
+        NoiftyMessage(Long.parseLong(getParameter("createUser").toString()),getParameter("createUser").toString().concat("#jdpay@").concat(JSONObject.fromObject(map).toString()));
         return OrderInfo.insertOrderInfo(orderInfo);
     }
 }

@@ -18,7 +18,11 @@
         </servlet-class>
         <load-on-startup>0</load-on-startup>
     </servlet>
-    <listener>
-        <listener-class>com.framework.socket.SocketServiceLoader</listener-class>
-    </listener>
+    <servlet>
+        <servlet-name>NotifyCenterServlet</servlet-name>
+        <servlet-class>
+            com.message.NotifyCenterServlet
+        </servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
 </web-app>
