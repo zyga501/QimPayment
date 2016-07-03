@@ -17,6 +17,10 @@ import java.util.Map;
 public class NotifyCenter {
     private static NotifyCenter notifyCenter_ = new NotifyCenter();
 
+    public static void Make(){
+
+    }
+
     public static void NoiftyMessage(Long uid, String nofity) {
         synchronized (notifyCenter_.ClientMap()) {
             if (notifyCenter_.ClientMap().containsKey(uid)) {
@@ -30,13 +34,13 @@ public class NotifyCenter {
             try {
                 clientSocket_ = clientSocket;
                 inputSteram_ = new BufferedReader(new InputStreamReader(clientSocket_.getInputStream()));
-                outputStream_ = new PrintWriter(clientSocket.getOutputStream());
+                outputStream_ = new PrintWriter(clientSocket.getOutputStream(),true);
                 SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(JSONObject.fromObject(inputSteram_.readLine()).get("id").toString()));
                 if (null != subMerchantUser) {
                     id_ = subMerchantUser.getId();
                 }
-                outputStream_.println("success");
-                outputStream_.flush();
+                //outputStream_.println("success");
+                //outputStream_.flush();
             }
             catch (Exception exception) {
 
@@ -52,7 +56,7 @@ public class NotifyCenter {
         }
 
         public void SendNotify(String nofityMessage) {
-            outputStream_.printf(nofityMessage);
+            outputStream_.println(nofityMessage);
         }
 
         private Long id_ = Long.MAX_VALUE;
@@ -66,9 +70,11 @@ public class NotifyCenter {
         public void run() {
             try {
                 notifySocket_ = new ServerSocket(ProjectSettings.getNotifyPort());
+                System.out.println("start Socket");
             }
             catch (Exception exception) {
                 Logger.error("Start Notify Center Failed!");
+                return;
             }
 
             while(!isInterrupted()){
@@ -106,7 +112,7 @@ public class NotifyCenter {
         }
     }
 
-    private NotifyCenter() {
+    public NotifyCenter() {
         new Thread(new NofityCenterThread()).start();
     }
 

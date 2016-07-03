@@ -2,8 +2,7 @@ package com.jdpay.action;
 
 import com.database.jdpay.OrderInfo;
 import com.framework.action.AjaxActionSupport;
-import com.framework.socket.Server;
-import com.framework.utils.MD5;
+import com.message.NotifyCenter;
 import net.sf.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -13,6 +12,7 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.message.NotifyCenter.NoiftyMessage;
 import static com.message.WeixinMessage.sendJDTemplateMessage;
 
 public class CallbackAction extends AjaxActionSupport {
@@ -66,7 +66,7 @@ public class CallbackAction extends AjaxActionSupport {
         map.put("bank_type","");
         map.put("total_fee", responseResult.get("amount").toString());
         map.put("time_end", responseResult.get("pay_time").toString());
-        Server.pushMessage(responseResult.get("term_no").toString().concat("#jdpay@").concat(JSONObject.fromObject(map).toString()),Long.parseLong(responseResult.get("term_no").toString()));
+        NoiftyMessage(Long.parseLong(responseResult.get("term_no").toString()),responseResult.get("term_no").toString().concat("#jdpay@").concat(JSONObject.fromObject(map).toString()));
     }
 
     public static boolean saveOrderToDb(Map map){
