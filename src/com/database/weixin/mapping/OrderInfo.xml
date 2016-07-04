@@ -21,7 +21,7 @@
         SELECT count(*) as infoCount,sum(totalFee) as sumFee FROM OrderInfo WHERE createUser=#{createUser}
         and createTime between #{startDate} and #{endDate}
     </select>
-    <resultMap type="com.database.weixin.OrderInfoCollect" id="orderInfoCollect">
+    <resultMap type="com.database.merchant.OrderInfoCollect" id="orderInfoCollect">
         <result property="infoCount" column="infoCount" jdbcType="INTEGER" />
         <result property="sumFee" column="sumFee" jdbcType="INTEGER" />
     </resultMap>
