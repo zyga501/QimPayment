@@ -29,6 +29,6 @@ public class WebAction extends AjaxActionSupport {
             return "AliJsPay";
         }
         else
-            return "";
+            return "goto404";
     }
 }
