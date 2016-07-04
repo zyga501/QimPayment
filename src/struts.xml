@@ -48,6 +48,11 @@
                 <param name="actionName">WebpagePayAction!prePay</param>
                 <param name="namespace">/jdpay</param>
             </result>
+            <result name="AliJsPay" type="chain">
+                <param name="actionName">WebpagePayAction!prePay</param>
+                <param name="namespace">/alipay</param>
+            </result>
+            <result name="goto404">./weixin/404.jsp</result>
         </action>
         <!--<action name="shoppay.*" class="com.weixin.action.WebpagePayAction" method="prePay">-->
         <!--</action>-->

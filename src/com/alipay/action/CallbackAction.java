@@ -40,7 +40,7 @@ public class CallbackAction extends AjaxActionSupport {
         map.put("out_trade_no", getParameter("out_trade_no").toString());
         map.put("total_fee", getParameter("total_amount").toString());
         map.put("time_end", getParameter("gmt_payment").toString());
-        NoiftyMessage(Long.parseLong(getParameter("createUser").toString()),getParameter("createUser").toString().concat("#jdpay@").concat(JSONObject.fromObject(map).toString()));
+        NoiftyMessage(Long.parseLong(getParameter("createUser").toString()),getParameter("createUser").toString().concat("#alipay@").concat(JSONObject.fromObject(map).toString()));
         return OrderInfo.insertOrderInfo(orderInfo);
     }
 }

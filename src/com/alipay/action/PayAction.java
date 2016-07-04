@@ -11,6 +11,7 @@ import com.database.merchant.SubMerchantUser;
 import com.framework.action.AjaxActionSupport;
 import com.framework.utils.StringUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -78,14 +79,13 @@ public class PayAction extends AjaxActionSupport {
         if (subMerchantUser != null) {
             SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
             if (subMerchantInfo != null) {
-                MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
-                if (merchantInfo != null) {
-                    OrderInfo orderInfo = new OrderInfo();
-                    orderInfo = OrderInfo.getOrderInfoByOrderNo(getParameter("out_trade_no").toString());
-                    List list = null;
+//                MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
+//                if (merchantInfo != null) {
+                    OrderInfo orderInfo = OrderInfo.getOrderInfoByOrderNo(getParameter("out_trade_no").toString());
+                    List<OrderInfo> list = new ArrayList<>();
                     list.add(orderInfo);
                     return AjaxActionComplete(list);
-                }
+//                }
             }
         }
         return AjaxActionComplete();

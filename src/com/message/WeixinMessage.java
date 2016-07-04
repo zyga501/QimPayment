@@ -43,8 +43,7 @@ public class WeixinMessage {
                 TemplateMessageRequestData templateMessageRequestData = new TemplateMessageRequestData();
                 templateMessageRequestData.template_id = subMerchantInfo.getTemplateId();
                 UserInfo userInfo = new UserInfo(accessToken, orderInfo.getOpenId());
-                int len =orderInfo.getOpenId().length();
-                templateMessageRequestData.nickName = "尊敬的商户，您成功收到"+(userInfo.getRequest()?userInfo.getNickname():"*".concat(orderInfo.getOpenId().substring(len-4,4)))+"的消费付款：";
+                templateMessageRequestData.nickName = "尊敬的商户，您成功收到"+(userInfo.getRequest()?userInfo.getNickname():"*".concat(orderInfo.getOpenId().substring(20,24)))+"的消费付款：";
                 templateMessageRequestData.timeEnd = orderInfo.getTimeEnd();
                 templateMessageRequestData.totalFee = orderInfo.getTotalFee() / 100.0;
                 templateMessageRequestData.storeName = subMerchantUser.getStoreName();
