@@ -1,5 +1,9 @@
 package com.database.alipay;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class OrderInfo {
     public static OrderInfo getOrderInfo(long id) {
         String statement = "com.database.alipay.mapping.orderInfo.getOrderInfoById";
@@ -16,6 +20,14 @@ public class OrderInfo {
         return Database.Instance().insert(statement, orderInfo) == 1;
     }
 
+    public static List<HashMap> getAliOrderExpListByDate(String createuser, String startDate, String endDate) {
+        String statement = "com.database.alipay.mapping.orderInfo.getOrderExpListByDate";
+        Map<String, Object> param=new HashMap<String, Object>();
+        param.put("createuser",createuser);
+        param.put("startdate",startDate);
+        param.put("enddate",endDate);
+        return Database.Instance().selectList(statement,param);
+    }
     public long getId() {
         return id_;
     }

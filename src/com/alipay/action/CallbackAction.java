@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.message.NotifyCenter.NoiftyMessage;
+import static com.message.WeixinMessage.sendAliTemplateMessage;
 
 public class CallbackAction extends AjaxActionSupport {
     public final static String TRADEPRECREATE = "Callback!tradePreCreate";
@@ -29,6 +30,7 @@ public class CallbackAction extends AjaxActionSupport {
         orderInfo.setOutTradeNo(getParameter("out_trade_no").toString());
         String fund_bill_list = getParameter("fund_bill_list").toString().substring(1);
         fund_bill_list = fund_bill_list.substring(0, fund_bill_list.length() - 1);
+        System.out.println("ali-callback[fund_bill_list]:"+getParameter("fund_bill_list"));
         orderInfo.setFundChannel(JSONObject.fromObject(getParameter("fund_bill_list")).getString("fundChannel"));
         orderInfo.setTotalAmount(Double.parseDouble(getParameter("total_amount").toString()));
         orderInfo.setGmtPayment(getParameter("gmt_payment").toString());
@@ -40,7 +42,11 @@ public class CallbackAction extends AjaxActionSupport {
         map.put("out_trade_no", getParameter("out_trade_no").toString());
         map.put("total_fee", getParameter("total_amount").toString());
         map.put("time_end", getParameter("gmt_payment").toString());
-        NoiftyMessage(Long.parseLong(getParameter("createUser").toString()),getParameter("createUser").toString().concat("#alipay@").concat(JSONObject.fromObject(map).toString()));
-        return OrderInfo.insertOrderInfo(orderInfo);
+        if (OrderInfo.insertOrderInfo(orderInfo)) {
+            NoiftyMessage(Long.parseLong(getParameter("createUser").toString()), getParameter("createUser").toString().concat("#alipay@").concat(JSONObject.fromObject(map).toString()));
+            sendAliTemplateMessage(map.get("trade_no").toString());
+            return true;
+        }
+        return false;
     }
 }
