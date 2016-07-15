@@ -20,17 +20,17 @@ public class CallbackAction extends AjaxActionSupport {
     public final static String H5PAY = "Callback!h5pay";
 
     public String codePay() throws Exception {
-        handlerCallback();
+        handlerCallback(1);
         return AjaxActionComplete();
     }
 
     public String h5pay() throws Exception {
-        if (handlerCallback())
+        if (handlerCallback(2))
             ResponseWrite("success");
         return AjaxActionComplete();
     }
 
-    private boolean handlerCallback() throws Exception {
+    private boolean handlerCallback(int typeid) throws Exception {
         {
             String data = "";
             if (null != getParameter("DATA")) {
@@ -52,18 +52,21 @@ public class CallbackAction extends AjaxActionSupport {
             map.put("trade_no",jsonObject.get("trade_no"));
             map.put("user",jsonObject.get("user"));
             if ( saveOrderToDb(map)) {
-                notifyClientToPrint(map);
                 sendJDTemplateMessage(map.get("trade_no").toString());
+                System.out.println("jdmsg over");
+                if (typeid==2)
+                notifyClientToPrint(map);
+                System.out.println("remote jd");
             }
             return true;
         }
     }
     private void notifyClientToPrint(Map<String,Object> responseResult) throws IOException {
         Map<String, String> map = new HashMap<>();
-        map.put("body", responseResult.get("sub_mer").toString());
+        map.put("body", responseResult.get("sub_mer")==null? "*":responseResult.get("sub_mer").toString());
         map.put("transaction_id",responseResult.get("trade_no").toString());
         map.put("out_trade_no", responseResult.get("order_no").toString());
-        map.put("bank_type","");
+        map.put("bank_type","*");
         map.put("total_fee", responseResult.get("amount").toString());
         map.put("time_end", responseResult.get("pay_time").toString());
         NoiftyMessage(Long.parseLong(responseResult.get("term_no").toString()),responseResult.get("term_no").toString().concat("#jdpay@").concat(JSONObject.fromObject(map).toString()));
