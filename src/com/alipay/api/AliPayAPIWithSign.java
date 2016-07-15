@@ -16,6 +16,10 @@ import java.net.URLEncoder;
 import java.util.Map;
 
 public abstract class AliPayAPIWithSign extends AliPayAPI {
+    public Map<String, Object> getResponseResult() {
+        return responseResult_;
+    }
+
     public boolean postRequest(String privateKey, String publicKey) throws Exception {
         if (!requestData_.checkParameter() || privateKey.isEmpty()) {
             Logger.error(this.getClass().getName() + " CheckParameter Failed!");
