@@ -11,7 +11,6 @@ import static com.message.WeixinMessage.sendAliTemplateMessage;
 
 public class TradePay extends AliPayAPIWithSign {
     public final static String TRADEPAY_API = "https://openapi.alipay.com/gateway.do";
-    public Map<String, Object> responseData;
     public TradePay(TradePayRequestData requestData, long createUser) {
         requestData_ = requestData;
         createUser_ = createUser;
@@ -30,7 +29,7 @@ public class TradePay extends AliPayAPIWithSign {
                 return false;
             }
 
-            responseData = (Map<String, Object>)responseResult.get("alipay_trade_pay_response");
+            Map<String, Object> responseData = (Map<String, Object>)responseResult.get("alipay_trade_pay_response");
             if (responseData.get("code").toString().compareTo("10000") == 0 && responseData.get("msg").toString().compareTo("Success") == 0)
             {
                 TradePayRequestData requestData = (TradePayRequestData)requestData_;
