@@ -39,7 +39,7 @@
         <!-- compatible api -->
         <action name="getuseragent.*" class="com.framework.action.WebAction" method="judgeUserAgent">
         </action>
-        <action name="shoppay.*" class="com.framework.action.WebAction" method="choogpay">
+        <action name="shoppay.*" class="com.framework.action.WebAction" method="ChoogPayment">
             <result name="WeixinJsPay" type="chain">
                 <param name="actionName">WebpagePayAction!prePay</param>
                 <param name="namespace">/</param>
@@ -54,8 +54,7 @@
             </result>
             <result name="goto404">./weixin/404.jsp</result>
         </action>
-        <!--<action name="shoppay.*" class="com.weixin.action.WebpagePayAction" method="prePay">-->
-        <!--</action>-->
+
         <action name="jjzzjjzz.*" class="com.weixin.action.WebpagePayAction" method="scanPay">
             <result name="scanPay">./weixin/scanpay.jsp</result>
         </action>

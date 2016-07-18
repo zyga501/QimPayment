@@ -1,6 +1,7 @@
 package com.jdpay.utils;
 
-import org.apache.commons.lang.ArrayUtils;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
 import javax.crypto.Cipher;
 import java.security.*;
@@ -12,10 +13,7 @@ import java.security.spec.X509EncodedKeySpec;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by lijunfu on 14-4-30.
- */
-public class RSACoder extends RSAUtil {
+public class RSACoder {
 
     public static final String KEY_ALGORITHM = "RSA";
     public static final String KEY_ALGORITHM_DETAIL = "RSA/ECB/PKCS1Padding";
@@ -24,14 +22,14 @@ public class RSACoder extends RSAUtil {
     public static final String PUBLIC_KEY = "H5RSAPublicKey";
     public static final String PRIVATE_KEY = "H5RSAPrivateKey";
 
-    /**
-     * 用私钥对信息生成数字签名
-     *
-     * @param data       加密数据
-     * @param privateKey 私钥
-     * @return
-     * @throws Exception
-     */
+    public static byte[] decryptBASE64(String key) throws Exception {
+        return (new BASE64Decoder()).decodeBuffer(key);
+    }
+
+    public static String encryptBASE64(byte[] key) throws Exception {
+        return (new BASE64Encoder()).encodeBuffer(key);
+    }
+
     public static String sign(byte[] data, String privateKey) throws Exception {
         // 解密由base64编码的私钥
         byte[] keyBytes = decryptBASE64(privateKey);
@@ -53,15 +51,6 @@ public class RSACoder extends RSAUtil {
         return encryptBASE64(signature.sign());
     }
 
-    /**
-     * 校验数字签名
-     *
-     * @param data      加密数据
-     * @param publicKey 公钥
-     * @param sign      数字签名
-     * @return 校验成功返回true 失败返回false
-     * @throws Exception
-     */
     public static boolean verify(byte[] data, String publicKey, String sign)
             throws Exception {
 
@@ -85,15 +74,6 @@ public class RSACoder extends RSAUtil {
         return signature.verify(decryptBASE64(sign));
     }
 
-    /**
-     * 解密<br>
-     * 用私钥解密
-     *
-     * @param data
-     * @param key
-     * @return
-     * @throws Exception
-     */
     public static byte[] decryptByPrivateKey(byte[] data, String key)
             throws Exception {
         // 对密钥解密
@@ -111,15 +91,6 @@ public class RSACoder extends RSAUtil {
         return cipher.doFinal(data);
     }
 
-    /**
-     * 解密<br>
-     * 用公钥解密
-     *
-     * @param data
-     * @param key
-     * @return
-     * @throws Exception
-     */
     public static byte[] decryptByPublicKey(byte[] data, String key)
             throws Exception {
         // 对密钥解密
@@ -137,15 +108,6 @@ public class RSACoder extends RSAUtil {
         return cipher.doFinal(data);
     }
 
-    /**
-     * 加密<br>
-     * 用公钥加密
-     *
-     * @param data
-     * @param key
-     * @return
-     * @throws Exception
-     */
     public static byte[] encryptByPublicKey(byte[] data, String key)
             throws Exception {
         // 对公钥解密
@@ -163,16 +125,6 @@ public class RSACoder extends RSAUtil {
         return cipher.doFinal(data);
     }
 
-
-    /**
-     * 加密<br>
-     * 用私钥加密
-     *
-     * @param data
-     * @param key
-     * @return
-     * @throws Exception
-     */
     public static byte[] encryptByPrivateKey(byte[] data, String key)
             throws Exception {
         // 对密钥解密
@@ -190,13 +142,6 @@ public class RSACoder extends RSAUtil {
         return cipher.doFinal(data);
     }
 
-    /**
-     * 取得私钥
-     *
-     * @param keyMap
-     * @return
-     * @throws Exception
-     */
     public static String getPrivateKey(Map<String, Object> keyMap)
             throws Exception {
         Key key = (Key) keyMap.get(PRIVATE_KEY);
@@ -204,13 +149,6 @@ public class RSACoder extends RSAUtil {
         return encryptBASE64(key.getEncoded());
     }
 
-    /**
-     * 取得公钥
-     *
-     * @param keyMap
-     * @return
-     * @throws Exception
-     */
     public static String getPublicKey(Map<String, Object> keyMap)
             throws Exception {
         Key key = (Key) keyMap.get(PUBLIC_KEY);
@@ -218,12 +156,6 @@ public class RSACoder extends RSAUtil {
         return encryptBASE64(key.getEncoded());
     }
 
-    /**
-     * 初始化密钥
-     *
-     * @return
-     * @throws Exception
-     */
     public static Map<String, Object> initKey() throws Exception {
         KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance(KEY_ALGORITHM);
         keyPairGen.initialize(1024);
@@ -236,72 +168,5 @@ public class RSACoder extends RSAUtil {
         keyMap.put(PUBLIC_KEY, publicKey);
         keyMap.put(PRIVATE_KEY, privateKey);
         return keyMap;
-    }
-
-
-    public static void main(String[] args){
-        try {
-            // 生成公私钥对
-            Map<String, Object> map = RSACoder.initKey();
-            // 获取公钥
-            RSAPublicKey publicKey = (RSAPublicKey) map.get(RSACoder.PUBLIC_KEY);
-            // 获取私钥
-            RSAPrivateKey privateKey = (RSAPrivateKey) map.get(RSACoder.PRIVATE_KEY);
-
-            System.out.println("********************************");
-            System.out.println("公钥加密算法：" + publicKey.getAlgorithm());
-            System.out.println("公钥加密格式：" + publicKey.getFormat());
-
-            System.out.println("私钥加密算法：" + privateKey.getAlgorithm());
-            System.out.println("私钥加密格式：" + privateKey.getFormat());
-            System.out.println("********************************");
-
-            // 使用BASE64对公私钥对进行加密
-            String pk =  FormatUtil.stringBlank(RSACoder.getPublicKey(map));
-            String sk =  FormatUtil.stringBlank(RSACoder.getPrivateKey(map));
-
-            System.out.println("公钥长度=：" + pk.length());
-            //去换行格式化输出
-            System.out.println("公钥：" +pk);
-
-            System.out.println("私钥长度=：" + sk.length());
-            System.out.println("私钥：" + sk);
-
-            System.out.println("********************************");
-
-            // 公钥加密的字符串
-            String str = "网银在线d0990-29349sssjsj思考角度思考";
-            System.out.println("公钥需要加密的字符串：" + str);
-            System.out.println("********************************");
-
-            byte[] pks = RSACoder.encryptByPublicKey(str.getBytes("utf-8"), pk);
-            String pkss = RSACoder.encryptBASE64(pks);
-
-            pkss= FormatUtil.stringBlank(pkss);
-
-            System.out.println("公钥加密后的数据：" +pkss);
-            System.out.println("********************************");
-
-            byte[] sss = str.getBytes("utf-8");
-            String pkssrn="";
-            for (int i = 0; i < sss.length; i +=4) {
-                byte[] doFinal =RSACoder.encryptByPublicKey(ArrayUtils.subarray(sss, i,
-                        i + 4),pk);
-                pkssrn +=(new String(doFinal));
-            }
-
-            pkss= FormatUtil.stringBlank(pkss);
-
-            System.out.println("公钥加密后的数据2：" +pkss);
-            System.out.println("********************************");
-
-            byte[] sks = RSACoder.decryptByPrivateKey(pks, sk);
-
-            System.out.println("私钥解密后的数据：" + new String(sks));
-            System.out.println("********************************");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }
