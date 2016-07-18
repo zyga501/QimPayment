@@ -27,25 +27,4 @@ public class Readconfig {
         }
         return "";
     }
-    public static String yzfconfig(String submerchantid) {
-        Properties prop = new Properties();
-        try{
-            //读取属性文件a.properties
-            InputStream in = new BufferedInputStream (new FileInputStream(Readconfig.class.getResource("/").getPath().
-                    substring(1).replaceAll("%20", 	" ")+"yzfconfig.properties"));
-            prop.load(in);     ///加载属性列表
-            Iterator<String> it=prop.stringPropertyNames().iterator();
-            while(it.hasNext()){
-                String key=it.next();
-                if (key.toLowerCase().equals(submerchantid))
-                    return prop.getProperty(key);
-            }
-            in.close();
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-        return "";
-    }
-
 }
