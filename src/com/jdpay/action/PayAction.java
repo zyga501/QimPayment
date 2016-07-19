@@ -33,10 +33,9 @@ public class PayAction extends AjaxActionSupport {
                 MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getId());
                 if (merchantInfo != null) {
                     MicroPayRequestData microPayRequestData = new MicroPayRequestData();
-                    microPayRequestData.order_no = getParameter("orderno").toString();
                     microPayRequestData.seed =  getParameter("seed").toString();
                     microPayRequestData.merchant_no = merchantInfo.getPaycodemerchantno();
-                    microPayRequestData.order_no = String.valueOf(new IdWorker(ProjectSettings.getIdWorkerSeed()).nextId());
+                    microPayRequestData.order_no =  StringUtils.convertNullableString(getParameter("orderno"),String.valueOf(new IdWorker(ProjectSettings.getIdWorkerSeed()).nextId()));
                     String requestUrl = getRequest().getRequestURL().toString();
                     requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/'));
                     requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/') + 1) + "jdpay/"

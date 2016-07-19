@@ -7,9 +7,10 @@ import net.sf.json.JSONObject;
 
 import java.util.Map;
 
+import static com.message.WeixinMessage.sendAliTemplateMessage;
+
 public class TradePay extends AliPayAPIWithSign {
     public final static String TRADEPAY_API = "https://openapi.alipay.com/gateway.do";
-
     public TradePay(TradePayRequestData requestData, long createUser) {
         requestData_ = requestData;
         createUser_ = createUser;
@@ -43,6 +44,7 @@ public class TradePay extends AliPayAPIWithSign {
                 orderInfo.setGmtPayment(responseData.get("gmt_payment").toString());
                 orderInfo.setCreateUser(createUser_);
                 orderInfo.setOpenId(responseData.get("open_id").toString());
+                sendAliTemplateMessage(responseData.get("out_trade_no").toString());
                 return OrderInfo.insertOrderInfo(orderInfo);
             }
         }

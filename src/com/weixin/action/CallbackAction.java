@@ -30,16 +30,16 @@ public class CallbackAction extends AjaxActionSupport {
     public final static Object syncObject = new Object();
 
     public void scanPay() throws Exception {
-        handlerCallback();
+        handlerCallback(1);
         getResponse().getWriter().write(WEIXINCALLBACKSUCCESS);
     }
 
     public void brandWCPay() throws Exception {
-        handlerCallback();
+        handlerCallback(2);
         getResponse().getWriter().write(WEIXINCALLBACKSUCCESS);
     }
 
-    private boolean handlerCallback() throws Exception {
+    private boolean handlerCallback(int typeid) throws Exception {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(getRequest().getInputStream(), "utf-8"));
         StringBuilder stringBuilder = new StringBuilder();
         String lineBuffer;
@@ -69,7 +69,8 @@ public class CallbackAction extends AjaxActionSupport {
         if (ret) {
             notifyClientToPrint(responseResult);
             WeixinMessage.sendTemplateMessage(responseResult.get("transaction_id").toString());
-            notifyClientOrderInfo(responseResult);
+            if (typeid==2)
+                notifyClientOrderInfo(responseResult);
             return true;
         }
 

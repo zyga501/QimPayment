@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 public class PayAction extends AjaxActionSupport {
     public String tradePay() throws Exception {
         SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(getParameter("id").toString()));
@@ -32,7 +33,14 @@ public class PayAction extends AjaxActionSupport {
                     tradePayRequestData.total_amount = Double.parseDouble(getParameter("total_amount").toString());
                     tradePayRequestData.subject = getParameter("subject").toString();
                     TradePay tradePay = new TradePay(tradePayRequestData, subMerchantUser.getId());
-                    return AjaxActionComplete(tradePay.postRequest(merchantInfo.getPrivateKey(), merchantInfo.getPublicKey()));
+                    tradePay.postRequest(merchantInfo.getPrivateKey(), merchantInfo.getPublicKey());
+                    Map<String, String> map = new HashMap<>();
+                    map.put("body",getParameter("subject").toString());
+                    map.put("transaction_id",tradePay.getResponseResult().get("trade_no").toString());
+                    map.put("out_trade_no", tradePay.getResponseResult().get("out_trade_no").toString());
+                    map.put("total_fee", tradePay.getResponseResult().get("total_amount").toString());
+                    map.put("time_end", tradePay.getResponseResult().get("gmt_payment").toString());
+                    return AjaxActionComplete(map);
                 }
             }
         }
@@ -51,6 +59,7 @@ public class PayAction extends AjaxActionSupport {
                     tradePreCreateRequestData.app_id = merchantInfo.getAppid();
                     tradePreCreateRequestData.total_amount = Double.parseDouble(getParameter("total_amount").toString());
                     tradePreCreateRequestData.subject = getParameter("subject").toString();
+                    tradePreCreateRequestData.out_trade_no = getParameter("out_trade_no").toString();
                     String requestUrl = getRequest().getRequestURL().toString();
                     requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/'));
                     requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/') + 1) + "alipay/"

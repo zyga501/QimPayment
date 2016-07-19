@@ -30,21 +30,21 @@ public class CallbackAction extends AjaxActionSupport {
         orderInfo.setOutTradeNo(getParameter("out_trade_no").toString());
         String fund_bill_list = getParameter("fund_bill_list").toString().substring(1);
         fund_bill_list = fund_bill_list.substring(0, fund_bill_list.length() - 1);
-        System.out.println("ali-callback[fund_bill_list]:"+getParameter("fund_bill_list"));
-        orderInfo.setFundChannel(JSONObject.fromObject(getParameter("fund_bill_list")).getString("fundChannel"));
+        orderInfo.setFundChannel(JSONObject.fromObject(fund_bill_list).get("fundChannel").toString());
         orderInfo.setTotalAmount(Double.parseDouble(getParameter("total_amount").toString()));
         orderInfo.setGmtPayment(getParameter("gmt_payment").toString());
         orderInfo.setCreateUser(Long.parseLong(getParameter("createUser").toString()));
         orderInfo.setOpenId(getParameter("open_id").toString());
-        Map<String, String> map = new HashMap<>();
-        map.put("body",getParameter("subject").toString());
-        map.put("transaction_id",getParameter("trade_no").toString());
-        map.put("out_trade_no", getParameter("out_trade_no").toString());
-        map.put("total_fee", getParameter("total_amount").toString());
-        map.put("time_end", getParameter("gmt_payment").toString());
         if (OrderInfo.insertOrderInfo(orderInfo)) {
+            sendAliTemplateMessage(getParameter("out_trade_no").toString());
+            Map<String, String> map = new HashMap<>();
+            map.put("body",getParameter("subject").toString());
+            map.put("transaction_id",getParameter("trade_no").toString());
+            map.put("out_trade_no", getParameter("out_trade_no").toString());
+            map.put("total_fee", getParameter("total_amount").toString());
+            map.put("time_end", getParameter("gmt_payment").toString());
+            System.out.println("ali-NoiftyMessage:"+fund_bill_list);
             NoiftyMessage(Long.parseLong(getParameter("createUser").toString()), getParameter("createUser").toString().concat("#alipay@").concat(JSONObject.fromObject(map).toString()));
-            sendAliTemplateMessage(map.get("trade_no").toString());
             return true;
         }
         return false;
