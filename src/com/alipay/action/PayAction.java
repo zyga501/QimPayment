@@ -59,6 +59,7 @@ public class PayAction extends AjaxActionSupport {
                     tradePreCreateRequestData.app_id = merchantInfo.getAppid();
                     tradePreCreateRequestData.total_amount = Double.parseDouble(getParameter("total_amount").toString());
                     tradePreCreateRequestData.subject = getParameter("subject").toString();
+                    tradePreCreateRequestData.out_trade_no = getParameter("out_trade_no").toString();
                     String requestUrl = getRequest().getRequestURL().toString();
                     requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/'));
                     requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/') + 1) + "alipay/"
