@@ -5,19 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-/**
- * Created by wywangzhenlong on 14-5-19.
- */
 public class SHAUtil {
-    /**
-     * ���ַ����,�����㷨ʹ��MD5,SHA-1,SHA-256,Ĭ��ʹ��SHA-256
-     *
-     * @param strSrc
-     *            Ҫ���ܵ��ַ�
-     * @param encName
-     *            ��������
-     * @return
-     */
     public static String Encrypt(String strSrc, String encName) {
         MessageDigest md = null;
         String strDes = null;

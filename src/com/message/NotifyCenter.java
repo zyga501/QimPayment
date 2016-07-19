@@ -15,10 +15,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class NotifyCenter {
-    private static NotifyCenter notifyCenter_ = new NotifyCenter();
+    private static NotifyCenter notifyCenter_;
 
-    public static void Make(){
-
+    public synchronized static void Make(){
+        if (notifyCenter_ == null) {
+            notifyCenter_ = new NotifyCenter();
+        }
     }
 
     public static void NoiftyMessage(Long uid, String nofity) {
@@ -39,8 +41,6 @@ public class NotifyCenter {
                 if (null != subMerchantUser) {
                     id_ = subMerchantUser.getId();
                 }
-                //outputStream_.println("success");
-                //outputStream_.flush();
             }
             catch (Exception exception) {
 
@@ -112,7 +112,7 @@ public class NotifyCenter {
         }
     }
 
-    public NotifyCenter() {
+    private NotifyCenter() {
         new Thread(new NofityCenterThread()).start();
     }
 

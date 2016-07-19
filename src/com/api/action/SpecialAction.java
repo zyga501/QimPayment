@@ -4,21 +4,14 @@ import com.database.merchant.SubMerchantUser;
 import com.database.weixin.OrderInfo;
 import com.database.weixin.SubMerchantInfo;
 import com.framework.action.AjaxActionSupport;
-import com.framework.base.Readconfig;
-import com.framework.utils.MD5;
 import net.sf.json.JSONObject;
 
 public class SpecialAction extends AjaxActionSupport {
     public void OrderInert() throws Exception {
         String data = getParameter("data").toString();
-        String sign = getParameter("sign").toString().toLowerCase();
-        String id = getParameter("roleid").toString();
         String rtn = "";
         if (null!=getParameter("retstr"))
             rtn = getParameter("retstr").toString();
-        String key = Readconfig.fetchspecialinfo(id);
-        if (!MD5.md5LowerCase(data,key).equals(sign))
-            return ;
         try {
             JSONObject jsonObject = JSONObject.fromObject(data);
             SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoBySubId(jsonObject.getString("sub_mch_id"));
