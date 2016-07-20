@@ -9,6 +9,8 @@ import com.database.alipay.OrderInfo;
 import com.database.merchant.SubMerchantInfo;
 import com.database.merchant.SubMerchantUser;
 import com.framework.action.AjaxActionSupport;
+import com.framework.base.ProjectSettings;
+import com.framework.utils.IdWorker;
 import com.framework.utils.StringUtils;
 
 import java.util.ArrayList;
@@ -59,7 +61,7 @@ public class PayAction extends AjaxActionSupport {
                     tradePreCreateRequestData.app_id = merchantInfo.getAppid();
                     tradePreCreateRequestData.total_amount = Double.parseDouble(getParameter("total_amount").toString());
                     tradePreCreateRequestData.subject = getParameter("subject").toString();
-                    tradePreCreateRequestData.out_trade_no = getParameter("out_trade_no").toString();
+                    tradePreCreateRequestData.out_trade_no =  StringUtils.convertNullableString(getParameter("out_trade_no"),String.valueOf(new IdWorker(ProjectSettings.getIdWorkerSeed()).nextId()));
                     String requestUrl = getRequest().getRequestURL().toString();
                     requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/'));
                     requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/') + 1) + "alipay/"
