@@ -67,10 +67,10 @@ public class CallbackAction extends AjaxActionSupport {
 
         boolean ret = saveOrderToDb(responseResult);
         if (ret) {
-            notifyClientToPrint(responseResult);
+            notifyClientOrderInfo(responseResult);
             WeixinMessage.sendTemplateMessage(responseResult.get("transaction_id").toString());
             if (typeid==2)
-                notifyClientOrderInfo(responseResult);
+                notifyClientToPrint(responseResult);
             return true;
         }
 
