@@ -16,7 +16,7 @@ public class TradePay extends AliPayAPIWithSign {
         createUser_ = createUser;
         requestData_.method = "alipay.trade.pay";
     }
-
+    public Map<String, Object> responseData;
     @Override
     protected String getAPIUri() {
         return TRADEPAY_API;
@@ -29,7 +29,7 @@ public class TradePay extends AliPayAPIWithSign {
                 return false;
             }
 
-            Map<String, Object> responseData = (Map<String, Object>)responseResult.get("alipay_trade_pay_response");
+            responseData = (Map<String, Object>)responseResult.get("alipay_trade_pay_response");
             if (responseData.get("code").toString().compareTo("10000") == 0 && responseData.get("msg").toString().compareTo("Success") == 0)
             {
                 TradePayRequestData requestData = (TradePayRequestData)requestData_;

@@ -25,12 +25,12 @@
         }
 
         .STYLE3 {
-            color: #06af3f;
+            color: #2789DC;
             font-size: 22px;
         }
 
         .STYLE5 {
-            color: #06af3f;
+            color: #2789dc;
             font-size: 16px;
         }
 
@@ -39,7 +39,7 @@
         }
 
         .STYLE8 {
-            color: #06af3f;
+            color: #2789DC;
             font-size: 16px;
             text-align: left;
         }
@@ -138,7 +138,7 @@
                 $("#paynum").text("￥" + th.value);
             }
             if (th.value != "") {
-                $("#butpaynum").css("background-color", "#06af3f");
+                $("#butpaynum").css("background-color", "#2789DC");
                 $("#butpaynum").removeAttr("disabled");
             }
             else {
