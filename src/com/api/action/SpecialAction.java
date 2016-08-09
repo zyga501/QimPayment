@@ -1,8 +1,8 @@
 package com.api.action;
 
 import com.database.merchant.SubMerchantUser;
-import com.database.weixin.OrderInfo;
-import com.database.weixin.SubMerchantInfo;
+import com.database.weixin.WxOrderInfo;
+import com.database.weixin.WxSubMerchantInfo;
 import com.framework.action.AjaxActionSupport;
 import net.sf.json.JSONObject;
 
@@ -14,12 +14,12 @@ public class SpecialAction extends AjaxActionSupport {
             rtn = getParameter("retstr").toString();
         try {
             JSONObject jsonObject = JSONObject.fromObject(data);
-            SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoBySubId(jsonObject.getString("sub_mch_id"));
+            WxSubMerchantInfo subMerchantInfo = WxSubMerchantInfo.getSubMerchantInfoBySubId(jsonObject.getString("sub_mch_id"));
             SubMerchantUser tempsubMerchantUser = new SubMerchantUser();
             tempsubMerchantUser.setSubMerchantId(subMerchantInfo.getId());
             tempsubMerchantUser.setUserName("001");
             SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserBySubMerchantIdAndUserName(tempsubMerchantUser);
-            OrderInfo orderInfo = new OrderInfo();
+            WxOrderInfo orderInfo = new WxOrderInfo();
             orderInfo.setAppid(jsonObject.get("appid").toString());
             orderInfo.setMchId(jsonObject.get("mch_id").toString());
             orderInfo.setSubMchId(jsonObject.get("sub_mch_id").toString());
@@ -31,7 +31,7 @@ public class SpecialAction extends AjaxActionSupport {
             orderInfo.setTimeEnd(jsonObject.get("time_end").toString());
             orderInfo.setCreateUser(subMerchantUser.getId());//
             orderInfo.setOpenId(jsonObject.get("openid").toString());
-            OrderInfo.insertOrderInfo(orderInfo);
+            WxOrderInfo.insertOrderInfo(orderInfo);
         }
         catch (Exception e){
             e.printStackTrace();;

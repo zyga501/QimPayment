@@ -1,22 +1,24 @@
 package com.message;
 
+import com.database.alipay.AliOrderInfo;
+import com.database.jdpay.JdOrderInfo;
 import com.database.merchant.SubMerchantInfo;
 import com.database.merchant.SubMerchantUser;
-import com.database.weixin.MerchantInfo;
-import com.database.weixin.OrderInfo;
+import com.database.weixin.WxMerchantInfo;
+import com.database.weixin.WxOrderInfo;
+import com.database.weixin.WxSubMerchantInfo;
 import com.framework.utils.StringUtils;
 import com.weixin.api.AccessToken;
 import com.weixin.api.RequestData.TemplateMessageRequestData;
 import com.weixin.api.TemplateMessage;
 import com.weixin.api.UserInfo;
 
-import java.util.DoubleSummaryStatistics;
 import java.util.HashMap;
 import java.util.Map;
 
 public class WeixinMessage {
     public static boolean sendTemplateMessage(String transactionId) throws Exception {
-        OrderInfo orderInfo = OrderInfo.getOrderInfoByTransactionId(transactionId);
+        WxOrderInfo orderInfo = WxOrderInfo.getOrderInfoByTransactionId(transactionId);
         if (orderInfo == null) {
             return false;
         }
@@ -26,13 +28,13 @@ public class WeixinMessage {
             SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
             String accessToken = new String();
             if (subMerchantInfo != null) {
-                com.database.weixin.SubMerchantInfo subMerchantWeixinInfo = com.database.weixin.SubMerchantInfo.getSubMerchantInfoById(subMerchantInfo.getId());
+                WxSubMerchantInfo subMerchantWeixinInfo = WxSubMerchantInfo.getSubMerchantInfoById(subMerchantInfo.getId());
                 if (!StringUtils.convertNullableString(subMerchantWeixinInfo.getAppid()).isEmpty()
                         && StringUtils.convertNullableString(subMerchantWeixinInfo.getAppsecret()).isEmpty()) {
                     accessToken = AccessToken.getAccessToken(subMerchantWeixinInfo.getAppid());
                 }
                 else {
-                    MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
+                    WxMerchantInfo merchantInfo = WxMerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
                     if (merchantInfo != null) {
                         accessToken = AccessToken.getAccessToken(merchantInfo.getAppid());
                     }
@@ -68,7 +70,7 @@ public class WeixinMessage {
     }
     public static boolean sendJDTemplateMessage(String transactionId) throws Exception {
         Map orderInfo = new HashMap<>();
-        orderInfo = com.database.jdpay.OrderInfo.getOrderInfoBytermno(transactionId);
+        orderInfo = JdOrderInfo.getOrderInfoBytermno(transactionId);
         if (orderInfo == null) {
             return false;
         }
@@ -78,13 +80,13 @@ public class WeixinMessage {
             SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
             String accessToken = new String();
             if (subMerchantInfo != null) {
-                com.database.weixin.SubMerchantInfo subMerchantWeixinInfo = com.database.weixin.SubMerchantInfo.getSubMerchantInfoById(subMerchantInfo.getId());
+                WxSubMerchantInfo subMerchantWeixinInfo = WxSubMerchantInfo.getSubMerchantInfoById(subMerchantInfo.getId());
                 if (!StringUtils.convertNullableString(subMerchantWeixinInfo.getAppid()).isEmpty()
                         && StringUtils.convertNullableString(subMerchantWeixinInfo.getAppsecret()).isEmpty()) {
                     accessToken = AccessToken.getAccessToken(subMerchantWeixinInfo.getAppid());
                 }
                 else {
-                    MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
+                    WxMerchantInfo merchantInfo = WxMerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
                     if (merchantInfo != null) {
                         accessToken = AccessToken.getAccessToken(merchantInfo.getAppid());
                     }
@@ -117,8 +119,8 @@ public class WeixinMessage {
         return false;
     }
     public static boolean sendAliTemplateMessage(String out_trade_no) throws Exception {
-        com.database.alipay.OrderInfo orderInfo ;
-        orderInfo = com.database.alipay.OrderInfo.getOrderInfoByOrderNo(out_trade_no);//OrderInfo.getOrderInfoBytermno(transactionId);
+        AliOrderInfo orderInfo ;
+        orderInfo = AliOrderInfo.getOrderInfoByOrderNo(out_trade_no);//OrderInfo.getOrderInfoBytermno(transactionId);
         if (orderInfo == null) {
             return false;
         }
@@ -128,13 +130,13 @@ public class WeixinMessage {
             SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
             String accessToken = new String();
             if (subMerchantInfo != null) {
-                com.database.weixin.SubMerchantInfo subMerchantWeixinInfo = com.database.weixin.SubMerchantInfo.getSubMerchantInfoById(subMerchantInfo.getId());
+                WxSubMerchantInfo subMerchantWeixinInfo = WxSubMerchantInfo.getSubMerchantInfoById(subMerchantInfo.getId());
                 if (!StringUtils.convertNullableString(subMerchantWeixinInfo.getAppid()).isEmpty()
                         && StringUtils.convertNullableString(subMerchantWeixinInfo.getAppsecret()).isEmpty()) {
                     accessToken = AccessToken.getAccessToken(subMerchantWeixinInfo.getAppid());
                 }
                 else {
-                    MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
+                    WxMerchantInfo merchantInfo = WxMerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
                     if (merchantInfo != null) {
                         accessToken = AccessToken.getAccessToken(merchantInfo.getAppid());
                     }

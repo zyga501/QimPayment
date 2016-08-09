@@ -1,25 +1,25 @@
 package com.database.weixin;
 
-public class SubMerchantInfo {
+public class WxSubMerchantInfo {
     public static void main(String[] args) throws Exception {
     }
 
-    public static SubMerchantInfo getSubMerchantInfoById(long id) {
+    public static WxSubMerchantInfo getSubMerchantInfoById(long id) {
         String statement = "com.database.weixin.mapping.subMerchantInfo.getSubMerchantInfoById";
         return Database.Instance().selectOne(statement, id);
     }
 
-    public static SubMerchantInfo getSubMerchantInfoBySubId(String subId) {
+    public static WxSubMerchantInfo getSubMerchantInfoBySubId(String subId) {
         String statement = "com.database.weixin.mapping.subMerchantInfo.getSubMerchantInfoBySubId";
         return Database.Instance().selectOne(statement, subId);
     }
 
-    public static SubMerchantInfo getSubMerchantIdBySubIdAndMerchantId(SubMerchantInfo subMerchantInfo) {
+    public static WxSubMerchantInfo getSubMerchantIdBySubIdAndMerchantId(WxSubMerchantInfo subMerchantInfo) {
         String statement = "com.database.weixin.mapping.subMerchantInfo.getSubMerchantIdBySubIdAndMerchantId";
         return Database.Instance().selectOne(statement, subMerchantInfo);
     }
 
-    public static boolean insertSubMerchantInfo(SubMerchantInfo subMerchantInfo) {
+    public static boolean insertSubMerchantInfo(WxSubMerchantInfo subMerchantInfo) {
         if (getSubMerchantIdBySubIdAndMerchantId(subMerchantInfo) == null) {
             String statement = "com.database.weixin.mapping.subMerchantInfo.insertSubMerchantInfo";
             return Database.Instance().insert(statement, subMerchantInfo) == 1;
@@ -32,12 +32,12 @@ public class SubMerchantInfo {
         return Database.Instance().selectOne(statement, compatibleId);
     }
 
-    public static SubMerchantInfo getSubMerchantInfoByAppId(String subId) {
+    public static WxSubMerchantInfo getSubMerchantInfoByAppId(String subId) {
         String statement = "com.database.weixin.mapping.subMerchantInfo.getSubMerchantInfoByAppId";
         return Database.Instance().selectOne(statement, subId);
     }
 
-    public static boolean updateWeixinInfoById(SubMerchantInfo subMerchantInfo) {
+    public static boolean updateWeixinInfoById(WxSubMerchantInfo subMerchantInfo) {
         String statement = "com.database.weixin.mapping.subMerchantInfo.updateWeixinInfoById";
         return Database.Instance().update(statement, subMerchantInfo) == 1;
     }

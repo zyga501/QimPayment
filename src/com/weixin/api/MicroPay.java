@@ -3,7 +3,7 @@ package com.weixin.api;
 import com.framework.utils.Logger;
 import com.weixin.api.RequestData.MicroPayRequestData;
 import com.weixin.api.RequestData.OrderQueryData;
-import com.database.weixin.OrderInfo;
+import com.database.weixin.WxOrderInfo;
 import net.sf.json.JSONObject;
 import org.xml.sax.SAXException;
 
@@ -70,7 +70,7 @@ public class MicroPay extends WeixinAPIWithSign {
     }
 
     private boolean saveOrderToDb(Map<String,Object> responseResult) {
-        OrderInfo orderInfo = new OrderInfo();
+        WxOrderInfo orderInfo = new WxOrderInfo();
         orderInfo.setAppid(responseResult.get("appid").toString());
         orderInfo.setMchId(responseResult.get("mch_id").toString());
         orderInfo.setSubMchId(responseResult.get("sub_mch_id").toString());
@@ -88,7 +88,7 @@ public class MicroPay extends WeixinAPIWithSign {
         orderInfo.setTimeEnd(responseResult.get("time_end").toString());
         orderInfo.setOpenId(responseResult.get("openid").toString());
         orderInfo.setCreateUser(createUser_);
-        return OrderInfo.insertOrderInfo(orderInfo);
+        return WxOrderInfo.insertOrderInfo(orderInfo);
     }
 
     private long createUser_;

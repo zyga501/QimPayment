@@ -1,21 +1,20 @@
 package com.jdpay.action;
 
 
-import com.database.jdpay.MerchantInfo;
+import com.database.jdpay.JdMerchantInfo;
 import com.database.merchant.SubMerchantInfo;
 import com.database.merchant.SubMerchantUser;
 import com.framework.action.AjaxActionSupport;
 import com.framework.base.ProjectSettings;
 import com.framework.utils.IdWorker;
-import com.framework.utils.Logger;
 import com.framework.utils.StringUtils;
 import com.jdpay.api.H5Pay;
+import com.jdpay.api.MicroPay;
 import com.jdpay.api.OrderQuery;
 import com.jdpay.api.RequestData.H5PayRequestData;
 import com.jdpay.api.RequestData.MicroPayRequestData;
 import com.jdpay.api.RequestData.QueryRequestData;
 import com.jdpay.api.RequestData.TokenPayRequestData;
-import com.jdpay.api.MicroPay;
 import com.jdpay.api.TokenOrder;
 import com.jdpay.utils.Signature;
 import net.sf.json.JSONObject;
@@ -30,7 +29,7 @@ public class PayAction extends AjaxActionSupport {
         if (subMerchantUser != null) {
             SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
             if (subMerchantInfo != null) {
-                MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getId());
+                JdMerchantInfo merchantInfo = JdMerchantInfo.getMerchantInfoById(subMerchantInfo.getId());
                 if (merchantInfo != null) {
                     MicroPayRequestData microPayRequestData = new MicroPayRequestData();
                     microPayRequestData.seed =  getParameter("seed").toString();
@@ -63,7 +62,7 @@ public class PayAction extends AjaxActionSupport {
         if (subMerchantUser != null) {
             SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
             if (subMerchantInfo != null) {
-                MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getId());
+                JdMerchantInfo merchantInfo = JdMerchantInfo.getMerchantInfoById(subMerchantInfo.getId());
                 if (merchantInfo != null) {
                     TokenPayRequestData tokenPayRequestData = new TokenPayRequestData();
                     tokenPayRequestData.expire =  5;
@@ -99,7 +98,7 @@ public class PayAction extends AjaxActionSupport {
         if (subMerchantUser != null) {
             SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
             if (subMerchantInfo != null) {
-                MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getId());
+                JdMerchantInfo merchantInfo = JdMerchantInfo.getMerchantInfoById(subMerchantInfo.getId());
                 if (merchantInfo != null) {
                     QueryRequestData queryRequestData  = new QueryRequestData();
                     queryRequestData.order_no = getParameter("orderno").toString();
@@ -130,7 +129,7 @@ public class PayAction extends AjaxActionSupport {
         if (subMerchantUser != null) {
             SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
             if (subMerchantInfo != null) {
-                MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getId());
+                JdMerchantInfo merchantInfo = JdMerchantInfo.getMerchantInfoById(subMerchantInfo.getId());
                 if (merchantInfo != null) {
                     H5PayRequestData h5RequestData  = new H5PayRequestData();
                     h5RequestData.merchant_no = merchantInfo.getH5merchantno();

@@ -3,7 +3,7 @@ package com.database.jdpay;
 import java.util.HashMap;
 import java.util.Map;
 
-public class OrderInfoCollect extends com.database.merchant.OrderInfoCollect {
+public class JdOrderInfoCollect extends com.database.merchant.OrderInfoCollect {
     public static com.database.merchant.OrderInfoCollect collectJDOrderInfoByDate(String createUser, String startDate, String endDate) {
         String statement = "com.database.jdpay.mapping.orderInfo.collectOrderInfoByDate";
         Map<String, Object> param=new HashMap<String, Object>();

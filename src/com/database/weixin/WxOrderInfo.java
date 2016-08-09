@@ -1,18 +1,16 @@
 package com.database.weixin;
 
-import org.apache.ibatis.session.SqlSession;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class OrderInfo {
-    public static OrderInfo getOrderInfoById(long id) {
+public class WxOrderInfo {
+    public static WxOrderInfo getOrderInfoById(long id) {
         String statement = "com.database.weixin.mapping.orderInfo.getOrderInfoById";
         return Database.Instance().selectOne(statement, id);
     }
 
-    public static OrderInfo getOrderInfoByTransactionId(String transactionId) {
+    public static WxOrderInfo getOrderInfoByTransactionId(String transactionId) {
         String statement = "com.database.weixin.mapping.orderInfo.getOrderInfoByTransactionId";
         return Database.Instance().selectOne(statement, transactionId);
     }
@@ -35,7 +33,7 @@ public class OrderInfo {
         return Database.Instance().selectList(statement,param);
     }
 
-    public static boolean insertOrderInfo(OrderInfo orderInfo) {
+    public static boolean insertOrderInfo(WxOrderInfo orderInfo) {
         String statement = "com.database.weixin.mapping.orderInfo.insertOrderInfo";
         return Database.Instance().insert(statement, orderInfo) == 1;
     }

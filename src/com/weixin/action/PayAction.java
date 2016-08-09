@@ -1,13 +1,12 @@
 package com.weixin.action;
 
 import com.database.merchant.SubMerchantUser;
-import com.database.weixin.MerchantInfo;
-import com.database.weixin.SubMerchantInfo;
+import com.database.weixin.WxSubMerchantInfo;
+import com.database.weixin.WxMerchantInfo;
 import com.framework.action.AjaxActionSupport;
 import com.framework.base.SessionCache;
 import com.framework.utils.Logger;
 import com.framework.utils.StringUtils;
-import com.framework.utils.UdpSocket;
 import com.framework.utils.Zip;
 import com.message.WeixinMessage;
 import com.weixin.api.MicroPay;
@@ -28,9 +27,9 @@ public class PayAction extends AjaxActionSupport {
     public String microPay() throws Exception {
         SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(getParameter("id").toString()));
         if (subMerchantUser != null) {
-            SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
+            WxSubMerchantInfo subMerchantInfo = WxSubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
             if (subMerchantInfo != null) {
-                MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
+                WxMerchantInfo merchantInfo = WxMerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
                 if (merchantInfo != null) {
                     MicroPayRequestData microPayRequestData = new MicroPayRequestData();
                     microPayRequestData.appid = merchantInfo.getAppid();
@@ -74,9 +73,9 @@ public class PayAction extends AjaxActionSupport {
     public String scanPay() throws Exception {
         SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(getParameter("id").toString()));
         if (subMerchantUser != null) {
-            SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
+            WxSubMerchantInfo subMerchantInfo = WxSubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
             if (subMerchantInfo != null) {
-                MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
+                WxMerchantInfo merchantInfo = WxMerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
                 if (merchantInfo != null) {
                     UnifiedOrderRequestData unifiedOrderRequestData = new UnifiedOrderRequestData();
                     unifiedOrderRequestData.appid = merchantInfo.getAppid();
@@ -122,9 +121,9 @@ public class PayAction extends AjaxActionSupport {
             subMerchantUserId = getParameter("id").toString();
             SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(subMerchantUserId));
             if (subMerchantUser != null) {
-                SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
+                WxSubMerchantInfo subMerchantInfo = WxSubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
                 if (subMerchantInfo != null) {
-                    MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
+                    WxMerchantInfo merchantInfo = WxMerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
                     if (merchantInfo != null) {
                         appid = merchantInfo.getAppid();
                     }
@@ -194,9 +193,9 @@ public class PayAction extends AjaxActionSupport {
 
         SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(subMerchantUserId));
         if (subMerchantUser != null) {
-            SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
+            WxSubMerchantInfo subMerchantInfo = WxSubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
             if (subMerchantInfo != null) {
-                MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
+                WxMerchantInfo merchantInfo = WxMerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
                 if (merchantInfo != null) {
                     UnifiedOrderRequestData unifiedOrderRequestData = new UnifiedOrderRequestData();
                     unifiedOrderRequestData.appid = merchantInfo.getAppid();
@@ -249,9 +248,9 @@ public class PayAction extends AjaxActionSupport {
     public String refund() throws Exception {
         SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(getParameter("id").toString()));
         if (subMerchantUser != null) {
-            SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
+            WxSubMerchantInfo subMerchantInfo = WxSubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
             if (subMerchantInfo != null) {
-                MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
+                WxMerchantInfo merchantInfo = WxMerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
                 if (merchantInfo != null) {
                     RefundRequestData refundRequestData = new RefundRequestData();
                     refundRequestData.appid = merchantInfo.getAppid();

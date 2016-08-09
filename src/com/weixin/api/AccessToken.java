@@ -1,8 +1,8 @@
 package com.weixin.api;
 
-import com.database.weixin.SubMerchantInfo;
+import com.database.weixin.WxSubMerchantInfo;
 import com.framework.utils.Logger;
-import com.database.weixin.MerchantInfo;
+import com.database.weixin.WxMerchantInfo;
 import net.sf.json.JSONObject;
 
 import java.util.HashMap;
@@ -47,12 +47,12 @@ public class AccessToken extends WeixinAPI{
     public static void updateAccessToken(String appid) throws Exception {
         synchronized(accessTokenMap_) {
             String appsecret = new String();
-            MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoByAppId(appid);
+            WxMerchantInfo merchantInfo = WxMerchantInfo.getMerchantInfoByAppId(appid);
             if (merchantInfo != null) {
                 appsecret = merchantInfo.getAppsecret();
             }
             else {
-                SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoByAppId(appid);
+                WxSubMerchantInfo subMerchantInfo = WxSubMerchantInfo.getSubMerchantInfoByAppId(appid);
                 if (subMerchantInfo != null) {
                     appsecret = subMerchantInfo.getAppsecret();
                 }

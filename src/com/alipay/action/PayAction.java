@@ -4,8 +4,8 @@ import com.alipay.api.RequestData.TradePayRequestData;
 import com.alipay.api.RequestData.TradePreCreateRequestData;
 import com.alipay.api.TradePay;
 import com.alipay.api.TradePreCreate;
-import com.database.alipay.MerchantInfo;
-import com.database.alipay.OrderInfo;
+import com.database.alipay.AliMerchantInfo;
+import com.database.alipay.AliOrderInfo;
 import com.database.merchant.SubMerchantInfo;
 import com.database.merchant.SubMerchantUser;
 import com.framework.action.AjaxActionSupport;
@@ -25,7 +25,7 @@ public class PayAction extends AjaxActionSupport {
         if (subMerchantUser != null) {
             SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
             if (subMerchantInfo != null) {
-                MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getId());
+                AliMerchantInfo merchantInfo = AliMerchantInfo.getMerchantInfoById(subMerchantInfo.getId());
                 if (merchantInfo != null) {
                     TradePayRequestData tradePayRequestData = new TradePayRequestData();
                     tradePayRequestData.app_id = merchantInfo.getAppid();
@@ -55,7 +55,7 @@ public class PayAction extends AjaxActionSupport {
         if (subMerchantUser != null) {
             SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
             if (subMerchantInfo != null) {
-                MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getId());
+                AliMerchantInfo merchantInfo = AliMerchantInfo.getMerchantInfoById(subMerchantInfo.getId());
                 if (merchantInfo != null) {
                     TradePreCreateRequestData tradePreCreateRequestData = new TradePreCreateRequestData();
                     tradePreCreateRequestData.app_id = merchantInfo.getAppid();
@@ -92,8 +92,8 @@ public class PayAction extends AjaxActionSupport {
             if (subMerchantInfo != null) {
 //                MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
 //                if (merchantInfo != null) {
-                    OrderInfo orderInfo = OrderInfo.getOrderInfoByOrderNo(getParameter("out_trade_no").toString());
-                    List<OrderInfo> list = new ArrayList<>();
+                AliOrderInfo orderInfo = AliOrderInfo.getOrderInfoByOrderNo(getParameter("out_trade_no").toString());
+                    List<AliOrderInfo> list = new ArrayList<>();
                     list.add(orderInfo);
                     return AjaxActionComplete(list);
 //                }

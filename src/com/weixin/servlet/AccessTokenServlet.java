@@ -2,7 +2,7 @@ package com.weixin.servlet;
 
 import com.framework.base.ProjectSettings;
 import com.weixin.api.AccessToken;
-import com.database.weixin.MerchantInfo;
+import com.database.weixin.WxMerchantInfo;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,7 +15,7 @@ public class AccessTokenServlet extends HttpServlet {
             while (true) {
                 try {
                     List<String> appidList = new ArrayList<>();
-                    appidList.add(MerchantInfo.getMerchantInfoById(ProjectSettings.getId()).getAppid());
+                    appidList.add(WxMerchantInfo.getMerchantInfoById(ProjectSettings.getId()).getAppid());
                     AccessToken.updateAccessToken(appidList);
                     // 休眠7000秒
                     Thread.sleep((DEFAULTEXPIRESTIME - 200) * 1000);

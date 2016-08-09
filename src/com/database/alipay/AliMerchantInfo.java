@@ -1,13 +1,13 @@
 package com.database.alipay;
 
-public class MerchantInfo {
+public class AliMerchantInfo {
     public static void main(String[] args) throws Exception {
         String statement = "com.database.alipay.mapping.merchantInfo.getMerchantInfoById";
-        MerchantInfo merchantInfo = Database.Instance().selectOne(statement, 1629719047391232L);
+        AliMerchantInfo merchantInfo = Database.Instance().selectOne(statement, 1629719047391232L);
         System.out.print(merchantInfo.getPrivateKey());
     }
 
-    public static MerchantInfo getMerchantInfoById(long id) {
+    public static AliMerchantInfo getMerchantInfoById(long id) {
         String statement = "com.database.alipay.mapping.merchantInfo.getMerchantInfoById";
         return com.database.alipay.Database.Instance().selectOne(statement, id);
     }

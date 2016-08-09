@@ -3,7 +3,7 @@ package com.alipay.action;
 import com.database.merchant.IdMapUUID;
 import com.database.merchant.SubMerchantInfo;
 import com.database.merchant.SubMerchantUser;
-import com.database.weixin.MerchantInfo;
+import com.database.weixin.WxMerchantInfo;
 import com.framework.action.AjaxActionSupport;
 import com.framework.utils.Logger;
 import com.framework.utils.StringUtils;
@@ -43,7 +43,7 @@ public class WebpagePayAction extends AjaxActionSupport {
             if (subMerchantUser != null) {
                 SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
                 if (subMerchantInfo != null) {
-                    MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
+                    WxMerchantInfo merchantInfo = WxMerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
                     if (merchantInfo != null) {
                         getRequest().getSession().setAttribute("storename",subMerchantUser.getStoreName());
                         getRequest().getSession().setAttribute("ucode",subMerchantUser.getUserName());
@@ -62,7 +62,7 @@ public class WebpagePayAction extends AjaxActionSupport {
                 getRequest().getSession().setAttribute("storename", subMerchantUser.getStoreName());
                 getRequest().getSession().setAttribute("ucode", subMerchantUser.getUserName());
                 SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
-                MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
+                WxMerchantInfo merchantInfo = WxMerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
                 getRequest().getSession().setAttribute("id", subMerchantUser.getId());
                 getRequest().getSession().setAttribute("subMerchantId", subMerchantInfo.getId());
                 appid = merchantInfo.getAppid();

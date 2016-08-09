@@ -1,13 +1,10 @@
 package com.jdpay.action;
 
-import com.database.jdpay.OrderInfo;
+import com.database.jdpay.JdOrderInfo;
 import com.framework.action.AjaxActionSupport;
-import com.message.NotifyCenter;
 import net.sf.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
@@ -73,6 +70,6 @@ public class CallbackAction extends AjaxActionSupport {
     }
 
     public static boolean saveOrderToDb(Map map){
-        return OrderInfo.insertOrderInfo(map);
+        return JdOrderInfo.insertOrderInfo(map);
     }
 }

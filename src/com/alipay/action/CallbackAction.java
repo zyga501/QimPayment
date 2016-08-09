@@ -1,6 +1,6 @@
 package com.alipay.action;
 
-import com.database.alipay.OrderInfo;
+import com.database.alipay.AliOrderInfo;
 import com.framework.action.AjaxActionSupport;
 import com.framework.utils.Logger;
 import net.sf.json.JSONObject;
@@ -22,7 +22,7 @@ public class CallbackAction extends AjaxActionSupport {
     }
 
     private boolean handlerCallback() throws Exception {
-        OrderInfo orderInfo = new OrderInfo();
+        AliOrderInfo orderInfo = new AliOrderInfo();
         orderInfo.setAppid(getParameter("app_id").toString());
         orderInfo.setMchId(Long.parseLong(getParameter("mchId").toString()));
         orderInfo.setSubject(getParameter("subject").toString());
@@ -35,7 +35,7 @@ public class CallbackAction extends AjaxActionSupport {
         orderInfo.setGmtPayment(getParameter("gmt_payment").toString());
         orderInfo.setCreateUser(Long.parseLong(getParameter("createUser").toString()));
         orderInfo.setOpenId(getParameter("open_id").toString());
-        if (OrderInfo.insertOrderInfo(orderInfo)) {
+        if (AliOrderInfo.insertOrderInfo(orderInfo)) {
             sendAliTemplateMessage(getParameter("out_trade_no").toString());
             Map<String, String> map = new HashMap<>();
             map.put("body",getParameter("subject").toString());

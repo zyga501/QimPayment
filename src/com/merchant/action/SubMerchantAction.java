@@ -1,14 +1,14 @@
 package com.merchant.action;
 
-import com.framework.base.ProjectSettings;
-import com.framework.action.AjaxActionSupport;
-import com.framework.utils.ClassUtils;
-import com.framework.utils.IdWorker;
-import com.framework.utils.Logger;
 import com.database.merchant.SubMerchantInfo;
 import com.database.merchant.SubMerchantUser;
+import com.database.weixin.WxMerchantInfo;
+import com.database.weixin.WxSubMerchantInfo;
+import com.framework.action.AjaxActionSupport;
+import com.framework.base.ProjectSettings;
+import com.framework.utils.IdWorker;
+import com.framework.utils.Logger;
 import com.weixin.api.OpenId;
-import com.database.weixin.MerchantInfo;
 
 import java.io.DataInputStream;
 import java.io.FileInputStream;
@@ -28,7 +28,7 @@ public class SubMerchantAction extends AjaxActionSupport {
         subMerchantInfo.setMerchantId(merchantId);
         subMerchantInfo.setName(storeName);
         subMerchantInfo.setAddress(address);
-        com.database.weixin.MerchantInfo merchantInfo = com.database.weixin.MerchantInfo.getMerchantInfoById(merchantId);
+        WxMerchantInfo merchantInfo = WxMerchantInfo.getMerchantInfoById(merchantId);
         subMerchantInfo.setTemplateId(merchantInfo.getTemplateId());
         return AjaxActionComplete(SubMerchantInfo.insertSubMerchantInfo(subMerchantInfo, () -> {
                 // insert default user
@@ -41,11 +41,11 @@ public class SubMerchantAction extends AjaxActionSupport {
                 return SubMerchantUser.insertSubMerchantUserInfo(subMerchantUser, () -> {
                         // insert weixin info
                         String sub_mch_id = getParameter("sub_mch_id").toString();
-                        com.database.weixin.SubMerchantInfo subMerchantWeixinInfo = new com.database.weixin.SubMerchantInfo();
+                        WxSubMerchantInfo subMerchantWeixinInfo = new WxSubMerchantInfo();
                         subMerchantWeixinInfo.setId(subMerchantId);
                         subMerchantWeixinInfo.setSubId(sub_mch_id);
                         subMerchantWeixinInfo.setMerchantId(merchantId);
-                        return com.database.weixin.SubMerchantInfo.insertSubMerchantInfo(subMerchantWeixinInfo);
+                        return WxSubMerchantInfo.insertSubMerchantInfo(subMerchantWeixinInfo);
                     }
                 );
             }
@@ -56,7 +56,7 @@ public class SubMerchantAction extends AjaxActionSupport {
         String subMerchantId = getParameter("id").toString();
         SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(Long.parseLong(subMerchantId));
         if (subMerchantInfo != null) {
-            MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
+            WxMerchantInfo merchantInfo = WxMerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
             if (merchantInfo != null) {
                 String redirect_uri = getRequest().getRequestURL().toString();
                 redirect_uri = redirect_uri.substring(0, redirect_uri.lastIndexOf('/'));
@@ -82,7 +82,7 @@ public class SubMerchantAction extends AjaxActionSupport {
         long id = Long.parseLong(subMerchantId);
         SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(id);
         if (subMerchantInfo != null) {
-            MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
+            WxMerchantInfo merchantInfo = WxMerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
             if (merchantInfo != null) {
                 OpenId openId = new OpenId(merchantInfo.getAppid(), merchantInfo.getAppsecret(), code);
                 if (openId.getRequest()) {
@@ -136,11 +136,11 @@ public class SubMerchantAction extends AjaxActionSupport {
         subMerchantInfo.setId(Long.parseLong(getParameter("id").toString()));
         subMerchantInfo.setTemplateId(getParameter("templateId").toString());
         if (SubMerchantInfo.updateWeixinInfoById(subMerchantInfo)) {
-            com.database.weixin.SubMerchantInfo subMerchantWeixinInfo = new com.database.weixin.SubMerchantInfo();
+            WxSubMerchantInfo subMerchantWeixinInfo = new WxSubMerchantInfo();
             subMerchantWeixinInfo.setId(Long.parseLong(getParameter("id").toString()));
             subMerchantWeixinInfo.setAppid(getParameter("appid").toString());
             subMerchantWeixinInfo.setAppsecret(getParameter("appsecret").toString());
-            return AjaxActionComplete(com.database.weixin.SubMerchantInfo.updateWeixinInfoById(subMerchantWeixinInfo));
+            return AjaxActionComplete(WxSubMerchantInfo.updateWeixinInfoById(subMerchantWeixinInfo));
         }
 
         return AjaxActionComplete(false);
@@ -164,7 +164,7 @@ public class SubMerchantAction extends AjaxActionSupport {
 
     public String getSubMerchantIdByCompatibleId() {
         String compatibleId = getParameter("compatibleId").toString();
-        long subMerchantId = com.database.weixin.SubMerchantInfo.getSubMerchantIdByCompatibleId(compatibleId);
+        long subMerchantId = WxSubMerchantInfo.getSubMerchantIdByCompatibleId(compatibleId);
         Map<String, Long> resultMap = new HashMap<>();
         resultMap.put("subMerchantId", subMerchantId);
         return AjaxActionComplete(resultMap);

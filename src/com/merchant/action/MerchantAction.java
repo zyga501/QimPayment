@@ -1,10 +1,13 @@
 package com.merchant.action;
 
+import com.database.alipay.AliMerchantInfo;
+import com.database.jdpay.JdMerchantInfo;
 import com.database.merchant.OAuthLogin;
 import com.database.merchant.SubMerchantInfo;
 import com.database.merchant.SubMerchantUser;
-import com.database.weixin.MerchantInfo;
-import com.database.weixin.SubMerchantAct;
+import com.database.weixin.WxMerchantInfo;
+import com.database.weixin.WxSubMerchantAct;
+import com.database.weixin.WxSubMerchantInfo;
 import com.framework.action.AjaxActionSupport;
 import com.weixin.api.OpenId;
 import net.sf.json.JSONObject;
@@ -32,7 +35,7 @@ public class MerchantAction extends AjaxActionSupport {
                         SubMerchantInfo submerchantinfo = SubMerchantInfo.getSubMerchantInfoById(submerchantuser.getSubMerchantId());
                         resultMap.put("businessname",submerchantinfo.getName());
                         resultMap.put("ads",submerchantinfo.getAds());
-                        SubMerchantAct  submerchantact = new SubMerchantAct().getGoodstagById(submerchantinfo.getId());
+                        WxSubMerchantAct  submerchantact = new WxSubMerchantAct().getGoodstagById(submerchantinfo.getId());
                         resultMap.put("goodstag",null==submerchantact?"":submerchantact.getGoodsTag());
                         return AjaxActionComplete(true, resultMap);
                     }
@@ -47,9 +50,9 @@ public class MerchantAction extends AjaxActionSupport {
         String appsecret = "";
         System.out.println("openId="+getRequest().getSession().getAttribute("datajson"));
         JSONObject jsonObject = JSONObject.fromObject( getRequest().getSession().getAttribute("datajson"));
-        com.database.weixin.SubMerchantInfo subMerchantInfo = com.database.weixin.SubMerchantInfo.getSubMerchantInfoById(jsonObject.getLong("mid"));
+        WxSubMerchantInfo subMerchantInfo = WxSubMerchantInfo.getSubMerchantInfoById(jsonObject.getLong("mid"));
         if (subMerchantInfo != null) {
-            MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
+            WxMerchantInfo merchantInfo = WxMerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
             if (merchantInfo != null) {
                 appid =  merchantInfo.getAppid();
                 appsecret =  merchantInfo.getAppsecret();
@@ -78,9 +81,9 @@ public class MerchantAction extends AjaxActionSupport {
         String dt = getParameter("dt").toString();
         String mid = getParameter("id").toString();
         System.out.println("mid="+mid);
-        com.database.weixin.SubMerchantInfo subMerchantInfo = com.database.weixin.SubMerchantInfo.getSubMerchantInfoById(Long.parseLong(mid));
+        WxSubMerchantInfo subMerchantInfo = WxSubMerchantInfo.getSubMerchantInfoById(Long.parseLong(mid));
         if (subMerchantInfo != null) {
-            MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
+            WxMerchantInfo merchantInfo = WxMerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
             if (merchantInfo != null) {
                 appid = merchantInfo.getAppid();
             }
@@ -103,19 +106,19 @@ public class MerchantAction extends AjaxActionSupport {
         subMerchantUser = SubMerchantUser.getSubMerchantUserByAccount(subMerchantUser);
         Map<String, String> resultMap = new HashMap<>();
         if (null != subMerchantUser) {
-            com.database.weixin.SubMerchantInfo subMerchantInfo = com.database.weixin.SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
+            WxSubMerchantInfo subMerchantInfo = WxSubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
             if (null == subMerchantInfo){
                 resultMap.put("hasweixin", "0");
             }else {
                 resultMap.put("hasweixin", "1");
             }
-            com.database.jdpay.MerchantInfo merchantInfo = com.database.jdpay.MerchantInfo.getMerchantInfoById(subMerchantUser.getSubMerchantId());
+            JdMerchantInfo merchantInfo = JdMerchantInfo.getMerchantInfoById(subMerchantUser.getSubMerchantId());
             if (null == merchantInfo){
                 resultMap.put("hasjdpay", "0");
             }else {
                 resultMap.put("hasjdpay", "1");
             }
-            com.database.alipay.MerchantInfo alimerchantInfo = com.database.alipay.MerchantInfo.getMerchantInfoById(subMerchantUser.getSubMerchantId());
+            AliMerchantInfo alimerchantInfo = AliMerchantInfo.getMerchantInfoById(subMerchantUser.getSubMerchantId());
             if (null == alimerchantInfo){
                 resultMap.put("hasalipay", "0");
             }else {
@@ -128,7 +131,7 @@ public class MerchantAction extends AjaxActionSupport {
             SubMerchantInfo submerchantinfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
             resultMap.put("businessname",submerchantinfo.getName());
             resultMap.put("ads",submerchantinfo.getAds());
-            SubMerchantAct  submerchantact = new SubMerchantAct().getGoodstagById(submerchantinfo.getId());
+            WxSubMerchantAct  submerchantact = new WxSubMerchantAct().getGoodstagById(submerchantinfo.getId());
             resultMap.put("goodstag",null==submerchantact?"":submerchantact.getGoodsTag());
             return AjaxActionComplete(true, resultMap);
         }

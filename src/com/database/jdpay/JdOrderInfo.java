@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class OrderInfo {
+public class JdOrderInfo {
     public static boolean insertOrderInfo(Map param) {
         String statement = "com.database.jdpay.mapping.orderInfo.insertOrderInfo";
         return Database.Instance().insert(statement, param) == 1;

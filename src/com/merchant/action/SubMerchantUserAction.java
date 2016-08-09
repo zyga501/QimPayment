@@ -2,9 +2,10 @@ package com.merchant.action;
 
 import com.database.merchant.SubMerchantInfo;
 import com.database.merchant.SubMerchantUser;
-import com.database.weixin.MerchantInfo;
-import com.framework.base.ProjectSettings;
+import com.database.weixin.WxMerchantInfo;
+import com.database.weixin.WxSubMerchantInfo;
 import com.framework.action.AjaxActionSupport;
+import com.framework.base.ProjectSettings;
 import com.framework.utils.IdWorker;
 import com.framework.utils.Logger;
 import com.weixin.api.OpenId;
@@ -16,7 +17,7 @@ public class SubMerchantUserAction extends AjaxActionSupport {
     public String getInfoByWeixinSubMerchantId() {
         String sub_mch_id = getParameter("sub_mch_id").toString();
         String merchantid = getParameter("merchantId").toString();
-        com.database.weixin.SubMerchantInfo subMerchantInfo = com.database.weixin.SubMerchantInfo.getSubMerchantInfoBySubId(sub_mch_id);
+        WxSubMerchantInfo subMerchantInfo = WxSubMerchantInfo.getSubMerchantInfoBySubId(sub_mch_id);
          if ((null!=subMerchantInfo) && (merchantid.equals(String.valueOf(subMerchantInfo.getMerchantId())))) {
                  return AjaxActionComplete(SubMerchantUser.getSubMerchantUserBySubMerchantId(subMerchantInfo.getId()));
              }
@@ -33,7 +34,7 @@ public class SubMerchantUserAction extends AjaxActionSupport {
         if (subMerchantUser != null) {
             SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
             if (subMerchantInfo != null) {
-                MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
+                WxMerchantInfo merchantInfo = WxMerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
                 if (merchantInfo != null) {
                     String redirect_uri = getRequest().getRequestURL().toString();
                    // redirect_uri = redirect_uri.substring(0, redirect_uri.lastIndexOf('/'));
@@ -62,7 +63,7 @@ public class SubMerchantUserAction extends AjaxActionSupport {
         if (subMerchantUser != null) {
             SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
             if (subMerchantInfo != null) {
-                MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
+                WxMerchantInfo merchantInfo = WxMerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
                 if (merchantInfo != null) {
                     OpenId openId = new OpenId(merchantInfo.getAppid(), merchantInfo.getAppsecret(), code);
                     if (openId.getRequest()) {
@@ -126,7 +127,7 @@ public class SubMerchantUserAction extends AjaxActionSupport {
         String bingencode = getParameter("bingencode").toString();
         String submchid = bingencode.split("_")[0];
         String ucode = bingencode.split("_")[1];
-        com.database.weixin.SubMerchantInfo subMerchantInfo = com.database.weixin.SubMerchantInfo.getSubMerchantInfoBySubId(submchid);
+        WxSubMerchantInfo subMerchantInfo = WxSubMerchantInfo.getSubMerchantInfoBySubId(submchid);
         List<SubMerchantUser> subMerchantUserList =  SubMerchantUser.getSubMerchantUserBySubMerchantId(subMerchantInfo.getId());
         for (SubMerchantUser submerchantuser: subMerchantUserList) {
             if  (submerchantuser.getUserName().equals(ucode)){

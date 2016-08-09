@@ -1,10 +1,11 @@
 package com.database.alipay;
 
+import com.database.merchant.OrderInfoCollect;
+
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-public class OrderInfoCollect extends com.database.merchant.OrderInfoCollect {
+public class AliOrderInfoCollect extends OrderInfoCollect {
     public static com.database.merchant.OrderInfoCollect collectAliOrderInfoByDate(String createUser, String startDate, String endDate) {
         String statement = "com.database.alipay.mapping.orderInfo.collectOrderInfoByDate";
         Map<String, Object> param=new HashMap<String, Object>();

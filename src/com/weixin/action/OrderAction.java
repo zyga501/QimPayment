@@ -5,9 +5,9 @@ import com.framework.utils.Logger;
 import com.database.merchant.SubMerchantUser;
 import com.weixin.api.OrderQuery;
 import com.weixin.api.RequestData.OrderQueryData;
-import com.database.weixin.MerchantInfo;
-import com.database.weixin.OrderInfo;
-import com.database.weixin.SubMerchantInfo;
+import com.database.weixin.WxMerchantInfo;
+import com.database.weixin.WxOrderInfo;
+import com.database.weixin.WxSubMerchantInfo;
 import net.sf.json.JSONObject;
 
 import java.util.HashMap;
@@ -17,9 +17,9 @@ public class OrderAction extends AjaxActionSupport {
     public String queryOrder() throws Exception {
         SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(getParameter("id").toString()));
         if (subMerchantUser != null) {
-            SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
+            WxSubMerchantInfo subMerchantInfo = WxSubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
             if (subMerchantInfo != null) {
-                MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
+                WxMerchantInfo merchantInfo = WxMerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
                 if (merchantInfo != null) {
                     OrderQueryData orderQueryData = new OrderQueryData();
                     orderQueryData.appid = merchantInfo.getAppid();
@@ -82,13 +82,13 @@ public class OrderAction extends AjaxActionSupport {
 
     public String insertOrder() throws Exception {
         try {
-            OrderInfo orderInfo = new OrderInfo();
+            WxOrderInfo orderInfo = new WxOrderInfo();
             orderInfo.setAppid("0xFFFFFF");
             orderInfo.setMchId(getParameter("mch_id").toString());
             orderInfo.setSubMchId(getParameter("sub_mch_id").toString());
             orderInfo.setBody(getParameter("body").toString());
             if (getParameter("transaction_id") != null) {
-                if (OrderInfo.getOrderInfoByTransactionId(getParameter("transaction_id").toString()) != null) {
+                if (WxOrderInfo.getOrderInfoByTransactionId(getParameter("transaction_id").toString()) != null) {
                     return AjaxActionComplete(false);
                 }
                 orderInfo.setTransactionId(getParameter("transaction_id").toString());
@@ -101,7 +101,7 @@ public class OrderAction extends AjaxActionSupport {
             orderInfo.setTimeEnd(getParameter("time_end").toString());
             orderInfo.setOpenId("0xFFFFFF");
             orderInfo.setCreateUser(0xFFFFFF);
-            OrderInfo.insertOrderInfo(orderInfo);
+            WxOrderInfo.insertOrderInfo(orderInfo);
             return AjaxActionComplete(true);
         }
         catch (Exception exception) {

@@ -1,7 +1,7 @@
 package com.alipay.api;
 
 import com.alipay.api.RequestData.TradePayRequestData;
-import com.database.alipay.OrderInfo;
+import com.database.alipay.AliOrderInfo;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -33,7 +33,7 @@ public class TradePay extends AliPayAPIWithSign {
             if (responseData.get("code").toString().compareTo("10000") == 0 && responseData.get("msg").toString().compareTo("Success") == 0)
             {
                 TradePayRequestData requestData = (TradePayRequestData)requestData_;
-                OrderInfo orderInfo = new OrderInfo();
+                AliOrderInfo orderInfo = new AliOrderInfo();
                 orderInfo.setAppid(requestData.app_id);
                 orderInfo.setMchId(requestData.mchId);
                 orderInfo.setSubject(requestData.subject);
@@ -45,7 +45,7 @@ public class TradePay extends AliPayAPIWithSign {
                 orderInfo.setCreateUser(createUser_);
                 orderInfo.setOpenId(responseData.get("open_id").toString());
                 sendAliTemplateMessage(responseData.get("out_trade_no").toString());
-                return OrderInfo.insertOrderInfo(orderInfo);
+                return AliOrderInfo.insertOrderInfo(orderInfo);
             }
         }
         catch (Exception exception) {

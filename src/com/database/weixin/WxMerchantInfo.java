@@ -2,23 +2,23 @@ package com.database.weixin;
 
 import java.util.List;
 
-public class MerchantInfo {
+public class WxMerchantInfo {
     public static void main(String[] args) throws Exception {
         String statement = "com.database.weixin.mapping.merchantInfo.getMerchantInfoByAppId";
-        MerchantInfo merchantInfo = Database.Instance().selectOne(statement, "wx0bfa8f7ec59b1f33");
+        WxMerchantInfo merchantInfo = Database.Instance().selectOne(statement, "wx0bfa8f7ec59b1f33");
     }
 
-    public static List<MerchantInfo> getAllMerchantInfo() {
+    public static List<WxMerchantInfo> getAllMerchantInfo() {
         String statement = "com.database.weixin.mapping.merchantInfo.getAllMerchantInfo";
         return Database.Instance().selectList(statement);
     }
 
-    public static MerchantInfo getMerchantInfoById(long id) {
+    public static WxMerchantInfo getMerchantInfoById(long id) {
         String statement = "com.database.weixin.mapping.merchantInfo.getMerchantInfoById";
         return Database.Instance().selectOne(statement, id);
     }
 
-    public static MerchantInfo getMerchantInfoByAppId(String appid) {
+    public static WxMerchantInfo getMerchantInfoByAppId(String appid) {
         String statement = "com.database.weixin.mapping.merchantInfo.getMerchantInfoByAppId";
         return Database.Instance().selectOne(statement, appid);
     }

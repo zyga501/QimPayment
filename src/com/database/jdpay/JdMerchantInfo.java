@@ -2,14 +2,14 @@ package com.database.jdpay;
 
 import net.sf.json.JSONObject;
 
-public class MerchantInfo {
+public class JdMerchantInfo {
     public static void main(String[] args) throws Exception {
         JSONObject jsonObject = JSONObject.fromObject("{tm:12}");
         System.out.println(jsonObject.get("term_no")==null?jsonObject.get("tm"):jsonObject.get("term_no"));
         System.out.println(jsonObject.get("tm"));
     }
 
-    public static MerchantInfo getMerchantInfoById(long id) {
+    public static JdMerchantInfo getMerchantInfoById(long id) {
         String statement = "com.database.jdpay.mapping.merchantInfo.getMerchantInfoById";
         return com.database.jdpay.Database.Instance().selectOne(statement, id);
     }

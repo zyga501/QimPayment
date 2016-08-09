@@ -1,7 +1,7 @@
 package com.weixin.action;
 
-import com.database.weixin.MerchantInfo;
-import com.database.weixin.OrderInfo;
+import com.database.weixin.WxMerchantInfo;
+import com.database.weixin.WxOrderInfo;
 import com.framework.action.AjaxActionSupport;
 import com.framework.utils.*;
 import com.message.NotifyCenter;
@@ -50,7 +50,7 @@ public class CallbackAction extends AjaxActionSupport {
 
         String responseString = stringBuilder.toString();
         Map<String,Object> responseResult = XMLParser.convertMapFromXML(responseString);;
-        MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoByAppId(responseResult.get("appid").toString());
+        WxMerchantInfo merchantInfo = WxMerchantInfo.getMerchantInfoByAppId(responseResult.get("appid").toString());
         if (merchantInfo != null) {
             if (!Signature.checkSignValid(responseResult, merchantInfo.getApiKey())) {
                 Logger.warn(this.getClass().getName() + " CheckSignValid Failed!");
@@ -80,13 +80,13 @@ public class CallbackAction extends AjaxActionSupport {
     private boolean saveOrderToDb(Map<String,Object> responseResult) {
         synchronized (syncObject) {
             String transactionId = responseResult.get("transaction_id").toString();
-            OrderInfo orderInfo = OrderInfo.getOrderInfoByTransactionId(transactionId);
+            WxOrderInfo orderInfo = WxOrderInfo.getOrderInfoByTransactionId(transactionId);
             if (orderInfo != null) {
                 return false;
             }
 
             Logger.info(responseResult.get("attach").toString());
-            orderInfo = new OrderInfo();
+            orderInfo = new WxOrderInfo();
             orderInfo.setAppid(responseResult.get("appid").toString());
             orderInfo.setMchId(responseResult.get("mch_id").toString());
             orderInfo.setSubMchId(responseResult.get("sub_mch_id").toString());
@@ -98,7 +98,7 @@ public class CallbackAction extends AjaxActionSupport {
             orderInfo.setTimeEnd(responseResult.get("time_end").toString());
             orderInfo.setCreateUser(Long.parseLong(responseResult.get("id").toString()));
             orderInfo.setOpenId(responseResult.get("openid").toString());
-            return OrderInfo.insertOrderInfo(orderInfo);
+            return WxOrderInfo.insertOrderInfo(orderInfo);
         }
     }
 

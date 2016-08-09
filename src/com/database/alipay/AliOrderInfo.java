@@ -4,18 +4,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class OrderInfo {
-    public static OrderInfo getOrderInfo(long id) {
+public class AliOrderInfo {
+    public static AliOrderInfo getOrderInfo(long id) {
         String statement = "com.database.alipay.mapping.orderInfo.getOrderInfoById";
         return Database.Instance().selectOne(statement, id);
     }
 
-    public static OrderInfo getOrderInfoByOrderNo(String on) {
+    public static AliOrderInfo getOrderInfoByOrderNo(String on) {
         String statement = "com.database.alipay.mapping.orderInfo.getOrderInfoByOrderNo";
         return Database.Instance().selectOne(statement, on);
     }
 
-    public static boolean insertOrderInfo(OrderInfo orderInfo) {
+    public static boolean insertOrderInfo(AliOrderInfo orderInfo) {
         String statement = "com.database.alipay.mapping.orderInfo.insertOrderInfo";
         return Database.Instance().insert(statement, orderInfo) == 1;
     }
