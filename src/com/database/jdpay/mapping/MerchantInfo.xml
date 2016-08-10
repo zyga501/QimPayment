@@ -4,7 +4,7 @@
     <select id="getMerchantInfoById" parameterType="long" resultMap="merchantInfoResult">
       SELECT * FROM MerchantInfo WHERE id=#{id}
     </select>
-    <resultMap type="com.database.jdpay.MerchantInfo" id="merchantInfoResult">
+    <resultMap type="com.database.jdpay.JdMerchantInfo" id="merchantInfoResult">
         <id property="id" column="id" jdbcType="BIGINT" />
         <result property="paycodemerchantno" column="paycodemerchantno" jdbcType="VARCHAR"/>
         <result property="paycodemd5key" column="paycodemd5key" jdbcType="VARCHAR"/>

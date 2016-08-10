@@ -29,8 +29,8 @@ public class WeixinMessage {
             String accessToken = new String();
             if (subMerchantInfo != null) {
                 WxSubMerchantInfo subMerchantWeixinInfo = WxSubMerchantInfo.getSubMerchantInfoById(subMerchantInfo.getId());
-                if (!StringUtils.convertNullableString(subMerchantWeixinInfo.getAppid()).isEmpty()
-                        && StringUtils.convertNullableString(subMerchantWeixinInfo.getAppsecret()).isEmpty()) {
+                if (!(StringUtils.convertNullableString(subMerchantWeixinInfo.getAppid()).isEmpty()
+                        && StringUtils.convertNullableString(subMerchantWeixinInfo.getAppsecret()).isEmpty())) {
                     accessToken = AccessToken.getAccessToken(subMerchantWeixinInfo.getAppid());
                 }
                 else {

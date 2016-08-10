@@ -132,6 +132,21 @@ public class SubMerchantInfo {
         this.address_ = address;
     }
 
+    public String getAppsecret() {
+            return appsecret_;
+        }
+
+    public void setAppsecret(String appsecret_) {
+    this.appsecret_ = appsecret_;
+}
+
+    public String getAppid() {
+    return appid_;
+}
+
+    public void setAppid(String appid_) {
+            this.appid_ = appid_;
+        }
     private long id_;
     private long merchantId_;
     private String name_;
@@ -141,4 +156,7 @@ public class SubMerchantInfo {
     private String weixinId_;
     private String templateId_;
     private String address_;
+    private String appid_;
+    private String appsecret_;
+
 }

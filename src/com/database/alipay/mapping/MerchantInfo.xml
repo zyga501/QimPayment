@@ -4,7 +4,7 @@
     <select id="getMerchantInfoById" parameterType="long" resultMap="merchantInfoResult">
       SELECT * FROM MerchantInfo WHERE id=#{id}
     </select>
-    <resultMap type="com.database.alipay.MerchantInfo" id="merchantInfoResult">
+    <resultMap type="com.database.alipay.AliMerchantInfo" id="merchantInfoResult">
         <id property="id" column="id" jdbcType="BIGINT" />
         <result property="appid" column="appid" jdbcType="VARCHAR"/>
         <result property="privateKey" column="privateKey" jdbcType="VARCHAR"/>

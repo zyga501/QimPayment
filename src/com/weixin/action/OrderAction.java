@@ -15,6 +15,7 @@ import java.util.Map;
 
 public class OrderAction extends AjaxActionSupport {
     public String queryOrder() throws Exception {
+        com.message.WeixinMessage.sendTemplateMessage("4002382001201608100998287350");
         SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(getParameter("id").toString()));
         if (subMerchantUser != null) {
             WxSubMerchantInfo subMerchantInfo = WxSubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());

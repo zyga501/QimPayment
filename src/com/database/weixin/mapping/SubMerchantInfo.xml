@@ -15,20 +15,20 @@
         INNER JOIN submerchantinfo ON compatibleidmapsubid.subid = submerchantinfo.subId
         where compatibleidmapsubid.id=#{id}
     </select>
-    <select id="getSubMerchantIdBySubIdAndMerchantId" parameterType="com.database.weixin.SubMerchantInfo" resultMap="subMerchantInfoResult">
+    <select id="getSubMerchantIdBySubIdAndMerchantId" parameterType="com.database.weixin.WxSubMerchantInfo" resultMap="subMerchantInfoResult">
         SELECT * FROM SubMerchantInfo WHERE subId=#{subId} and merchantId=#{merchantId}
     </select>
     <select id="getSubMerchantInfoByAppId" parameterType="String" resultMap="subMerchantInfoResult">
-        SELECT * FROM SubMerchant WHERE appid=#{appid}
+        SELECT * FROM SubMerchantInfo WHERE appid=#{appid}
     </select>
-    <resultMap type="com.database.weixin.SubMerchantInfo" id="subMerchantInfoResult">
+    <resultMap type="com.database.weixin.WxSubMerchantInfo" id="subMerchantInfoResult">
         <id property="id" column="id" jdbcType="BIGINT" />
         <result property="merchantId" column="merchantId" jdbcType="BIGINT" />
         <result property="subId" column="subId" jdbcType="VARCHAR"/>
         <result property="appid" column="appid" jdbcType="VARCHAR"/>
         <result property="appsecret" column="appsecret" jdbcType="VARCHAR"/>
     </resultMap>
-    <insert id="insertSubMerchantInfo" parameterType="com.database.weixin.SubMerchantInfo">
+    <insert id="insertSubMerchantInfo" parameterType="com.database.weixin.WxSubMerchantInfo">
         INSERT INTO SubMerchantInfo(id,subId,merchantId)
         VALUE (#{id},#{subId},#{merchantId})
     </insert>

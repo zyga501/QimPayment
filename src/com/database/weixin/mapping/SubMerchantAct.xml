@@ -4,7 +4,7 @@
     <select id="getSubMerchantActById" parameterType="long" resultMap="subMerchantActResult">
       SELECT * FROM SubMerchantAct WHERE id=#{id}
     </select>
-    <resultMap type="com.database.weixin.SubMerchantAct" id="subMerchantActResult">
+    <resultMap type="com.database.weixin.WxSubMerchantAct" id="subMerchantActResult">
         <id property="id" column="id" jdbcType="BIGINT" />
         <result property="goodsTag" column="goodsTag" jdbcType="VARCHAR" />
     </resultMap>
