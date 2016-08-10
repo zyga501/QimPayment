@@ -20,9 +20,6 @@
     </environments>
 
     <mappers>
-        <mapper resource="com/database/weixin/mapping/MerchantInfo.xml" />
-        <mapper resource="com/database/weixin/mapping/SubMerchantInfo.xml" />
-        <mapper resource="com/database/weixin/mapping/SubMerchantAct.xml" />
-        <mapper resource="com/database/weixin/mapping/OrderInfo.xml" />
+        <mapper resource="com/database/bestpay/mapping/MerchantInfo.xml" />
     </mappers>
 </configuration>
