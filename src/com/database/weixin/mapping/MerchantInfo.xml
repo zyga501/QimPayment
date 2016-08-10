@@ -10,7 +10,7 @@
     <select id="getMerchantInfoByAppId" parameterType="String" resultMap="merchantInfoResult">
         SELECT * FROM MerchantInfo WHERE appid=#{appid}
     </select>
-    <resultMap type="com.database.weixin.MerchantInfo" id="merchantInfoResult">
+    <resultMap type="com.database.weixin.WxMerchantInfo" id="merchantInfoResult">
         <id property="id" column="id" jdbcType="BIGINT" />
         <result property="appid" column="appid" jdbcType="VARCHAR"/>
         <result property="appsecret" column="appsecret" jdbcType="VARCHAR"/>

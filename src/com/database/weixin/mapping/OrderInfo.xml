@@ -25,7 +25,7 @@
         <result property="infoCount" column="infoCount" jdbcType="INTEGER" />
         <result property="sumFee" column="sumFee" jdbcType="INTEGER" />
     </resultMap>
-    <resultMap type="com.database.weixin.OrderInfo" id="orderInfoResult">
+    <resultMap type="com.database.weixin.WxOrderInfo" id="orderInfoResult">
         <id property="id" column="id" jdbcType="BIGINT" />
         <result property="appid" column="appid" jdbcType="VARCHAR"/>
         <result property="mchId" column="mchId" jdbcType="VARCHAR"/>
@@ -38,7 +38,7 @@
         <result property="timeEnd" column="timeEnd" jdbcType="VARCHAR" />
         <result property="openId" column="openId" jdbcType="VARCHAR" />
     </resultMap>
-    <insert id="insertOrderInfo" parameterType="com.database.weixin.OrderInfo">
+    <insert id="insertOrderInfo" parameterType="com.database.weixin.WxOrderInfo">
         INSERT INTO OrderInfo(appid,mchid,subMchId,body,transactionId,outTradeNo,bankType,totalFee,timeEnd,createUser,openId)
         VALUE (#{appid},#{mchId},#{subMchId},#{body},#{transactionId},#{outTradeNo},#{bankType},#{totalFee},#{timeEnd},#{createUser},#{openId})
     </insert>

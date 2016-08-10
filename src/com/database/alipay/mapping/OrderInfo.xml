@@ -23,7 +23,7 @@
         <result property="infoCount" column="infoCount" jdbcType="INTEGER" />
         <result property="sumFee" column="sumFee" javaType="DOUBLE" jdbcType="DOUBLE" />
     </resultMap>
-    <resultMap type="com.database.alipay.OrderInfo" id="orderInfoResult">
+    <resultMap type="com.database.alipay.AliOrderInfo" id="orderInfoResult">
         <id property="id" column="id" jdbcType="BIGINT" />
         <result property="appid" column="appid" jdbcType="VARCHAR"/>
         <result property="mchId" column="mchId" jdbcType="VARCHAR"/>
@@ -35,7 +35,7 @@
         <result property="gmtPayment" column="gmtPayment" jdbcType="VARCHAR" />
         <result property="openId" column="openId" jdbcType="VARCHAR" />
     </resultMap>
-    <insert id="insertOrderInfo" parameterType="com.database.alipay.OrderInfo">
+    <insert id="insertOrderInfo" parameterType="com.database.alipay.AliOrderInfo">
         INSERT INTO OrderInfo(appid,mchid,subject,tradeNo,outTradeNo,fundChannel,totalAmount,gmtPayment,createUser,openId)
         VALUE (#{appid},#{mchId},#{subject},#{tradeNo},#{outTradeNo},#{fundChannel},#{totalAmount},#{gmtPayment},#{createUser},#{openId})
     </insert>
