@@ -1,4 +1,4 @@
-package com.weixin.api;
+package com.bestpay.api;
 
 import com.framework.utils.HttpUtils;
 import com.framework.utils.Logger;
@@ -6,27 +6,20 @@ import com.framework.utils.XMLParser;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.thoughtworks.xstream.io.xml.XmlFriendlyNameCoder;
-import com.weixin.api.RequestData.RequestData;
-import com.weixin.utils.Signature;
+import com.bestpay.api.RequestData.RequestData;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
 
-import java.util.Map;
-
-public abstract class WeixinAPIWithSign extends WeixinAPI {
-    public Map<String, Object> getResponseResult() {
-        return responseResult_;
-    }
-
-    public boolean postRequest(String apiKey) throws Exception {
-        if (!requestData_.checkParameter() || apiKey.isEmpty()) {
+public abstract class BestPayWithSign extends BestPayAPI {
+    public boolean postRequest(String keyString) throws Exception {
+        if (!requestData_.checkParameter() || keyString.isEmpty()) {
             Logger.error(this.getClass().getName() + " CheckParameter Failed!");
             return false;
         }
 
-        requestData_.buildSign(apiKey_ = apiKey);
+        requestData_.buildMac(keyString);
 
         String apiUri = getAPIUri();
         if (apiUri.isEmpty()) {
@@ -51,15 +44,8 @@ public abstract class WeixinAPIWithSign extends WeixinAPI {
             httpPost.abort();
         }
 
-        responseResult_ = XMLParser.convertMapFromXML(responseString);
-
-        boolean ret = true;
-        if (!Signature.checkSignValid(responseResult_, apiKey)) {
-            Logger.error(this.getClass().getName() + " CheckSignValid Failed!");
-            ret = false;
-        }
-
-        ret = ret && handlerResponse(responseResult_);
+        boolean ret = false;
+        XMLParser.convertMapFromXML(responseString);
 
         if (!ret) {
             Logger.error("Request Url:\r\n" + apiUri);
@@ -70,11 +56,5 @@ public abstract class WeixinAPIWithSign extends WeixinAPI {
         return ret;
     }
 
-    protected boolean handlerResponse(Map<String, Object> responseResult) throws Exception {
-        return true;
-    }
-
     protected RequestData requestData_;
-    protected String apiKey_;
-    protected Map<String, Object> responseResult_;
 }

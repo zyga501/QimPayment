@@ -1,5 +1,7 @@
 package com.jdpay.api.RequestData;
 
+import com.jdpay.utils.Signature;
+
 public class RequestData {
     public RequestData() {
     }
@@ -14,6 +16,10 @@ public class RequestData {
         }
 
         return false;
+    }
+
+    public void buildSign(String apiKey) throws Exception {
+        this.sign = Signature.generateSign(this, apiKey);
     }
 
     public String merchant_no; // 商户号 微信支付分配的商户号

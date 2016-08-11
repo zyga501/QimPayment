@@ -15,6 +15,7 @@ public class H5PayRequestData extends RequestData {
 
         return false;
     }
+
     public String sign; //
     public String notify_url; //
     public double amount; //单位元

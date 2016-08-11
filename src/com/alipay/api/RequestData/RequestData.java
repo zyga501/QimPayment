@@ -1,5 +1,9 @@
 package com.alipay.api.RequestData;
 
+import com.alipay.utils.Signature;
+import com.framework.utils.ClassUtils;
+import net.sf.json.JSONArray;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
@@ -46,8 +50,13 @@ public class RequestData {
         return false;
     }
 
-    public String buildRequestData() {
-        return new String();
+    public void buildRequestData() {
+        String requestData = JSONArray.fromObject(ClassUtils.convertToMap(this, false)).toString().substring(1);
+        biz_content = requestData.substring(0, requestData.length() - 1);
+    }
+
+    public void buildSign(String privateKey) throws IllegalAccessException {
+        sign = Signature.generateSign(new RequestData(this), privateKey);
     }
 
     public String app_id; // 支付宝分配给开发者的应用Id

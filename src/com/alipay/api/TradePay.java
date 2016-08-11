@@ -11,12 +11,15 @@ import static com.message.WeixinMessage.sendAliTemplateMessage;
 
 public class TradePay extends AliPayAPIWithSign {
     public final static String TRADEPAY_API = "https://openapi.alipay.com/gateway.do";
+
     public TradePay(TradePayRequestData requestData, long createUser) {
         requestData_ = requestData;
         createUser_ = createUser;
         requestData_.method = "alipay.trade.pay";
     }
+
     public Map<String, Object> responseData;
+
     @Override
     protected String getAPIUri() {
         return TRADEPAY_API;
