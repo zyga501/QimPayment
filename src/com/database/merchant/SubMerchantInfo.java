@@ -134,19 +134,20 @@ public class SubMerchantInfo {
 
     public String getAppsecret() {
             return appsecret_;
-        }
+    }
 
     public void setAppsecret(String appsecret_) {
-    this.appsecret_ = appsecret_;
-}
+        this.appsecret_ = appsecret_;
+    }
 
     public String getAppid() {
-    return appid_;
-}
+        return appid_;
+    }
 
     public void setAppid(String appid_) {
-            this.appid_ = appid_;
-        }
+        this.appid_ = appid_;
+    }
+    
     private long id_;
     private long merchantId_;
     private String name_;

@@ -4,8 +4,9 @@
     <select id="getMerchantInfoById" parameterType="long" resultMap="merchantInfoResult">
       SELECT * FROM MerchantInfo WHERE id=#{id}
     </select>
-    <resultMap type="com.database.bestpay.MerchantInfo" id="merchantInfoResult">
+    <resultMap type="com.database.bestpay.BtMerchantInfo" id="merchantInfoResult">
         <id property="id" column="id" jdbcType="BIGINT" />
         <result property="mchId" column="mchId" jdbcType="VARCHAR"/>
+        <result property="apiKey" column="apiKey" jdbcType="VARCHAR"/>
     </resultMap>
 </mapper>
