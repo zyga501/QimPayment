@@ -9,9 +9,7 @@ import java.net.UnknownHostException;
 public class UnifiedOrderRequestData extends RequestData {
     public UnifiedOrderRequestData() throws UnknownHostException {
         spbill_create_ip = InetAddress.getLocalHost().getHostAddress().toString();
-        if (out_trade_no == null) {
-            out_trade_no = String.valueOf(new IdWorker(ProjectSettings.getIdWorkerSeed()).nextId());
-        }
+        out_trade_no = String.valueOf(new IdWorker(ProjectSettings.getIdWorkerSeed()).nextId());
     }
 
     public boolean checkParameter() {

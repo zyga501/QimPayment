@@ -1,6 +1,7 @@
 package com.weixin.api.RequestData;
 
 import com.framework.utils.StringUtils;
+import com.weixin.utils.Signature;
 
 public class RequestData {
     public RequestData() {
@@ -19,6 +20,10 @@ public class RequestData {
         }
 
         return false;
+    }
+
+    public void buildSign(String apiKey) throws IllegalAccessException {
+        this.sign = Signature.generateSign(this, apiKey);
     }
 
     public String appid; // 公众账号ID 微信分配的公众账号ID

@@ -30,8 +30,7 @@ public abstract class JDAPIWithSign extends JDAPI {
             return false;
         }
 
-        String sign = Signature.generateSign(requestData_, apiKey_ = apiKey);
-        requestData_.sign = sign;
+        requestData_.buildSign(apiKey);
 
         String apiUri = getAPIUri();
         if (apiUri.isEmpty()) {
@@ -69,6 +68,5 @@ public abstract class JDAPIWithSign extends JDAPI {
     }
 
     protected RequestData requestData_;
-    protected String apiKey_;
     protected Map<String, Object> responseResult_;
 }

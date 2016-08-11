@@ -1,17 +1,14 @@
 package com.alipay.api.RequestData;
 
 import com.framework.base.ProjectSettings;
-import com.framework.utils.ClassUtils;
 import com.framework.utils.IdWorker;
-import net.sf.json.JSONArray;
 
 public class TradePayRequestData extends RequestData {
     public TradePayRequestData () {
-        if (out_trade_no == null) {
-            out_trade_no = String.valueOf(new IdWorker(ProjectSettings.getIdWorkerSeed()).nextId());
-        }
+        out_trade_no = String.valueOf(new IdWorker(ProjectSettings.getIdWorkerSeed()).nextId());
     }
 
+    @Override
     public boolean checkParameter() {
         if (!super.checkParameter()) {
             return false;
@@ -28,12 +25,6 @@ public class TradePayRequestData extends RequestData {
         }
 
         return false;
-    }
-
-    @Override
-    public String buildRequestData() {
-        String requestData = JSONArray.fromObject(ClassUtils.convertToMap(this, false)).toString().substring(1);
-        return requestData.substring(0, requestData.length() - 1);
     }
 
     public String out_trade_no; // 商户订单号,64个字符以内

@@ -77,4 +77,5 @@
     
     <include file="com/alipay/struts-alipay.xml" />
     <include file="com/jdpay/struts-jdpay.xml" />
+    <include file="com/bestpay/struts-bestpay.xml" />
 </struts>

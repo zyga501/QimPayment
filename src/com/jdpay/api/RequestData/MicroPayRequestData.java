@@ -17,7 +17,6 @@ public class MicroPayRequestData extends RequestData {
         return false;
     }
 
-
     public String seed;
     public String sign; //
     public String notify_url; //
