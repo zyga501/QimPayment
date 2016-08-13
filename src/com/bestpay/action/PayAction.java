@@ -43,6 +43,7 @@ public class PayAction extends AjaxActionSupport {
             BarcodePay barcodePay = new BarcodePay(barcodePayRequestData);
             return AjaxActionComplete(barcodePay.postRequest(merchantInfo.getApiKey()));
         } while (false);
-        return AjaxActionComplete();
+
+        return AjaxActionComplete(false);
     }
 }
