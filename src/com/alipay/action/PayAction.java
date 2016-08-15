@@ -21,84 +21,103 @@ import java.util.Map;
 
 public class PayAction extends AjaxActionSupport {
     public String tradePay() throws Exception {
-        SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(getParameter("id").toString()));
-        if (subMerchantUser != null) {
-            SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
-            if (subMerchantInfo != null) {
-                AliMerchantInfo merchantInfo = AliMerchantInfo.getMerchantInfoById(subMerchantInfo.getId());
-                if (merchantInfo != null) {
-                    TradePayRequestData tradePayRequestData = new TradePayRequestData();
-                    tradePayRequestData.app_id = merchantInfo.getAppid();
-                    tradePayRequestData.mchId = merchantInfo.getId();
-                    tradePayRequestData.scene = "bar_code";
-                    tradePayRequestData.auth_code = getParameter("auth_code").toString();
-                    tradePayRequestData.total_amount = Double.parseDouble(getParameter("total_amount").toString());
-                    tradePayRequestData.subject = getParameter("subject").toString();
-                    TradePay tradePay = new TradePay(tradePayRequestData, subMerchantUser.getId());
-                    tradePay.postRequest(merchantInfo.getPrivateKey(), merchantInfo.getPublicKey());
-                    Map<String, String> map = new HashMap<>();
-                    map.put("body",getParameter("subject").toString());
-                    map.put("transaction_id",tradePay.responseData.get("trade_no").toString());
-                    map.put("out_trade_no", tradePay.responseData.get("out_trade_no").toString());
-                    map.put("total_fee", tradePay.responseData.get("total_amount").toString());
-                    map.put("time_end", tradePay.responseData.get("gmt_payment").toString());
-                    return AjaxActionComplete(map);
-                }
+        do {
+            SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(getParameter("id").toString()));
+            if (subMerchantUser == null) {
+                break;
             }
-        }
 
+            SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
+            if (subMerchantInfo == null) {
+                break;
+            }
+
+            AliMerchantInfo merchantInfo = AliMerchantInfo.getMerchantInfoById(subMerchantInfo.getId());
+            if (merchantInfo == null) {
+                break;
+            }
+
+            TradePayRequestData tradePayRequestData = new TradePayRequestData();
+            tradePayRequestData.app_id = merchantInfo.getAppid();
+            tradePayRequestData.mchId = merchantInfo.getId();
+            tradePayRequestData.scene = "bar_code";
+            tradePayRequestData.auth_code = getParameter("auth_code").toString();
+            tradePayRequestData.total_amount = Double.parseDouble(getParameter("total_amount").toString());
+            tradePayRequestData.subject = getParameter("subject").toString();
+            TradePay tradePay = new TradePay(tradePayRequestData, subMerchantUser.getId());
+            tradePay.postRequest(merchantInfo.getPrivateKey(), merchantInfo.getPublicKey());
+            Map<String, String> map = new HashMap<>();
+            map.put("body",getParameter("subject").toString());
+            map.put("transaction_id",tradePay.responseData.get("trade_no").toString());
+            map.put("out_trade_no", tradePay.responseData.get("out_trade_no").toString());
+            map.put("total_fee", tradePay.responseData.get("total_amount").toString());
+            map.put("time_end", tradePay.responseData.get("gmt_payment").toString());
+            return AjaxActionComplete(map);
+        } while (false);
         return AjaxActionComplete(false);
     }
 
     public String tradePreCreate() throws Exception {
-        SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(getParameter("id").toString()));
-        if (subMerchantUser != null) {
+        do {
+            SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(getParameter("id").toString()));
+            if (subMerchantUser == null) {
+                break;
+            }
+
             SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
-            if (subMerchantInfo != null) {
-                AliMerchantInfo merchantInfo = AliMerchantInfo.getMerchantInfoById(subMerchantInfo.getId());
-                if (merchantInfo != null) {
-                    TradePreCreateRequestData tradePreCreateRequestData = new TradePreCreateRequestData();
-                    tradePreCreateRequestData.app_id = merchantInfo.getAppid();
-                    tradePreCreateRequestData.total_amount = Double.parseDouble(getParameter("total_amount").toString());
-                    tradePreCreateRequestData.subject = getParameter("subject").toString();
-                    tradePreCreateRequestData.out_trade_no =  StringUtils.convertNullableString(getParameter("out_trade_no"),String.valueOf(new IdWorker(ProjectSettings.getIdWorkerSeed()).nextId()));
-                    String requestUrl = getRequest().getRequestURL().toString();
-                    requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/'));
-                    requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/') + 1) + "alipay/"
-                            + CallbackAction.TRADEPRECREATE + "?mchId=" + merchantInfo.getId() + "&createUser=" + subMerchantUser.getId();
-                    tradePreCreateRequestData.notify_url = requestUrl;
-                    TradePreCreate tradePreCreate = new TradePreCreate(tradePreCreateRequestData);
-                    if (tradePreCreate.postRequest(merchantInfo.getPrivateKey(), merchantInfo.getPublicKey())) {
-                        if (StringUtils.convertNullableString(getParameter("auto_redirect")).compareTo("true") != 0) {
-                            Map<String, String> map = new HashMap<>();
-                            map.put("qr_code", tradePreCreate.getQrCode());
-                            return AjaxActionComplete(map);
-                        }
-                        else {
-                            getResponse().sendRedirect(tradePreCreate.getQrCode());
-                        }
-                    }
+            if (subMerchantInfo == null) {
+                break;
+            }
+
+            AliMerchantInfo merchantInfo = AliMerchantInfo.getMerchantInfoById(subMerchantInfo.getId());
+            if (merchantInfo == null) {
+                break;
+            }
+
+            TradePreCreateRequestData tradePreCreateRequestData = new TradePreCreateRequestData();
+            tradePreCreateRequestData.app_id = merchantInfo.getAppid();
+            tradePreCreateRequestData.total_amount = Double.parseDouble(getParameter("total_amount").toString());
+            tradePreCreateRequestData.subject = getParameter("subject").toString();
+            tradePreCreateRequestData.out_trade_no =  StringUtils.convertNullableString(getParameter("out_trade_no"),String.valueOf(new IdWorker(ProjectSettings.getIdWorkerSeed()).nextId()));
+            String requestUrl = getRequest().getRequestURL().toString();
+            requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/'));
+            requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/') + 1) + "alipay/"
+                    + CallbackAction.TRADEPRECREATE + "?mchId=" + merchantInfo.getId() + "&createUser=" + subMerchantUser.getId();
+            tradePreCreateRequestData.notify_url = requestUrl;
+            TradePreCreate tradePreCreate = new TradePreCreate(tradePreCreateRequestData);
+            if (tradePreCreate.postRequest(merchantInfo.getPrivateKey(), merchantInfo.getPublicKey())) {
+                if (StringUtils.convertNullableString(getParameter("auto_redirect")).compareTo("true") != 0) {
+                    Map<String, String> map = new HashMap<>();
+                    map.put("qr_code", tradePreCreate.getQrCode());
+                    return AjaxActionComplete(map);
+                }
+                else {
+                    getResponse().sendRedirect(tradePreCreate.getQrCode());
                 }
             }
-        }
+        } while (false);
 
         return AjaxActionComplete(false);
     }
 
     public String queryOrder() throws Exception {
-        SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(getParameter("id").toString()));
-        if (subMerchantUser != null) {
-            SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
-            if (subMerchantInfo != null) {
-//                MerchantInfo merchantInfo = MerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
-//                if (merchantInfo != null) {
-                AliOrderInfo orderInfo = AliOrderInfo.getOrderInfoByOrderNo(getParameter("out_trade_no").toString());
-                    List<AliOrderInfo> list = new ArrayList<>();
-                    list.add(orderInfo);
-                    return AjaxActionComplete(list);
-//                }
+        do {
+            SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(getParameter("id").toString()));
+            if (subMerchantUser == null) {
+                break;
             }
-        }
-        return AjaxActionComplete();
+
+            SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
+            if (subMerchantInfo == null) {
+                break;
+            }
+
+            AliOrderInfo orderInfo = AliOrderInfo.getOrderInfoByOrderNo(getParameter("out_trade_no").toString());
+            List<AliOrderInfo> list = new ArrayList<>();
+            list.add(orderInfo);
+            return AjaxActionComplete(list);
+        } while (false);
+
+        return AjaxActionComplete(false);
     }
 }

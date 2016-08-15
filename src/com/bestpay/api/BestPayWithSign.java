@@ -1,16 +1,15 @@
 package com.bestpay.api;
 
-import com.framework.utils.HttpUtils;
-import com.framework.utils.Logger;
-import com.framework.utils.XMLParser;
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
-import com.thoughtworks.xstream.io.xml.XmlFriendlyNameCoder;
 import com.bestpay.api.RequestData.RequestData;
+import com.framework.utils.*;
+import org.apache.http.Consts;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
+
+import java.util.Map;
 
 public abstract class BestPayWithSign extends BestPayAPI {
     public boolean postRequest(String keyString) throws Exception {
@@ -26,12 +25,8 @@ public abstract class BestPayWithSign extends BestPayAPI {
             return false;
         }
 
-        XStream xStreamForRequestPostData = new XStream(new DomDriver("UTF-8", new XmlFriendlyNameCoder("-_", "_")));
-        String postDataXML = xStreamForRequestPostData.toXML(requestData_);
-
         HttpPost httpPost = new HttpPost(apiUri);
-        StringEntity postEntity = new StringEntity(postDataXML, "UTF-8");
-        httpPost.addHeader("Content-Type", "text/xml");
+        StringEntity postEntity = new UrlEncodedFormEntity(ClassUtils.ConvertToList(requestData_, true), Consts.UTF_8);
         httpPost.setEntity(postEntity);
 
         String responseString = new String();
@@ -44,17 +39,23 @@ public abstract class BestPayWithSign extends BestPayAPI {
             httpPost.abort();
         }
 
-        boolean ret = false;
-        XMLParser.convertMapFromXML(responseString);
+        responseResult_ = JsonUtils.toMap(responseString, true);
+        boolean ret = StringUtils.convertNullableString(responseResult_.get("success")).compareTo("true") == 0;
+        ret = ret && handlerResponse(responseResult_);
 
         if (!ret) {
             Logger.error("Request Url:\r\n" + apiUri);
-            Logger.error("Reqest Data:\r\n" + postDataXML);
             Logger.error("Response Data:\r\n" + responseString);
         }
 
         return ret;
     }
 
+
+    protected boolean handlerResponse(Map<String, Object> responseResult) throws Exception {
+        return true;
+    }
+
     protected RequestData requestData_;
+    protected Map<String, Object> responseResult_;
 }
