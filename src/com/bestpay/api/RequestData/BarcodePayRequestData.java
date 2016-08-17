@@ -3,9 +3,9 @@ package com.bestpay.api.RequestData;
 import com.framework.base.ProjectSettings;
 import com.framework.utils.IdWorker;
 import com.framework.utils.MD5;
+import com.framework.utils.StringUtils;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.TimeZone;
 
 public class BarcodePayRequestData extends RequestData {
@@ -13,7 +13,10 @@ public class BarcodePayRequestData extends RequestData {
         orderReqNo = orderNo = String.valueOf(new IdWorker(ProjectSettings.getIdWorkerSeed()).nextId());
         SimpleDateFormat df = new SimpleDateFormat("yyyyMMddhhmmss");
         df.setTimeZone(TimeZone.getTimeZone("GMT+8"));
-        orderDate = df.format(new Date(Long.valueOf(System.currentTimeMillis()).longValue()));
+        orderDate = StringUtils.generateDate("yyyyMMddhhmmss", "GMT+8");
+        TransType = "B";
+        channel = "05";
+        busiType = "0000001";
     }
 
     @Override
@@ -23,7 +26,9 @@ public class BarcodePayRequestData extends RequestData {
         }
 
         try {
-            return !orderNo.isEmpty()
+            return !channel.isEmpty()
+                    && !busiType.isEmpty()
+                    && !orderNo.isEmpty()
                     && !orderReqNo.isEmpty()
                     && !orderDate.isEmpty()
                     && !barcode.isEmpty()
@@ -51,6 +56,9 @@ public class BarcodePayRequestData extends RequestData {
         this.mac = MD5.MD5Encode(stringBuilder.toString());
     }
 
+    public String TransType; //
+    public String channel; // 渠道
+    public String busiType; // 业务类型
     public String orderNo; // 订单号
     public String orderReqNo; // 订单请求交易流水号,与订单号一致
     public String orderDate; // 订单日期

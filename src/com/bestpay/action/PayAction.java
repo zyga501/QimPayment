@@ -46,4 +46,25 @@ public class PayAction extends AjaxActionSupport {
 
         return AjaxActionComplete(false);
     }
+
+    public String orderPay() throws Exception {
+        do {
+            SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(getParameter("id").toString()));
+            if (subMerchantUser == null) {
+                break;
+            }
+
+            SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
+            if (subMerchantInfo == null) {
+                break;
+            }
+
+            BtMerchantInfo merchantInfo = BtMerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
+            if (merchantInfo == null) {
+                break;
+            }
+        } while (false);
+
+        return AjaxActionComplete(false);
+    }
 }
