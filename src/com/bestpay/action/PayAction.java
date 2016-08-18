@@ -3,7 +3,6 @@ package com.bestpay.action;
 import com.bestpay.api.BarcodePay;
 import com.bestpay.api.RequestData.BarcodePayRequestData;
 import com.database.bestpay.BtMerchantInfo;
-import com.database.merchant.SubMerchantInfo;
 import com.database.merchant.SubMerchantUser;
 import com.framework.action.AjaxActionSupport;
 
@@ -15,12 +14,7 @@ public class PayAction extends AjaxActionSupport {
                 break;
             }
 
-            SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
-            if (subMerchantInfo == null) {
-                break;
-            }
-
-            BtMerchantInfo merchantInfo = BtMerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
+            BtMerchantInfo merchantInfo = BtMerchantInfo.getMerchantInfoById(subMerchantUser.getSubMerchantId());
             if (merchantInfo == null) {
                 break;
             }
@@ -54,15 +48,11 @@ public class PayAction extends AjaxActionSupport {
                 break;
             }
 
-            SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
-            if (subMerchantInfo == null) {
-                break;
-            }
-
-            BtMerchantInfo merchantInfo = BtMerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
+            BtMerchantInfo merchantInfo = BtMerchantInfo.getMerchantInfoById(subMerchantUser.getSubMerchantId());
             if (merchantInfo == null) {
                 break;
             }
+
         } while (false);
 
         return AjaxActionComplete(false);
