@@ -127,7 +127,7 @@ public class MerchantAction extends AjaxActionSupport {
                 resultMap.put("hasalipay", "1");
             }
             SubMerchantInfo subMerchantInfo1 = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
-                BtMerchantInfo btMerchantInfo = BtMerchantInfo.getMerchantInfoById(subMerchantInfo1.getMerchantId());
+                BtMerchantInfo btMerchantInfo = BtMerchantInfo.getMerchantInfoById(subMerchantUser.getSubMerchantId());
                 if (null == btMerchantInfo){
                 resultMap.put("hasbestpay", "0");
             }else {
