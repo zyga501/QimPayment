@@ -20,7 +20,7 @@ public class PayAction extends AjaxActionSupport {
             }
 
             BarcodePayRequestData barcodePayRequestData = new BarcodePayRequestData();
-            barcodePayRequestData.subMerchantId = barcodePayRequestData.merchantId = String.valueOf(subMerchantInfo.getMerchantId());
+            barcodePayRequestData.subMerchantId = barcodePayRequestData.merchantId = merchantInfo.getMchId();
             barcodePayRequestData.barcode = getParameter("barcode").toString();
             if (getParameter("orderNo") != null) {
                 barcodePayRequestData.orderReqNo = barcodePayRequestData.orderNo = getParameter("orderNo").toString();
