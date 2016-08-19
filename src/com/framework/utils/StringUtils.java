@@ -1,6 +1,9 @@
 package com.framework.utils;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
+import java.util.TimeZone;
 
 public class StringUtils {
     public static String convertNullableString(Object object) {
@@ -28,5 +31,11 @@ public class StringUtils {
             sb.append(base.charAt(number));
         }
         return sb.toString();
+    }
+
+    public static String generateDate(String pattern, String timeZone) {
+        SimpleDateFormat df = new SimpleDateFormat(pattern);
+        df.setTimeZone(TimeZone.getTimeZone("GMT+8"));
+        return df.format(new Date(Long.valueOf(System.currentTimeMillis()).longValue()));
     }
 }
