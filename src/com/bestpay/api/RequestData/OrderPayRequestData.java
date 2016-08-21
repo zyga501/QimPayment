@@ -2,6 +2,7 @@ package com.bestpay.api.RequestData;
 
 import com.framework.base.ProjectSettings;
 import com.framework.utils.IdWorker;
+import com.framework.utils.MD5;
 import com.framework.utils.StringUtils;
 
 public class OrderPayRequestData extends RequestData {
@@ -28,10 +29,22 @@ public class OrderPayRequestData extends RequestData {
         return false;
     }
 
+    @Override
+    public void buildMac(String keyString) {
+        StringBuilder stringBuilder = new StringBuilder();//组装mac加密明文串
+        stringBuilder.append("MERCHANTID=").append(merchantId);
+        stringBuilder.append("&ORDERSEQ=").append(orderSeq);
+        stringBuilder.append("&ORDERREQTRANSEQ=").append(orderReqTranSeq);
+        stringBuilder.append("&ORDERREQTIME=").append(orderReqTime);
+        stringBuilder.append("&KEY=").append(keyString); //此处是商户的key
+        this.mac = MD5.MD5Encode(stringBuilder.toString());
+    }
+
     public String orderSeq; // 订单号
     public String orderReqTranSeq; // 订单请求流水号
     public String orderReqTime; // yyyyMMDDhhmmss
     public String transCode; // 交易代码
+    public int productAmt; // 产品金额
     public int orderAmt; // 订单金额（分）
     public String productDesc; // 商品描述
     public String attach; // 附加信息
