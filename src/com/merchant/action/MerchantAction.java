@@ -1,7 +1,9 @@
 package com.merchant.action;
 
 import com.database.alipay.AliMerchantInfo;
+import com.database.bestpay.BtMerchantInfo;
 import com.database.jdpay.JdMerchantInfo;
+import com.database.merchant.MerchantInfo;
 import com.database.merchant.OAuthLogin;
 import com.database.merchant.SubMerchantInfo;
 import com.database.merchant.SubMerchantUser;
@@ -123,6 +125,13 @@ public class MerchantAction extends AjaxActionSupport {
                 resultMap.put("hasalipay", "0");
             }else {
                 resultMap.put("hasalipay", "1");
+            }
+            SubMerchantInfo subMerchantInfo1 = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
+                BtMerchantInfo btMerchantInfo = BtMerchantInfo.getMerchantInfoById(subMerchantUser.getSubMerchantId());
+                if (null == btMerchantInfo){
+                resultMap.put("hasbestpay", "0");
+            }else {
+                resultMap.put("hasbestpay", "1");
             }
 
             resultMap.put("uid", String.valueOf(subMerchantUser.getId()));
