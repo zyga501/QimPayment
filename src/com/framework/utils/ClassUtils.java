@@ -77,7 +77,7 @@ public class ClassUtils {
         return query.toString();
     }
 
-    public static List<NameValuePair> ConvertToList(Object object, boolean recursive) {
+    public static List<NameValuePair> ConvertToList(Object object, boolean recursive, boolean toUpperCase) {
         ArrayList<Field> fields = new ArrayList<Field>();
         ClassUtils.getBeanFields(object.getClass(), fields, recursive);
         List<NameValuePair> nameValuePairList = new ArrayList<>();
@@ -88,7 +88,12 @@ public class ClassUtils {
                 if (obj != null) {
                     String value = obj.toString();
                     if (!value.isEmpty()) {
-                        nameValuePairList.add(new BasicNameValuePair(field.getName(), value));
+                        if (!toUpperCase) {
+                            nameValuePairList.add(new BasicNameValuePair(field.getName(), value.toUpperCase()));
+                        }
+                        else {
+                            nameValuePairList.add(new BasicNameValuePair(field.getName().toUpperCase(), value.toUpperCase()));
+                        }
                     }
                 }
             }

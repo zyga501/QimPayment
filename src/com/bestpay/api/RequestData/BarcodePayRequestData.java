@@ -11,8 +11,6 @@ import java.util.TimeZone;
 public class BarcodePayRequestData extends RequestData {
     public BarcodePayRequestData() {
         orderReqNo = orderNo = String.valueOf(new IdWorker(ProjectSettings.getIdWorkerSeed()).nextId());
-        SimpleDateFormat df = new SimpleDateFormat("yyyyMMddhhmmss");
-        df.setTimeZone(TimeZone.getTimeZone("GMT+8"));
         orderDate = StringUtils.generateDate("yyyyMMddhhmmss", "GMT+8");
         TransType = "B";
         channel = "05";

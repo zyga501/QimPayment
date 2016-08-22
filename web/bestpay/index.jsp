@@ -16,6 +16,16 @@
           }
         })
       }
+      function orderPay() {
+        $.ajax({
+          type: 'post',
+          url: '<%=request.getContextPath()%>/bestpay/Pay!orderPay',
+          dataType:"json",
+          data:$("form").serialize(),
+          success: function (data) {
+          }
+        })
+      }
     </script>
   </head>
   <body>
@@ -29,7 +39,7 @@
         </tr>
         <tr><td>总金额:</td>
           <td>
-            <input type="text" id="total_amount" name="productAmt" value="1"/>
+            <input type="text" id="productAmt" name="productAmt" value="1"/>
           </td>
         </tr>
         <tr><td>二维码字符串:</td>
@@ -40,6 +50,9 @@
         <tr>
           <td>
             <input type="button" onclick="barcodePay()" value="条码提交"/>
+          </td>
+          <td>
+            <input type="button" onclick="orderPay()" value="订单提交"/>
           </td>
         </tr>
       </table>

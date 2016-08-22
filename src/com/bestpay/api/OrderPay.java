@@ -1,0 +1,27 @@
+package com.bestpay.api;
+
+import com.bestpay.api.RequestData.OrderPayRequestData;
+import com.framework.utils.ClassUtils;
+import org.apache.http.Consts;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.entity.StringEntity;
+
+import java.io.UnsupportedEncodingException;
+
+public class OrderPay extends BestPayWithSign {
+    public final static String ORDERPAY_API = "https://webpaywg.bestpay.com.cn/order.action";
+
+    public OrderPay(OrderPayRequestData requestData) {
+        requestData_ = requestData;
+    }
+
+    @Override
+    protected String getAPIUri() {
+        return ORDERPAY_API;
+    }
+
+    @Override
+    protected StringEntity buildPostStringEntity() throws UnsupportedEncodingException {
+        return new UrlEncodedFormEntity(ClassUtils.ConvertToList(requestData_, true, true), Consts.UTF_8);
+    }
+}
