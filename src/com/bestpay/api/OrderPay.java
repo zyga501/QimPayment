@@ -24,4 +24,9 @@ public class OrderPay extends BestPayWithSign {
     protected StringEntity buildPostStringEntity() throws UnsupportedEncodingException {
         return new UrlEncodedFormEntity(ClassUtils.ConvertToList(requestData_, true, true), Consts.UTF_8);
     }
+
+    @Override
+    protected boolean handlerResponse(String responseResult) throws Exception {
+        return "00&手机客户端下单成功".compareTo(responseResult) == 0;
+    }
 }

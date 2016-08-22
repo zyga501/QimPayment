@@ -4,10 +4,10 @@ import com.framework.utils.HttpUtils;
 import com.framework.utils.JsonUtils;
 import com.framework.utils.Logger;
 import com.jdpay.api.RequestData.RequestData;
+import com.jdpay.utils.Signature;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.thoughtworks.xstream.io.xml.XmlFriendlyNameCoder;
-import com.jdpay.utils.Signature;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -58,9 +58,19 @@ public abstract class JDAPIWithSign extends JDAPI {
             httpPost.abort();
         }
 
-        System.out.println("Response Data:\r\n" + responseString);
-        responseResult_ = JsonUtils.toMap(responseString,true);
-        return handlerResponse(responseResult_);
+        boolean ret = handlerResponse(responseString) && handlerResponse(responseResult_);
+        if (!ret) {
+            Logger.error("Request Url:\r\n" + apiUri);
+            Logger.error("Response Data:\r\n" + responseString);
+        }
+
+        return ret;
+    }
+
+    @Override
+    protected boolean handlerResponse(String... args) throws Exception {
+        responseResult_ = JsonUtils.toMap(args[0],true);
+        return true;
     }
 
     protected boolean handlerResponse(Map<String, Object> responseResult) throws Exception {

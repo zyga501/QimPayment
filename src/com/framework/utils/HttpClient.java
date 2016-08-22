@@ -1,10 +1,8 @@
 package com.framework.utils;
 
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
 
@@ -55,5 +53,5 @@ public abstract class HttpClient {
 
     protected abstract String getAPIUri();
 
-    protected abstract boolean handlerResponse(String responseResult) throws Exception;
+    protected abstract boolean handlerResponse(String... args) throws Exception;
 }
