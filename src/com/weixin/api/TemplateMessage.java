@@ -22,8 +22,8 @@ public class TemplateMessage extends WeixinAPI {
     }
 
     @Override
-    protected boolean handlerResponse(String responseResult) throws Exception {
-        JSONObject jsonParse = JSONObject.fromObject(responseResult);
+    protected boolean handlerResponse(String... args) throws Exception {
+        JSONObject jsonParse = JSONObject.fromObject(args[0]);
         if (jsonParse.get("errcode") != null) {
             String errorCode = jsonParse.get("errcode").toString();
             switch (errorCode) {
@@ -42,12 +42,12 @@ public class TemplateMessage extends WeixinAPI {
                 }
                 default: {
                     Logger.error("UnHandler Exception!");
-                    Logger.error("Request Url:\r\n" + getAPIUri() + "\r\nRequest Data:\r\n" + postData_ + "\r\nResponse Data:\r\n" + responseResult);
+                    Logger.error("Request Url:\r\n" + getAPIUri() + "\r\nRequest Data:\r\n" + postData_ + "\r\nResponse Data:\r\n" + args[0]);
                     return false;
                 }
             }
         }
-        return super.handlerResponse(responseResult);
+        return super.handlerResponse(args);
     }
 
     private String accessToken_;
