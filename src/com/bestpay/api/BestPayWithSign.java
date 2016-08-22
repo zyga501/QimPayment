@@ -28,6 +28,7 @@ public abstract class BestPayWithSign extends BestPayAPI {
         HttpPost httpPost = new HttpPost(apiUri);
         StringEntity postEntity = new UrlEncodedFormEntity(ClassUtils.ConvertToList(requestData_, true), Consts.UTF_8);
         httpPost.setEntity(postEntity);
+        httpPost.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
 
         String responseString = new String();
         try {

@@ -10,7 +10,6 @@ public class OrderPayRequestData extends RequestData {
         orderSeq = orderReqTranSeq = String.valueOf(new IdWorker(ProjectSettings.getIdWorkerSeed()).nextId());
         orderReqTime = StringUtils.generateDate("yyyyMMddhhmmss", "GMT+8");
         transCode = "01";
-        productDesc = "";
         attach = "";
     }
 
