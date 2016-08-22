@@ -204,7 +204,7 @@ public class PayAction extends AjaxActionSupport {
         }
 
         do {
-            SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(getParameter("id").toString()));
+            SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(subMerchantUserId));
             if (subMerchantUser == null) {
                 break;
             }
