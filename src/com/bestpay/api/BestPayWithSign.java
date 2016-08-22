@@ -4,11 +4,13 @@ import com.bestpay.api.RequestData.RequestData;
 import com.framework.utils.*;
 import org.apache.http.Consts;
 import org.apache.http.HttpResponse;
+import org.apache.http.UnsupportedHttpVersionException;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 public abstract class BestPayWithSign extends BestPayAPI {
@@ -26,8 +28,7 @@ public abstract class BestPayWithSign extends BestPayAPI {
         }
 
         HttpPost httpPost = new HttpPost(apiUri);
-        StringEntity postEntity = new UrlEncodedFormEntity(ClassUtils.ConvertToList(requestData_, true), Consts.UTF_8);
-        httpPost.setEntity(postEntity);
+        httpPost.setEntity(buildPostStringEntity());
         httpPost.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
 
         String responseString = new String();
@@ -52,6 +53,9 @@ public abstract class BestPayWithSign extends BestPayAPI {
         return ret;
     }
 
+    protected StringEntity buildPostStringEntity() throws UnsupportedEncodingException {
+        return new StringEntity("");
+    }
 
     protected boolean handlerResponse(Map<String, Object> responseResult) throws Exception {
         return true;

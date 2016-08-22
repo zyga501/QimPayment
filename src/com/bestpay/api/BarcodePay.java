@@ -1,7 +1,12 @@
 package com.bestpay.api;
 
 import com.bestpay.api.RequestData.BarcodePayRequestData;
+import com.framework.utils.ClassUtils;
+import org.apache.http.Consts;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.entity.StringEntity;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 public class BarcodePay extends BestPayWithSign {
@@ -14,6 +19,11 @@ public class BarcodePay extends BestPayWithSign {
     @Override
     protected String getAPIUri() {
         return BARCODEPAY_API;
+    }
+
+    @Override
+    protected StringEntity buildPostStringEntity() throws UnsupportedEncodingException {
+        return new UrlEncodedFormEntity(ClassUtils.ConvertToList(requestData_, true, false), Consts.UTF_8);
     }
 
     @Override

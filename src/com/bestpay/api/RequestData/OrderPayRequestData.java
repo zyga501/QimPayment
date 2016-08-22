@@ -36,7 +36,7 @@ public class OrderPayRequestData extends RequestData {
         stringBuilder.append("&ORDERREQTRANSEQ=").append(orderReqTranSeq);
         stringBuilder.append("&ORDERREQTIME=").append(orderReqTime);
         stringBuilder.append("&KEY=").append(keyString); //此处是商户的key
-        this.mac = MD5.MD5Encode(stringBuilder.toString());
+        this.mac = MD5.MD5Encode(stringBuilder.toString()).toUpperCase();
     }
 
     public String orderSeq; // 订单号
