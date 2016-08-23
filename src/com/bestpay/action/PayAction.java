@@ -7,6 +7,9 @@ import com.bestpay.api.RequestData.OrderPayRequestData;
 import com.database.bestpay.BtMerchantInfo;
 import com.database.merchant.SubMerchantUser;
 import com.framework.action.AjaxActionSupport;
+import com.framework.utils.ClassUtils;
+
+import java.util.Map;
 
 public class PayAction extends AjaxActionSupport {
     public String barcodePay() throws Exception {
@@ -71,7 +74,12 @@ public class PayAction extends AjaxActionSupport {
             }
 
             OrderPay orderPay = new OrderPay(orderPayRequestData);
-            return AjaxActionComplete(orderPay.postRequest(merchantInfo.getApiKey()));
+            if (orderPay.postRequest(merchantInfo.getApiKey())) {
+                orderPayRequestData.orderAmt = orderPayRequestData.productAmt = orderPayRequestData.productAmt * 0.01;
+                Map<String, Object> resultMap = ClassUtils.convertToMap(orderPayRequestData);
+                resultMap.put("merchantPwd", merchantInfo.getApiKey());
+                return AjaxActionComplete(true, resultMap);
+            }
         } while (false);
 
         return AjaxActionComplete(false);

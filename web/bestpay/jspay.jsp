@@ -129,8 +129,42 @@
                 data:$("form").serialize(),
                 success: function (data) {
                     var json = eval("(" + data + ")");
-                    if ('Y'== json.is_success){
-                        pay(json.paystr);
+                    if (json.resultCode == "Succeed") {
+                        var paySuccess = function() {
+                            alert("Success");
+                        }
+                        var payFail = function() {
+                            alert("Fail");
+                        }
+                        Payment.onPay(
+                                {
+                                    "PRODUCTID": "04", //业务标识
+                                    "MAC": json.mac, // MAC 校验
+                                    "ATTACHAMOUNT": "0.00", //附加金额（单位：元，保留小数点后两位）
+                                    "USERIP": "", //用户 IP
+                                    "SUBMERCHANTID": json.subMerchantId, //子商户号
+                                    "ORDERTIME": json.orderReqTime, //订单请求时间格式yyyyMMddHHmmss
+                                    "MERCHANTID": json.merchantId, //商户号
+                                    "DIVDETAILS": "", //分账明细，分账商户必填,
+                                    "ATTACH": json.attach, //附加信息
+                                    "BACKMERCHANTURL": "", //支付结果后台通知地址
+                                    "PRODUCTAMOUNT": json.productAmt, //产品金额,（单位：元，保留小数点后两位）
+                                    "CURTYPE": "RMB", //币种（默认填 RMB ）
+                                    "BUSITYPE": "09", //业务类型
+                                    "PRODUCTDESC": json.productDesc, //产品描述
+                                    "CUSTOMERID": "", //用户 ID, 在商户系统的登录
+                                    "ORDERVALIDITYTIME": "", //订单有效时间
+                                    "ORDERAMOUNT": json.orderAmt, //订单金额／积分扣减（单位：元，保留小数点后两位）
+                                    "ORDERSEQ": json.orderSeq,//订单号
+                                    "MERCHANTPWD": json.merchantPwd, //商户交易KEY
+                                    "ACCOUNTID": "", //翼支付账户号
+                                    "ORDERREQTRANSEQ": json.orderReqTranSeq, //流水号
+                                    "ORDERREQTRNSEQ": json.orderReqTranSeq, //值同上面的ORDERREQTRANSEQ
+                                    "SERVICE": "mobile.security.pay",   //此值写死
+                                    "SESSIONKEY": App.getSessionKey()
+                                },
+                                payCallback,
+                                payCallback);
                     }
                 }
             })
