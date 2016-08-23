@@ -180,7 +180,7 @@
                 var reg = new RegExp(regStrs[i][0]);
                 th.value = th.value.replace(reg, regStrs[i][1]);
             }
-            $("#total_fee").val(th.value);
+            $("#productAmt").val(th.value);
             if (th.value == "") {
                 $("#paynum").text("");
             }
@@ -205,7 +205,7 @@
 <form>
     <input type="hidden" value="${storename}" name="body"/>
     <input type="hidden" value="${id}" name="id"/>
-    <input type="hidden" value="" name="total_fee" id="total_fee"/>
+    <input type="hidden" value="" name="productAmt" id="productAmt"/>
 
     <div class="Layer122">
         <div align="center" class="STYLE3"></div>

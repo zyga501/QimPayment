@@ -75,7 +75,6 @@ public class PayAction extends AjaxActionSupport {
 
             OrderPay orderPay = new OrderPay(orderPayRequestData);
             if (orderPay.postRequest(merchantInfo.getApiKey())) {
-                orderPayRequestData.orderAmt = orderPayRequestData.productAmt = orderPayRequestData.productAmt * 0.01;
                 Map<String, Object> resultMap = ClassUtils.convertToMap(orderPayRequestData);
                 resultMap.put("merchantPwd", merchantInfo.getApiKey());
                 return AjaxActionComplete(true, resultMap);

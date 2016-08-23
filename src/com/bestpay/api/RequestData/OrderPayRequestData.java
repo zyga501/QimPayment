@@ -43,8 +43,8 @@ public class OrderPayRequestData extends RequestData {
     public String orderReqTranSeq; // 订单请求流水号
     public String orderReqTime; // yyyyMMDDhhmmss
     public String transCode; // 交易代码
-    public double productAmt; // 产品金额
-    public double orderAmt; // 订单金额（分）
+    public int productAmt; // 产品金额
+    public int orderAmt; // 订单金额（分）
     public String productDesc; // 商品描述
     public String attach; // 附加信息
 
