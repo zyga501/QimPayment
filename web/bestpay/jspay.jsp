@@ -180,7 +180,7 @@
                 var reg = new RegExp(regStrs[i][0]);
                 th.value = th.value.replace(reg, regStrs[i][1]);
             }
-            $("#productAmt").val(th.value);
+            $("#productAmt").val(th.value*100);
             if (th.value == "") {
                 $("#paynum").text("");
             }
@@ -225,7 +225,7 @@
 	<span class="STYLE7">
   	  <label>消费总额: </label>
   	</span>
-            <input type="text" name="paynum" id="paynumbtn"  readonly="readonly"  class="amount" maxlength=10 onclick="new KeyBoard(this);" onchange="amount(this)"  onpaste="return false;"
+            <input type="text" name="paynum" id="paynumbtn"  class="amount" maxlength=10 onkeyup="amount(this)" onchange="amount(this)"  onpaste="return false;"
                    autocomplete="off" placeholder="询问服务员后输入"/>
         </div>
     </div>
