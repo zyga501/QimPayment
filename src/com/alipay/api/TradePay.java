@@ -18,7 +18,9 @@ public class TradePay extends AliPayAPIWithSign {
         requestData_.method = "alipay.trade.pay";
     }
 
-    public Map<String, Object> responseData;
+    public Map<String, Object> getPayResponse() {
+        return payResponse_;
+    }
 
     @Override
     protected String getAPIUri() {
@@ -32,22 +34,22 @@ public class TradePay extends AliPayAPIWithSign {
                 return false;
             }
 
-            responseData = (Map<String, Object>)responseResult.get("alipay_trade_pay_response");
-            if (responseData.get("code").toString().compareTo("10000") == 0 && responseData.get("msg").toString().compareTo("Success") == 0)
+            payResponse_ = (Map<String, Object>)responseResult.get("alipay_trade_pay_response");
+            if (payResponse_.get("code").toString().compareTo("10000") == 0 && payResponse_.get("msg").toString().compareTo("Success") == 0)
             {
                 TradePayRequestData requestData = (TradePayRequestData)requestData_;
                 AliOrderInfo orderInfo = new AliOrderInfo();
                 orderInfo.setAppid(requestData.app_id);
                 orderInfo.setMchId(requestData.mchId);
                 orderInfo.setSubject(requestData.subject);
-                orderInfo.setTradeNo(responseData.get("trade_no").toString());
-                orderInfo.setOutTradeNo(responseData.get("out_trade_no").toString());
-                orderInfo.setFundChannel(((JSONObject)((JSONArray)responseData.get("fund_bill_list")).get(0)).getString("fund_channel"));
-                orderInfo.setTotalAmount(Double.parseDouble(responseData.get("total_amount").toString()));
-                orderInfo.setGmtPayment(responseData.get("gmt_payment").toString());
+                orderInfo.setTradeNo(payResponse_.get("trade_no").toString());
+                orderInfo.setOutTradeNo(payResponse_.get("out_trade_no").toString());
+                orderInfo.setFundChannel(((JSONObject)((JSONArray)payResponse_.get("fund_bill_list")).get(0)).getString("fund_channel"));
+                orderInfo.setTotalAmount(Double.parseDouble(payResponse_.get("total_amount").toString()));
+                orderInfo.setGmtPayment(payResponse_.get("gmt_payment").toString());
                 orderInfo.setCreateUser(createUser_);
-                orderInfo.setOpenId(responseData.get("open_id").toString());
-                sendAliTemplateMessage(responseData.get("out_trade_no").toString());
+                orderInfo.setOpenId(payResponse_.get("open_id").toString());
+                sendAliTemplateMessage(payResponse_.get("out_trade_no").toString());
                 return AliOrderInfo.insertOrderInfo(orderInfo);
             }
         }
@@ -59,4 +61,5 @@ public class TradePay extends AliPayAPIWithSign {
     }
 
     private long createUser_;
+    private Map<String, Object> payResponse_;
 }

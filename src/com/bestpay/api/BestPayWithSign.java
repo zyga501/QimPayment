@@ -40,7 +40,7 @@ public abstract class BestPayWithSign extends BestPayAPI {
             httpPost.abort();
         }
 
-        boolean ret = handlerResponse(responseString) && handlerResponse(responseResult_);
+        boolean ret = parseResponse(responseString) && handlerResponse(responseResult_);
 
         if (!ret) {
             Logger.error("Request Url:\r\n" + apiUri);
@@ -55,7 +55,7 @@ public abstract class BestPayWithSign extends BestPayAPI {
     }
 
     @Override
-    protected boolean handlerResponse(String... args) throws Exception {
+    protected boolean parseResponse(String... args) throws Exception {
         responseResult_ = JsonUtils.toMap(args[0], true);
         return StringUtils.convertNullableString(responseResult_.get("success")).compareTo("true") == 0;
     }

@@ -48,10 +48,10 @@ public class PayAction extends AjaxActionSupport {
             tradePay.postRequest(merchantInfo.getPrivateKey(), merchantInfo.getPublicKey());
             Map<String, String> resultMap = new HashMap<>();
             resultMap.put("body",getParameter("subject").toString());
-            resultMap.put("transaction_id",tradePay.responseData.get("trade_no").toString());
-            resultMap.put("out_trade_no", tradePay.responseData.get("out_trade_no").toString());
-            resultMap.put("total_fee", tradePay.responseData.get("total_amount").toString());
-            resultMap.put("time_end", tradePay.responseData.get("gmt_payment").toString());
+            resultMap.put("transaction_id",tradePay.getPayResponse().get("trade_no").toString());
+            resultMap.put("out_trade_no", tradePay.getPayResponse().get("out_trade_no").toString());
+            resultMap.put("total_fee", tradePay.getPayResponse().get("total_amount").toString());
+            resultMap.put("time_end", tradePay.getPayResponse().get("gmt_payment").toString());
             return AjaxActionComplete(resultMap);
         } while (false);
         return AjaxActionComplete(false);

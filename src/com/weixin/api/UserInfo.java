@@ -20,7 +20,7 @@ public class UserInfo extends WeixinAPI {
     }
 
     @Override
-    protected boolean handlerResponse(String... args) throws Exception {
+    protected boolean parseResponse(String... args) throws Exception {
         JSONObject jsonParse = JSONObject.fromObject(args[0]);
         if (jsonParse.get("nickname") != null) {
             nickname_ = jsonParse.get("nickname").toString();

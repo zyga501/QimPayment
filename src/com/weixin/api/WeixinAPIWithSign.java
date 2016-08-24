@@ -51,7 +51,7 @@ public abstract class WeixinAPIWithSign extends WeixinAPI {
             httpPost.abort();
         }
 
-        boolean ret = handlerResponse(responseString, apiKey) && handlerResponse(responseResult_);
+        boolean ret = parseResponse(responseString, apiKey) && handlerResponse(responseResult_);
 
         if (!ret) {
             Logger.error("Request Url:\r\n" + apiUri);
@@ -62,7 +62,7 @@ public abstract class WeixinAPIWithSign extends WeixinAPI {
     }
 
     @Override
-    protected boolean handlerResponse(String... args) throws Exception {
+    protected boolean parseResponse(String... args) throws Exception {
         responseResult_ = XMLParser.convertMapFromXML(args[0]);
         if (!Signature.checkSignValid(responseResult_, args[1])) {
             Logger.error(this.getClass().getName() + " CheckSignValid Failed!");

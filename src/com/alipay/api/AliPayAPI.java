@@ -4,7 +4,7 @@ import com.framework.utils.HttpClient;
 
 public abstract class AliPayAPI extends HttpClient {
     @Override
-    protected boolean handlerResponse(String... args) throws Exception {
+    protected boolean parseResponse(String... args) throws Exception {
         return true;
     }
 }

@@ -20,7 +20,7 @@ public class OpenId extends WeixinAPI {
     }
 
     @Override
-    protected boolean handlerResponse(String... args) throws Exception {
+    protected boolean parseResponse(String... args) throws Exception {
         JSONObject jsonParse = JSONObject.fromObject(args[0]);
         if (jsonParse.get("openid") != null) {
             openid_ = jsonParse.get("openid").toString();

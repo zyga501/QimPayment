@@ -100,7 +100,7 @@ public class AccessToken extends WeixinAPI{
     }
 
     @Override
-    protected boolean handlerResponse(String... args) throws Exception {
+    protected boolean parseResponse(String... args) throws Exception {
         JSONObject jsonParse = JSONObject.fromObject(args[0]);
         if (jsonParse.get("access_token") != null) {
             accessToken_ = jsonParse.get("access_token").toString();

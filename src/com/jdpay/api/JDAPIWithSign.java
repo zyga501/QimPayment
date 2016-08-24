@@ -58,7 +58,7 @@ public abstract class JDAPIWithSign extends JDAPI {
             httpPost.abort();
         }
 
-        boolean ret = handlerResponse(responseString) && handlerResponse(responseResult_);
+        boolean ret = parseResponse(responseString) && handlerResponse(responseResult_);
         if (!ret) {
             Logger.error("Request Url:\r\n" + apiUri);
             Logger.error("Response Data:\r\n" + responseString);
@@ -68,7 +68,7 @@ public abstract class JDAPIWithSign extends JDAPI {
     }
 
     @Override
-    protected boolean handlerResponse(String... args) throws Exception {
+    protected boolean parseResponse(String... args) throws Exception {
         responseResult_ = JsonUtils.toMap(args[0],true);
         return true;
     }

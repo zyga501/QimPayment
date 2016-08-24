@@ -20,7 +20,7 @@ public abstract class HttpClient {
 
         Logger.debug("Response Data:\r\n" + responseString);
 
-        return handlerResponse(responseString);
+        return parseResponse(responseString);
     }
 
     public boolean postRequest(String postData) throws Exception {
@@ -48,10 +48,10 @@ public abstract class HttpClient {
 
         Logger.debug("Response Data:\r\n" + responseString);
 
-        return handlerResponse(responseString);
+        return parseResponse(responseString);
     }
 
     protected abstract String getAPIUri();
 
-    protected abstract boolean handlerResponse(String... args) throws Exception;
+    protected abstract boolean parseResponse(String... args) throws Exception;
 }

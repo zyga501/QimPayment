@@ -48,7 +48,7 @@ public abstract class AliPayAPIWithSign extends AliPayAPI {
             httpPost.abort();
         }
 
-        boolean ret = handlerResponse(responseString, publicKey) && handlerResponse(responseResult_);
+        boolean ret = parseResponse(responseString, publicKey) && handlerResponse(responseResult_);
 
         if (!ret) {
             Logger.error("Request Url:\r\n" + apiUri);
@@ -59,7 +59,7 @@ public abstract class AliPayAPIWithSign extends AliPayAPI {
     }
 
     @Override
-    protected boolean handlerResponse(String... args) throws Exception {
+    protected boolean parseResponse(String... args) throws Exception {
         responseResult_ = JsonUtils.toMap(args[0], true);
         String rootNode = requestData_.method.replace('.', '_') + "_response";
         if (responseResult_.containsKey("sign") && responseResult_.containsKey(rootNode)) {

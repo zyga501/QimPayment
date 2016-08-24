@@ -22,7 +22,7 @@ public class TemplateMessage extends WeixinAPI {
     }
 
     @Override
-    protected boolean handlerResponse(String... args) throws Exception {
+    protected boolean parseResponse(String... args) throws Exception {
         JSONObject jsonParse = JSONObject.fromObject(args[0]);
         if (jsonParse.get("errcode") != null) {
             String errorCode = jsonParse.get("errcode").toString();
@@ -47,7 +47,7 @@ public class TemplateMessage extends WeixinAPI {
                 }
             }
         }
-        return super.handlerResponse(args);
+        return super.parseResponse(args);
     }
 
     private String accessToken_;

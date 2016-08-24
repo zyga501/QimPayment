@@ -26,7 +26,7 @@ public class OrderPay extends BestPayWithSign {
     }
 
     @Override
-    protected boolean handlerResponse(String... args) throws Exception {
+    protected boolean parseResponse(String... args) throws Exception {
         return "00&手机客户端下单成功".compareTo(args[0]) == 0;
     }
 }
