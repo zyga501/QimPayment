@@ -38,7 +38,7 @@ public class PayAction extends AjaxActionSupport {
             barcodePayRequestData.storeId = "000000";
 
             BarcodePay barcodePay = new BarcodePay(barcodePayRequestData);
-            return AjaxActionComplete(barcodePay.postRequest(merchantInfo.getApiKey()));
+            return AjaxActionComplete(barcodePay.postRequest(merchantInfo.getDataKey()));
         } while (false);
 
         return AjaxActionComplete(false);
@@ -74,9 +74,9 @@ public class PayAction extends AjaxActionSupport {
             }
 
             OrderPay orderPay = new OrderPay(orderPayRequestData);
-            if (orderPay.postRequest(merchantInfo.getApiKey())) {
+            if (orderPay.postRequest(merchantInfo.getDataKey())) {
                 Map<String, Object> resultMap = ClassUtils.convertToMap(orderPayRequestData);
-                resultMap.put("merchantPwd", merchantInfo.getApiKey());
+                resultMap.put("merchantPwd", merchantInfo.getMchPwd());
                 return AjaxActionComplete(true, resultMap);
             }
         } while (false);

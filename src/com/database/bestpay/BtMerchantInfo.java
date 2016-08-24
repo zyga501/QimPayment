@@ -25,15 +25,24 @@ public class BtMerchantInfo {
         this.mchId_ = mchId;
     }
 
-    public String getApiKey() {
-        return apiKey_;
+    public String getMchPwd() {
+        return mchPwd_;
     }
 
-    public void setApiKey(String apiKey) {
-        this.apiKey_ = apiKey;
+    public void setMchPwd(String mchPwd) {
+        this.mchPwd_ = mchPwd;
+    }
+
+    public String getDataKey() {
+        return dataKey_;
+    }
+
+    public void setDataKey(String dataKey) {
+        this.dataKey_ = dataKey;
     }
 
     private Long id_;
     private String mchId_;
-    private String apiKey_;
+    private String mchPwd_;
+    private String dataKey_;
 }
