@@ -55,7 +55,7 @@ public class OrderPayRequestData extends RequestData {
     public String loginNo; // 翼支付登录账号
     public String provinceCode; // 省份
     public String cityCode; // 城市
-    public String divDatails; // 分账信息
+    public String divDetail; // 分账信息
     public String encodeType; // MAC字段的加密方式
     public String sessionKey; // 登录密串
     public String encode; // 加密因子索引
