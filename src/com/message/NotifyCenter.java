@@ -5,10 +5,7 @@ import com.framework.base.ProjectSettings;
 import com.framework.utils.Logger;
 import net.sf.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
@@ -25,21 +22,65 @@ public class NotifyCenter {
 
     public static void NoiftyMessage(Long uid, String nofity) {
         synchronized (notifyCenter_.ClientMap()) {
+            System.out.println("notifyCenter_:"+String.valueOf(notifyCenter_.clientMap_.size()));
             if (notifyCenter_.ClientMap().containsKey(uid)) {
                 notifyCenter_.ClientMap().get(uid).SendNotify(nofity);
             }
         }
     }
 
-    class ClientSocket {
-        public ClientSocket(Socket clientSocket) throws IOException {
+    class ClientSocket extends Thread {
+        public Socket GetSocket( ){
+            return this.clientSocket_ ;
+        }
+        public ClientSocket(Socket socket){
+            this.clientSocket_ = socket;
+        }
+
+        @Override
+        public void run() {
             try {
-                clientSocket_ = clientSocket;
-                inputSteram_ = new BufferedReader(new InputStreamReader(clientSocket_.getInputStream()));
-                outputStream_ = new PrintWriter(clientSocket.getOutputStream(),true);
-                SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(JSONObject.fromObject(inputSteram_.readLine()).get("id").toString()));
-                if (null != subMerchantUser) {
-                    id_ = subMerchantUser.getId();
+                String buffer;
+                outputStream_ = new PrintWriter(clientSocket_.getOutputStream(),true);
+                inputStream_ = new BufferedReader(new InputStreamReader(clientSocket_.getInputStream()));
+                while(true){
+                    try {
+                        if (this.clientSocket_.isClosed()) {
+                            clientMap_.remove(this.ID());
+                            return;
+                        }
+                        buffer = inputStream_.readLine();
+                        if (null==buffer){
+                            continue;
+                        }
+                        SubMerchantUser subMerchantUser = null;
+                        try {
+                            subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(JSONObject.fromObject(buffer).get("id").toString()));
+                        }
+                        catch (Exception e){
+
+                        }
+                        if ((null != subMerchantUser)) {
+                            if (clientMap_.containsKey(subMerchantUser.getId())) {
+                                clientMap_.get(subMerchantUser.getId()).Close();
+                                clientMap_.remove(subMerchantUser.getId());
+                            }
+                            clientMap_.put(subMerchantUser.getId(), this);
+                            id_ = subMerchantUser.getId();
+                            SendNotify("OK");
+                            continue;
+                        }
+                        if (this.clientSocket_.isClosed()){
+                            clientMap_.remove(this.ID());
+                        }
+                        if (null!=buffer && buffer.contains("keepalive")) {
+                            System.out.println("client:"+buffer.toString());
+                            System.out.println("client:"+this.ID());
+                            SendNotify("OK");
+                        }
+                    } catch (Exception e) {
+                        // e.printStackTrace();
+                    }
                 }
             }
             catch (Exception exception) {
@@ -61,7 +102,7 @@ public class NotifyCenter {
 
         private Long id_ = Long.MAX_VALUE;
         private Socket clientSocket_;
-        private BufferedReader inputSteram_;
+        private BufferedReader inputStream_;
         private PrintWriter outputStream_;
     }
 
@@ -73,6 +114,7 @@ public class NotifyCenter {
                 System.out.println("start Socket");
             }
             catch (Exception exception) {
+                exception.printStackTrace();
                 Logger.error("Start Notify Center Failed!");
                 return;
             }
@@ -84,11 +126,7 @@ public class NotifyCenter {
                         synchronized (clientMap_) {
                             try {
                                 ClientSocket clientSocket = new ClientSocket(socket);
-                                if (clientMap_.containsKey(clientSocket.ID())) {
-                                    clientMap_.get(clientSocket.ID()).Close();
-                                    clientMap_.remove(clientSocket.ID());
-                                }
-                                clientMap_.put(clientSocket.ID(), clientSocket);
+                                clientSocket.start();
                             }
                             catch (Exception e) {
                                 e.printStackTrace();
