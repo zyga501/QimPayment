@@ -7,6 +7,7 @@
     <resultMap type="com.database.bestpay.BtMerchantInfo" id="merchantInfoResult">
         <id property="id" column="id" jdbcType="BIGINT" />
         <result property="mchId" column="mchId" jdbcType="VARCHAR"/>
-        <result property="apiKey" column="apiKey" jdbcType="VARCHAR"/>
+        <result property="mchPwd" column="mchPwd" jdbcType="VARCHAR"/>
+        <result property="dataKey" column="dataKey" jdbcType="VARCHAR"/>
     </resultMap>
 </mapper>

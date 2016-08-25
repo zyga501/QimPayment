@@ -39,6 +39,27 @@ public class OrderPayRequestData extends RequestData {
         this.mac = MD5.MD5Encode(stringBuilder.toString()).toUpperCase();
     }
 
+    public String buildSign(String merchantPwd) {
+        StringBuffer stringBuilder = new StringBuffer();
+        stringBuilder.append("SERVICE=").append("mobile.security.pay")
+                .append("&MERCHANTID=").append(merchantId)
+                .append("&MERCHANTPWD=").append(merchantPwd)
+                .append("&SUBMERCHANTID=").append(subMerchantId)
+                .append("&BACKMERCHANTURL=").append("")
+                .append("&ORDERSEQ=").append(orderSeq)
+                .append("&ORDERREQTRANSEQ=").append(orderReqTranSeq)
+                .append("&ORDERTIME=").append(orderReqTime)
+                .append("&ORDERVALIDITYTIME=").append("")
+                .append("&CURTYPE=").append("RMB")
+                .append("&ORDERAMOUNT=").append(orderAmt * 0.01)
+                .append("&SUBJECT=").append("")
+                .append("&PRODUCTID=").append("04")
+                .append("&PRODUCTDESC=").append(productDesc)
+                .append("&CUSTOMERID=").append("")
+                .append("&SWTICHACC=").append("true");
+        return MD5.MD5Encode(stringBuilder.toString());
+    }
+
     public String orderSeq; // 订单号
     public String orderReqTranSeq; // 订单请求流水号
     public String orderReqTime; // yyyyMMDDhhmmss
@@ -55,7 +76,7 @@ public class OrderPayRequestData extends RequestData {
     public String loginNo; // 翼支付登录账号
     public String provinceCode; // 省份
     public String cityCode; // 城市
-    public String divDatails; // 分账信息
+    public String divDetail; // 分账信息
     public String encodeType; // MAC字段的加密方式
     public String sessionKey; // 登录密串
     public String encode; // 加密因子索引

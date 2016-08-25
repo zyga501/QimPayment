@@ -7,6 +7,9 @@ import com.bestpay.api.RequestData.OrderPayRequestData;
 import com.database.bestpay.BtMerchantInfo;
 import com.database.merchant.SubMerchantUser;
 import com.framework.action.AjaxActionSupport;
+import com.framework.utils.ClassUtils;
+
+import java.util.Map;
 
 public class PayAction extends AjaxActionSupport {
     public String barcodePay() throws Exception {
@@ -35,7 +38,7 @@ public class PayAction extends AjaxActionSupport {
             barcodePayRequestData.storeId = "000000";
 
             BarcodePay barcodePay = new BarcodePay(barcodePayRequestData);
-            return AjaxActionComplete(barcodePay.postRequest(merchantInfo.getApiKey()));
+            return AjaxActionComplete(barcodePay.postRequest(merchantInfo.getDataKey()));
         } while (false);
 
         return AjaxActionComplete(false);
@@ -71,7 +74,13 @@ public class PayAction extends AjaxActionSupport {
             }
 
             OrderPay orderPay = new OrderPay(orderPayRequestData);
-            return AjaxActionComplete(orderPay.postRequest(merchantInfo.getApiKey()));
+            if (orderPay.postRequest(merchantInfo.getDataKey())) {
+                Map<String, Object> resultMap = ClassUtils.convertToMap(orderPayRequestData);
+                resultMap.put("key", merchantInfo.getDataKey());
+                resultMap.put("merchantPwd", merchantInfo.getMchPwd());
+                resultMap.put("sign", orderPayRequestData.buildSign(merchantInfo.getMchPwd()));
+                return AjaxActionComplete(true, resultMap);
+            }
         } while (false);
 
         return AjaxActionComplete(false);

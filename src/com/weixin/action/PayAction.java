@@ -61,15 +61,15 @@ public class PayAction extends AjaxActionSupport {
                 return AjaxActionComplete();
             }
 
-            Map<String, String> map = new HashMap<>();
-            map.put("body", microPayRequestData.body);
-            map.put("transaction_id", microPay.getResponseResult().get("transaction_id").toString());
-            map.put("out_trade_no", microPay.getResponseResult().get("out_trade_no").toString());
-            map.put("bank_type", microPay.getResponseResult().get("bank_type").toString());
-            map.put("total_fee", microPay.getResponseResult().get("total_fee").toString());
-            map.put("time_end", microPay.getResponseResult().get("time_end").toString());
+            Map<String, String> resultMap = new HashMap<>();
+            resultMap.put("body", microPayRequestData.body);
+            resultMap.put("transaction_id", microPay.getResponseResult().get("transaction_id").toString());
+            resultMap.put("out_trade_no", microPay.getResponseResult().get("out_trade_no").toString());
+            resultMap.put("bank_type", microPay.getResponseResult().get("bank_type").toString());
+            resultMap.put("total_fee", microPay.getResponseResult().get("total_fee").toString());
+            resultMap.put("time_end", microPay.getResponseResult().get("time_end").toString());
             WeixinMessage.sendTemplateMessage(microPay.getResponseResult().get("transaction_id").toString());
-            return AjaxActionComplete(map);
+            return AjaxActionComplete(resultMap);
         } while (false);
 
         return AjaxActionComplete(false);
@@ -120,9 +120,9 @@ public class PayAction extends AjaxActionSupport {
                 return AjaxActionComplete();
             }
 
-            Map<String, String> map = new HashMap<>();
-            map.put("code_url", unifiedOrder.getResponseResult().get("code_url").toString());
-            return AjaxActionComplete(map);
+            Map<String, String> resultMap = new HashMap<>();
+            resultMap.put("code_url", unifiedOrder.getResponseResult().get("code_url").toString());
+            return AjaxActionComplete(resultMap);
         } while (false);
 
         return AjaxActionComplete(false);
@@ -250,16 +250,16 @@ public class PayAction extends AjaxActionSupport {
                 return AjaxActionComplete();
             }
 
-            Map<String,Object> map = new HashMap<>();
-            map.put("appId", unifiedOrderRequestData.appid);
-            map.put("timeStamp", String.valueOf(System.currentTimeMillis() / 1000));
-            map.put("nonceStr", StringUtils.generateRandomString(32));
-            map.put("package", "prepay_id=" + unifiedOrder.getResponseResult().get("prepay_id").toString());
-            map.put("signType", "MD5");
-            map.put("paySign", Signature.generateSign(map, merchantInfo.getApiKey()));
-            map.put("redirect_uri", redirect_uri);
-            map.put("data", data);
-            return AjaxActionComplete(map);
+            Map<String,Object> resultMap = new HashMap<>();
+            resultMap.put("appId", unifiedOrderRequestData.appid);
+            resultMap.put("timeStamp", String.valueOf(System.currentTimeMillis() / 1000));
+            resultMap.put("nonceStr", StringUtils.generateRandomString(32));
+            resultMap.put("package", "prepay_id=" + unifiedOrder.getResponseResult().get("prepay_id").toString());
+            resultMap.put("signType", "MD5");
+            resultMap.put("paySign", Signature.generateSign(resultMap, merchantInfo.getApiKey()));
+            resultMap.put("redirect_uri", redirect_uri);
+            resultMap.put("data", data);
+            return AjaxActionComplete(resultMap);
         } while (false);
 
         return AjaxActionComplete(false);

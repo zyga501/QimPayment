@@ -22,6 +22,7 @@ public class NotifyCenter {
 
     public static void NoiftyMessage(Long uid, String nofity) {
         synchronized (notifyCenter_.ClientMap()) {
+            System.out.println("notifyCenter_:"+String.valueOf(notifyCenter_.clientMap_.size()));
             if (notifyCenter_.ClientMap().containsKey(uid)) {
                 notifyCenter_.ClientMap().get(uid).SendNotify(nofity);
             }
@@ -78,7 +79,7 @@ public class NotifyCenter {
                             SendNotify("OK");
                         }
                     } catch (Exception e) {
-                       // e.printStackTrace();
+                        // e.printStackTrace();
                     }
                 }
             }
@@ -86,24 +87,6 @@ public class NotifyCenter {
 
             }
         }
-      /*  public ClientSocket(Socket clientSocket) throws IOException {
-            try {
-                clientSocket_ = clientSocket;
-                inputSteram_ = new BufferedReader(new InputStreamReader(clientSocket_.getInputStream()));
-                if (inputSteram_.readLine().contains("keepalive")==true) {
-                    clientSocket_.getOutputStream().write("ok".getBytes());
-                    return ;
-                }
-                outputStream_ = new PrintWriter(clientSocket.getOutputStream(),true);
-                SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(JSONObject.fromObject(inputSteram_.readLine()).get("id").toString()));
-                if (null != subMerchantUser) {
-                    id_ = subMerchantUser.getId();
-                }
-            }
-            catch (Exception exception) {
-
-            }
-        }*/
 
         public void Close() throws IOException {
             clientSocket_.close();
@@ -144,11 +127,6 @@ public class NotifyCenter {
                             try {
                                 ClientSocket clientSocket = new ClientSocket(socket);
                                 clientSocket.start();
-//                                    if (clientMap_.containsKey(clientSocket.ID())) {
-//                                        clientMap_.get(clientSocket.ID()).Close();
-//                                        clientMap_.remove(clientSocket.ID());
-//                                }
-//                                clientMap_.put(clientSocket.ID(), clientSocket);
                             }
                             catch (Exception e) {
                                 e.printStackTrace();

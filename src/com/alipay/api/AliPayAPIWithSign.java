@@ -3,10 +3,7 @@ package com.alipay.api;
 import com.alipay.api.RequestData.QueryData;
 import com.alipay.api.RequestData.RequestData;
 import com.alipay.utils.Signature;
-import com.framework.utils.ClassUtils;
-import com.framework.utils.HttpUtils;
-import com.framework.utils.JsonUtils;
-import com.framework.utils.Logger;
+import com.framework.utils.*;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -51,18 +48,7 @@ public abstract class AliPayAPIWithSign extends AliPayAPI {
             httpPost.abort();
         }
 
-        responseResult_ = JsonUtils.toMap(responseString, true);
-
-        boolean ret = true;
-        String rootNode = requestData_.method.replace('.', '_') + "_response";
-        if (responseResult_.containsKey("sign") && responseResult_.containsKey(rootNode)) {
-            if (!Signature.verifySign(getSignSourceData(rootNode, responseString),
-                    responseResult_.get("sign").toString(),
-                    publicKey))
-                ret = false;
-        }
-
-        ret = ret && handlerResponse(responseResult_);
+        boolean ret = parseResponse(responseString, publicKey) && handlerResponse(responseResult_);
 
         if (!ret) {
             Logger.error("Request Url:\r\n" + apiUri);
@@ -70,6 +56,21 @@ public abstract class AliPayAPIWithSign extends AliPayAPI {
         }
 
         return ret;
+    }
+
+    @Override
+    protected boolean parseResponse(String... args) throws Exception {
+        responseResult_ = JsonUtils.toMap(args[0], true);
+        String rootNode = requestData_.method.replace('.', '_') + "_response";
+        if (responseResult_.containsKey("sign") && responseResult_.containsKey(rootNode)) {
+            if (!Signature.verifySign(getSignSourceData(rootNode, args[0]),
+                    responseResult_.get("sign").toString(),
+                    args[1])) {
+                return false;
+            }
+            return true;
+        }
+        return false;
     }
 
     protected boolean handlerResponse(Map<String, Object> responseResult) throws Exception {
