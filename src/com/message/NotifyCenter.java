@@ -22,7 +22,6 @@ public class NotifyCenter {
 
     public static void NoiftyMessage(Long uid, String nofity) {
         synchronized (notifyCenter_.ClientMap()) {
-            System.out.println("notifyCenter_:"+String.valueOf(notifyCenter_.clientMap_.size()));
             if (notifyCenter_.ClientMap().containsKey(uid)) {
                 notifyCenter_.ClientMap().get(uid).SendNotify(nofity);
             }
@@ -67,6 +66,7 @@ public class NotifyCenter {
                             }
                             clientMap_.put(subMerchantUser.getId(), this);
                             id_ = subMerchantUser.getId();
+                            System.out.println("remoteID:"+String.valueOf(id_));
                             SendNotify("OK");
                             continue;
                         }
@@ -74,8 +74,6 @@ public class NotifyCenter {
                             clientMap_.remove(this.ID());
                         }
                         if (null!=buffer && buffer.contains("keepalive")) {
-                            System.out.println("client:"+buffer.toString());
-                            System.out.println("client:"+this.ID());
                             SendNotify("OK");
                         }
                     } catch (Exception e) {

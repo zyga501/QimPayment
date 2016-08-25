@@ -43,34 +43,23 @@ public class WebpagePayAction extends AjaxActionSupport {
             if (subMerchantUser != null) {
                 SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
                 if (subMerchantInfo != null) {
-                    WxMerchantInfo merchantInfo = WxMerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
-                    if (merchantInfo != null) {
                         getRequest().getSession().setAttribute("storename",subMerchantUser.getStoreName());
                         getRequest().getSession().setAttribute("ucode",subMerchantUser.getUserName());
                         getRequest().getSession().setAttribute("subMerchantId",subMerchantInfo.getId());
                         getRequest().getSession().setAttribute("id", subMerchantUser.getId());
-                        appid = merchantInfo.getAppid();
-                    }
                 }
             }
         }
         else {
             IdMapUUID idMapUUID = IdMapUUID.getMappingByUUID(getParameter("odod").toString());
             if (idMapUUID != null) {
-                subMerchantUserId = String.valueOf(idMapUUID.getId());
                 SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(idMapUUID.getId());
                 getRequest().getSession().setAttribute("storename", subMerchantUser.getStoreName());
                 getRequest().getSession().setAttribute("ucode", subMerchantUser.getUserName());
                 SubMerchantInfo subMerchantInfo = SubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
-                WxMerchantInfo merchantInfo = WxMerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
                 getRequest().getSession().setAttribute("id", subMerchantUser.getId());
                 getRequest().getSession().setAttribute("subMerchantId", subMerchantInfo.getId());
-                appid = merchantInfo.getAppid();
             }
-        }
-        if (appid.isEmpty()) {
-            Logger.warn("prePay Failed!");
-            return;
         }
 
         String redirect_uri = getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + "alipay/jspay.jsp";
