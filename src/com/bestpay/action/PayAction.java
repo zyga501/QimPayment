@@ -76,7 +76,9 @@ public class PayAction extends AjaxActionSupport {
             OrderPay orderPay = new OrderPay(orderPayRequestData);
             if (orderPay.postRequest(merchantInfo.getDataKey())) {
                 Map<String, Object> resultMap = ClassUtils.convertToMap(orderPayRequestData);
+                resultMap.put("key", merchantInfo.getDataKey());
                 resultMap.put("merchantPwd", merchantInfo.getMchPwd());
+                resultMap.put("sign", orderPayRequestData.buildSign(merchantInfo.getMchPwd()));
                 return AjaxActionComplete(true, resultMap);
             }
         } while (false);

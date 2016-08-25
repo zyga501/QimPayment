@@ -136,35 +136,80 @@
                         var payFail = function() {
                             alert("Fail");
                         }
-                        Payment.onPay(
-                                {
-                                    "PRODUCTID": "04", //业务标识
-                                    "MAC": json.mac, // MAC 校验
-                                    "ATTACHAMOUNT": "0.00", //附加金额（单位：元，保留小数点后两位）
-                                    "USERIP": "", //用户 IP
-                                    "SUBMERCHANTID": json.subMerchantId, //子商户号
-                                    "ORDERTIME": json.orderReqTime, //订单请求时间格式yyyyMMddHHmmss
-                                    "MERCHANTID": json.merchantId, //商户号
-                                    "DIVDETAILS": "", //分账明细，分账商户必填,
-                                    "ATTACH": json.attach, //附加信息
-                                    "BACKMERCHANTURL": "", //支付结果后台通知地址
-                                    "PRODUCTAMOUNT": json.productAmt * 0.01, //产品金额,（单位：元，保留小数点后两位）
-                                    "CURTYPE": "RMB", //币种（默认填 RMB ）
-                                    "BUSITYPE": "09", //业务类型
-                                    "PRODUCTDESC": json.productDesc, //产品描述
-                                    "CUSTOMERID": "", //用户 ID, 在商户系统的登录
-                                    "ORDERVALIDITYTIME": "", //订单有效时间
-                                    "ORDERAMOUNT": json.orderAmt * 0.01, //订单金额／积分扣减（单位：元，保留小数点后两位）
-                                    "ORDERSEQ": json.orderSeq,//订单号
-                                    "MERCHANTPWD": json.merchantPwd, //商户交易KEY
-                                    "ACCOUNTID": "", //翼支付账户号
-                                    "ORDERREQTRANSEQ": json.orderReqTranSeq, //流水号
-                                    "ORDERREQTRNSEQ": json.orderReqTranSeq, //值同上面的ORDERREQTRANSEQ
-                                    "SERVICE": "mobile.security.pay",   //此值写死
-                                    "SESSIONKEY": App.getSessionKey()
-                                },
-                                paySuccess,
-                                payFail);
+
+                        var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+                        if (/windows phone/i.test(userAgent)) {
+                            alert("Unsupport Windows Phone");
+                        }
+                        else if (/android/i.test(userAgent)) {
+                            Payment.onPay(
+                                    {
+                                        "MERCHANTID": json.merchantId, //商户号
+                                        "SUBMERCHANTID": json.subMerchantId, //子商户号
+                                        "ORDERSEQ": json.orderSeq,//订单号
+                                        "ORDERAMOUNT": json.orderAmt * 0.01, //订单金额／积分扣减（单位：元，保留小数点后两位）
+                                        "ORDERTIME": json.orderReqTime, //订单请求时间格式yyyyMMddHHmmss
+                                        "ORDERVALIDITYTIME": "", //订单有效时间
+                                        "PRODUCTDESC": json.productDesc, //产品描述
+                                        "CUSTOMERID": "", //用户 ID, 在商户系统的登录
+                                        "PRODUCTAMOUNT": json.productAmt * 0.01, //产品金额,（单位：元，保留小数点后两位）
+                                        "ATTACHAMOUNT": "0.00", //附加金额（单位：元，保留小数点后两位）
+                                        "CURTYPE": "RMB", //币种（默认填 RMB ）
+                                        "BACKMERCHANTURL": "", //支付结果后台通知地址
+                                        "ATTACH": json.attach, //附加信息
+                                        "PRODUCTID": "04", //业务标识
+                                        "USERIP": "", //用户 IP
+                                        "DIVDETAILS": "", //分账明细，分账商户必填,
+                                        "KEY": json.key, //商户交易KEY
+                                        "ACCOUNTID": "", //翼支付账户号
+                                        "BUSITYPE": "04", //业务类型
+                                        "ORDERREQTRANSEQ": json.orderReqTranSeq, //流水号
+                                        "SERVICE": "mobile.security.pay",   //此值写死
+                                        "SIGNTYPE": "MD5",
+                                        "MAC": json.mac, // MAC 校验
+                                        "SIGN": json.sign,
+                                        "SUBJECT": "",
+                                        "SWTICHACC":"true",
+                                        "SESSIONKEY": App.getSessionKey(),
+                                        "OTHERFLOW":"false"
+                                    },
+                                    paySuccess,
+                                    payFail);
+                        }
+                        else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                            Payment.onPay(
+                                    {
+                                        "PRODUCTID": "04", //业务标识
+                                        "MAC": json.mac, // MAC 校验
+                                        "ATTACHAMOUNT": "0.00", //附加金额（单位：元，保留小数点后两位）
+                                        "USERIP": "", //用户 IP
+                                        "SUBMERCHANTID": json.subMerchantId, //子商户号
+                                        "ORDERTIME": json.orderReqTime, //订单请求时间格式yyyyMMddHHmmss
+                                        "MERCHANTID": json.merchantId, //商户号
+                                        "DIVDETAILS": "", //分账明细，分账商户必填,
+                                        "ATTACH": json.attach, //附加信息
+                                        "BACKMERCHANTURL": "", //支付结果后台通知地址
+                                        "PRODUCTAMOUNT": json.productAmt * 0.01, //产品金额,（单位：元，保留小数点后两位）
+                                        "CURTYPE": "RMB", //币种（默认填 RMB ）
+                                        "BUSITYPE": "09", //业务类型
+                                        "PRODUCTDESC": json.productDesc, //产品描述
+                                        "CUSTOMERID": "", //用户 ID, 在商户系统的登录
+                                        "ORDERVALIDITYTIME": "", //订单有效时间
+                                        "ORDERAMOUNT": json.orderAmt * 0.01, //订单金额／积分扣减（单位：元，保留小数点后两位）
+                                        "ORDERSEQ": json.orderSeq,//订单号
+                                        "MERCHANTPWD": json.merchantPwd, //商户交易KEY
+                                        "ACCOUNTID": "", //翼支付账户号
+                                        "ORDERREQTRANSEQ": json.orderReqTranSeq, //流水号
+                                        "ORDERREQTRNSEQ": json.orderReqTranSeq, //值同上面的ORDERREQTRANSEQ
+                                        "SERVICE": "mobile.security.pay",   //此值写死
+                                        "SESSIONKEY": App.getSessionKey()
+                                    },
+                                    paySuccess,
+                                    payFail);
+                        }
+                        else {
+                            alert("unknown device!");
+                        }
                     }
                 }
             })
