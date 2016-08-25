@@ -1,10 +1,8 @@
 package com.framework.utils;
 
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
 
@@ -22,7 +20,7 @@ public abstract class HttpClient {
 
         Logger.debug("Response Data:\r\n" + responseString);
 
-        return handlerResponse(responseString);
+        return parseResponse(responseString);
     }
 
     public boolean postRequest(String postData) throws Exception {
@@ -50,10 +48,10 @@ public abstract class HttpClient {
 
         Logger.debug("Response Data:\r\n" + responseString);
 
-        return handlerResponse(responseString);
+        return parseResponse(responseString);
     }
 
     protected abstract String getAPIUri();
 
-    protected abstract boolean handlerResponse(String responseResult) throws Exception;
+    protected abstract boolean parseResponse(String... args) throws Exception;
 }

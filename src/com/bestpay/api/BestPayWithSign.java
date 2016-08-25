@@ -1,11 +1,11 @@
 package com.bestpay.api;
 
 import com.bestpay.api.RequestData.RequestData;
-import com.framework.utils.*;
-import org.apache.http.Consts;
+import com.framework.utils.HttpUtils;
+import com.framework.utils.JsonUtils;
+import com.framework.utils.Logger;
+import com.framework.utils.StringUtils;
 import org.apache.http.HttpResponse;
-import org.apache.http.UnsupportedHttpVersionException;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
@@ -40,9 +40,7 @@ public abstract class BestPayWithSign extends BestPayAPI {
             httpPost.abort();
         }
 
-        responseResult_ = JsonUtils.toMap(responseString, true);
-        boolean ret = StringUtils.convertNullableString(responseResult_.get("success")).compareTo("true") == 0;
-        ret = ret && handlerResponse(responseResult_);
+        boolean ret = parseResponse(responseString) && handlerResponse(responseResult_);
 
         if (!ret) {
             Logger.error("Request Url:\r\n" + apiUri);
@@ -54,6 +52,12 @@ public abstract class BestPayWithSign extends BestPayAPI {
 
     protected StringEntity buildPostStringEntity() throws UnsupportedEncodingException {
         return new StringEntity("");
+    }
+
+    @Override
+    protected boolean parseResponse(String... args) throws Exception {
+        responseResult_ = JsonUtils.toMap(args[0], true);
+        return StringUtils.convertNullableString(responseResult_.get("success")).compareTo("true") == 0;
     }
 
     protected boolean handlerResponse(Map<String, Object> responseResult) throws Exception {

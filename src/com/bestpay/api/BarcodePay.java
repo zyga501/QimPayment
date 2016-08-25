@@ -28,9 +28,9 @@ public class BarcodePay extends BestPayWithSign {
 
     @Override
     protected boolean handlerResponse(Map<String, Object> responseResult) throws Exception {
-        if (responseResult.containsKey("result")) {
+        if (responseResult != null && responseResult.containsKey("result")) {
             Map<String, Object> payResult = (Map<String, Object>)responseResult.get("result");
-            if (payResult != null) {
+            if (payResult != null && payResult.containsKey("transStatus")) {
                 return payResult.get("transStatus").toString().compareTo("B") == 0;
             }
         }

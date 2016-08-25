@@ -4,9 +4,6 @@ import com.alipay.api.RequestData.TradePreCreateRequestData;
 
 import java.util.Map;
 
-/**
- * Created by Administrator on 2016/5/18.
- */
 public class TradePreCreate extends AliPayAPIWithSign {
     public final static String TRADEPAY_API = "https://openapi.alipay.com/gateway.do";
 

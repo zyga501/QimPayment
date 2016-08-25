@@ -103,9 +103,9 @@ public class PayAction extends AjaxActionSupport {
                 return AjaxActionComplete(false);
             }
             else {
-                Map<String, String> map = new HashMap<>();
-                map.put("code_url",  ((Map<String,String>)(tokenOrder.getResponseResult().get("data"))).get("qrcode"));
-                return AjaxActionComplete(map);
+                Map<String, String> resultMap = new HashMap<>();
+                resultMap.put("code_url",  ((Map<String,String>)(tokenOrder.getResponseResult().get("data"))).get("qrcode"));
+                return AjaxActionComplete(resultMap);
             }
         } while (false);
 
@@ -188,26 +188,26 @@ public class PayAction extends AjaxActionSupport {
                 System.out.println(h5Pay.getResponseResult().toString());
                 JSONObject jsonObject = JSONObject.fromObject(h5Pay.getResponseResult());
                 JSONObject jsonObject2 =jsonObject.fromObject(jsonObject.get("data"));
-                Map map = new HashMap<>();
-                map.put("merchantNotifyUrl",requestUrl);
-                map.put("merchantNum",merchantInfo.getH5merchantno());
-                map.put("merchantOuterOrderNum",jsonObject2.get("order_no"));
-                map.put("merchantTradeAmount",String.valueOf((int)(Double.valueOf(jsonObject2.get("amount").toString())*100)));
-                map.put("merchantTradeNum",jsonObject2.get("order_no"));
-                map.put("merchantTradeTime",jsonObject2.get("trade_time"));
-                map.put("merchantSign", Signature.generateRSASign(map,merchantInfo.getH5rsaprivatekey()));
-                map.put("merchantToken",(""));
-                map.put("merchantUserId",getParameter("id").toString());
-                map.put("merchantMobile","");
-                map.put("merchantRemark","");
-                map.put("merchantTradeName",subMerchantUser.getStoreName());
-                map.put("merchantTradeDescription","");
-                map.put("merchantCurrency","CNY");
-                map.put("data",(""));
-                map.put("cpTradeNum",jsonObject2.get("trade_no"));
+                Map resultMap = new HashMap<>();
+                resultMap.put("merchantNotifyUrl",requestUrl);
+                resultMap.put("merchantNum",merchantInfo.getH5merchantno());
+                resultMap.put("merchantOuterOrderNum",jsonObject2.get("order_no"));
+                resultMap.put("merchantTradeAmount",String.valueOf((int)(Double.valueOf(jsonObject2.get("amount").toString())*100)));
+                resultMap.put("merchantTradeNum",jsonObject2.get("order_no"));
+                resultMap.put("merchantTradeTime",jsonObject2.get("trade_time"));
+                resultMap.put("merchantSign", Signature.generateRSASign(resultMap,merchantInfo.getH5rsaprivatekey()));
+                resultMap.put("merchantToken",(""));
+                resultMap.put("merchantUserId",getParameter("id").toString());
+                resultMap.put("merchantMobile","");
+                resultMap.put("merchantRemark","");
+                resultMap.put("merchantTradeName",subMerchantUser.getStoreName());
+                resultMap.put("merchantTradeDescription","");
+                resultMap.put("merchantCurrency","CNY");
+                resultMap.put("data",(""));
+                resultMap.put("cpTradeNum",jsonObject2.get("trade_no"));
                 Map rstmap = new HashMap<>();
                 rstmap.put("is_success","Y");
-                rstmap.put("paystr",map);
+                rstmap.put("paystr",resultMap);
                 return AjaxActionComplete(rstmap);
             }
         } while (false);
