@@ -151,7 +151,7 @@
                                         "ORDERTIME": json.orderReqTime, //订单请求时间格式yyyyMMddHHmmss
                                         "ORDERVALIDITYTIME": "", //订单有效时间
                                         "PRODUCTDESC": json.productDesc, //产品描述
-                                        "CUSTOMERID": User.getProuct(), //用户 ID, 在商户系统的登录
+                                        "CUSTOMERID": User.getProduct(), //用户 ID, 在商户系统的登录
                                         "PRODUCTAMOUNT": json.productAmt * 0.01, //产品金额,（单位：元，保留小数点后两位）
                                         "ATTACHAMOUNT": "0.00", //附加金额（单位：元，保留小数点后两位）
                                         "CURTYPE": "RMB", //币种（默认填 RMB ）
@@ -161,7 +161,7 @@
                                         "USERIP": "", //用户 IP
                                         "DIVDETAILS": "", //分账明细，分账商户必填,
                                         "KEY": json.key, //商户交易KEY
-                                        "ACCOUNTID": User.getProuct(), //翼支付账户号
+                                        "ACCOUNTID": User.getProduct(), //翼支付账户号
                                         "BUSITYPE": "04", //业务类型
                                         "ORDERREQTRANSEQ": json.orderReqTranSeq, //流水号
                                         "SERVICE": "mobile.security.pay",   //此值写死
