@@ -41,22 +41,15 @@ public class OrderPayRequestData extends RequestData {
 
     public String buildSign(String merchantPwd) {
         StringBuffer stringBuilder = new StringBuffer();
-        stringBuilder.append("SERVICE=").append("mobile.security.pay")
-                .append("&MERCHANTID=").append(merchantId)
-                .append("&MERCHANTPWD=").append(merchantPwd)
-                .append("&SUBMERCHANTID=").append(subMerchantId)
-                .append("&BACKMERCHANTURL=").append("")
-                .append("&ORDERSEQ=").append(orderSeq)
-                .append("&ORDERREQTRANSEQ=").append(orderReqTranSeq)
-                .append("&ORDERTIME=").append(orderReqTime)
-                .append("&ORDERVALIDITYTIME=").append("")
-                .append("&CURTYPE=").append("RMB")
-                .append("&ORDERAMOUNT=").append(orderAmt * 0.01)
-                .append("&SUBJECT=").append("")
-                .append("&PRODUCTID=").append("04")
-                .append("&PRODUCTDESC=").append(productDesc)
-                .append("&CUSTOMERID=").append("")
-                .append("&SWTICHACC=").append("true");
+        stringBuilder.append("&MERCHANTID=").append(merchantId)
+                .append("&ORDERNO=").append(orderSeq)
+                .append("&ORDERREQNO=").append(orderReqTranSeq)
+                .append("&ORDERDATA=").append(orderReqTime)
+                .append("&OURTRANSNO=").append(orderSeq)
+                .append("&TRANSAMT=").append(orderAmt * 0.01)
+                .append("&TRANSSTATUS=").append("B")
+                .append("&ENCODETYPE=").append("1")
+                .append("&MERCHANTPWD=").append(merchantPwd);
         return MD5.MD5Encode(stringBuilder.toString());
     }
 
