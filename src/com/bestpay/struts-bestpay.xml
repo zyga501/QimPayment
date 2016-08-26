@@ -14,5 +14,8 @@
 
         <action name="Pay!*" class="com.bestpay.action.PayAction"  method="{1}">
         </action>
+        <action name="WebpagePayAction!*" class="com.bestpay.action.WebpagePayAction" method="{1}">
+            <result name="prePay">./bestpay/jspay.jsp</result>
+        </action>
     </package>
 </struts>
