@@ -52,6 +52,10 @@
                 <param name="actionName">WebpagePayAction!prePay</param>
                 <param name="namespace">/alipay</param>
             </result>
+            <result name="BestJsPay" type="chain">
+                <param name="actionName">WebpagePayAction!prePay</param>
+                <param name="namespace">/bestpay</param>
+            </result>
             <result name="goto404">./weixin/404.jsp</result>
         </action>
 

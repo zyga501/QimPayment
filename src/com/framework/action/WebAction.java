@@ -27,6 +27,9 @@ public class WebAction extends AjaxActionSupport {
         else if (userAgent.contains("alipayclient")){
             return "AliJsPay";
         }
+        else if (userAgent.contains("bestpay")){
+            return "BestJsPay";
+        }
         else
             return "goto404";
     }
