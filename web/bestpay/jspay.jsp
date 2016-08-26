@@ -171,8 +171,9 @@
                                         "SUBJECT": "",
                                         "SWTICHACC":"true",
                                         "SESSIONKEY": App.getSessionKey(),
-                                        "OTHERFLOW":"false"
-                                    },
+                                        "OTHERFLOW":"false",
+                                        "MERCHANTPWD": json.merchantPwd, //商户交易KEY
+                                    },,
                                     paySuccess,
                                     payFail);
                         }
