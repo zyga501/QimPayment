@@ -131,7 +131,7 @@
                     var json = eval("(" + data + ")");
                     if (json.resultCode == "Succeed") {
                         var paySuccess = function() {
-                            alert("Success");
+                            App.exitApp();
                         }
                         var payFail = function() {
                             alert("Fail");

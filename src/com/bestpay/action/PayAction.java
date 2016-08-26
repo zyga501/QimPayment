@@ -65,7 +65,7 @@ public class PayAction extends AjaxActionSupport {
             if (getParameter("productDesc") != null) {
                 orderPayRequestData.productDesc = getParameter("productDesc").toString();
             }
-            orderPayRequestData.productDesc = "下单";
+            orderPayRequestData.productDesc = "企盟H5支付";
             if (getParameter("productDesc") != null) {
                 orderPayRequestData.productDesc = getParameter("productDesc").toString();
             }
