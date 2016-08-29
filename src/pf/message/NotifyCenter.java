@@ -29,9 +29,6 @@ public class NotifyCenter {
     }
 
     class ClientSocket extends Thread {
-        public Socket GetSocket( ){
-            return this.clientSocket_ ;
-        }
         public ClientSocket(Socket socket){
             this.clientSocket_ = socket;
         }
@@ -52,23 +49,27 @@ public class NotifyCenter {
                         if (null==buffer){
                             continue;
                         }
-                        SubMerchantUser subMerchantUser = null;
-                        try {
-                            subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(JSONObject.fromObject(buffer).get("id").toString()));
-                        }
-                        catch (Exception e){
-
-                        }
-                        if ((null != subMerchantUser)) {
-                            if (clientMap_.containsKey(subMerchantUser.getId())) {
-                                clientMap_.get(subMerchantUser.getId()).Close();
-                                clientMap_.remove(subMerchantUser.getId());
+                        if (! ID().equals(Long.MAX_VALUE)) {
+                            Long userid = Long.valueOf(0);
+                            try {
+                                userid = Long.parseLong(JSONObject.fromObject(buffer).get("id").toString());
+                            } catch (Exception e) {
+                                userid = Long.valueOf(0);
                             }
-                            clientMap_.put(subMerchantUser.getId(), this);
-                            id_ = subMerchantUser.getId();
-                            System.out.println("remoteID:"+String.valueOf(id_));
-                            SendNotify("OK");
-                            continue;
+                            SubMerchantUser subMerchantUser = null;
+                            if (userid != Long.valueOf(0))
+                                subMerchantUser = SubMerchantUser.getSubMerchantUserById(userid);
+                            if ((null != subMerchantUser)) {
+                                if (clientMap_.containsKey(subMerchantUser.getId())) {
+                                    clientMap_.get(subMerchantUser.getId()).Close();
+                                    clientMap_.remove(subMerchantUser.getId());
+                                }
+                                clientMap_.put(subMerchantUser.getId(), this);
+                                id_ = subMerchantUser.getId();
+                                System.out.println("remoteID:" + String.valueOf(id_));
+                                SendNotify("OK");
+                                continue;
+                            }
                         }
                         if (this.clientSocket_.isClosed()){
                             clientMap_.remove(this.ID());
@@ -77,12 +78,24 @@ public class NotifyCenter {
                             SendNotify("OK");
                         }
                     } catch (Exception e) {
-                        // e.printStackTrace();
+                        e.printStackTrace();
+                        clientMap_.get(ID()).Close();
+                        clientMap_.remove(ID());
                     }
                 }
             }
-            catch (Exception exception) {
-
+            catch (Exception e){
+                try {
+                    if (inputStream_ != null)
+                        inputStream_.close();
+                    if (outputStream_ != null)
+                        outputStream_.close();
+                    if (this.clientSocket_ != null) {
+                        this.clientSocket_.close();
+                    }
+                } catch (Exception ee) {
+                    ee.printStackTrace();
+                }
             }
         }
 
