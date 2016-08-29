@@ -36,75 +36,57 @@ public class NotifyCenter {
         @Override
         public void run() {
             try {
-                String buffer;
                 outputStream_ = new PrintWriter(clientSocket_.getOutputStream(),true);
                 inputStream_ = new BufferedReader(new InputStreamReader(clientSocket_.getInputStream()));
                 while(true){
-                    try {
-                        if (this.clientSocket_.isClosed()) {
-                            clientMap_.remove(this.ID());
-                            return;
-                        }
-                        buffer = inputStream_.readLine();
-                        if (null==buffer){
-                            continue;
-                        }
-                        if (! ID().equals(Long.MAX_VALUE)) {
-                            Long userid = Long.valueOf(0);
-                            try {
-                                userid = Long.parseLong(JSONObject.fromObject(buffer).get("id").toString());
-                            } catch (Exception e) {
-                                userid = Long.valueOf(0);
+                    String buffer = inputStream_.readLine();
+                    if (null == buffer || buffer.length() <= 0) {
+                        continue;
+                    }
+
+                    if (id_ != Long.MAX_VALUE) {
+                        SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(JSONObject.fromObject(buffer).get("id").toString()));
+                        if ((null != subMerchantUser)) {
+                            id_ = subMerchantUser.getId();
+                            if (clientMap_.containsKey(id_)) {
+                                clientMap_.get(id_).close();
                             }
-                            SubMerchantUser subMerchantUser = null;
-                            if (userid != Long.valueOf(0))
-                                subMerchantUser = SubMerchantUser.getSubMerchantUserById(userid);
-                            if ((null != subMerchantUser)) {
-                                if (clientMap_.containsKey(subMerchantUser.getId())) {
-                                    clientMap_.get(subMerchantUser.getId()).Close();
-                                    clientMap_.remove(subMerchantUser.getId());
-                                }
-                                clientMap_.put(subMerchantUser.getId(), this);
-                                id_ = subMerchantUser.getId();
-                                System.out.println("remoteID:" + String.valueOf(id_));
-                                SendNotify("OK");
-                                continue;
-                            }
+                            clientMap_.put(id_, this);
+                            System.out.println("remoteID:" + String.valueOf(id_));
                         }
-                        if (this.clientSocket_.isClosed()){
-                            clientMap_.remove(this.ID());
-                        }
-                        if (null!=buffer && buffer.contains("keepalive")) {
-                            SendNotify("OK");
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        clientMap_.get(ID()).Close();
-                        clientMap_.remove(ID());
+                    }
+
+                    if (null != buffer && buffer.contains("keepalive")) {
+                        SendNotify("OK");
                     }
                 }
             }
             catch (Exception e){
-                try {
-                    if (inputStream_ != null)
-                        inputStream_.close();
-                    if (outputStream_ != null)
-                        outputStream_.close();
-                    if (this.clientSocket_ != null) {
-                        this.clientSocket_.close();
-                    }
-                } catch (Exception ee) {
-                    ee.printStackTrace();
+
+            }
+            finally {
+                if (clientMap_.containsKey(id_)) {
+                    clientMap_.get(id_).close();
+                    clientMap_.remove(id_);
                 }
             }
         }
 
-        public void Close() throws IOException {
-            clientSocket_.close();
-        }
+        public void close() {
+            try {
+                if (inputStream_ != null) {
+                    inputStream_.close();
+                }
+                if (outputStream_ != null) {
+                    outputStream_.close();
+                }
+                if (clientSocket_ != null) {
+                    clientSocket_.close();
+                }
+            }
+            catch (Exception exception) {
 
-        public Long ID() {
-            return id_;
+            }
         }
 
         public void SendNotify(String nofityMessage) {
@@ -152,7 +134,7 @@ public class NotifyCenter {
             synchronized (clientMap_) {
                 try {
                     for (Map.Entry<Long, ClientSocket> entry : clientMap_.entrySet()) {
-                        entry.getValue().Close();
+                        entry.getValue().close();
                     }
                 } catch (Exception exception) {
 
