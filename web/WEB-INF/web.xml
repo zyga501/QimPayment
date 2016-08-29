@@ -14,14 +14,14 @@
     <servlet>
         <servlet-name>WeixinAccessToken</servlet-name>
         <servlet-class>
-            com.weixin.servlet.AccessTokenServlet
+            pf.weixin.servlet.AccessTokenServlet
         </servlet-class>
         <load-on-startup>0</load-on-startup>
     </servlet>
     <servlet>
         <servlet-name>NotifyCenterServlet</servlet-name>
         <servlet-class>
-            com.message.NotifyCenterServlet
+            pf.message.NotifyCenterServlet
         </servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>

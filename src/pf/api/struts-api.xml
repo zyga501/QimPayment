@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <package name="api" namespace="/api" extends="json-default">
+        <global-results>
+            <result name="ajaxActionCompleted" type="json">
+                <param name="root">ajaxActionResult</param>
+            </result>
+        </global-results>
+
+        <action name="MicroPay" class="pf.api.action.CommonAction" method="MicroPay">
+            <result name="WeixinMicroPay" type="chain">
+                <param name="actionName">Pay!microPay</param>
+                <param name="namespace">/weixin</param>
+            </result>
+        </action>
+        <action name="ScanPay" class="pf.api.action.CommonAction" method="ScanPay">
+            <result name="WeixinScanPay" type="chain">
+                <param name="actionName">Pay!scanPay</param>
+                <param name="namespace">/weixin</param>
+            </result>
+        </action>
+        <action name="JsPay" class="pf.api.action.CommonAction" method="JsPay">
+            <result name="WeixinJsPay" type="chain">
+                <param name="actionName">Pay!jsPay</param>
+                <param name="namespace">/weixin</param>
+            </result>
+        </action>
+        <action name="OrderQuery" class="pf.api.action.CommonAction" method="OrderQuery">
+            <result name="WeixinOrderQuery" type="chain">
+                <param name="actionName">Order!queryOrder</param>
+                <param name="namespace">/weixin</param>
+            </result>
+        </action>
+        <action name="OrderInsert" class="pf.api.action.CommonAction" method="OrderInsert">
+            <result name="WeixinOrderInsert" type="chain">
+                <param name="actionName">Order!insertOrder</param>
+                <param name="namespace">/weixin</param>
+            </result>
+        </action>
+
+        <action name="SpecialInteface!*" class="pf.api.action.SpecialAction" method="{1}">
+        </action>
+        <action name="Query!*" class="pf.api.action.QueryAction" method="{1}">
+        </action>
+        <!--- test action -->
+        <action name="TestPay!*" class="pf.api.test.TestPayAction" method="{1}">
+        </action>
+    </package>
+</struts>

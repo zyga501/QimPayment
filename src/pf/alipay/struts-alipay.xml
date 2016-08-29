@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <package name="alipay" namespace="/alipay" extends="json-default">
+        <global-results>
+            <result name="ajaxActionCompleted" type="json">
+                <param name="root">ajaxActionResult</param>
+            </result>
+        </global-results>
+
+        <action name="Pay!*" class="pf.alipay.action.PayAction" method="{1}">
+        </action>
+        <action name="Callback!*" class="pf.alipay.action.CallbackAction" method="{1}">
+        </action>
+        <action name="WebpagePayAction!*" class="pf.alipay.action.WebpagePayAction" method="{1}">
+            <result name="prePay">./alipay/jspay.jsp</result>
+        </action>
+    </package>
+</struts>

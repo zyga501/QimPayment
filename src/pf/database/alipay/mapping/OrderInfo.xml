@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pf.database.alipay.mapping.orderInfo">
+    <select id="getOrderInfo" resultMap="orderInfoResult">
+        SELECT * FROM  OrderInfo
+    </select>
+    <select id="getOrderInfoById" parameterType="long" resultMap="orderInfoResult">
+        SELECT * FROM OrderInfo WHERE id=#{id}
+    </select>
+    <select id="getOrderInfoByOrderNo" parameterType="String" resultMap="orderInfoResult">
+        SELECT * FROM OrderInfo WHERE outTradeNo=#{outtradeno}
+    </select>
+
+    <select id="collectOrderInfoByDate"  parameterType="java.util.HashMap"  resultMap="orderInfoCollect">
+        SELECT count(*) as infoCount,ifnull(sum(totalamount),0) as sumFee FROM OrderInfo WHERE createUser=#{createUser}
+        and createtime between #{startDate} and #{endDate}
+    </select>
+    <select id="getOrderExpListByDate" parameterType="java.util.HashMap"  resultType="java.util.HashMap">
+        SELECT tradeno as 支付宝订单号,outTradeNo 订单号,fundchannel 支付渠道,totalamount 金额【元】,gmtpayment 时间
+        FROM OrderInfo WHERE createuser=#{createuser} and createtime between #{startdate}  and #{enddate}
+    </select>
+    <resultMap type="pf.database.merchant.OrderInfoCollect" id="orderInfoCollect">
+        <result property="infoCount" column="infoCount" jdbcType="INTEGER" />
+        <result property="sumFee" column="sumFee" javaType="DOUBLE" jdbcType="DOUBLE" />
+    </resultMap>
+    <resultMap type="pf.database.alipay.AliOrderInfo" id="orderInfoResult">
+        <id property="id" column="id" jdbcType="BIGINT" />
+        <result property="appid" column="appid" jdbcType="VARCHAR"/>
+        <result property="mchId" column="mchId" jdbcType="VARCHAR"/>
+        <result property="subject" column="subject" jdbcType="VARCHAR" />
+        <result property="tradeNo" column="tradeNo" jdbcType="VARCHAR"/>
+        <result property="outTradeNo" column="outTradeNo" jdbcType="VARCHAR"/>
+        <result property="fundChannel" column="fundChannel" jdbcType="VARCHAR"/>
+        <result property="totalAmount" column="totalAmount" jdbcType="INTEGER" />
+        <result property="gmtPayment" column="gmtPayment" jdbcType="VARCHAR" />
+        <result property="openId" column="openId" jdbcType="VARCHAR" />
+    </resultMap>
+    <insert id="insertOrderInfo" parameterType="pf.database.alipay.AliOrderInfo">
+        INSERT INTO OrderInfo(appid,mchid,subject,tradeNo,outTradeNo,fundChannel,totalAmount,gmtPayment,createUser,openId)
+        VALUE (#{appid},#{mchId},#{subject},#{tradeNo},#{outTradeNo},#{fundChannel},#{totalAmount},#{gmtPayment},#{createUser},#{openId})
+    </insert>
+</mapper>

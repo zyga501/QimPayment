@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pf.database.merchant.mapping.idMapUUID">
+    <select id="getMappingByUUID" parameterType="String" resultMap="MappingInfo">
+      SELECT * FROM IdMapUUID WHERE uuid=#{uuid}
+    </select>
+    <resultMap type="pf.database.merchant.IdMapUUID" id="MappingInfo">
+        <id property="id" column="id" jdbcType="BIGINT" />
+        <result property="uuid" column="uuid" jdbcType="VARCHAR"/>
+    </resultMap>
+</mapper>
