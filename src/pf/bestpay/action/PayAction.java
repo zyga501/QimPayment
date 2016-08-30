@@ -4,7 +4,10 @@ import pf.bestpay.api.BarcodePay;
 import pf.bestpay.api.OrderPay;
 import pf.bestpay.api.RequestData.BarcodePayRequestData;
 import pf.bestpay.api.RequestData.OrderPayRequestData;
+import pf.bestpay.utils.LedgerUtils;
 import pf.database.bestpay.BtMerchantInfo;
+import pf.database.bestpay.BtSubMerchantInfo;
+import pf.database.bestpay.LedgerInfo;
 import pf.database.merchant.SubMerchantUser;
 import pf.framework.action.AjaxActionSupport;
 import pf.framework.utils.ClassUtils;
@@ -19,14 +22,20 @@ public class PayAction extends AjaxActionSupport {
                 break;
             }
 
-            BtMerchantInfo merchantInfo = BtMerchantInfo.getMerchantInfoById(subMerchantUser.getSubMerchantId());
+            BtSubMerchantInfo subMerchantInfo = BtSubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
+            if (subMerchantInfo == null) {
+                break;
+            }
+
+            BtMerchantInfo merchantInfo = BtMerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
             if (merchantInfo == null) {
                 break;
             }
 
             BarcodePayRequestData barcodePayRequestData = new BarcodePayRequestData();
-            barcodePayRequestData.subMerchantId = barcodePayRequestData.merchantId = merchantInfo.getMchId();
-            barcodePayRequestData.barcode = getParameter("barcode").toString();
+            barcodePayRequestData.merchantId = merchantInfo.getMchId();
+            barcodePayRequestData.subMerchantId = subMerchantInfo.getSubId();
+                    barcodePayRequestData.barcode = getParameter("barcode").toString();
             if (getParameter("orderNo") != null) {
                 barcodePayRequestData.orderReqNo = barcodePayRequestData.orderNo = getParameter("orderNo").toString();
             }
@@ -36,6 +45,17 @@ public class PayAction extends AjaxActionSupport {
                 barcodePayRequestData.orderAmt += barcodePayRequestData.attachAmt;
             }
             barcodePayRequestData.storeId = "000000";
+            LedgerInfo ledgerInfo = LedgerInfo.getLedgerInfoById(subMerchantUser.getSubMerchantId());
+            if (ledgerInfo != null) {
+                barcodePayRequestData.ledgerDetail = LedgerUtils.buildLedgerInfo(
+                        subMerchantInfo.getSubId(),
+                        barcodePayRequestData.orderAmt,
+                        merchantInfo.getRate(),
+                        merchantInfo.getMchId(),
+                        ledgerInfo.getMerchantRate(),
+                        ledgerInfo.getSubMerchantRates()
+                        );
+            }
 
             BarcodePay barcodePay = new BarcodePay(barcodePayRequestData);
             return AjaxActionComplete(barcodePay.postRequest(merchantInfo.getDataKey()));
@@ -51,7 +71,12 @@ public class PayAction extends AjaxActionSupport {
                 break;
             }
 
-            BtMerchantInfo merchantInfo = BtMerchantInfo.getMerchantInfoById(subMerchantUser.getSubMerchantId());
+            BtSubMerchantInfo subMerchantInfo = BtSubMerchantInfo.getSubMerchantInfoById(subMerchantUser.getSubMerchantId());
+            if (subMerchantInfo == null) {
+                break;
+            }
+
+            BtMerchantInfo merchantInfo = BtMerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());
             if (merchantInfo == null) {
                 break;
             }
@@ -71,6 +96,17 @@ public class PayAction extends AjaxActionSupport {
             }
             if (getParameter("attach") != null) {
                 orderPayRequestData.attach = getParameter("attach").toString();
+            }
+            LedgerInfo ledgerInfo = LedgerInfo.getLedgerInfoById(subMerchantUser.getSubMerchantId());
+            if (ledgerInfo != null) {
+                orderPayRequestData.divDetail = LedgerUtils.buildLedgerInfo(
+                        subMerchantInfo.getSubId(),
+                        orderPayRequestData.orderAmt,
+                        merchantInfo.getRate(),
+                        merchantInfo.getMchId(),
+                        ledgerInfo.getMerchantRate(),
+                        ledgerInfo.getSubMerchantRates()
+                );
             }
 
             OrderPay orderPay = new OrderPay(orderPayRequestData);

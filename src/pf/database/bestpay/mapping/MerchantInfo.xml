@@ -9,5 +9,6 @@
         <result property="mchId" column="mchId" jdbcType="VARCHAR"/>
         <result property="mchPwd" column="mchPwd" jdbcType="VARCHAR"/>
         <result property="dataKey" column="dataKey" jdbcType="VARCHAR"/>
+        <result property="rate" column="rate" jdbcType="DOUBLE"/>
     </resultMap>
 </mapper>

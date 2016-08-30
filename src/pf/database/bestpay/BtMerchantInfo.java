@@ -41,8 +41,17 @@ public class BtMerchantInfo {
         this.dataKey_ = dataKey;
     }
 
+    public double getRate() {
+        return rate_;
+    }
+
+    public void setRate(double rate) {
+        rate_ = rate;
+    }
+
     private Long id_;
     private String mchId_;
     private String mchPwd_;
     private String dataKey_;
+    private double rate_;
 }

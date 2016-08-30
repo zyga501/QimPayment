@@ -21,5 +21,7 @@
 
     <mappers>
         <mapper resource="pf/database/bestpay/mapping/MerchantInfo.xml" />
+        <mapper resource="pf/database/bestpay/mapping/SubMerchantInfo.xml" />
+        <mapper resource="pf/database/bestpay/mapping/LedgerInfo.xml" />
     </mappers>
 </configuration>

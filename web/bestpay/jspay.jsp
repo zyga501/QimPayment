@@ -159,7 +159,7 @@
                                         "ATTACH": json.attach, //附加信息
                                         "PRODUCTID": "04", //业务标识
                                         "USERIP": "", //用户 IP
-                                        "DIVDETAILS": "", //分账明细，分账商户必填,
+                                        "DIVDETAILS": json.divDetail, //分账明细，分账商户必填,
                                         "KEY": json.key, //商户交易KEY
                                         "ACCOUNTID": User.getProduct(), //翼支付账户号
                                         "BUSITYPE": "04", //业务类型
@@ -187,7 +187,7 @@
                                         "SUBMERCHANTID": json.subMerchantId, //子商户号
                                         "ORDERTIME": json.orderReqTime, //订单请求时间格式yyyyMMddHHmmss
                                         "MERCHANTID": json.merchantId, //商户号
-                                        "DIVDETAILS": "", //分账明细，分账商户必填,
+                                        "DIVDETAILS": json.divDetail, //分账明细，分账商户必填,
                                         "ATTACH": json.attach, //附加信息
                                         "BACKMERCHANTURL": "", //支付结果后台通知地址
                                         "PRODUCTAMOUNT": json.productAmt * 0.01, //产品金额,（单位：元，保留小数点后两位）
