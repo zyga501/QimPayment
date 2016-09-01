@@ -189,7 +189,7 @@
                                         "MERCHANTID": json.merchantId, //商户号
                                         "DIVDETAILS": json.divDetail, //分账明细，分账商户必填,
                                         "ATTACH": json.attach, //附加信息
-                                        "BACKMERCHANTURL": "", //支付结果后台通知地址
+                                        "BACKMERCHANTURL": json.backMerchantUrl, //支付结果后台通知地址
                                         "PRODUCTAMOUNT": json.productAmt * 0.01, //产品金额,（单位：元，保留小数点后两位）
                                         "CURTYPE": "RMB", //币种（默认填 RMB ）
                                         "BUSITYPE": "09", //业务类型

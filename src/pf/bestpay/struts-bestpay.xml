@@ -18,4 +18,8 @@
             <result name="prePay">./bestpay/jspay.jsp</result>
         </action>
     </package>
+    <package name="bestpaycallback" namespace="/BESTPAY" extends="json-default">
+        <action name="CALLBACK!*" class="pf.bestpay.action.CallbackAction" method="{1}">
+        </action>
+    </package>
 </struts>

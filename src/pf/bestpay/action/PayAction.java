@@ -56,6 +56,10 @@ public class PayAction extends AjaxActionSupport {
                         ledgerInfo.getSubMerchantRates()
                         );
             }
+            String requestUrl = getRequest().getRequestURL().toString();
+            requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/'));
+            requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/') + 1) + "bestpay/" + CallbackAction.BARCODEPAY;
+            barcodePayRequestData.backUrl = requestUrl;
 
             BarcodePay barcodePay = new BarcodePay(barcodePayRequestData);
             return AjaxActionComplete(barcodePay.postRequest(merchantInfo.getDataKey()));
@@ -115,6 +119,10 @@ public class PayAction extends AjaxActionSupport {
                 resultMap.put("key", merchantInfo.getDataKey());
                 resultMap.put("merchantPwd", merchantInfo.getMchPwd());
                 resultMap.put("sign", orderPayRequestData.buildSign(merchantInfo.getMchPwd()));
+                String requestUrl = getRequest().getRequestURL().toString();
+                requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/'));
+                requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/') + 1) + "bestpay/" + CallbackAction.ORDERPAY;
+                resultMap.put("backMerchantUrl", requestUrl);
                 return AjaxActionComplete(true, resultMap);
             }
         } while (false);
