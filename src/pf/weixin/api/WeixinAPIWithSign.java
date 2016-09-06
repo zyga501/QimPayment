@@ -6,7 +6,7 @@ import pf.framework.utils.XMLParser;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.thoughtworks.xstream.io.xml.XmlFriendlyNameCoder;
-import pf.weixin.api.RequestData.RequestData;
+import pf.weixin.api.RequestBean.RequestData;
 import pf.weixin.utils.Signature;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;

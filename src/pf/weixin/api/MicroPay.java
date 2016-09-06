@@ -1,8 +1,8 @@
 package pf.weixin.api;
 
 import pf.framework.utils.Logger;
-import pf.weixin.api.RequestData.MicroPayRequestData;
-import pf.weixin.api.RequestData.OrderQueryData;
+import pf.weixin.api.RequestBean.MicroPayRequestData;
+import pf.weixin.api.RequestBean.OrderQueryData;
 import pf.database.weixin.WxOrderInfo;
 import net.sf.json.JSONObject;
 import org.xml.sax.SAXException;

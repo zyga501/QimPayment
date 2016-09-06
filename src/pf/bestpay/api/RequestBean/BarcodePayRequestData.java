@@ -1,4 +1,4 @@
-package pf.bestpay.api.RequestData;
+package pf.bestpay.api.RequestBean;
 
 import pf.framework.base.ProjectSettings;
 import pf.framework.utils.IdWorker;

@@ -1,6 +1,6 @@
 package pf.bestpay.api;
 
-import pf.bestpay.api.RequestData.OrderPayRequestData;
+import pf.bestpay.api.RequestBean.OrderPayRequestData;
 import pf.framework.utils.ClassUtils;
 import org.apache.http.Consts;
 import org.apache.http.client.entity.UrlEncodedFormEntity;

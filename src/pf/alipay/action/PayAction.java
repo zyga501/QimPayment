@@ -1,7 +1,7 @@
 package pf.alipay.action;
 
-import pf.alipay.api.RequestData.TradePayRequestData;
-import pf.alipay.api.RequestData.TradePreCreateRequestData;
+import pf.alipay.api.RequestBean.TradePayRequestData;
+import pf.alipay.api.RequestBean.TradePreCreateRequestData;
 import pf.alipay.api.TradePay;
 import pf.alipay.api.TradePreCreate;
 import pf.database.alipay.AliMerchantInfo;

@@ -3,7 +3,7 @@ package pf.jdpay.api;
 import pf.framework.utils.HttpUtils;
 import pf.framework.utils.JsonUtils;
 import pf.framework.utils.Logger;
-import pf.jdpay.api.RequestData.RequestData;
+import pf.jdpay.api.RequestBean.RequestData;
 import pf.jdpay.utils.Signature;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;

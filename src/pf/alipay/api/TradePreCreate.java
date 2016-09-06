@@ -1,6 +1,6 @@
 package pf.alipay.api;
 
-import pf.alipay.api.RequestData.TradePreCreateRequestData;
+import pf.alipay.api.RequestBean.TradePreCreateRequestData;
 
 import java.util.Map;
 

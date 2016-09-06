@@ -1,6 +1,6 @@
 package pf.weixin.api;
 
-import pf.weixin.api.RequestData.OrderQueryData;
+import pf.weixin.api.RequestBean.OrderQueryData;
 
 import java.util.Map;
 

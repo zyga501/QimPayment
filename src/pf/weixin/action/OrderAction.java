@@ -4,7 +4,7 @@ import pf.framework.action.AjaxActionSupport;
 import pf.framework.utils.Logger;
 import pf.database.merchant.SubMerchantUser;
 import pf.weixin.api.OrderQuery;
-import pf.weixin.api.RequestData.OrderQueryData;
+import pf.weixin.api.RequestBean.OrderQueryData;
 import pf.database.weixin.WxMerchantInfo;
 import pf.database.weixin.WxOrderInfo;
 import pf.database.weixin.WxSubMerchantInfo;

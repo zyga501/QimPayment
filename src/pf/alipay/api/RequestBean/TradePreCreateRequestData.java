@@ -1,10 +1,10 @@
-package pf.alipay.api.RequestData;
+package pf.alipay.api.RequestBean;
 
 import pf.framework.base.ProjectSettings;
 import pf.framework.utils.IdWorker;
 
-public class TradePayRequestData extends RequestData {
-    public TradePayRequestData () {
+public class TradePreCreateRequestData extends RequestData {
+    public TradePreCreateRequestData() {
         out_trade_no = String.valueOf(new IdWorker(ProjectSettings.getIdWorkerSeed()).nextId());
     }
 
@@ -16,9 +16,8 @@ public class TradePayRequestData extends RequestData {
 
         try {
             return !out_trade_no.isEmpty()
-                    && !scene.isEmpty()
-                    && !auth_code.isEmpty()
-                    && !subject.isEmpty();
+                    && !subject.isEmpty()
+                    && !notify_url.isEmpty();
         }
         catch (Exception exception) {
 
@@ -28,12 +27,10 @@ public class TradePayRequestData extends RequestData {
     }
 
     public String out_trade_no; // 商户订单号,64个字符以内
-    public String scene; // 支付场景 条码支付，取值：bar_code 声波支付，取值：wave_code
-    public String auth_code; // 支付授权码
     public String subject; // 订单标题
-    public long mchId;
 
     // option
+    public String buyer_logon_id;
     public String body; // 订单描述
     public String seller_id; // 如果该值为空，则默认为商户签约账号对应的支付宝用户ID
     public double total_amount; // 订单总金额，单位为元，精确到小数点后两位

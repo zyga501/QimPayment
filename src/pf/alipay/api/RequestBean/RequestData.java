@@ -1,4 +1,4 @@
-package pf.alipay.api.RequestData;
+package pf.alipay.api.RequestBean;
 
 import pf.alipay.utils.Signature;
 import pf.framework.utils.ClassUtils;

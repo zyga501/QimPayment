@@ -1,7 +1,7 @@
 package pf.jdpay.api;
 
 
-import pf.jdpay.api.RequestData.TokenPayRequestData;
+import pf.jdpay.api.RequestBean.TokenPayRequestData;
 
 import java.util.Map;
 

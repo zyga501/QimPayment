@@ -1,4 +1,4 @@
-package pf.jdpay.api.RequestData;
+package pf.jdpay.api.RequestBean;
 
 public class H5PayRequestData extends RequestData {
     public H5PayRequestData() {

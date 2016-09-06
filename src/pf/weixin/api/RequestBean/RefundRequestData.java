@@ -1,4 +1,4 @@
-package pf.weixin.api.RequestData;
+package pf.weixin.api.RequestBean;
 
 public class RefundRequestData extends RequestData {
     public RefundRequestData() {

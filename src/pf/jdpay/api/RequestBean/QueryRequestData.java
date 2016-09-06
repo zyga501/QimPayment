@@ -1,4 +1,4 @@
-package pf.jdpay.api.RequestData;
+package pf.jdpay.api.RequestBean;
 
 public class QueryRequestData extends RequestData {
     public QueryRequestData() {

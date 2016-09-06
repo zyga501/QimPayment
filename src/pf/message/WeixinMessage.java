@@ -9,7 +9,7 @@ import pf.database.weixin.WxOrderInfo;
 import pf.database.weixin.WxSubMerchantInfo;
 import pf.framework.utils.StringUtils;
 import pf.weixin.api.AccessToken;
-import pf.weixin.api.RequestData.TemplateMessageRequestData;
+import pf.weixin.api.RequestBean.TemplateMessageRequestData;
 import pf.weixin.api.TemplateMessage;
 import pf.weixin.api.UserInfo;
 

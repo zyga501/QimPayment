@@ -1,7 +1,7 @@
 package pf.alipay.api;
 
-import pf.alipay.api.RequestData.QueryData;
-import pf.alipay.api.RequestData.RequestData;
+import pf.alipay.api.RequestBean.QueryData;
+import pf.alipay.api.RequestBean.RequestData;
 import pf.alipay.utils.Signature;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;

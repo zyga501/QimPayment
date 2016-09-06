@@ -1,4 +1,4 @@
-package pf.bestpay.api.RequestData;
+package pf.bestpay.api.RequestBean;
 
 public class RequestData {
     public RequestData() {

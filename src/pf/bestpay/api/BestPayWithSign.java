@@ -1,6 +1,6 @@
 package pf.bestpay.api;
 
-import pf.bestpay.api.RequestData.RequestData;
+import pf.bestpay.api.RequestBean.RequestData;
 import pf.framework.utils.HttpUtils;
 import pf.framework.utils.JsonUtils;
 import pf.framework.utils.Logger;

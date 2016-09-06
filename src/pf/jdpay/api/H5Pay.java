@@ -1,7 +1,7 @@
 package pf.jdpay.api;
 
 
-import pf.jdpay.api.RequestData.H5PayRequestData;
+import pf.jdpay.api.RequestBean.H5PayRequestData;
 
 import java.util.Map;
 

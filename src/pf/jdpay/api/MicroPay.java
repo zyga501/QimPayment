@@ -1,6 +1,6 @@
 package pf.jdpay.api;
 
-import pf.jdpay.api.RequestData.MicroPayRequestData;
+import pf.jdpay.api.RequestBean.MicroPayRequestData;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;

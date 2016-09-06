@@ -1,4 +1,4 @@
-package pf.weixin.api.RequestData;
+package pf.weixin.api.RequestBean;
 
 import pf.framework.base.ProjectSettings;
 import pf.framework.utils.IdWorker;

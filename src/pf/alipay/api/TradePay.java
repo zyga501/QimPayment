@@ -1,6 +1,6 @@
 package pf.alipay.api;
 
-import pf.alipay.api.RequestData.TradePayRequestData;
+import pf.alipay.api.RequestBean.TradePayRequestData;
 import pf.database.alipay.AliOrderInfo;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;

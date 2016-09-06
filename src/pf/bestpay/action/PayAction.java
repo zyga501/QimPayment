@@ -2,8 +2,8 @@ package pf.bestpay.action;
 
 import pf.bestpay.api.BarcodePay;
 import pf.bestpay.api.OrderPay;
-import pf.bestpay.api.RequestData.BarcodePayRequestData;
-import pf.bestpay.api.RequestData.OrderPayRequestData;
+import pf.bestpay.api.RequestBean.BarcodePayRequestData;
+import pf.bestpay.api.RequestBean.OrderPayRequestData;
 import pf.bestpay.utils.LedgerUtils;
 import pf.database.bestpay.BtMerchantInfo;
 import pf.database.bestpay.BtSubMerchantInfo;

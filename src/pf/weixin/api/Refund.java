@@ -1,6 +1,6 @@
 package pf.weixin.api;
 
-import pf.weixin.api.RequestData.RefundRequestData;
+import pf.weixin.api.RequestBean.RefundRequestData;
 
 public class Refund extends WeixinAPIWithSign  {
     public final static String REFUND_API = "https://api.mch.weixin.qq.com/secapi/pay/refund";

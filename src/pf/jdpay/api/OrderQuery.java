@@ -1,6 +1,6 @@
 package pf.jdpay.api;
 
-import pf.jdpay.api.RequestData.QueryRequestData;
+import pf.jdpay.api.RequestBean.QueryRequestData;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;

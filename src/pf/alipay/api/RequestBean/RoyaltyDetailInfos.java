@@ -1,4 +1,4 @@
-package pf.alipay.api.RequestData;
+package pf.alipay.api.RequestBean;
 
 public class RoyaltyDetailInfos {
     public String batch_no;

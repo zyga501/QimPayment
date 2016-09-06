@@ -1,14 +1,13 @@
-package pf.jdpay.api.RequestData;
+package pf.jdpay.api.RequestBean;
 
-public class MicroPayRequestData extends RequestData {
-    public MicroPayRequestData() {
+public class TokenPayRequestData extends RequestData {
+    public TokenPayRequestData() {
     }
 
     public boolean checkParameter() {
         try {
             return  !merchant_no.isEmpty()
-                    && !order_no.isEmpty()
-                    && !seed.isEmpty();
+                    && !order_no.isEmpty();
         }
         catch (Exception exception) {
 
@@ -17,7 +16,7 @@ public class MicroPayRequestData extends RequestData {
         return false;
     }
 
-    public String seed;
+    public long expire;
     public String sign; //
     public String notify_url; //
     public double amount; //单位元
