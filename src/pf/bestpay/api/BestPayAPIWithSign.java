@@ -13,7 +13,7 @@ import org.apache.http.util.EntityUtils;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
-public abstract class BestPayWithSign extends BestPayAPI {
+public abstract class BestPayAPIWithSign extends BestPayAPI {
     public boolean postRequest(String keyString) throws Exception {
         if (!requestData_.checkParameter() || keyString.isEmpty()) {
             Logger.error(this.getClass().getName() + " CheckParameter Failed!");

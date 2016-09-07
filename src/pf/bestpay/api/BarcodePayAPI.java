@@ -9,10 +9,10 @@ import org.apache.http.entity.StringEntity;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
-public class BarcodePay extends BestPayWithSign {
+public class BarcodePayAPI extends BestPayAPIWithSign {
     public final static String BARCODEPAY_API = "https://webpaywg.bestpay.com.cn/barcode/placeOrder";
 
-    public BarcodePay(BarcodePayRequestData requestData) {
+    public BarcodePayAPI(BarcodePayRequestData requestData) {
         requestData_ = requestData;
     }
 

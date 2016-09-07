@@ -6,4 +6,9 @@
     <serverAddress>127.0.0.1</serverAddress>
     <idWorkerSeed>0</idWorkerSeed>
     <notifyPort>2016</notifyPort>
+    <chanPay>
+        <CJ_GATEWAY_URL>
+            https://123.103.9.189:9204/crps-gateway/gw01/process01
+        </CJ_GATEWAY_URL>
+    </chanPay>
 </project>

@@ -29,7 +29,7 @@ public class ProjectSettings {
 
     public static long getId() {
         try {
-            if (projectSettings_ != null && projectSettings_.get("id") != null) {
+            if (projectSettings_ != null && projectSettings_.containsKey("id")) {
                 return Long.parseLong(projectSettings_.get("id").toString());
             }
         }
@@ -43,7 +43,7 @@ public class ProjectSettings {
 
     public static String getName() {
         try {
-            if (projectSettings_ != null && projectSettings_.get("name") != null) {
+            if (projectSettings_ != null && projectSettings_.containsKey("name")) {
                 return projectSettings_.get("name").toString();
             }
         }
@@ -57,7 +57,7 @@ public class ProjectSettings {
 
     public static long getIdWorkerSeed() {
         try {
-            if (projectSettings_ != null && projectSettings_.get("idWorkerSeed") != null) {
+            if (projectSettings_ != null && projectSettings_.containsKey("idWorkerSeed")) {
                 return Long.parseLong(projectSettings_.get("idWorkerSeed").toString());
             }
         }
@@ -71,7 +71,7 @@ public class ProjectSettings {
 
     public static int getNotifyPort(){
         try {
-            if (projectSettings_ != null && projectSettings_.get("notifyPort") != null) {
+            if (projectSettings_ != null && projectSettings_.containsKey("notifyPort")) {
                 return Integer.parseInt(projectSettings_.get("notifyPort").toString());
             }
         }
@@ -81,5 +81,14 @@ public class ProjectSettings {
 
         return 2016;
     }
+
+    public static Object getData(String key) {
+        if (projectSettings_ != null && projectSettings_.containsKey(key)) {
+            return projectSettings_.get(key);
+        }
+
+        return  null;
+    }
+
     private static Map<String, Object> projectSettings_;
 }

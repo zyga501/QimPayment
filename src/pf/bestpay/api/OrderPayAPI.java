@@ -8,10 +8,10 @@ import org.apache.http.entity.StringEntity;
 
 import java.io.UnsupportedEncodingException;
 
-public class OrderPay extends BestPayWithSign {
+public class OrderPayAPI extends BestPayAPIWithSign {
     public final static String ORDERPAY_API = "https://webpaywg.bestpay.com.cn/order.action";
 
-    public OrderPay(OrderPayRequestData requestData) {
+    public OrderPayAPI(OrderPayRequestData requestData) {
         requestData_ = requestData;
     }
 

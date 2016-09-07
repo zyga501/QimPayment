@@ -1,7 +1,7 @@
 package pf.bestpay.action;
 
-import pf.bestpay.api.BarcodePay;
-import pf.bestpay.api.OrderPay;
+import pf.bestpay.api.BarcodePayAPI;
+import pf.bestpay.api.OrderPayAPI;
 import pf.bestpay.api.RequestBean.BarcodePayRequestData;
 import pf.bestpay.api.RequestBean.OrderPayRequestData;
 import pf.bestpay.utils.LedgerUtils;
@@ -61,7 +61,7 @@ public class PayAction extends AjaxActionSupport {
             requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/') + 1) + "bestpay/" + CallbackAction.BARCODEPAY;
             barcodePayRequestData.backUrl = requestUrl;
 
-            BarcodePay barcodePay = new BarcodePay(barcodePayRequestData);
+            BarcodePayAPI barcodePay = new BarcodePayAPI(barcodePayRequestData);
             return AjaxActionComplete(barcodePay.postRequest(merchantInfo.getDataKey()));
         } while (false);
 
@@ -113,7 +113,7 @@ public class PayAction extends AjaxActionSupport {
                 );
             }
 
-            OrderPay orderPay = new OrderPay(orderPayRequestData);
+            OrderPayAPI orderPay = new OrderPayAPI(orderPayRequestData);
             if (orderPay.postRequest(merchantInfo.getDataKey())) {
                 Map<String, Object> resultMap = ClassUtils.convertToMap(orderPayRequestData);
                 resultMap.put("key", merchantInfo.getDataKey());
