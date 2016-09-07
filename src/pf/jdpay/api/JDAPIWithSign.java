@@ -68,8 +68,8 @@ public abstract class JDAPIWithSign extends JDAPI {
     }
 
     @Override
-    protected boolean parseResponse(String... args) throws Exception {
-        responseResult_ = JsonUtils.toMap(args[0],true);
+    protected boolean parseResponse(String responseString) throws Exception {
+        responseResult_ = JsonUtils.toMap(responseString,true);
         return true;
     }
 

@@ -20,15 +20,15 @@ public class OpenId extends WeixinAPI {
     }
 
     @Override
-    protected boolean parseResponse(String... args) throws Exception {
-        JSONObject jsonParse = JSONObject.fromObject(args[0]);
+    protected boolean parseResponse(String responseString) throws Exception {
+        JSONObject jsonParse = JSONObject.fromObject(responseString);
         if (jsonParse.get("openid") != null) {
             openid_ = jsonParse.get("openid").toString();
             return true;
         }
 
         Logger.error(this.getClass().getName() + " Get OpenId Failed!");
-        Logger.error("Request Url:\r\n" + getAPIUri() + "\r\nResponse Data:\r\n" + args[0]);
+        Logger.error("Request Url:\r\n" + getAPIUri() + "\r\nResponse Data:\r\n" + responseString);
         return false;
     }
 

@@ -53,5 +53,5 @@ public abstract class HttpClient {
 
     protected abstract String getAPIUri();
 
-    protected abstract boolean parseResponse(String... args) throws Exception;
+    protected abstract boolean parseResponse(String responseString) throws Exception;
 }

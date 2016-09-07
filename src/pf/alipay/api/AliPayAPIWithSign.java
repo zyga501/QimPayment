@@ -61,7 +61,6 @@ public abstract class AliPayAPIWithSign extends AliPayAPI {
         return ret;
     }
 
-    @Override
     protected boolean parseResponse(String... args) throws Exception {
         responseResult_ = JsonUtils.toMap(args[0], true);
         String rootNode = requestData_.method.replace('.', '_') + "_response";

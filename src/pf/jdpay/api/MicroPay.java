@@ -21,9 +21,7 @@ public class MicroPay extends JDAPIWithSign {
 
     @Override
     protected boolean handlerResponse(Map<String,Object> responseResult) throws IllegalAccessException, IOException,ParserConfigurationException, SAXException {
-        System.out.print("MicroPay handlerResponse");
         return responseResult.containsKey("is_success") && (responseResult.get("is_success").toString().equals("Y"));
-//        return false;
     }
 
     private long createUser_;
