@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Bouncy-Castle">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/bcprov-jdk15-1.46.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/bcmail-jdk15-1.46.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/bctsp-jdk15-1.46.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,20 +1,15 @@
 package pf.alipay.api.RequestBean;
 
+import net.sf.json.JSONArray;
 import pf.alipay.utils.Signature;
 import pf.framework.utils.ClassUtils;
-import net.sf.json.JSONArray;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.TimeZone;
+import pf.framework.utils.StringUtils;
 
 public class RequestData {
     public RequestData() {
         charset = "utf-8";
         sign_type = "RSA";
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        df.setTimeZone(TimeZone.getTimeZone("GMT+8"));
-        timestamp = df.format(new Date(Long.valueOf(System.currentTimeMillis()).longValue()));
+        timestamp = StringUtils.generateDate("yyyy-MM-dd HH:mm:ss", "GMT+8");
         version = "1.0";
         alipay_sdk = "alipay-sdk-java-dynamicVersionNo";
         format = "json";

@@ -7,8 +7,16 @@
     <idWorkerSeed>0</idWorkerSeed>
     <notifyPort>2016</notifyPort>
     <chanPay>
-        <CJ_GATEWAY_URL>
-            https://123.103.9.189:9204/crps-gateway/gw01/process01
-        </CJ_GATEWAY_URL>
+        <CJ_GATEWAY_URL>https://123.103.9.189:9204/crps-gateway/gw01/process01</CJ_GATEWAY_URL>
+        <MERCHANT_ID>cp2016051890757</MERCHANT_ID>
+        <BUSINESS_CODE>00505</BUSINESS_CODE>
+        <CORP_ACCT_NO>89075701</CORP_ACCT_NO>
+        <BANK_GENERAL_NAME>中国工商银行</BANK_GENERAL_NAME>
+        <ACCOUNT_NO>cp2016051890757</ACCOUNT_NO>
+        <ACCOUNT_NAME>代付联调接口专用</ACCOUNT_NAME>
+        <BANK_NAME>中国工商银行股份有限公司北京南苑支行</BANK_NAME>
+        <YS_PFX_PATH></YS_PFX_PATH>
+        <YS_PFX_PASSWD></YS_PFX_PASSWD>
+        <CJ_CERT_PATH></CJ_CERT_PATH>
     </chanPay>
 </project>

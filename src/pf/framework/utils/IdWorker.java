@@ -68,7 +68,10 @@ public class IdWorker
     public static void main(String[] args){
         IdWorker worker2 = new IdWorker(2);
         for (int i=0;i<1000;i++) {
-            System.out.println(worker2.nextId());
+            long before = worker2.nextId();
+            long after = (before * 100 + System.currentTimeMillis() % 100) ^ 1361753741828L;
+            long revert = (after ^ 1361753741828L) / 100;
+            System.out.println("before:" + before + " after:" + after + " revert:" + revert);
         }
     }
 }

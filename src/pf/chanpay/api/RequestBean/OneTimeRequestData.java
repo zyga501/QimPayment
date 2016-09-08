@@ -1,6 +1,27 @@
 package pf.chanpay.api.RequestBean;
 
+import pf.framework.base.ProjectSettings;
+
+import java.util.Map;
+
 public class OneTimeRequestData extends RequestData {
+    public OneTimeRequestData() {
+        try {
+            trxCode = "G10001";
+            businessCode = ((Map<Object, Object>) ProjectSettings.getData("chanPay")).get("BUSINESS_CODE").toString();
+            corpAccNo = ((Map<Object, Object>) ProjectSettings.getData("chanPay")).get("CORP_ACCT_NO").toString();
+            productCode = "60020002";
+            accountProp = "1";
+            bankGeneralName = ((Map<Object, Object>) ProjectSettings.getData("chanPay")).get("BANK_GENERAL_NAME").toString();
+            accountNo = ((Map<Object, Object>) ProjectSettings.getData("chanPay")).get("ACCOUNT_NO").toString();
+            accountName = ((Map<Object, Object>) ProjectSettings.getData("chanPay")).get("ACCOUNT_NAME").toString();
+            bankName = ((Map<Object, Object>) ProjectSettings.getData("chanPay")).get("BANK_NAME").toString();
+        }
+        catch (Exception exception) {
+
+        }
+    }
+
     public String businessCode; // 业务代码, 接入生产前，业务人员会提供
     public String productCode; // 产品编码, 接入生产前，业务人员会提供
     public String corpAccNo; // 企业账号
