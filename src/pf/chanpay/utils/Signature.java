@@ -78,7 +78,7 @@ public class Signature {
     }
 
     private static void initPrivateKey() throws Exception {
-        String pfxPath = ((Map<Object, Object>) ProjectSettings.getData("chanPay")).get("YS_PFX_PATH").toString();
+        String pfxPath = "";
         String pfxPasswd = ((Map<Object, Object>) ProjectSettings.getData("chanPay")).get("YS_PFX_PASSWD").toString();
         cmsSignedDataGenerator_ = buildCmsSignedDataGenerator(pfxPath, pfxPasswd);
     }

@@ -25,20 +25,28 @@ public class XMLParser {
         return tInputStringStream;
     }
 
-    public static Map<String,Object> convertMapFromXML(String xmlString) throws ParserConfigurationException, IOException, SAXException {
+    public static Map<String, Object> convertMapFromXML(String xmlString) throws ParserConfigurationException, IOException, SAXException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         InputStream is =  getStringStream(xmlString);
         Document document = builder.parse(is);
 
-        NodeList allNodes = document.getFirstChild().getChildNodes();
+        return convertMapFromXML(document.getFirstChild().getChildNodes());
+    }
+
+    private static Map<String, Object> convertMapFromXML(NodeList allNodes) {
         Node node;
         Map<String, Object> map = new HashMap<String, Object>();
         int i=0;
         while (i < allNodes.getLength()) {
             node = allNodes.item(i);
             if(node instanceof Element){
-                map.put(node.getNodeName(),node.getTextContent());
+                if (node.getChildNodes().getLength() == 1) {
+                    map.put(node.getNodeName(), node.getTextContent());
+                }
+                else {
+                    map.put(node.getNodeName(), convertMapFromXML(node.getChildNodes()));
+                }
             }
             i++;
         }

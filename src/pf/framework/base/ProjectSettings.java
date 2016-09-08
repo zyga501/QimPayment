@@ -9,7 +9,7 @@ import java.util.Map;
 public class ProjectSettings {
     static {
         try {
-            String projectSettingsPath = ProjectSettings.class.getResource("/").getPath().substring(1).replaceAll("%20", " ") + "project.xml";
+            String projectSettingsPath = getProjectPath() + "project.xml";
             File file = new File(projectSettingsPath);
             if (file.exists()) {
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "utf-8"));
@@ -25,6 +25,14 @@ public class ProjectSettings {
         catch (Exception exception) {
             Logger.error(exception.getMessage());
         }
+    }
+
+    public static String getProjectPath() {
+        return ProjectSettings.class.getResource("/").getPath().substring(1).replaceAll("%20", " ");
+    }
+
+    public static String getTopPackagePath() {
+        return "";
     }
 
     public static long getId() {

@@ -14,6 +14,10 @@ public class OrderPayRequestData extends RequestData {
     }
 
     public boolean checkParameter() {
+        if (!super.checkParameter()) {
+            return false;
+        }
+
         try {
             return !orderSeq.isEmpty()
                     && !orderSeq.isEmpty()
