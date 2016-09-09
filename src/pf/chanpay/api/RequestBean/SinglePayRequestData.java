@@ -14,7 +14,9 @@ public class SinglePayRequestData extends RequestData {
             businessCode = ((Map<Object, Object>) ProjectSettings.getData("chanPay")).get("BUSINESS_CODE").toString();
             corpAccNo = ((Map<Object, Object>) ProjectSettings.getData("chanPay")).get("CORP_ACCT_NO").toString();
             productCode = "60020002";
-            accountProp = "1";
+            accountProp = "0";
+            accountType = "00";
+            currency = "CNY";
         }
         catch (Exception exception) {
 
@@ -64,8 +66,12 @@ public class SinglePayRequestData extends RequestData {
             body.addElement("CITY").setText(city);
         }
         body.addElement("BANK_NAME").setText(bankName);
-        body.addElement("BANK_CODE").setText(bankCode);
-        body.addElement("DRCT_BANK_CODE").setText(drctBankCode);
+        if (bankCode != null) {
+            body.addElement("BANK_CODE").setText(bankCode);
+        }
+        if (drctBankCode != null) {
+            body.addElement("DRCT_BANK_CODE").setText(drctBankCode);
+        }
         if (protocolNo != null) {
             body.addElement("PROTOCOL_NO").setText(protocolNo);
         }

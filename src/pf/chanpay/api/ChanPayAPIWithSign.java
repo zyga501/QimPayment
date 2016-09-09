@@ -5,10 +5,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
 import pf.chanpay.api.RequestBean.RequestData;
-import pf.framework.utils.HttpUtils;
-import pf.framework.utils.JsonUtils;
-import pf.framework.utils.Logger;
-import pf.framework.utils.StringUtils;
+import pf.framework.utils.*;
 
 import java.util.Map;
 
@@ -49,7 +46,7 @@ public class ChanPayAPIWithSign extends ChanPayAPI {
     }
 
     protected boolean parseResponse(String responseString) throws Exception {
-        responseResult_ = JsonUtils.toMap(responseString, true);
+        responseResult_ = XMLParser.convertMapFromXML(responseString);
         return StringUtils.convertNullableString(responseResult_.get("success")).compareTo("true") == 0;
     }
 

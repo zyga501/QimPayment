@@ -18,7 +18,7 @@ public abstract class RequestData {
         try {
             timestamp = StringUtils.generateDate("yyyyMMddhhmmss", "GMT+8");
             mertid = ((Map<Object, Object>)ProjectSettings.getData("chanPay")).get("MERCHANT_ID").toString();
-            reqSn = mertid + timestamp + String.valueOf(new IdWorker(ProjectSettings.getIdWorkerSeed() % 100000).nextId());
+            reqSn = mertid + timestamp.substring(2) + String.valueOf(new IdWorker(ProjectSettings.getIdWorkerSeed()).nextId() % 100000);
             version = "01";
         }
         catch (Exception exception) {
