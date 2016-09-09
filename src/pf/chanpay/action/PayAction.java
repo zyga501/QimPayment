@@ -16,6 +16,7 @@ public class PayAction extends AjaxActionSupport{
         singlePayRequestData.accountName = ((Map<Object, Object>) ProjectSettings.getData("chanPay")).get("ACCOUNT_NAME").toString();
         singlePayRequestData.bankName = ((Map<Object, Object>) ProjectSettings.getData("chanPay")).get("BANK_NAME").toString();
         singlePayRequestData.bankCode = ((Map<Object, Object>) ProjectSettings.getData("chanPay")).get("BANK_CODE").toString();
+        singlePayRequestData.drctBankCode = ((Map<Object, Object>) ProjectSettings.getData("chanPay")).get("DRCT_BANK_CODE").toString();
         SinglePay singlePay = new SinglePay(singlePayRequestData);
         singlePay.postRequest();
         return AjaxActionComplete();

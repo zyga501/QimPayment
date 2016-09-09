@@ -25,7 +25,7 @@ import java.security.cert.X509Certificate;
 import java.util.*;
 
 public class Signature {
-    public String generateSign(String plain) {
+    public static String generateSign(String plain) {
         try {
             byte[] plainBs = plain.getBytes("UTF-8");
             CMSTypedData cmsdata = new CMSProcessableByteArray(plainBs);
@@ -41,7 +41,7 @@ public class Signature {
         return "";
     }
 
-    public boolean verifySign(String plain, String signed) {
+    public static boolean verifySign(String plain, String signed) {
         try {
             byte[] signedBs = Base64.decode(signed);//pkcs7
 
@@ -78,13 +78,13 @@ public class Signature {
     }
 
     private static void initPrivateKey() throws Exception {
-        String pfxPath = "";
+        String pfxPath = ProjectSettings.getTopPackagePath().concat("/chanpay/PrivateCertificate.pfx");
         String pfxPasswd = ((Map<Object, Object>) ProjectSettings.getData("chanPay")).get("YS_PFX_PASSWD").toString();
         cmsSignedDataGenerator_ = buildCmsSignedDataGenerator(pfxPath, pfxPasswd);
     }
 
     private static void initPublicKey() throws Exception {
-        String certPath = ((Map<Object, Object>) ProjectSettings.getData("chanPay")).get("YS_PFX_PATH").toString();
+        String certPath = ProjectSettings.getTopPackagePath().concat("/chanpay/PublicCertificate.cer");
         CertificateFactory factory = CertificateFactory.getInstance("X509");
         FileInputStream cjCertInputStream = new FileInputStream(certPath);
         cjServerPublicKey_ = (X509Certificate) factory.generateCertificate(cjCertInputStream);

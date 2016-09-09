@@ -32,7 +32,10 @@ public class ProjectSettings {
     }
 
     public static String getTopPackagePath() {
-        return "";
+        String projectPath = getProjectPath();
+        String topPackageName = ProjectSettings.class.getPackage().getName();
+        topPackageName = topPackageName.substring(0, topPackageName.indexOf('.'));
+        return projectPath.concat("/").concat(topPackageName);
     }
 
     public static long getId() {

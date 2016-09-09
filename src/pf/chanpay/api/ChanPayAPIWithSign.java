@@ -25,6 +25,7 @@ public class ChanPayAPIWithSign extends ChanPayAPI {
         }
 
         HttpPost httpPost = new HttpPost(apiUri);
+        httpPost.addHeader("Content-Type", "text/xml");
         httpPost.setEntity(new StringEntity(requestData_.generateRequestData(), "UTF-8"));
 
         String responseString = new String();

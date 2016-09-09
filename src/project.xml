@@ -15,6 +15,8 @@
         <ACCOUNT_NO>cp2016051890757</ACCOUNT_NO>
         <ACCOUNT_NAME>代付联调接口专用</ACCOUNT_NAME>
         <BANK_NAME>中国工商银行股份有限公司北京南苑支行</BANK_NAME>
+        <BANK_CODE>123456</BANK_CODE>
+        <DRCT_BANK_CODE>123456</DRCT_BANK_CODE>
         <YS_PFX_PASSWD>123456</YS_PFX_PASSWD>
     </chanPay>
 </project>
