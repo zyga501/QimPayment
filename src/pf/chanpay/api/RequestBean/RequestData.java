@@ -1,14 +1,14 @@
 package pf.chanpay.api.RequestBean;
 
+import framework.utils.IdWorker;
+import framework.utils.StringUtils;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.XMLWriter;
-import pf.chanpay.utils.Signature;
+import pf.ProjectLogger;
 import pf.ProjectSettings;
-import framework.utils.IdWorker;
-import framework.utils.Logger;
-import framework.utils.StringUtils;
+import pf.chanpay.utils.Signature;
 
 import java.io.StringWriter;
 import java.util.Map;
@@ -62,7 +62,7 @@ public abstract class RequestData {
             return out.toString();
         }
         catch (Exception exception) {
-            Logger.debug("ChanPay GenerateRequestData Error!");
+            ProjectLogger.debug("ChanPay GenerateRequestData Error!");
         }
 
         return "";

@@ -1,17 +1,17 @@
 package pf.weixin.api;
 
-import framework.utils.HttpUtils;
-import framework.utils.Logger;
-import framework.utils.XMLParser;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.thoughtworks.xstream.io.xml.XmlFriendlyNameCoder;
-import pf.weixin.api.RequestBean.RequestData;
-import pf.weixin.utils.Signature;
+import framework.utils.HttpUtils;
+import framework.utils.XMLParser;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
+import pf.ProjectLogger;
+import pf.weixin.api.RequestBean.RequestData;
+import pf.weixin.utils.Signature;
 
 import java.util.Map;
 
@@ -22,7 +22,7 @@ public abstract class WeixinAPIWithSign extends WeixinAPI {
 
     public boolean postRequest(String apiKey) throws Exception {
         if (!requestData_.checkParameter() || apiKey.isEmpty()) {
-            Logger.error(this.getClass().getName() + " CheckParameter Failed!");
+            ProjectLogger.error(this.getClass().getName() + " CheckParameter Failed!");
             return false;
         }
 
@@ -54,8 +54,8 @@ public abstract class WeixinAPIWithSign extends WeixinAPI {
         boolean ret = parseResponse(responseString, apiKey) && handlerResponse(responseResult_);
 
         if (!ret) {
-            Logger.error("Request Url:\r\n" + apiUri);
-            Logger.error("Response Data:\r\n" + responseString);
+            ProjectLogger.error("Request Url:\r\n" + apiUri);
+            ProjectLogger.error("Response Data:\r\n" + responseString);
         }
 
         return ret;
@@ -64,7 +64,7 @@ public abstract class WeixinAPIWithSign extends WeixinAPI {
     protected boolean parseResponse(String ...args) throws Exception {
         responseResult_ = XMLParser.convertMapFromXml(args[0]);
         if (!Signature.checkSignValid(responseResult_, args[1])) {
-            Logger.error(this.getClass().getName() + " CheckSignValid Failed!");
+            ProjectLogger.error(this.getClass().getName() + " CheckSignValid Failed!");
             return false;
         }
         return true;

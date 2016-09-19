@@ -1,13 +1,13 @@
 package pf.merchant.action;
 
+import framework.action.AjaxActionSupport;
+import framework.utils.IdWorker;
+import pf.ProjectLogger;
+import pf.ProjectSettings;
 import pf.database.merchant.SubMerchantInfo;
 import pf.database.merchant.SubMerchantUser;
 import pf.database.weixin.WxMerchantInfo;
 import pf.database.weixin.WxSubMerchantInfo;
-import framework.action.AjaxActionSupport;
-import pf.ProjectSettings;
-import framework.utils.IdWorker;
-import framework.utils.Logger;
 import pf.weixin.api.OpenId;
 
 import java.io.DataInputStream;
@@ -69,7 +69,7 @@ public class SubMerchantAction extends AjaxActionSupport {
             }
         }
 
-        Logger.error("UpdateWeixinIdById Error!");
+        ProjectLogger.error("UpdateWeixinIdById Error!");
     }
 
     public String updateWeixinIdById() throws Exception {

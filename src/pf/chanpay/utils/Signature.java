@@ -11,8 +11,8 @@ import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
 import org.bouncycastle.operator.jcajce.JcaDigestCalculatorProviderBuilder;
 import org.bouncycastle.util.Store;
 import org.bouncycastle.util.encoders.Base64;
+import pf.ProjectLogger;
 import pf.ProjectSettings;
-import framework.utils.Logger;
 
 import java.io.FileInputStream;
 import java.security.KeyStore;
@@ -73,7 +73,7 @@ public class Signature {
             initPublicKey();
         }
         catch (Exception exception) {
-            Logger.debug("ChanPay SignUtils InitFailed!");
+            ProjectLogger.debug("ChanPay SignUtils InitFailed!");
         }
     }
 

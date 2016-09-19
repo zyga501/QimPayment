@@ -1,7 +1,7 @@
 package pf.weixin.api;
 
-import framework.utils.Logger;
 import net.sf.json.JSONObject;
+import pf.ProjectLogger;
 
 public class TemplateMessage extends WeixinAPI {
     private static final String SEND_MESSAGE = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=%s";
@@ -33,7 +33,7 @@ public class TemplateMessage extends WeixinAPI {
                 case "40001": {
                     String appid = AccessToken.getAppidByAccessToken(accessToken_);
                     if (appid.isEmpty()) {
-                        Logger.error("AccessToken Handler Error!");
+                        ProjectLogger.error("AccessToken Handler Error!");
                         return false;
                     }
 
@@ -41,8 +41,8 @@ public class TemplateMessage extends WeixinAPI {
                     return postRequest(postData_);
                 }
                 default: {
-                    Logger.error("UnHandler Exception!");
-                    Logger.error("Request Url:\r\n" + getAPIUri() + "\r\nRequest Data:\r\n" + postData_ + "\r\nResponse Data:\r\n" + responseString);
+                    ProjectLogger.error("UnHandler Exception!");
+                    ProjectLogger.error("Request Url:\r\n" + getAPIUri() + "\r\nRequest Data:\r\n" + postData_ + "\r\nResponse Data:\r\n" + responseString);
                     return false;
                 }
             }

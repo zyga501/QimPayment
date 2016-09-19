@@ -1,7 +1,7 @@
 package pf.weixin.api;
 
-import framework.utils.Logger;
 import net.sf.json.JSONObject;
+import pf.ProjectLogger;
 
 public class OpenId extends WeixinAPI {
     private final static String OPENID_API = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code";
@@ -27,8 +27,8 @@ public class OpenId extends WeixinAPI {
             return true;
         }
 
-        Logger.error(this.getClass().getName() + " Get OpenId Failed!");
-        Logger.error("Request Url:\r\n" + getAPIUri() + "\r\nResponse Data:\r\n" + responseString);
+        ProjectLogger.error(this.getClass().getName() + " Get OpenId Failed!");
+        ProjectLogger.error("Request Url:\r\n" + getAPIUri() + "\r\nResponse Data:\r\n" + responseString);
         return false;
     }
 

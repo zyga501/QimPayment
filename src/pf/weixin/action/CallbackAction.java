@@ -1,20 +1,20 @@
 package pf.weixin.action;
 
-import pf.database.weixin.WxMerchantInfo;
-import pf.database.weixin.WxOrderInfo;
 import framework.action.AjaxActionSupport;
+import framework.utils.HttpUtils;
 import framework.utils.StringUtils;
-import pf.message.NotifyCenter;
-import pf.message.WeixinMessage;
-import pf.weixin.utils.Signature;
+import framework.utils.XMLParser;
 import net.sf.json.JSONObject;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
-import framework.utils.HttpUtils;
-import framework.utils.Logger;
-import framework.utils.XMLParser;
+import pf.ProjectLogger;
+import pf.database.weixin.WxMerchantInfo;
+import pf.database.weixin.WxOrderInfo;
+import pf.message.NotifyCenter;
+import pf.message.WeixinMessage;
+import pf.weixin.utils.Signature;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -56,8 +56,8 @@ public class CallbackAction extends AjaxActionSupport {
         WxMerchantInfo merchantInfo = WxMerchantInfo.getMerchantInfoByAppId(responseResult.get("appid").toString());
         if (merchantInfo != null) {
             if (!Signature.checkSignValid(responseResult, merchantInfo.getApiKey())) {
-                Logger.warn(this.getClass().getName() + " CheckSignValid Failed!");
-                Logger.error(this.getClass().getName() + " " + responseString);
+                ProjectLogger.warn(this.getClass().getName() + " CheckSignValid Failed!");
+                ProjectLogger.error(this.getClass().getName() + " " + responseString);
                 return false;
             }
         }
@@ -88,7 +88,7 @@ public class CallbackAction extends AjaxActionSupport {
                 return false;
             }
 
-            Logger.info(responseResult.get("attach").toString());
+            ProjectLogger.info(responseResult.get("attach").toString());
             orderInfo = new WxOrderInfo();
             orderInfo.setAppid(responseResult.get("appid").toString());
             orderInfo.setMchId(responseResult.get("mch_id").toString());

@@ -1,9 +1,9 @@
 package pf.alipay.action;
 
-import pf.database.alipay.AliOrderInfo;
 import framework.action.AjaxActionSupport;
-import framework.utils.Logger;
 import net.sf.json.JSONObject;
+import pf.ProjectLogger;
+import pf.database.alipay.AliOrderInfo;
 import pf.message.NotifyCenter;
 import pf.message.WeixinMessage;
 
@@ -15,7 +15,7 @@ public class CallbackAction extends AjaxActionSupport {
     public final static String SUCCESS = "success";
 
     public void tradePreCreate() throws Exception {
-        Logger.warn("tradePreCreate Callback");
+        ProjectLogger.warn("tradePreCreate Callback");
         handlerCallback();
         getResponse().getWriter().write(SUCCESS);
     }

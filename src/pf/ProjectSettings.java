@@ -13,7 +13,7 @@ public class ProjectSettings {
             projectSettings_ = XMLParser.convertMapFromXmlFile(projectSettingsPath);
         }
         catch (Exception exception) {
-            Logger.error(exception.getMessage());
+            ProjectLogger.error(exception.getMessage());
         }
     }
 
@@ -34,7 +34,7 @@ public class ProjectSettings {
 
         }
 
-        Logger.error("ProjectSettings.getId() Failed!");
+        ProjectLogger.error("ProjectSettings.getId() Failed!");
         return 0;
     }
 
@@ -48,7 +48,7 @@ public class ProjectSettings {
 
         }
 
-        Logger.error("ProjectSettings.getName() Failed!");
+        ProjectLogger.error("ProjectSettings.getName() Failed!");
         return "";
     }
 
@@ -62,7 +62,7 @@ public class ProjectSettings {
 
         }
 
-        Logger.error("ProjectSettings.getIdWorkerSeed() Failed!");
+        ProjectLogger.error("ProjectSettings.getIdWorkerSeed() Failed!");
         return 0;
     }
 

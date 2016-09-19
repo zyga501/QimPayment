@@ -1,9 +1,9 @@
 package pf.weixin.api;
 
-import pf.database.weixin.WxSubMerchantInfo;
-import framework.utils.Logger;
-import pf.database.weixin.WxMerchantInfo;
 import net.sf.json.JSONObject;
+import pf.ProjectLogger;
+import pf.database.weixin.WxMerchantInfo;
+import pf.database.weixin.WxSubMerchantInfo;
 
 import java.util.HashMap;
 import java.util.List;
@@ -39,7 +39,7 @@ public class AccessToken extends WeixinAPI{
                 return accessTokenMap_.get(appid);
             }
 
-            Logger.error("Get Access Token Failed!");
+            ProjectLogger.error("Get Access Token Failed!");
             return null;
         }
     }

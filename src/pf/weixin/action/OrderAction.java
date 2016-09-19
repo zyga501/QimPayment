@@ -1,14 +1,14 @@
 package pf.weixin.action;
 
 import framework.action.AjaxActionSupport;
-import framework.utils.Logger;
+import net.sf.json.JSONObject;
+import pf.ProjectLogger;
 import pf.database.merchant.SubMerchantUser;
-import pf.weixin.api.OrderQuery;
-import pf.weixin.api.RequestBean.OrderQueryData;
 import pf.database.weixin.WxMerchantInfo;
 import pf.database.weixin.WxOrderInfo;
 import pf.database.weixin.WxSubMerchantInfo;
-import net.sf.json.JSONObject;
+import pf.weixin.api.OrderQuery;
+import pf.weixin.api.RequestBean.OrderQueryData;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,7 +43,7 @@ public class OrderAction extends AjaxActionSupport {
             }
             OrderQuery orderQuery = new OrderQuery(orderQueryData);
             if (!orderQuery.postRequest(merchantInfo.getApiKey())) {
-                Logger.warn("QueryOrder Failed!");
+                ProjectLogger.warn("QueryOrder Failed!");
                 return AjaxActionComplete();
             }
 

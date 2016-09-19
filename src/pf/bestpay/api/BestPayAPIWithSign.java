@@ -1,14 +1,14 @@
 package pf.bestpay.api;
 
-import pf.bestpay.api.RequestBean.RequestData;
 import framework.utils.HttpUtils;
 import framework.utils.JsonUtils;
-import framework.utils.Logger;
 import framework.utils.StringUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
+import pf.ProjectLogger;
+import pf.bestpay.api.RequestBean.RequestData;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
@@ -16,7 +16,7 @@ import java.util.Map;
 public abstract class BestPayAPIWithSign extends BestPayAPI {
     public boolean postRequest(String keyString) throws Exception {
         if (!requestData_.checkParameter() || keyString.isEmpty()) {
-            Logger.error(this.getClass().getName() + " CheckParameter Failed!");
+            ProjectLogger.error(this.getClass().getName() + " CheckParameter Failed!");
             return false;
         }
 
@@ -43,8 +43,8 @@ public abstract class BestPayAPIWithSign extends BestPayAPI {
         boolean ret = parseResponse(responseString) && handlerResponse(responseResult_);
 
         if (!ret) {
-            Logger.error("Request Url:\r\n" + apiUri);
-            Logger.error("Response Data:\r\n" + responseString);
+            ProjectLogger.error("Request Url:\r\n" + apiUri);
+            ProjectLogger.error("Response Data:\r\n" + responseString);
         }
 
         return ret;

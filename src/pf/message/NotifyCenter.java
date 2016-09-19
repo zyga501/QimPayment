@@ -1,11 +1,13 @@
 package pf.message;
 
-import pf.database.merchant.SubMerchantUser;
-import pf.ProjectSettings;
-import framework.utils.Logger;
 import net.sf.json.JSONObject;
+import pf.ProjectLogger;
+import pf.ProjectSettings;
+import pf.database.merchant.SubMerchantUser;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
@@ -108,7 +110,7 @@ public class NotifyCenter {
             }
             catch (Exception exception) {
                 exception.printStackTrace();
-                Logger.error("Start Notify Center Failed!");
+                ProjectLogger.error("Start Notify Center Failed!");
                 return;
             }
 

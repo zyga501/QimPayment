@@ -1,13 +1,14 @@
 package pf.weixin.action;
 
-import pf.database.merchant.SubMerchantUser;
-import pf.database.weixin.WxSubMerchantInfo;
-import pf.database.weixin.WxMerchantInfo;
 import framework.action.AjaxActionSupport;
 import framework.utils.SessionCache;
-import framework.utils.Logger;
 import framework.utils.StringUtils;
 import framework.utils.Zip;
+import net.sf.json.JSONObject;
+import pf.ProjectLogger;
+import pf.database.merchant.SubMerchantUser;
+import pf.database.weixin.WxMerchantInfo;
+import pf.database.weixin.WxSubMerchantInfo;
 import pf.message.WeixinMessage;
 import pf.weixin.api.MicroPay;
 import pf.weixin.api.OpenId;
@@ -17,7 +18,6 @@ import pf.weixin.api.RequestBean.RefundRequestData;
 import pf.weixin.api.RequestBean.UnifiedOrderRequestData;
 import pf.weixin.api.UnifiedOrder;
 import pf.weixin.utils.Signature;
-import net.sf.json.JSONObject;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -57,7 +57,7 @@ public class PayAction extends AjaxActionSupport {
             }
             MicroPay microPay = new MicroPay(microPayRequestData, subMerchantUser.getId());
             if (!microPay.postRequest(merchantInfo.getApiKey())) {
-                Logger.warn("MicroPay Failed!");
+                ProjectLogger.warn("MicroPay Failed!");
                 return AjaxActionComplete();
             }
 
@@ -116,7 +116,7 @@ public class PayAction extends AjaxActionSupport {
             UnifiedOrder unifiedOrder = new UnifiedOrder(unifiedOrderRequestData);
 
             if (!unifiedOrder.postRequest(merchantInfo.getApiKey())) {
-                Logger.warn("ScanPay Failed!");
+                ProjectLogger.warn("ScanPay Failed!");
                 return AjaxActionComplete();
             }
 
@@ -187,7 +187,7 @@ public class PayAction extends AjaxActionSupport {
             SessionCache.clearSessionData(sessionId);
 
         if (jsonObject == null) {
-            Logger.warn("BrandWCPay Failed! Session Data Is Miss!");
+            ProjectLogger.warn("BrandWCPay Failed! Session Data Is Miss!");
             return AjaxActionComplete(false);
         }
 
@@ -246,7 +246,7 @@ public class PayAction extends AjaxActionSupport {
 
             UnifiedOrder unifiedOrder = new UnifiedOrder(unifiedOrderRequestData);
             if (!unifiedOrder.postRequest(merchantInfo.getApiKey())) {
-                Logger.warn("BrandWCPay Failed!");
+                ProjectLogger.warn("BrandWCPay Failed!");
                 return AjaxActionComplete();
             }
 
@@ -297,7 +297,7 @@ public class PayAction extends AjaxActionSupport {
             refundRequestData.op_user_id = refundRequestData.mch_id;
             Refund refund = new Refund(refundRequestData);
             if (!refund.postRequest(merchantInfo.getApiKey())) {
-                Logger.warn("Refund Failed!");
+                ProjectLogger.warn("Refund Failed!");
                 return AjaxActionComplete();
             }
             return AjaxActionComplete(refund.getResponseResult());

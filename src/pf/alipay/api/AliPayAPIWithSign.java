@@ -1,16 +1,16 @@
 package pf.alipay.api;
 
-import pf.alipay.api.RequestBean.QueryData;
-import pf.alipay.api.RequestBean.RequestData;
-import pf.alipay.utils.Signature;
+import framework.utils.ClassUtils;
+import framework.utils.HttpUtils;
+import framework.utils.JsonUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
-import framework.utils.ClassUtils;
-import framework.utils.HttpUtils;
-import framework.utils.JsonUtils;
-import framework.utils.Logger;
+import pf.ProjectLogger;
+import pf.alipay.api.RequestBean.QueryData;
+import pf.alipay.api.RequestBean.RequestData;
+import pf.alipay.utils.Signature;
 
 import java.net.URLEncoder;
 import java.util.Map;
@@ -22,7 +22,7 @@ public abstract class AliPayAPIWithSign extends AliPayAPI {
 
     public boolean postRequest(String privateKey, String publicKey) throws Exception {
         if (!requestData_.checkParameter() || privateKey.isEmpty()) {
-            Logger.error(this.getClass().getName() + " CheckParameter Failed!");
+            ProjectLogger.error(this.getClass().getName() + " CheckParameter Failed!");
             return false;
         }
 
@@ -54,8 +54,8 @@ public abstract class AliPayAPIWithSign extends AliPayAPI {
         boolean ret = parseResponse(responseString, publicKey) && handlerResponse(responseResult_);
 
         if (!ret) {
-            Logger.error("Request Url:\r\n" + apiUri);
-            Logger.error("Response Data:\r\n" + responseString);
+            ProjectLogger.error("Request Url:\r\n" + apiUri);
+            ProjectLogger.error("Response Data:\r\n" + responseString);
         }
 
         return ret;

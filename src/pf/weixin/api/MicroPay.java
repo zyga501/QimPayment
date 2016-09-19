@@ -1,11 +1,11 @@
 package pf.weixin.api;
 
-import framework.utils.Logger;
-import pf.weixin.api.RequestBean.MicroPayRequestData;
-import pf.weixin.api.RequestBean.OrderQueryData;
-import pf.database.weixin.WxOrderInfo;
 import net.sf.json.JSONObject;
 import org.xml.sax.SAXException;
+import pf.ProjectLogger;
+import pf.database.weixin.WxOrderInfo;
+import pf.weixin.api.RequestBean.MicroPayRequestData;
+import pf.weixin.api.RequestBean.OrderQueryData;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
@@ -56,7 +56,7 @@ public class MicroPay extends WeixinAPIWithSign {
                             return true;
                         }
                         default: {
-                            Logger.warn(String.format("MicroPay UnHandler Exception, errorCode:%s", errorCode));
+                            ProjectLogger.warn(String.format("MicroPay UnHandler Exception, errorCode:%s", errorCode));
                             break;
                         }
                     }
