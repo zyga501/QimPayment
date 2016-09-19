@@ -9,10 +9,7 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,13 +22,28 @@ public class XMLParser {
         return tInputStringStream;
     }
 
-    public static Map<String, Object> convertMapFromXML(String xmlString) throws ParserConfigurationException, IOException, SAXException {
+    public static Map<String, Object> convertMapFromXml(String xmlString) throws ParserConfigurationException, IOException, SAXException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         InputStream is =  getStringStream(xmlString);
         Document document = builder.parse(is);
 
         return convertMapFromXML(document.getFirstChild().getChildNodes());
+    }
+
+    public static Map<String, Object> convertMapFromXmlFile(String xmlPath) throws ParserConfigurationException, IOException, SAXException {
+        File file = new File(xmlPath);
+        if (file.exists()) {
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "utf-8"));
+            StringBuilder stringBuilder = new StringBuilder();
+            String lineBuffer;
+            while ((lineBuffer = bufferedReader.readLine()) != null) {
+                stringBuilder.append(lineBuffer);
+            }
+            bufferedReader.close();
+            return convertMapFromXml(stringBuilder.toString());
+        }
+        return null;
     }
 
     private static Map<String, Object> convertMapFromXML(NodeList allNodes) {

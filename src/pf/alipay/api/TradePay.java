@@ -27,6 +27,7 @@ public class TradePay extends AliPayAPIWithSign {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     protected boolean handlerResponse(Map<String, Object> responseResult) throws Exception {
         try {
             if (!responseResult.containsKey("alipay_trade_pay_response")) {

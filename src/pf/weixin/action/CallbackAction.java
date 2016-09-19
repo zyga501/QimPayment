@@ -52,7 +52,7 @@ public class CallbackAction extends AjaxActionSupport {
         bufferedReader.close();
 
         String responseString = stringBuilder.toString();
-        Map<String,Object> responseResult = XMLParser.convertMapFromXML(responseString);;
+        Map<String,Object> responseResult = XMLParser.convertMapFromXml(responseString);;
         WxMerchantInfo merchantInfo = WxMerchantInfo.getMerchantInfoByAppId(responseResult.get("appid").toString());
         if (merchantInfo != null) {
             if (!Signature.checkSignValid(responseResult, merchantInfo.getApiKey())) {

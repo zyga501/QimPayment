@@ -1,38 +1,24 @@
 package pf;
 
 import framework.utils.Logger;
+import framework.utils.PathUtils;
 import framework.utils.XMLParser;
 
-import java.io.*;
 import java.util.Map;
 
 public class ProjectSettings {
     static {
         try {
-            String projectSettingsPath = getProjectPath() + "project.xml";
-            File file = new File(projectSettingsPath);
-            if (file.exists()) {
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "utf-8"));
-                StringBuilder stringBuilder = new StringBuilder();
-                String lineBuffer;
-                while ((lineBuffer = bufferedReader.readLine()) != null) {
-                    stringBuilder.append(lineBuffer);
-                }
-                bufferedReader.close();
-                projectSettings_ = XMLParser.convertMapFromXML(stringBuilder.toString());
-            }
+            String projectSettingsPath = PathUtils.getProjectPath() + "project.xml";
+            projectSettings_ = XMLParser.convertMapFromXmlFile(projectSettingsPath);
         }
         catch (Exception exception) {
             Logger.error(exception.getMessage());
         }
     }
 
-    public static String getProjectPath() {
-        return ProjectSettings.class.getResource("/").getPath().substring(1).replaceAll("%20", " ");
-    }
-
     public static String getTopPackagePath() {
-        String projectPath = getProjectPath();
+        String projectPath = PathUtils.getProjectPath();
         String topPackageName = ProjectSettings.class.getPackage().getName();
         topPackageName = topPackageName.substring(0, topPackageName.indexOf('.'));
         return projectPath.concat("/").concat(topPackageName);

@@ -58,7 +58,7 @@ public class Signature {
     }
 
     public static boolean checkSignValid(String responseString, String key) throws ParserConfigurationException, IOException, SAXException {
-        Map<String,Object> map = XMLParser.convertMapFromXML(responseString);
+        Map<String,Object> map = XMLParser.convertMapFromXml(responseString);
         return checkSignValid(map, key);
     }
 

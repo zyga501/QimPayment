@@ -62,7 +62,7 @@ public abstract class WeixinAPIWithSign extends WeixinAPI {
     }
 
     protected boolean parseResponse(String ...args) throws Exception {
-        responseResult_ = XMLParser.convertMapFromXML(args[0]);
+        responseResult_ = XMLParser.convertMapFromXml(args[0]);
         if (!Signature.checkSignValid(responseResult_, args[1])) {
             Logger.error(this.getClass().getName() + " CheckSignValid Failed!");
             return false;

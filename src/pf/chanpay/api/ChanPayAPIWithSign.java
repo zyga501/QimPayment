@@ -46,7 +46,7 @@ public class ChanPayAPIWithSign extends ChanPayAPI {
     }
 
     protected boolean parseResponse(String responseString) throws Exception {
-        responseResult_ = XMLParser.convertMapFromXML(responseString);
+        responseResult_ = XMLParser.convertMapFromXml(responseString);
         return StringUtils.convertNullableString(responseResult_.get("success")).compareTo("true") == 0;
     }
 
