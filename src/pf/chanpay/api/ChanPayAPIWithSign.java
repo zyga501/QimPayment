@@ -5,7 +5,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
 import pf.chanpay.api.RequestBean.RequestData;
-import pf.framework.utils.*;
+import framework.utils.*;
 
 import java.util.Map;
 

@@ -1,7 +1,7 @@
 package pf.weixin.api;
 
 import pf.database.weixin.WxSubMerchantInfo;
-import pf.framework.utils.Logger;
+import framework.utils.Logger;
 import pf.database.weixin.WxMerchantInfo;
 import net.sf.json.JSONObject;
 

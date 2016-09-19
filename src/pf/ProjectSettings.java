@@ -1,7 +1,7 @@
-package pf.framework.base;
+package pf;
 
-import pf.framework.utils.Logger;
-import pf.framework.utils.XMLParser;
+import framework.utils.Logger;
+import framework.utils.XMLParser;
 
 import java.io.*;
 import java.util.Map;

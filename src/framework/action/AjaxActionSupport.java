@@ -1,6 +1,6 @@
-package pf.framework.action;
+package framework.action;
 
-import pf.framework.utils.StringUtils;
+import framework.utils.StringUtils;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import net.sf.json.JSONArray;

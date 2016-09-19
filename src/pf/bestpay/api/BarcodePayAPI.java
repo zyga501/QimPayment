@@ -1,7 +1,7 @@
 package pf.bestpay.api;
 
 import pf.bestpay.api.RequestBean.BarcodePayRequestData;
-import pf.framework.utils.ClassUtils;
+import framework.utils.ClassUtils;
 import org.apache.http.Consts;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.entity.StringEntity;

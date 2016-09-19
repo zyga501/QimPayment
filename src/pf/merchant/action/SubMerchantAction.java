@@ -4,10 +4,10 @@ import pf.database.merchant.SubMerchantInfo;
 import pf.database.merchant.SubMerchantUser;
 import pf.database.weixin.WxMerchantInfo;
 import pf.database.weixin.WxSubMerchantInfo;
-import pf.framework.action.AjaxActionSupport;
-import pf.framework.base.ProjectSettings;
-import pf.framework.utils.IdWorker;
-import pf.framework.utils.Logger;
+import framework.action.AjaxActionSupport;
+import pf.ProjectSettings;
+import framework.utils.IdWorker;
+import framework.utils.Logger;
 import pf.weixin.api.OpenId;
 
 import java.io.DataInputStream;

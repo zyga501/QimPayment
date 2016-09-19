@@ -1,8 +1,8 @@
 package pf.alipay.action;
 
 import pf.database.alipay.AliOrderInfo;
-import pf.framework.action.AjaxActionSupport;
-import pf.framework.utils.Logger;
+import framework.action.AjaxActionSupport;
+import framework.utils.Logger;
 import net.sf.json.JSONObject;
 import pf.message.NotifyCenter;
 import pf.message.WeixinMessage;

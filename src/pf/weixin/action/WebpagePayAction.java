@@ -3,8 +3,8 @@ package pf.weixin.action;
 import pf.database.merchant.IdMapUUID;
 import pf.database.merchant.SubMerchantInfo;
 import pf.database.merchant.SubMerchantUser;
-import pf.framework.action.AjaxActionSupport;
-import pf.framework.utils.StringUtils;
+import framework.action.AjaxActionSupport;
+import framework.utils.StringUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

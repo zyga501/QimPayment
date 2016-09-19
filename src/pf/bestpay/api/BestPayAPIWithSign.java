@@ -1,10 +1,10 @@
 package pf.bestpay.api;
 
 import pf.bestpay.api.RequestBean.RequestData;
-import pf.framework.utils.HttpUtils;
-import pf.framework.utils.JsonUtils;
-import pf.framework.utils.Logger;
-import pf.framework.utils.StringUtils;
+import framework.utils.HttpUtils;
+import framework.utils.JsonUtils;
+import framework.utils.Logger;
+import framework.utils.StringUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;

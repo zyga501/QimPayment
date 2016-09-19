@@ -3,7 +3,7 @@ package pf.chanpay.api.RequestBean;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
-import pf.framework.base.ProjectSettings;
+import pf.ProjectSettings;
 
 import java.util.Map;
 

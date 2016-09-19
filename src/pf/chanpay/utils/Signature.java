@@ -11,8 +11,8 @@ import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
 import org.bouncycastle.operator.jcajce.JcaDigestCalculatorProviderBuilder;
 import org.bouncycastle.util.Store;
 import org.bouncycastle.util.encoders.Base64;
-import pf.framework.base.ProjectSettings;
-import pf.framework.utils.Logger;
+import pf.ProjectSettings;
+import framework.utils.Logger;
 
 import java.io.FileInputStream;
 import java.security.KeyStore;

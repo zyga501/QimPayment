@@ -1,4 +1,4 @@
-package pf.framework.utils;
+package framework.utils;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;

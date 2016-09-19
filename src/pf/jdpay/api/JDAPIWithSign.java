@@ -1,8 +1,8 @@
 package pf.jdpay.api;
 
-import pf.framework.utils.HttpUtils;
-import pf.framework.utils.JsonUtils;
-import pf.framework.utils.Logger;
+import framework.utils.HttpUtils;
+import framework.utils.JsonUtils;
+import framework.utils.Logger;
 import pf.jdpay.api.RequestBean.RequestData;
 import pf.jdpay.utils.Signature;
 import com.thoughtworks.xstream.XStream;

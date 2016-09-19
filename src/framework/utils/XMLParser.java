@@ -1,4 +1,4 @@
-package pf.framework.utils;
+package framework.utils;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

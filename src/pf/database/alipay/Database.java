@@ -1,6 +1,6 @@
 package pf.database.alipay;
 
-import pf.framework.database.DatabaseFramework;
+import framework.database.DatabaseFramework;
 import org.apache.ibatis.session.SqlSessionFactory;
 
 public class Database extends DatabaseFramework {

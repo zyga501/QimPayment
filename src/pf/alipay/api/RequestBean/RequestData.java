@@ -2,8 +2,8 @@ package pf.alipay.api.RequestBean;
 
 import net.sf.json.JSONArray;
 import pf.alipay.utils.Signature;
-import pf.framework.utils.ClassUtils;
-import pf.framework.utils.StringUtils;
+import framework.utils.ClassUtils;
+import framework.utils.StringUtils;
 
 public class RequestData {
     public RequestData() {

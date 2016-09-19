@@ -1,7 +1,7 @@
 package pf.weixin.action;
 
-import pf.framework.action.AjaxActionSupport;
-import pf.framework.utils.Logger;
+import framework.action.AjaxActionSupport;
+import framework.utils.Logger;
 import pf.database.merchant.SubMerchantUser;
 import pf.weixin.api.OrderQuery;
 import pf.weixin.api.RequestBean.OrderQueryData;

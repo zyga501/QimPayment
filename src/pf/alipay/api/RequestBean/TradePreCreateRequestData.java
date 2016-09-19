@@ -1,7 +1,7 @@
 package pf.alipay.api.RequestBean;
 
-import pf.framework.base.ProjectSettings;
-import pf.framework.utils.IdWorker;
+import pf.ProjectSettings;
+import framework.utils.IdWorker;
 
 public class TradePreCreateRequestData extends RequestData {
     public TradePreCreateRequestData() {

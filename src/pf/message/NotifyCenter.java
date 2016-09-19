@@ -1,8 +1,8 @@
 package pf.message;
 
 import pf.database.merchant.SubMerchantUser;
-import pf.framework.base.ProjectSettings;
-import pf.framework.utils.Logger;
+import pf.ProjectSettings;
+import framework.utils.Logger;
 import net.sf.json.JSONObject;
 
 import java.io.*;

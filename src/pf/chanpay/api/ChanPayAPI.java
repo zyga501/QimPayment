@@ -1,7 +1,7 @@
 package pf.chanpay.api;
 
-import pf.framework.base.ProjectSettings;
-import pf.framework.utils.HttpClient;
+import pf.ProjectSettings;
+import framework.utils.HttpClient;
 
 import java.util.Map;
 

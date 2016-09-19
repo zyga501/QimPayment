@@ -5,10 +5,10 @@ import org.dom4j.Element;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.XMLWriter;
 import pf.chanpay.utils.Signature;
-import pf.framework.base.ProjectSettings;
-import pf.framework.utils.IdWorker;
-import pf.framework.utils.Logger;
-import pf.framework.utils.StringUtils;
+import pf.ProjectSettings;
+import framework.utils.IdWorker;
+import framework.utils.Logger;
+import framework.utils.StringUtils;
 
 import java.io.StringWriter;
 import java.util.Map;

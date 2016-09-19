@@ -2,8 +2,8 @@ package pf.weixin.action;
 
 import pf.database.weixin.WxMerchantInfo;
 import pf.database.weixin.WxOrderInfo;
-import pf.framework.action.AjaxActionSupport;
-import pf.framework.utils.StringUtils;
+import framework.action.AjaxActionSupport;
+import framework.utils.StringUtils;
 import pf.message.NotifyCenter;
 import pf.message.WeixinMessage;
 import pf.weixin.utils.Signature;
@@ -12,9 +12,9 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
-import pf.framework.utils.HttpUtils;
-import pf.framework.utils.Logger;
-import pf.framework.utils.XMLParser;
+import framework.utils.HttpUtils;
+import framework.utils.Logger;
+import framework.utils.XMLParser;
 
 import java.io.BufferedReader;
 import java.io.IOException;

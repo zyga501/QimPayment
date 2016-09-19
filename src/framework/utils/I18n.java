@@ -1,4 +1,4 @@
-package pf.framework.utils;
+package framework.utils;
 
 import com.opensymphony.xwork2.util.LocalizedTextUtil;
 

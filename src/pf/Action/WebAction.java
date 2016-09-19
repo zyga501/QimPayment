@@ -1,7 +1,8 @@
-package pf.framework.action;
+package pf.action;
 
 
 import com.opensymphony.xwork2.ActionContext;
+import framework.action.AjaxActionSupport;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;

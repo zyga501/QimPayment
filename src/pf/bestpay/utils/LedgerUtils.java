@@ -1,6 +1,6 @@
 package pf.bestpay.utils;
 
-import pf.framework.utils.JsonUtils;
+import framework.utils.JsonUtils;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

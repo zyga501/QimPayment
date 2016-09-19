@@ -1,4 +1,4 @@
-package pf.framework.database;
+package framework.database;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;

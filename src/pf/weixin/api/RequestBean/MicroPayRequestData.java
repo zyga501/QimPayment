@@ -1,7 +1,7 @@
 package pf.weixin.api.RequestBean;
 
-import pf.framework.base.ProjectSettings;
-import pf.framework.utils.IdWorker;
+import pf.ProjectSettings;
+import framework.utils.IdWorker;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;

@@ -7,10 +7,10 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
-import pf.framework.utils.ClassUtils;
-import pf.framework.utils.HttpUtils;
-import pf.framework.utils.JsonUtils;
-import pf.framework.utils.Logger;
+import framework.utils.ClassUtils;
+import framework.utils.HttpUtils;
+import framework.utils.JsonUtils;
+import framework.utils.Logger;
 
 import java.net.URLEncoder;
 import java.util.Map;

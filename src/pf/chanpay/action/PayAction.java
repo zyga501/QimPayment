@@ -2,8 +2,8 @@ package pf.chanpay.action;
 
 import pf.chanpay.api.RequestBean.SinglePayRequestData;
 import pf.chanpay.api.SinglePay;
-import pf.framework.action.AjaxActionSupport;
-import pf.framework.base.ProjectSettings;
+import framework.action.AjaxActionSupport;
+import pf.ProjectSettings;
 
 import java.util.Map;
 

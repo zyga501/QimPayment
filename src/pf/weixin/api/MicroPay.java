@@ -1,6 +1,6 @@
 package pf.weixin.api;
 
-import pf.framework.utils.Logger;
+import framework.utils.Logger;
 import pf.weixin.api.RequestBean.MicroPayRequestData;
 import pf.weixin.api.RequestBean.OrderQueryData;
 import pf.database.weixin.WxOrderInfo;

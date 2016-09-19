@@ -1,6 +1,6 @@
 package pf.weixin.api.RequestBean;
 
-import pf.framework.utils.I18n;
+import framework.utils.I18n;
 
 public class TemplateMessageRequestData {
     public TemplateMessageRequestData() {

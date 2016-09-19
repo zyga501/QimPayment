@@ -1,9 +1,9 @@
 package pf.api.action;
 
 import pf.api.mode.BaseMode;
-import pf.framework.action.AjaxActionSupport;
-import pf.framework.utils.StringUtils;
-import pf.framework.utils.XMLParser;
+import framework.action.AjaxActionSupport;
+import framework.utils.StringUtils;
+import framework.utils.XMLParser;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;

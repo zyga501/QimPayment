@@ -1,6 +1,6 @@
 package pf.weixin.api;
 
-import pf.framework.utils.Logger;
+import framework.utils.Logger;
 import net.sf.json.JSONObject;
 
 public class TemplateMessage extends WeixinAPI {

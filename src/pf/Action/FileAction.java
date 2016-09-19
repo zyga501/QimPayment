@@ -1,6 +1,7 @@
-package pf.framework.action;
+package pf.action;
 
 
+import framework.action.AjaxActionSupport;
 import sun.misc.BASE64Encoder;
 
 import java.io.*;

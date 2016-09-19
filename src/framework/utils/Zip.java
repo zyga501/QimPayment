@@ -1,4 +1,4 @@
-package pf.framework.utils;
+package framework.utils;
 
 import sun.misc.BASE64Encoder;
 

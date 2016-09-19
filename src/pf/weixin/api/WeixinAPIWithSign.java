@@ -1,8 +1,8 @@
 package pf.weixin.api;
 
-import pf.framework.utils.HttpUtils;
-import pf.framework.utils.Logger;
-import pf.framework.utils.XMLParser;
+import framework.utils.HttpUtils;
+import framework.utils.Logger;
+import framework.utils.XMLParser;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.thoughtworks.xstream.io.xml.XmlFriendlyNameCoder;

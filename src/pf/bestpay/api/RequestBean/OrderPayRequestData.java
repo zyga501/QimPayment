@@ -1,9 +1,9 @@
 package pf.bestpay.api.RequestBean;
 
-import pf.framework.base.ProjectSettings;
-import pf.framework.utils.IdWorker;
-import pf.framework.utils.MD5;
-import pf.framework.utils.StringUtils;
+import pf.ProjectSettings;
+import framework.utils.IdWorker;
+import framework.utils.MD5;
+import framework.utils.StringUtils;
 
 public class OrderPayRequestData extends RequestData {
     public OrderPayRequestData() {

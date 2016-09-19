@@ -1,6 +1,6 @@
 package pf.alipay.utils;
 
-import pf.framework.utils.ClassUtils;
+import framework.utils.ClassUtils;
 
 import javax.xml.bind.DatatypeConverter;
 import java.lang.reflect.Field;

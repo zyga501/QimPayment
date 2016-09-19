@@ -1,6 +1,6 @@
-package pf.framework.utils;
+package framework.utils;
 
-import pf.framework.base.ProjectSettings;
+import pf.ProjectSettings;
 import org.apache.log4j.PropertyConfigurator;
 
 public class Logger {
