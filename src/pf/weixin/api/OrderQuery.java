@@ -17,6 +17,12 @@ public class OrderQuery extends WeixinAPIWithSign {
     }
 
     @Override
+    public boolean postRequest(String apiKey) throws Exception {
+        apiKey_ = apiKey;
+        return super.postRequest(apiKey);
+    }
+
+    @Override
     protected boolean handlerResponse(Map<String,Object> responseResult) throws Exception {
         String returnCode = responseResult.get("return_code").toString().toUpperCase();
         String resultCode = responseResult.get("result_code").toString().toUpperCase();
@@ -38,4 +44,6 @@ public class OrderQuery extends WeixinAPIWithSign {
         }
         return false;
     }
+
+    private String apiKey_;
 }

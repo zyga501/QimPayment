@@ -78,5 +78,5 @@ public abstract class JDAPIWithSign extends JDAPI {
     }
 
     protected RequestData requestData_;
-    protected Map<String, Object> responseResult_;
+    private Map<String, Object> responseResult_;
 }

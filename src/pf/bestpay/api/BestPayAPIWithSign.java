@@ -64,5 +64,5 @@ public abstract class BestPayAPIWithSign extends BestPayAPI {
     }
 
     protected RequestData requestData_;
-    protected Map<String, Object> responseResult_;
+    private Map<String, Object> responseResult_;
 }

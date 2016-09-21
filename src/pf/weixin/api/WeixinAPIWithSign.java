@@ -26,7 +26,7 @@ public abstract class WeixinAPIWithSign extends WeixinAPI {
             return false;
         }
 
-        requestData_.buildSign(apiKey_ = apiKey);
+        requestData_.buildSign(apiKey);
 
         String apiUri = getAPIUri();
         if (apiUri.isEmpty()) {
@@ -75,6 +75,5 @@ public abstract class WeixinAPIWithSign extends WeixinAPI {
     }
 
     protected RequestData requestData_;
-    protected String apiKey_;
-    protected Map<String, Object> responseResult_;
+    private Map<String, Object> responseResult_;
 }

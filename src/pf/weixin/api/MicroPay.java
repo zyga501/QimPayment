@@ -25,6 +25,12 @@ public class MicroPay extends WeixinAPIWithSign {
     }
 
     @Override
+    public boolean postRequest(String apiKey) throws Exception {
+        apiKey_ = apiKey;
+        return super.postRequest(apiKey);
+    }
+
+    @Override
     protected boolean handlerResponse(Map<String,Object> responseResult) throws IllegalAccessException, IOException,ParserConfigurationException, SAXException {
         try {
             String returnCode = responseResult.get("return_code").toString().toUpperCase();
@@ -52,7 +58,6 @@ public class MicroPay extends WeixinAPIWithSign {
                                 return false;
                             }
                             saveOrderToDb(orderQuery.getResponseResult());
-                            responseResult_ = orderQuery.getResponseResult();
                             return true;
                         }
                         default: {
@@ -92,4 +97,5 @@ public class MicroPay extends WeixinAPIWithSign {
     }
 
     private long createUser_;
+    private String apiKey_;
 }
