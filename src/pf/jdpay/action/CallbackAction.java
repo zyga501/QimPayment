@@ -9,7 +9,7 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
-import static pf.message.NotifyCenter.NoiftyMessage;
+import static pf.message.NotifyCenter.NotifyMessage;
 import static pf.message.WeixinMessage.sendJDTemplateMessage;
 
 public class CallbackAction extends AjaxActionSupport {
@@ -66,7 +66,7 @@ public class CallbackAction extends AjaxActionSupport {
         map.put("bank_type","*");
         map.put("total_fee", responseResult.get("amount").toString());
         map.put("time_end", responseResult.get("pay_time").toString());
-        NoiftyMessage(Long.parseLong(responseResult.get("term_no").toString()),responseResult.get("term_no").toString().concat("#jdpay@").concat(JSONObject.fromObject(map).toString()));
+        NotifyMessage(Long.parseLong(responseResult.get("term_no").toString()),responseResult.get("term_no").toString().concat("#jdpay@").concat(JSONObject.fromObject(map).toString()));
     }
 
     public static boolean saveOrderToDb(Map map){

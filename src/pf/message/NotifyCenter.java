@@ -22,7 +22,7 @@ public class NotifyCenter {
         }
     }
 
-    public static void NoiftyMessage(Long uid, String nofity) {
+    public static void NotifyMessage(Long uid, String nofity) {
         synchronized (notifyCenter_.ClientMap()) {
             if (notifyCenter_.ClientMap().containsKey(uid)) {
                 notifyCenter_.ClientMap().get(uid).SendNotify(nofity);
@@ -40,9 +40,14 @@ public class NotifyCenter {
             try {
                 outputStream_ = new PrintWriter(clientSocket_.getOutputStream(),true);
                 inputStream_ = new BufferedReader(new InputStreamReader(clientSocket_.getInputStream()));
-                while(true){
+                while(!clientSocket_.isClosed()) {
                     String buffer = inputStream_.readLine();
-                    if (null == buffer || buffer.length() <= 0) {
+                    if (null == buffer) {
+                        break;
+                    }
+
+                    if (buffer.length() <= 0) {
+                        Thread.sleep(1000);
                         continue;
                     }
 

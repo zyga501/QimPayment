@@ -113,7 +113,7 @@ public class CallbackAction extends AjaxActionSupport {
         map.put("bank_type", responseResult.get("bank_type").toString());
         map.put("total_fee", responseResult.get("total_fee").toString());
         map.put("time_end", responseResult.get("time_end").toString());
-        NotifyCenter.NoiftyMessage(Long.parseLong(responseResult.get("id").toString()), responseResult.get("id").toString().concat("#weixin@").concat(JSONObject.fromObject(map).toString()));
+        NotifyCenter.NotifyMessage(Long.parseLong(responseResult.get("id").toString()), responseResult.get("id").toString().concat("#weixin@").concat(JSONObject.fromObject(map).toString()));
     }
 
     private void notifyClientOrderInfo(Map<String, Object> responseResult) throws Exception {
