@@ -62,7 +62,7 @@ public class CommonAction extends AjaxActionSupport {
         switch (mode) {
             case WEIXINMODE:
             default:
-                baseMode = (BaseMode)Class.forName("WeixinMode").newInstance();
+                baseMode = (BaseMode)Class.forName("pf.api.mode.WeixinMode").newInstance();
         }
         baseMode.initMode(requestBuffer_);
         return baseMode;
