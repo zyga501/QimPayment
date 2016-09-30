@@ -49,7 +49,6 @@ public class MerchantAction extends AjaxActionSupport {
     public String wx() throws Exception {
         String appid = "";
         String appsecret = "";
-        System.out.println("openId="+getRequest().getSession().getAttribute("datajson"));
         JSONObject jsonObject = JSONObject.fromObject( getRequest().getSession().getAttribute("datajson"));
         WxSubMerchantInfo subMerchantInfo = WxSubMerchantInfo.getSubMerchantInfoById(jsonObject.getLong("mid"));
         if (subMerchantInfo != null) {
@@ -58,7 +57,6 @@ public class MerchantAction extends AjaxActionSupport {
                 appid =  merchantInfo.getAppid();
                 appsecret =  merchantInfo.getAppsecret();
                 OpenId openId = new OpenId(appid, appsecret, getParameter("code").toString());
-                System.out.println("openId="+openId.getOpenId());
                 if (openId.getRequest()) {
                     List<SubMerchantUser> subMerchantUserList = SubMerchantUser.getSubMerchantUserBySubMerchantId(jsonObject.getLong("mid"));
                     for (SubMerchantUser submerchantuser: subMerchantUserList) {
@@ -81,7 +79,6 @@ public class MerchantAction extends AjaxActionSupport {
         String appid = "";//"wx0bfa8f7ec59b1f33";
         String dt = getParameter("dt").toString();
         String mid = getParameter("id").toString();
-        System.out.println("mid="+mid);
         WxSubMerchantInfo subMerchantInfo = WxSubMerchantInfo.getSubMerchantInfoById(Long.parseLong(mid));
         if (subMerchantInfo != null) {
             WxMerchantInfo merchantInfo = WxMerchantInfo.getMerchantInfoById(subMerchantInfo.getMerchantId());

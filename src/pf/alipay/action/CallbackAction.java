@@ -42,7 +42,6 @@ public class CallbackAction extends AjaxActionSupport {
             map.put("out_trade_no", getParameter("out_trade_no").toString());
             map.put("total_fee", getParameter("total_amount").toString());
             map.put("time_end", getParameter("gmt_payment").toString());
-            System.out.println("ali-NoiftyMessage:"+fund_bill_list);
             NotifyCenter.NotifyMessage(Long.parseLong(getParameter("createUser").toString()), getParameter("createUser").toString().concat("#alipay@").concat(JSONObject.fromObject(map).toString()));
             return true;
         }

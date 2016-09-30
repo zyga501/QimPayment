@@ -11,14 +11,12 @@ public class WebAction extends AjaxActionSupport {
     public  String judgeUserAgent() throws IOException {
         HttpServletRequest request = (HttpServletRequest) ActionContext.getContext().get(org.apache.struts2.StrutsStatics.HTTP_REQUEST);
         String userAgent = request.getHeader("User-Agent");
-        System.out.println("Your Browser User-Agent is:"+userAgent);
         return userAgent;
     }
 
     public String ChoogPayment() throws IOException {
         HttpServletRequest request = (HttpServletRequest) ActionContext.getContext().get(org.apache.struts2.StrutsStatics.HTTP_REQUEST);
         String userAgent = request.getHeader("User-Agent").toLowerCase();
-        System.out.println("Your Browser User-Agent is:"+userAgent);
         if (userAgent.contains("micromessenger")){
             return "WeixinJsPay";
         }
