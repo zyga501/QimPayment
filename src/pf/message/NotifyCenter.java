@@ -22,10 +22,13 @@ public class NotifyCenter {
         }
     }
 
-    public static void NotifyMessage(Long uid, String nofity) {
+    public static void NotifyMessage(Long uid, String notify) {
         synchronized (notifyCenter_.ClientMap()) {
             if (notifyCenter_.ClientMap().containsKey(uid)) {
-                notifyCenter_.ClientMap().get(uid).SendNotify(nofity);
+                notifyCenter_.ClientMap().get(uid).SendNotify(notify);
+            }
+            else {
+                ProjectLogger.info("NotifyMessage Not find " + uid);
             }
         }
     }
@@ -47,11 +50,11 @@ public class NotifyCenter {
                     }
 
                     if (buffer.length() <= 0) {
-                        Thread.sleep(1000);
+                        Thread.sleep(5000);
                         continue;
                     }
 
-                    if (id_ != Long.MAX_VALUE) {
+                    if (id_ == Long.MAX_VALUE) {
                         SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(JSONObject.fromObject(buffer).get("id").toString()));
                         if ((null != subMerchantUser)) {
                             id_ = subMerchantUser.getId();
@@ -59,7 +62,7 @@ public class NotifyCenter {
                                 clientMap_.get(id_).close();
                             }
                             clientMap_.put(id_, this);
-                            System.out.println("remoteID:" + String.valueOf(id_));
+                            ProjectLogger.info("remoteID:" + String.valueOf(id_));
                         }
                     }
 
@@ -96,8 +99,8 @@ public class NotifyCenter {
             }
         }
 
-        public void SendNotify(String nofityMessage) {
-            outputStream_.println(nofityMessage);
+        public void SendNotify(String notifyMessage) {
+            outputStream_.println(notifyMessage);
         }
 
         private Long id_ = Long.MAX_VALUE;
@@ -106,12 +109,11 @@ public class NotifyCenter {
         private PrintWriter outputStream_;
     }
 
-    class NofityCenterThread extends Thread {
+    class NotifyCenterThread extends Thread {
         @Override
         public void run() {
             try {
                 notifySocket_ = new ServerSocket(ProjectSettings.getNotifyPort());
-                System.out.println("start Socket");
             }
             catch (Exception exception) {
                 exception.printStackTrace();
@@ -151,7 +153,7 @@ public class NotifyCenter {
     }
 
     private NotifyCenter() {
-        new Thread(new NofityCenterThread()).start();
+        new Thread(new NotifyCenterThread()).start();
     }
 
     public Map<Long, ClientSocket> ClientMap() { return clientMap_; }

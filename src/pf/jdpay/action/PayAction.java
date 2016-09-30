@@ -139,13 +139,11 @@ public class PayAction extends AjaxActionSupport {
                 queryRequestData2.merchant_no = merchantInfo.getScanmerchantno();
                 OrderQuery orderQuery2 = new OrderQuery(queryRequestData2);
                 if (orderQuery2.postRequest(merchantInfo.getScanmd5key())) {
-                    System.out.println(orderQuery2.getResponseResult().get("data"));
                     return AjaxActionComplete(orderQuery2.getResponseResult());
                 }else
                     return AjaxActionComplete(false);
             }
             else {
-                System.out.println(orderQuery.getResponseResult().get("data"));
                 return AjaxActionComplete(orderQuery.getResponseResult());
             }
         } while (false);
@@ -185,7 +183,6 @@ public class PayAction extends AjaxActionSupport {
             if (!h5Pay.postRequest(merchantInfo.getH5md5key())) {
                 return AjaxActionComplete(false);
             } else {
-                System.out.println(h5Pay.getResponseResult().toString());
                 JSONObject jsonObject = JSONObject.fromObject(h5Pay.getResponseResult());
                 JSONObject jsonObject2 =jsonObject.fromObject(jsonObject.get("data"));
                 Map resultMap = new HashMap<>();

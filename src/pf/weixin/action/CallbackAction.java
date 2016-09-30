@@ -88,7 +88,6 @@ public class CallbackAction extends AjaxActionSupport {
                 return false;
             }
 
-            ProjectLogger.info(responseResult.get("attach").toString());
             orderInfo = new WxOrderInfo();
             orderInfo.setAppid(responseResult.get("appid").toString());
             orderInfo.setMchId(responseResult.get("mch_id").toString());

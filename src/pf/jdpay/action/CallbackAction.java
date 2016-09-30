@@ -31,11 +31,9 @@ public class CallbackAction extends AjaxActionSupport {
         {
             String data = "";
             if (null != getParameter("DATA")) {
-                System.out.println("DATA:" + getParameter("DATA").toString());
                 data =getParameter("DATA").toString();
                 data = data.replace("\n","");
                 data =   new String(Base64.getDecoder().decode(data),"utf8");
-                System.out.println("data:" + data);
             }//对data作签名和sign对比，此步骤省略.
             JSONObject jsonObject = JSONObject.fromObject(data);
             Map map =new HashMap();
@@ -50,10 +48,8 @@ public class CallbackAction extends AjaxActionSupport {
             map.put("user",jsonObject.get("user"));
             if ( saveOrderToDb(map)) {
                 sendJDTemplateMessage(map.get("trade_no").toString());
-                System.out.println("jdmsg over");
                 if (typeid==2)
                 notifyClientToPrint(map);
-                System.out.println("remote jd");
             }
             return true;
         }
