@@ -23,13 +23,12 @@ public class NotifyCenter {
     }
 
     public static void NotifyMessage(Long uid, String notify) {
-        ProjectLogger.info("NotifyMessage");
         synchronized (notifyCenter_.ClientMap()) {
             if (notifyCenter_.ClientMap().containsKey(uid)) {
                 notifyCenter_.ClientMap().get(uid).SendNotify(notify);
             }
             else {
-                ProjectLogger.info("Not Find uid");
+                ProjectLogger.info("NotifyMessage Not find " + uid);
             }
         }
     }
@@ -46,12 +45,16 @@ public class NotifyCenter {
                 inputStream_ = new BufferedReader(new InputStreamReader(clientSocket_.getInputStream()));
                 while(!clientSocket_.isClosed()) {
                     String buffer = inputStream_.readLine();
-                    if (null == buffer || buffer.length() <= 0) {
-                        Thread.sleep(0);
+                    if (null == buffer) {
+                        break;
+                    }
+
+                    if (buffer.length() <= 0) {
+                        Thread.sleep(5000);
                         continue;
                     }
 
-                    if (id_ != Long.MAX_VALUE) {
+                    if (id_ == Long.MAX_VALUE) {
                         SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(JSONObject.fromObject(buffer).get("id").toString()));
                         if ((null != subMerchantUser)) {
                             id_ = subMerchantUser.getId();
@@ -59,6 +62,7 @@ public class NotifyCenter {
                                 clientMap_.get(id_).close();
                             }
                             clientMap_.put(id_, this);
+                            ProjectLogger.info("remoteID:" + String.valueOf(id_));
                         }
                     }
 
