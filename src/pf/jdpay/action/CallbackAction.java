@@ -23,7 +23,7 @@ public class CallbackAction extends AjaxActionSupport {
 
     public String h5pay() throws Exception {
         if (handlerCallback(2))
-            ResponseWrite("success");
+            getResponse().getWriter().write("success");
         return AjaxActionComplete();
     }
 

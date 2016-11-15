@@ -40,5 +40,6 @@
     <orderEntry type="library" exported="" name="Log4j-1.2.17" level="project" />
     <orderEntry type="library" exported="" name="Bouncy-Castle" level="project" />
     <orderEntry type="library" exported="" name="Dom4j-1.6.1" level="project" />
+    <orderEntry type="library" name="AliPay" level="project" />
   </component>
 </module>
