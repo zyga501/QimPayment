@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pf.database.switftpass.mapping.orderInfo">
+    <select id="getOrderInfo" resultMap="orderInfoResult">
+        SELECT * FROM  OrderInfo
+    </select>
+    <select id="getOrderInfoById" parameterType="long" resultMap="orderInfoResult">
+        SELECT * FROM OrderInfo WHERE id=#{id}
+    </select>
+    <insert id="insertOrderInfo" parameterType="pf.database.alipay.AliOrderInfo">
+        INSERT INTO OrderInfo(mchId,out_trade_no,total_fee,time_end)
+        VALUE (#{mchId},#{out_trade_no},#{total_fee},#{time_end})
+    </insert>
+    <resultMap type="pf.database.switftpass.SwiftOrderInfo" id="orderInfoResult">
+        <id property="id" column="id" jdbcType="NUMERIC" />
+        <result property="mchId" column="mchId" jdbcType="BIGINT"/>
+        <result property="out_trade_no" column="out_trade_no" jdbcType="VARCHAR"/>
+        <result property="total_fee" column="total_fee" jdbcType="NUMERIC" />
+        <result property="time_end" column="time_end" jdbcType="VARCHAR"/>
+    </resultMap>
+</mapper>
