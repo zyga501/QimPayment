@@ -7,6 +7,9 @@
     <select id="getOrderInfoById" parameterType="long" resultMap="orderInfoResult">
         SELECT * FROM OrderInfo WHERE id=#{id}
     </select>
+    <select id="getOrderInfoByTradeNo" parameterType="String" resultMap="orderInfoResult">
+        SELECT * FROM OrderInfo WHERE out_trade_no=#{out_trade_no}
+    </select>
     <insert id="insertOrderInfo" parameterType="pf.database.alipay.AliOrderInfo">
         INSERT INTO OrderInfo(mchId,out_trade_no,total_fee,time_end)
         VALUE (#{mchId},#{out_trade_no},#{total_fee},#{time_end})

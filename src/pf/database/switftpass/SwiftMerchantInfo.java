@@ -22,12 +22,12 @@ public class SwiftMerchantInfo {
         this.mchId_ = mchId;
     }
 
-    public String getAppKey() {
-        return appKey_;
+    public String getApiKey() {
+        return apiKey_;
     }
 
-    public void setAppKey(String appKey) {
-        this.appKey_ = appKey;
+    public void setApiKey(String apiKey) {
+        this.apiKey_ = apiKey;
     }
 
     public String getWeixinAppId() {
@@ -72,7 +72,7 @@ public class SwiftMerchantInfo {
 
     private long id_;
     private String mchId_;
-    private String appKey_;
+    private String apiKey_;
     private String weixinAppId_;
     private String weixinAppSecret_;
     private String aliAppId_;

@@ -1,6 +1,16 @@
 package pf.database.switftpass;
 
 public class SwiftOrderInfo {
+    public static SwiftOrderInfo getOrderInfoByOrderNo(String orderNo) {
+        String statement = "pf.database.swiftpass.mapping.orderInfo.getOrderInfoByTradeNo";
+        return Database.Instance().selectOne(statement, orderNo);
+    }
+
+    public static boolean insertOrderInfo(SwiftOrderInfo swiftOrderInfo) {
+        String statement = "pf.database.swiftpass.mapping.orderInfo.insertOrderInfo";
+        return Database.Instance().insert(statement, swiftOrderInfo) == 1;
+    }
+
     public int getId() {
         return id_;
     }
@@ -17,33 +27,33 @@ public class SwiftOrderInfo {
         this.mchId_ = mchId;
     }
 
-    public String getOut_trade_no() {
-        return out_trade_no_;
+    public String getOutTradeNo() {
+        return outTradeNo_;
     }
 
-    public void setOut_trade_no(String out_trade_no) {
-        this.out_trade_no_ = out_trade_no;
+    public void setOutTradeNo(String outTradeNo) {
+        this.outTradeNo_ = outTradeNo;
     }
 
-    public int getTotal_fee() {
-        return total_fee_;
+    public int getTotalFee() {
+        return totalFee_;
     }
 
-    public void setTotal_fee(int total_fee) {
-        this.total_fee_ = total_fee;
+    public void setTotalFee(int totalFee) {
+        this.totalFee_ = totalFee;
     }
 
-    public String getTime_end() {
-        return time_end_;
+    public String getTimeEnd() {
+        return timeEnd_;
     }
 
-    public void setTime_end(String time_end) {
-        this.time_end_ = time_end;
+    public void setTimeEnd(String timeEnd) {
+        this.timeEnd_ = timeEnd;
     }
 
     int id_;
     private long mchId_;
-    private String out_trade_no_;
-    private int total_fee_;
-    private String time_end_;
+    private String outTradeNo_;
+    private int totalFee_;
+    private String timeEnd_;
 }
