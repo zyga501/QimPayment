@@ -117,7 +117,7 @@
         }
         -->
     </style>
-    <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/jskeyboard.js"></script>
     <script language="javascript">
         function amount(th) {

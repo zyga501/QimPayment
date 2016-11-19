@@ -1,4 +1,4 @@
-package pf.database.switftpass;
+package pf.database.swiftpass;
 
 public class SwiftOrderInfo {
     public static SwiftOrderInfo getOrderInfoByOrderNo(String orderNo) {

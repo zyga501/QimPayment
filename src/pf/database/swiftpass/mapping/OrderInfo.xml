@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="pf.database.switftpass.mapping.orderInfo">
+<mapper namespace="pf.database.swiftpass.mapping.orderInfo">
     <select id="getOrderInfo" resultMap="orderInfoResult">
         SELECT * FROM  OrderInfo
     </select>
@@ -10,11 +10,11 @@
     <select id="getOrderInfoByTradeNo" parameterType="String" resultMap="orderInfoResult">
         SELECT * FROM OrderInfo WHERE outTradeNo=#{outTradeNo}
     </select>
-    <insert id="insertOrderInfo" parameterType="pf.database.switftpass.SwiftOrderInfo">
+    <insert id="insertOrderInfo" parameterType="pf.database.swiftpass.SwiftOrderInfo">
         INSERT INTO OrderInfo(mchId,outTradeNo,totalFee,timeEnd)
         VALUE (#{mchId},#{outTradeNo},#{totalFee},#{timeEnd})
     </insert>
-    <resultMap type="pf.database.switftpass.SwiftOrderInfo" id="orderInfoResult">
+    <resultMap type="pf.database.swiftpass.SwiftOrderInfo" id="orderInfoResult">
         <id property="id" column="id" jdbcType="NUMERIC" />
         <result property="mchId" column="mchId" jdbcType="BIGINT"/>
         <result property="outTradeNo" column="outTradeNo" jdbcType="VARCHAR"/>

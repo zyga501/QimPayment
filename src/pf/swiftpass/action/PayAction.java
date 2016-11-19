@@ -8,7 +8,7 @@ import framework.action.AjaxActionSupport;
 import framework.utils.StringUtils;
 import pf.ProjectLogger;
 import pf.database.merchant.SubMerchantUser;
-import pf.database.switftpass.SwiftMerchantInfo;
+import pf.database.swiftpass.SwiftMerchantInfo;
 import pf.swiftpass.api.AliJsPay;
 import pf.swiftpass.api.RequestBean.AliJsPayRequestData;
 import pf.swiftpass.api.RequestBean.WeixinJsPayRequestData;
@@ -44,6 +44,7 @@ public class PayAction extends AjaxActionSupport {
             requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/') + 1) + "swiftpass/"
                     + CallbackAction.WEIXINJSPAYCALLBACK;
             weixinJsPayRequestData.notify_url = requestUrl;
+            weixinJsPayRequestData.callback_url = requestUrl;
             if (!StringUtils.convertNullableString(getParameter("out_trade_no")).isEmpty()) {
                 weixinJsPayRequestData.out_trade_no = getParameter("out_trade_no").toString();
             }
@@ -99,7 +100,7 @@ public class PayAction extends AjaxActionSupport {
             requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/') + 1) + "swiftpass/"
                     + CallbackAction.ALIJSPAYCALLBACK;
             aliJsPayRequestData.notify_url = requestUrl;
-            aliJsPayRequestData.buyer_id = fetchBuyerId(getParameter("auth_code").toString(), swiftMerchantInfo.getAliAppId(), swiftMerchantInfo.getAliprivateKey(), swiftMerchantInfo.getAlipublicKey());
+            aliJsPayRequestData.buyer_id = fetchBuyerId(getParameter("auth_code").toString(), swiftMerchantInfo.getAliAppId(), swiftMerchantInfo.getAliPrivateKey(), swiftMerchantInfo.getAliPublicKey());
             if (!StringUtils.convertNullableString(getParameter("out_trade_no")).isEmpty()) {
                 aliJsPayRequestData.out_trade_no = getParameter("out_trade_no").toString();
             }

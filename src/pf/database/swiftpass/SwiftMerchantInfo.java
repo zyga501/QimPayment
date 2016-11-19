@@ -1,4 +1,4 @@
-package pf.database.switftpass;
+package pf.database.swiftpass;
 
 public class SwiftMerchantInfo {
     public static SwiftMerchantInfo getMerchantInfoById(long id) {
@@ -54,20 +54,20 @@ public class SwiftMerchantInfo {
         this.aliAppId_ = aliAppId;
     }
 
-    public String getAliprivateKey() {
-        return aliprivateKey_;
+    public String getAliPrivateKey() {
+        return aliPrivateKey_;
     }
 
-    public void setAliprivateKey(String aliprivateKey) {
-        this.aliprivateKey_ = aliprivateKey;
+    public void setAliPrivateKey(String aliPrivateKey) {
+        this.aliPrivateKey_ = aliPrivateKey;
     }
 
-    public String getAlipublicKey() {
-        return alipublicKey_;
+    public String getAliPublicKey() {
+        return aliPublicKey_;
     }
 
-    public void setAlipublicKey(String alipublicKey) {
-        this.alipublicKey_ = alipublicKey;
+    public void setAliPublicKey(String aliPublicKey) {
+        this.aliPublicKey_ = aliPublicKey;
     }
 
     private long id_;
@@ -76,6 +76,6 @@ public class SwiftMerchantInfo {
     private String weixinAppId_;
     private String weixinAppSecret_;
     private String aliAppId_;
-    private String aliprivateKey_;
-    private String alipublicKey_;
+    private String aliPrivateKey_;
+    private String aliPublicKey_;
 }

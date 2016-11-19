@@ -1,4 +1,4 @@
-package pf.database.switftpass;
+package pf.database.swiftpass;
 
 import framework.database.DatabaseFramework;
 import org.apache.ibatis.session.SqlSessionFactory;
