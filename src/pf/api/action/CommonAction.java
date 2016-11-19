@@ -1,20 +1,20 @@
 package pf.api.action;
 
-import pf.api.mode.BaseMode;
 import framework.action.AjaxActionSupport;
 import framework.utils.StringUtils;
 import framework.utils.XMLParser;
 import org.xml.sax.SAXException;
+import pf.ProjectLogger;
+import pf.api.mode.BaseMode;
 
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
 public class CommonAction extends AjaxActionSupport {
     private final static String WEIXINMODE = "weixin";
+    private final static String SWIFTPASSMODE = "swiftpass";
 
     public String MicroPay() throws Exception {
         parseRequestBuffer();
@@ -29,6 +29,7 @@ public class CommonAction extends AjaxActionSupport {
     }
 
     public String JsPay() throws Exception {
+        ProjectLogger.error("JsPay");
         parseRequestBuffer();
         String mode = StringUtils.convertNullableString(requestBuffer_.get("mode"));
         return handlerResult(createMode(mode).jsPay());
@@ -47,19 +48,15 @@ public class CommonAction extends AjaxActionSupport {
     }
 
     private void parseRequestBuffer() throws IOException, ParserConfigurationException, IOException, SAXException {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(getRequest().getInputStream(), "utf-8"));
-        StringBuilder stringBuilder = new StringBuilder();
-        String lineBuffer;
-        while ((lineBuffer = bufferedReader.readLine()) != null) {
-            stringBuilder.append(lineBuffer);
-        }
-        bufferedReader.close();
-        requestBuffer_ = XMLParser.convertMapFromXml(stringBuilder.toString());
+        requestBuffer_ = XMLParser.convertMapFromXml(getInputStreamAsString());
     }
 
     private BaseMode createMode(String mode) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
         BaseMode baseMode;
-        switch (mode) {
+        switch (mode.toLowerCase()) {
+            case SWIFTPASSMODE:
+                baseMode = (BaseMode)Class.forName("pf.api.mode.SwiftPassMode").newInstance();
+                break;
             case WEIXINMODE:
             default:
                 baseMode = (BaseMode)Class.forName("pf.api.mode.WeixinMode").newInstance();

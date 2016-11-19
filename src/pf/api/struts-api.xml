@@ -29,6 +29,14 @@
                 <param name="actionName">Pay!jsPay</param>
                 <param name="namespace">/weixin</param>
             </result>
+            <result name="SwiftPassWeixinJsPay" type="chain">
+                <param name="actionName">Pay!weixinJsPay</param>
+                <param name="namespace">/swiftpass</param>
+            </result>
+            <result name="SwiftPassAliJsPay" type="chain">
+                <param name="actionName">Pay!aliJsPay</param>
+                <param name="namespace">/swiftpass</param>
+            </result>
         </action>
         <action name="OrderQuery" class="pf.api.action.CommonAction" method="OrderQuery">
             <result name="WeixinOrderQuery" type="chain">

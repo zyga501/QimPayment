@@ -31,7 +31,7 @@ public class PayAction extends AjaxActionSupport {
 
             WeixinJsPayRequestData weixinJsPayRequestData = new WeixinJsPayRequestData();
             weixinJsPayRequestData.mch_id = swiftMerchantInfo.getMchId();
-            weixinJsPayRequestData.body = "企盟支付";
+            weixinJsPayRequestData.body = getParameter("body").toString();
             weixinJsPayRequestData.attach = getParameter("state").toString();
             weixinJsPayRequestData.total_fee = (int)Double.parseDouble(getParameter("total_amount").toString());
                 OpenId weixinOpenId = new OpenId(swiftMerchantInfo.getWeixinAppId(), swiftMerchantInfo.getWeixinAppSecret(), getParameter("code").toString());
@@ -91,7 +91,7 @@ public class PayAction extends AjaxActionSupport {
 
             AliJsPayRequestData aliJsPayRequestData = new AliJsPayRequestData();
             aliJsPayRequestData.mch_id = swiftMerchantInfo.getMchId();
-            aliJsPayRequestData.body = "企盟支付";
+            aliJsPayRequestData.body = getParameter("body").toString();
             aliJsPayRequestData.attach = getParameter("state").toString();
             aliJsPayRequestData.total_fee = (int)Double.parseDouble(getParameter("total_amount").toString());
             String requestUrl = getRequest().getRequestURL().toString();

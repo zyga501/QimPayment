@@ -86,14 +86,14 @@ public class TestPayAction extends AjaxActionSupport {
 
     public void jsPay() throws Exception {
         JsPayData jsPayData = new JsPayData();
+        jsPayData.mode = "SwiftPass";
         jsPayData.id = getParameter("id").toString();
         jsPayData.body = getParameter("body").toString();
         jsPayData.total_fee = getParameter("total_fee").toString();
-        jsPayData.redirect_uri = "";
         jsPayData.sign = Signature.generateSign(jsPayData, jsPayData.id);
         XStream xStreamForRequestPostData = new XStream(new DomDriver("UTF-8", new XmlFriendlyNameCoder("-_", "_")));
         String postDataXML = xStreamForRequestPostData.toXML(jsPayData);
-        HttpPost httpPost = new HttpPost(getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + "JsPay");
+        HttpPost httpPost = new HttpPost("http://www.jeanhk.top/QimPayment/api/JsPay");
         StringEntity postEntity = new StringEntity(postDataXML, "UTF-8");
         httpPost.addHeader("Content-Type", "text/xml");
         httpPost.setEntity(postEntity);

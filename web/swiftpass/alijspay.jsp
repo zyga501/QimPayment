@@ -154,6 +154,7 @@
 <form action="<%=request.getContextPath()%>/swiftpass/Pay!aliJsPay" method="post">
     <input type="hidden" value=<%=request.getParameter("state")%> name="state" id="state"/>
     <input type="hidden" value=<%=request.getParameter("auth_code")%> name="auth_code" id="auth_code" />
+    <input type="hidden" value=<%=request.getParameter("body")%> name="auth_code" id="body" />
     <input type="hidden" value="" name="total_amount" id="total_amount"/>
     <div class="Layer1">
         <div class="dv1">

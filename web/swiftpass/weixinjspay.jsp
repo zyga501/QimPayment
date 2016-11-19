@@ -154,6 +154,7 @@
 <form action="<%=request.getContextPath()%>/swiftpass/Pay!weixinJsPay" method="post">
     <input id="code" name="code" type="hidden" value="<%=request.getParameter("code")%>" />
     <input type="hidden" value=<%=request.getParameter("state")%> name="state" id="state"/>
+    <input type="hidden" value=<%=request.getParameter("body")%> name="auth_code" id="body" />
     <input type="hidden" value="" name="total_amount" id="total_amount"/>
     <div class="Layer1">
         <div class="dv1">
