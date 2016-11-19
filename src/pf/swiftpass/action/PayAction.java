@@ -44,7 +44,6 @@ public class PayAction extends AjaxActionSupport {
             requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/') + 1) + "swiftpass/"
                     + CallbackAction.WEIXINJSPAYCALLBACK;
             weixinJsPayRequestData.notify_url = requestUrl;
-            weixinJsPayRequestData.callback_url = requestUrl;
             if (!StringUtils.convertNullableString(getParameter("out_trade_no")).isEmpty()) {
                 weixinJsPayRequestData.out_trade_no = getParameter("out_trade_no").toString();
             }
