@@ -1,5 +1,6 @@
 package pf.api.mode;
 
+import pf.ProjectLogger;
 import pf.weixin.utils.Signature;
 
 public class WeixinMode extends BaseMode  {
@@ -11,6 +12,7 @@ public class WeixinMode extends BaseMode  {
 
     public String microPay() {
         if (!Signature.checkSignValid(requestBuffer_, requestBuffer_.get("id").toString())) {
+            ProjectLogger.error("WeixinMode.microPay.checkSignValid.Failed!");
             return super.microPay();
         }
 
@@ -19,6 +21,7 @@ public class WeixinMode extends BaseMode  {
 
     public String scanPay() {
         if (!Signature.checkSignValid(requestBuffer_, requestBuffer_.get("id").toString())) {
+            ProjectLogger.error("WeixinMode.scanPay.checkSignValid.Failed!");
             return super.scanPay();
         }
 
@@ -27,6 +30,7 @@ public class WeixinMode extends BaseMode  {
 
     public String jsPay() {
         if (!Signature.checkSignValid(requestBuffer_, requestBuffer_.get("id").toString())) {
+            ProjectLogger.error("WeixinMode.jsPay.checkSignValid.Failed!");
             return super.jsPay();
         }
 
@@ -35,6 +39,7 @@ public class WeixinMode extends BaseMode  {
 
     public String orderQuery() {
         if (!Signature.checkSignValid(requestBuffer_, requestBuffer_.get("id").toString())) {
+            ProjectLogger.error("WeixinMode.orderQuery.checkSignValid.Failed!");
             return super.orderQuery();
         }
 
@@ -43,6 +48,7 @@ public class WeixinMode extends BaseMode  {
 
     public String orderInsert() {
         if (!Signature.checkSignValid(requestBuffer_, requestBuffer_.get("id").toString())) {
+            ProjectLogger.error("SwiftPassMode.orderInsert.checkSignValid.Failed!");
             return super.orderInsert();
         }
 
