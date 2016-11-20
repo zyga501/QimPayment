@@ -170,12 +170,8 @@ public class PayAction extends AjaxActionSupport {
     public String brandWCPay() throws Exception {
         // get session data and remove data
         JSONObject jsonObject = null;
-        if (!StringUtils.convertNullableString(getParameter("data")).isEmpty()) {
-            jsonObject = JSONObject.fromObject(Zip.unZip(getParameter("data").toString()));
-        }
-
         String sessionId = StringUtils.convertNullableString(getParameter("state"));
-        if (jsonObject == null && !sessionId.isEmpty()) {
+        if (!sessionId.isEmpty()) {
             String sesseionData = SessionCache.getSessionData(sessionId).toString();
             if (!sesseionData.isEmpty()) {
                 jsonObject = JSONObject.fromObject(Zip.unZip(sesseionData));

@@ -35,6 +35,14 @@ public class SwiftOrderInfo {
         this.outTradeNo_ = outTradeNo;
     }
 
+    public String getBody() {
+        return body_;
+    }
+
+    public void setBody(String body) {
+        body_ = body;
+    }
+
     public int getTotalFee() {
         return totalFee_;
     }
@@ -54,6 +62,7 @@ public class SwiftOrderInfo {
     int id_;
     private long mchId_;
     private String outTradeNo_;
+    private String body_;
     private int totalFee_;
     private String timeEnd_;
 }

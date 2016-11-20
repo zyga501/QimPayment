@@ -11,13 +11,14 @@
         SELECT * FROM OrderInfo WHERE outTradeNo=#{outTradeNo}
     </select>
     <insert id="insertOrderInfo" parameterType="pf.database.swiftpass.SwiftOrderInfo">
-        INSERT INTO OrderInfo(mchId,outTradeNo,totalFee,timeEnd)
-        VALUE (#{mchId},#{outTradeNo},#{totalFee},#{timeEnd})
+        INSERT INTO OrderInfo(mchId,outTradeNo,body,totalFee,timeEnd)
+        VALUE (#{mchId},#{outTradeNo},#{body},#{totalFee},#{timeEnd})
     </insert>
     <resultMap type="pf.database.swiftpass.SwiftOrderInfo" id="orderInfoResult">
         <id property="id" column="id" jdbcType="NUMERIC" />
         <result property="mchId" column="mchId" jdbcType="BIGINT"/>
         <result property="outTradeNo" column="outTradeNo" jdbcType="VARCHAR"/>
+        <result property="body" column="body" jdbcType="VARCHAR"/>
         <result property="totalFee" column="totalFee" jdbcType="NUMERIC" />
         <result property="timeEnd" column="timeEnd" jdbcType="VARCHAR"/>
     </resultMap>

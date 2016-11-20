@@ -4,7 +4,6 @@ import framework.action.AjaxActionSupport;
 import framework.utils.StringUtils;
 import framework.utils.XMLParser;
 import org.xml.sax.SAXException;
-import pf.ProjectLogger;
 import pf.api.mode.BaseMode;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -29,7 +28,6 @@ public class CommonAction extends AjaxActionSupport {
     }
 
     public String JsPay() throws Exception {
-        ProjectLogger.error("JsPay");
         parseRequestBuffer();
         String mode = StringUtils.convertNullableString(requestBuffer_.get("mode"));
         return handlerResult(createMode(mode).jsPay());
