@@ -159,7 +159,12 @@ public class PayAction extends AjaxActionSupport {
             String redirect_uri = jsonObject.get("url").toString();
             String data = jsonObject.get("data").toString();
 
-            SwiftMerchantInfo swiftMerchantInfo = SwiftMerchantInfo.getMerchantInfoById(Long.parseLong(subMerchantUserId));
+            SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(subMerchantUserId));
+            if (subMerchantUser == null) {
+                break;
+            }
+
+            SwiftMerchantInfo swiftMerchantInfo = SwiftMerchantInfo.getMerchantInfoById(subMerchantUser.getSubMerchantId());
             if (swiftMerchantInfo == null) {
                 break;
             }
@@ -204,7 +209,7 @@ public class PayAction extends AjaxActionSupport {
 
             String sessionId = getRequest().getSession().getId();
             String redirect_uri =  getRequest().getScheme()+"://" + getRequest().getServerName() + getRequest().getContextPath() + "/swiftpass/Pay!aliJsPay";
-            String fetchOpenidUri = String.format("https://openauth.alipay.com/oauth2/publicAppAuthorize.htm?app_id=%s&scope=auth_base&redirect_uri=%s&state=%d",
+            String fetchOpenidUri = String.format("https://openauth.alipay.com/oauth2/publicAppAuthorize.htm?app_id=%s&scope=auth_base&redirect_uri=%s&state=%s",
                     swiftMerchantInfo.getAliAppId(), redirect_uri, sessionId);
             String data = String.format("{'id':'%s','body':'%s','fee':'%s','no':'%s','url':'%s','data':'%s'}",
                     subMerchantUserId,

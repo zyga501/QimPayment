@@ -171,7 +171,7 @@ public class PayAction extends AjaxActionSupport {
         // get session data and remove data
         JSONObject jsonObject = null;
         String sessionId = StringUtils.convertNullableString(getParameter("state"));
-        if (!sessionId.isEmpty()) {
+        if (jsonObject == null && !sessionId.isEmpty()) {
             String sesseionData = SessionCache.getSessionData(sessionId).toString();
             if (!sesseionData.isEmpty()) {
                 jsonObject = JSONObject.fromObject(Zip.unZip(sesseionData));
