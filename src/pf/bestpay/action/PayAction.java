@@ -9,8 +9,8 @@ import pf.database.bestpay.BtMerchantInfo;
 import pf.database.bestpay.BtSubMerchantInfo;
 import pf.database.bestpay.LedgerInfo;
 import pf.database.merchant.SubMerchantUser;
-import framework.action.AjaxActionSupport;
-import framework.utils.ClassUtils;
+import QimCommon.struts.AjaxActionSupport;
+import QimCommon.utils.ClassUtils;
 
 import java.util.Map;
 

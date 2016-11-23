@@ -1,9 +1,9 @@
 package pf.weixin.action;
 
-import framework.action.AjaxActionSupport;
-import framework.utils.SessionCache;
-import framework.utils.StringUtils;
-import framework.utils.Zip;
+import QimCommon.struts.AjaxActionSupport;
+import QimCommon.utils.SessionCache;
+import QimCommon.utils.StringUtils;
+import QimCommon.utils.Zip;
 import net.sf.json.JSONObject;
 import pf.ProjectLogger;
 import pf.database.merchant.SubMerchantUser;

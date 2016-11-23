@@ -1,7 +1,7 @@
 package pf.alipay.api.RequestBean;
 
 import pf.ProjectSettings;
-import framework.utils.IdWorker;
+import QimCommon.utils.IdWorker;
 
 public class TradePayRequestData extends RequestData {
     public TradePayRequestData () {

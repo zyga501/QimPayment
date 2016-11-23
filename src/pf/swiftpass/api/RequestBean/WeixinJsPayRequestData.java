@@ -1,7 +1,7 @@
 package pf.swiftpass.api.RequestBean;
 
 import pf.ProjectSettings;
-import framework.utils.IdWorker;
+import QimCommon.utils.IdWorker;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;

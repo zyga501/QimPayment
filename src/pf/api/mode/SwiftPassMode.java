@@ -1,6 +1,6 @@
 package pf.api.mode;
 
-import framework.utils.StringUtils;
+import QimCommon.utils.StringUtils;
 import pf.ProjectLogger;
 import pf.weixin.utils.Signature;
 

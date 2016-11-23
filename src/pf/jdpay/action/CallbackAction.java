@@ -1,7 +1,7 @@
 package pf.jdpay.action;
 
 import pf.database.jdpay.JdOrderInfo;
-import framework.action.AjaxActionSupport;
+import QimCommon.struts.AjaxActionSupport;
 import net.sf.json.JSONObject;
 
 import java.io.IOException;

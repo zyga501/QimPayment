@@ -1,6 +1,6 @@
 package pf.alipay.utils;
 
-import framework.utils.ClassUtils;
+import QimCommon.utils.ClassUtils;
 
 import javax.xml.bind.DatatypeConverter;
 import java.lang.reflect.Field;

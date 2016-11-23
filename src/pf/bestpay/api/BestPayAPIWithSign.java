@@ -1,8 +1,8 @@
 package pf.bestpay.api;
 
-import framework.utils.HttpUtils;
-import framework.utils.JsonUtils;
-import framework.utils.StringUtils;
+import QimCommon.utils.HttpUtils;
+import QimCommon.utils.JsonUtils;
+import QimCommon.utils.StringUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;

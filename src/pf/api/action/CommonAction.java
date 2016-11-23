@@ -1,8 +1,8 @@
 package pf.api.action;
 
-import framework.action.AjaxActionSupport;
-import framework.utils.StringUtils;
-import framework.utils.XMLParser;
+import QimCommon.struts.AjaxActionSupport;
+import QimCommon.utils.StringUtils;
+import QimCommon.utils.XMLParser;
 import org.xml.sax.SAXException;
 import pf.api.mode.BaseMode;
 

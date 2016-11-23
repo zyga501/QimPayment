@@ -1,7 +1,7 @@
 package pf.merchant.action;
 
-import framework.action.AjaxActionSupport;
-import framework.utils.IdWorker;
+import QimCommon.struts.AjaxActionSupport;
+import QimCommon.utils.IdWorker;
 import pf.ProjectLogger;
 import pf.ProjectSettings;
 import pf.database.merchant.SubMerchantInfo;

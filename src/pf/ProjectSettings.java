@@ -1,7 +1,7 @@
 package pf;
 
-import framework.utils.PathUtils;
-import framework.utils.XMLParser;
+import QimCommon.utils.PathUtils;
+import QimCommon.utils.XMLParser;
 
 import java.util.Map;
 

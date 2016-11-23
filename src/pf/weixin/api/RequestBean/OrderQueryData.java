@@ -1,6 +1,6 @@
 package pf.weixin.api.RequestBean;
 
-import framework.utils.StringUtils;
+import QimCommon.utils.StringUtils;
 
 public class OrderQueryData extends RequestData {
     public boolean checkParameter() {

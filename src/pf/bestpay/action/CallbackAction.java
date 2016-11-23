@@ -1,6 +1,6 @@
 package pf.bestpay.action;
 
-import framework.action.AjaxActionSupport;
+import QimCommon.struts.AjaxActionSupport;
 
 public class CallbackAction extends AjaxActionSupport {
     public final static String BARCODEPAY = "CALLBACK!BARCODEPAY";

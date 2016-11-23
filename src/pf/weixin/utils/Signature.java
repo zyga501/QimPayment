@@ -1,8 +1,8 @@
 package pf.weixin.utils;
 
-import framework.utils.ClassUtils;
-import framework.utils.MD5;
-import framework.utils.XMLParser;
+import QimCommon.utils.ClassUtils;
+import QimCommon.utils.MD5;
+import QimCommon.utils.XMLParser;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;

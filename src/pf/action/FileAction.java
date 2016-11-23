@@ -1,7 +1,7 @@
 package pf.action;
 
 
-import framework.action.AjaxActionSupport;
+import QimCommon.struts.AjaxActionSupport;
 import pf.ProjectLogger;
 import sun.misc.BASE64Encoder;
 

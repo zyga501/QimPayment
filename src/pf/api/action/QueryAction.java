@@ -7,7 +7,7 @@ import pf.database.jdpay.JdOrderInfoCollect;
 import pf.database.merchant.OrderInfoCollect;
 import pf.database.weixin.WxOrderInfo;
 import pf.database.weixin.WxOrderInfoCollect;
-import framework.action.AjaxActionSupport;
+import QimCommon.struts.AjaxActionSupport;
 
 import java.util.HashMap;
 import java.util.List;
