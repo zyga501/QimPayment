@@ -67,7 +67,7 @@ public class PayAction extends AjaxActionSupport {
             WeixinJsPayRequestData weixinJsPayRequestData = new WeixinJsPayRequestData();
             weixinJsPayRequestData.mch_id = swiftMerchantInfo.getMchId();
             weixinJsPayRequestData.body = body;
-            weixinJsPayRequestData.attach = String.format("{'id':'%s','body':'%s','redirect_uri':'%s','data':'%s'}",
+            weixinJsPayRequestData.attach = String.format("{'id':'%s','body':'%s','url':'%s','data':'%s'}",
                     subMerchantUserId, body, redirect_uri, data);
             weixinJsPayRequestData.total_fee = total_fee;
             if (!out_trade_no.isEmpty()) {
@@ -172,7 +172,7 @@ public class PayAction extends AjaxActionSupport {
             AliJsPayRequestData aliJsPayRequestData = new AliJsPayRequestData();
             aliJsPayRequestData.mch_id = swiftMerchantInfo.getMchId();
             aliJsPayRequestData.body = body;
-            aliJsPayRequestData.attach = String.format("{'id':'%s','body':'%s','redirect_uri':'%s','data':'%s'}",
+            aliJsPayRequestData.attach = String.format("{'id':'%s','body':'%s','url':'%s','data':'%s'}",
                     subMerchantUserId, body, redirect_uri, data);
             aliJsPayRequestData.total_fee = total_fee;
             if (!out_trade_no.isEmpty()) {

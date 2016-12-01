@@ -38,7 +38,7 @@ public class CallbackAction extends AjaxActionSupport {
             JSONObject jsonObject = JSONObject.fromObject(responseResult.get("attach").toString());
             responseResult.put("id", jsonObject.get("id").toString());
             responseResult.put("body", jsonObject.get("body").toString());
-            responseResult.put("redirect_uri", StringUtils.convertNullableString(jsonObject.get("redirect_uri")));
+            responseResult.put("redirect_uri", StringUtils.convertNullableString(jsonObject.get("url")));
             responseResult.put("data", jsonObject.get("data").toString());
 
             synchronized (syncObject) {
@@ -62,13 +62,14 @@ public class CallbackAction extends AjaxActionSupport {
     }
 
     private void notifyClientOrderInfo(Map<String, Object> responseResult) throws Exception {
+        ProjectLogger.info("nofityClientUrl:" + StringUtils.convertNullableString(responseResult.get("redirect_uri")));
         if (!StringUtils.convertNullableString(responseResult.get("redirect_uri")).isEmpty()) {
             String redirect_uri = responseResult.get("redirect_uri").toString();
             Map<String, String> map = new HashMap<>();
             map.put("body", responseResult.get("body").toString());
             map.put("transaction_id",responseResult.get("transaction_id").toString());
             map.put("out_trade_no", responseResult.get("out_trade_no").toString());
-            map.put("bank_type", responseResult.get("bank_type").toString());
+            map.put("bank_type", "*");
             map.put("total_fee", responseResult.get("total_fee").toString());
             map.put("time_end", responseResult.get("time_end").toString());
             map.put("data", responseResult.get("data").toString());
