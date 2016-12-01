@@ -14,7 +14,7 @@ public class SwiftPassMode extends BaseMode {
             return super.jsPay();
         }
 
-        if (StringUtils.convertNullableString(requestBuffer_.get("methodType")).toLowerCase().compareTo("alipay.jspay") == 0) {
+        if (StringUtils.convertNullableString(requestBuffer_.get("method")).toLowerCase().compareTo("alipay.jspay") == 0) {
             return AliJsPay;
         }
 
