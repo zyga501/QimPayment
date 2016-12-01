@@ -63,7 +63,7 @@ public class PayAction extends AjaxActionSupport {
 
             Map<String, String> resultMap = new HashMap<>();
             resultMap.put("body", microPayRequestData.body);
-            resultMap.put("transaction_id", microPay.getResponseResult().get("transaction_id").toString());
+            resultMap.put("transaction_id", StringUtils.convertNullableString(microPay.getResponseResult().get("transaction_id")));
             resultMap.put("out_trade_no", microPay.getResponseResult().get("out_trade_no").toString());
             resultMap.put("bank_type", microPay.getResponseResult().get("bank_type").toString());
             resultMap.put("total_fee", microPay.getResponseResult().get("total_fee").toString());
