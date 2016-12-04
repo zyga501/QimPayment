@@ -1,9 +1,7 @@
 package pf.swiftpass.action;
 
 import QimCommon.struts.AjaxActionSupport;
-import QimCommon.utils.HttpUtils;
-import QimCommon.utils.StringUtils;
-import QimCommon.utils.XMLParser;
+import QimCommon.utils.*;
 import net.sf.json.JSONObject;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -35,7 +33,12 @@ public class CallbackAction extends AjaxActionSupport {
         Map<String,Object> responseResult = XMLParser.convertMapFromXml(getInputStreamAsString());
         if (responseResult.get("result_code").toString().compareTo("0") == 0 &&
                 responseResult.get("pay_result").toString().compareTo("0") == 0) {
-            JSONObject jsonObject = JSONObject.fromObject(responseResult.get("attach").toString());
+            JSONObject jsonObject = null;
+            String sesseionData = SessionCache.getSessionData(responseResult.get("attach").toString()).toString();
+            if (!sesseionData.isEmpty()) {
+                jsonObject = JSONObject.fromObject(Zip.unZip(sesseionData));
+                SessionCache.clearSessionData(sesseionData);
+            }
             responseResult.put("id", jsonObject.get("id").toString());
             responseResult.put("body", jsonObject.get("body").toString());
             responseResult.put("redirect_uri", StringUtils.convertNullableString(jsonObject.get("url")));

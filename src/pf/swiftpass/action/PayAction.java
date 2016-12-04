@@ -1,13 +1,13 @@
 package pf.swiftpass.action;
 
-import com.alipay.api.AlipayClient;
-import com.alipay.api.DefaultAlipayClient;
-import com.alipay.api.request.AlipaySystemOauthTokenRequest;
-import com.alipay.api.response.AlipaySystemOauthTokenResponse;
 import QimCommon.struts.AjaxActionSupport;
 import QimCommon.utils.SessionCache;
 import QimCommon.utils.StringUtils;
 import QimCommon.utils.Zip;
+import com.alipay.api.AlipayClient;
+import com.alipay.api.DefaultAlipayClient;
+import com.alipay.api.request.AlipaySystemOauthTokenRequest;
+import com.alipay.api.response.AlipaySystemOauthTokenResponse;
 import net.sf.json.JSONObject;
 import pf.ProjectLogger;
 import pf.database.merchant.SubMerchantUser;
@@ -16,42 +16,15 @@ import pf.swiftpass.api.AliJsPay;
 import pf.swiftpass.api.RequestBean.AliJsPayRequestData;
 import pf.swiftpass.api.RequestBean.WeixinJsPayRequestData;
 import pf.swiftpass.api.WeixinJsPay;
-import pf.weixin.api.OpenId;
-
-import java.io.IOException;
 
 public class PayAction extends AjaxActionSupport {
     public String weixinJsPay() throws Exception {
-        if (getParameter("code") == null || getParameter("state") == null) {
-            return "fetchWxCode";
-        }
-
-        // get session data and remove data
-        JSONObject jsonObject = null;
-        String sessionId = StringUtils.convertNullableString(getParameter("state"));
-        if (!sessionId.isEmpty()) {
-            String sesseionData = SessionCache.getSessionData(sessionId).toString();
-            if (!sesseionData.isEmpty()) {
-                jsonObject = JSONObject.fromObject(Zip.unZip(sesseionData));
-            }
-        }
-
-        getRequest().getSession().removeAttribute("data");
-        if (!sessionId.isEmpty())
-            SessionCache.clearSessionData(sessionId);
-
-        if (jsonObject == null) {
-            ProjectLogger.warn("weixinJsPay Failed! Session Data Is Miss!");
-            return AjaxActionComplete(false);
-        }
-
-        String subMerchantUserId = jsonObject.get("id").toString();
-        String body = jsonObject.get("body").toString();
-        int total_fee = (int)Double.parseDouble(jsonObject.get("fee").toString());
-        String out_trade_no = jsonObject.get("no").toString();
-        String redirect_uri = jsonObject.get("url").toString();
-        String data = jsonObject.get("data").toString();
-        String code = getParameter("code").toString();
+        String subMerchantUserId = getParameter("id").toString();
+        String body = StringUtils.convertNullableString(getParameter("body").toString());
+        int total_fee = (int)Double.parseDouble(getParameter("total_fee").toString());
+        String out_trade_no = StringUtils.convertNullableString(getParameter("out_trade_no"));
+        String redirect_uri = StringUtils.convertNullableString(getParameter("redirect_uri"));
+        String data = StringUtils.convertNullableString(getParameter("data"));
 
         do {
             SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(subMerchantUserId));
@@ -67,17 +40,15 @@ public class PayAction extends AjaxActionSupport {
             WeixinJsPayRequestData weixinJsPayRequestData = new WeixinJsPayRequestData();
             weixinJsPayRequestData.mch_id = swiftMerchantInfo.getMchId();
             weixinJsPayRequestData.body = body;
-            weixinJsPayRequestData.attach = String.format("{'id':'%s','body':'%s','url':'%s','data':'%s'}",
-                    subMerchantUserId, body, redirect_uri, data);
             weixinJsPayRequestData.total_fee = total_fee;
             if (!out_trade_no.isEmpty()) {
                 weixinJsPayRequestData.out_trade_no = out_trade_no;
             }
-            OpenId weixinOpenId = new OpenId(swiftMerchantInfo.getWeixinAppId(), swiftMerchantInfo.getWeixinAppSecret(), code);
-            if (!weixinOpenId.getRequest()) {
-                return AjaxActionComplete(false);
-            }
-            weixinJsPayRequestData.sub_openid = weixinOpenId.getOpenId();
+            SessionCache.setSessionData(weixinJsPayRequestData.out_trade_no, Zip.zip(String.format("{'id':'%s','body':'%s','url':'%s','data':'%s'}",
+                    subMerchantUserId, body, redirect_uri, data)));
+            weixinJsPayRequestData.attach = weixinJsPayRequestData.out_trade_no;
+
+            weixinJsPayRequestData.sub_openid = "oBhD-wj1zMF5-FET_9dwK8rI2nt0";
             String requestUrl = getRequest().getRequestURL().toString();
             requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/'));
             requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/') + 1) + "swiftpass/"
@@ -91,39 +62,6 @@ public class PayAction extends AjaxActionSupport {
         } while (false);
 
         return AjaxActionComplete(false);
-    }
-
-    public void fetchWxCode() throws IOException {
-        do {
-            String subMerchantUserId = getParameter("id").toString();
-            SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(subMerchantUserId));
-            if (subMerchantUser == null) {
-                break;
-            }
-
-            SwiftMerchantInfo swiftMerchantInfo = SwiftMerchantInfo.getMerchantInfoById(subMerchantUser.getSubMerchantId());
-            if (swiftMerchantInfo == null) {
-                break;
-            }
-
-            String sessionId = getRequest().getSession().getId();
-            String redirect_uri =  getRequest().getScheme()+"://" + getRequest().getServerName() + getRequest().getContextPath() + "/swiftpass/Pay!weixinJsPay";
-            String fetchOpenidUri = String.format("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" +
-                            "%s&redirect_uri=%s&response_type=code&scope=snsapi_base&state=%s#wechat_redirect",
-                    swiftMerchantInfo.getWeixinAppId(), redirect_uri, sessionId);
-            // save session data, state is too short
-            String data = String.format("{'id':'%s','body':'%s','fee':'%s','no':'%s','url':'%s','data':'%s'}",
-                    subMerchantUserId,
-                    StringUtils.convertNullableString(getParameter("body")),
-                    StringUtils.convertNullableString(getParameter("total_fee")),
-                    StringUtils.convertNullableString(getParameter("out_trade_no")),
-                    StringUtils.convertNullableString(getParameter("redirect_uri")),
-                    StringUtils.convertNullableString(getParameter("data")));
-            String zipData = Zip.zip(data);
-            getRequest().getSession().setAttribute("data", zipData);
-            SessionCache.setSessionData(sessionId, zipData);
-            getResponse().sendRedirect(fetchOpenidUri);
-        } while (false);
     }
 
     public void aliJsPay() throws Exception {
@@ -172,12 +110,14 @@ public class PayAction extends AjaxActionSupport {
             AliJsPayRequestData aliJsPayRequestData = new AliJsPayRequestData();
             aliJsPayRequestData.mch_id = swiftMerchantInfo.getMchId();
             aliJsPayRequestData.body = body;
-            aliJsPayRequestData.attach = String.format("{'id':'%s','body':'%s','url':'%s','data':'%s'}",
-                    subMerchantUserId, body, redirect_uri, data);
             aliJsPayRequestData.total_fee = total_fee;
             if (!out_trade_no.isEmpty()) {
                 aliJsPayRequestData.out_trade_no = out_trade_no;
             }
+            SessionCache.setSessionData(aliJsPayRequestData.out_trade_no, Zip.zip(String.format("{'id':'%s','body':'%s','url':'%s','data':'%s'}",
+                    subMerchantUserId, body, redirect_uri, data)));
+            aliJsPayRequestData.attach = aliJsPayRequestData.out_trade_no;
+
             String requestUrl = getRequest().getRequestURL().toString();
             requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/'));
             requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/') + 1) + "swiftpass/"
