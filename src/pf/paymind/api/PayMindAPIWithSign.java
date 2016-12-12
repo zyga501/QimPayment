@@ -1,6 +1,8 @@
 package pf.paymind.api;
 
 import QimCommon.utils.HttpUtils;
+import QimCommon.utils.JsonUtils;
+import QimCommon.utils.StringUtils;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.thoughtworks.xstream.io.xml.XmlFriendlyNameCoder;
@@ -51,7 +53,12 @@ abstract public class PayMindAPIWithSign extends PayMindAPI {
     }
 
     protected boolean parseResponse(String ...args) throws Exception {
-        return true;
+        responseResult_ = JsonUtils.toMap(args[0], true);
+        if (StringUtils.convertNullableString(responseResult_.get("retCode")).compareTo("0000") == 0) {
+            return true;
+        }
+
+        return false;
     }
 
     protected boolean handlerResponse(Map<String, Object> responseResult) throws Exception {

@@ -12,7 +12,7 @@ public class JsPayRequestData extends RequestData {
         trxType = "WX_SCANCODE_JSAPI";
         orderIp = InetAddress.getLocalHost().getHostAddress().toString();
         orderNum = String.valueOf(new IdWorker(ProjectSettings.getIdWorkerSeed()).nextId());
-        encrypt = "T0";
+        encrypt = "T1";
         goodsName = "QIMENG_GOODSNAME";
     }
 
@@ -24,7 +24,8 @@ public class JsPayRequestData extends RequestData {
         try {
             return !orderIp.isEmpty()
                     && !orderNum.isEmpty()
-                    && amount >= 0.01;
+                    && amount >= 0.01
+                    && !serverCallbackUrl.isEmpty();
         }
         catch (Exception exception) {
 
@@ -34,13 +35,13 @@ public class JsPayRequestData extends RequestData {
     }
 
     public void buildSign(String apiKey) throws IllegalAccessException {
-        sign = MD5.MD5Encode(String.format("#OnlinePay#%s#%s#%f#%s#%s#%s#%s",
-                merchantNo, orderNum, amount, goodsName, orderIp, encrypt, apiKey));
+        sign = MD5.MD5Encode(String.format("#%s#%s#%s#%.2f#%s#%s#%s#%s#%s",
+                trxType, merchantNo, orderNum, amount, goodsName, serverCallbackUrl, orderIp, encrypt, apiKey));
     }
 
     public String buildRequestData() {
-        return String.format("trxType=%s&merchantNo=%s&orderNum=%s&amount=%f&goodsName=%s&orderIp=%s&encrypt=%s&sign=%s",
-                trxType, merchantNo, orderNum, amount, goodsName, orderIp, encrypt, sign);
+        return String.format("trxType=%s&merchantNo=%s&orderNum=%s&amount=%.2f&goodsName=%s&serverCallbackUrl=%s&orderIp=%s&encrypt=%s&sign=%s",
+                trxType, merchantNo, orderNum, amount, goodsName, serverCallbackUrl, orderIp, encrypt, sign);
     }
 
     public String orderIp; // 用户支付IP
