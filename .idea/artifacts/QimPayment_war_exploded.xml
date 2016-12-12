@@ -16,6 +16,7 @@
           <element id="library" level="project" name="Log4j-1.2.17" />
           <element id="library" level="project" name="Bouncy-Castle" />
           <element id="library" level="project" name="Dom4j-1.6.1" />
+          <element id="library" level="project" name="AliPay" />
         </element>
       </element>
     </root>

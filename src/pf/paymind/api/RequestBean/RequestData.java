@@ -5,10 +5,28 @@ public class RequestData {
 
     }
 
+    public boolean checkParameter() {
+        try {
+            return !trxType.isEmpty()
+                    && !merchantNo.isEmpty();
+        }
+        catch (Exception exception) {
+
+        }
+
+        return false;
+    }
+
+    public void buildSign(String apiKey) throws IllegalAccessException {
+
+    }
+
+    public String buildRequestData() {
+        return "";
+    }
+
     public String trxType; // 接口类型
     public String merchantNo; // 商户编号
-    public String orderIp; // 用户支付IP
-    public String encrypt; // T0/T1标识，若此项为T0，对应的5,11,12,13,14必填
     public String sign; // 签名
 
     // option

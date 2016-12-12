@@ -5,6 +5,10 @@ import java.util.List;
 import java.util.Map;
 
 public class AliOrderInfo {
+    public static void main(String[] args) throws Exception {
+
+    }
+
     public static AliOrderInfo getOrderInfo(long id) {
         String statement = "pf.database.alipay.mapping.orderInfo.getOrderInfoById";
         return Database.Instance().selectOne(statement, id);
