@@ -16,6 +16,8 @@ public class PayAction extends AjaxActionSupport {
         + CallbackAction.JSPAYCALLBACK;
         jsPayRequestData.serverCallbackUrl = requestUrl;
         JsPay jsPay = new JsPay(jsPayRequestData);
-        jsPay.postRequest("XrsYj8t2jdcbrljK3Oc7KqfuJtASxKkE");
+        if (jsPay.postRequest("XrsYj8t2jdcbrljK3Oc7KqfuJtASxKkE")) {
+            getResponse().sendRedirect(jsPay.getPayUrl());
+        }
     }
 }
