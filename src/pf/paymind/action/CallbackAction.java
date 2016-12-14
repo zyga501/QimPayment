@@ -35,14 +35,17 @@ public class CallbackAction extends AjaxActionSupport {
             responseResult.put("body", jsonObject.get("body").toString());
             responseResult.put("redirect_uri", StringUtils.convertNullableString(jsonObject.get("url")));
             responseResult.put("data", jsonObject.get("data").toString());
+            responseResult.put("time_end", getParameter("r7_completeDate").toString());
+            responseResult.put("out_trade_no", getParameter("r2_orderNumber").toString());
+            responseResult.put("total_fee", (int)(Double.parseDouble(getParameter("r3_amount").toString()) * 100));
 
             synchronized (syncObject) {
                 PmOrderInfo pmOrderInfo = new PmOrderInfo();
                 pmOrderInfo.setMchId(Long.parseLong(responseResult.get("id").toString()));
-                pmOrderInfo.setOutTradeNo(getParameter("r2_orderNumber").toString());
+                pmOrderInfo.setOutTradeNo(responseResult.get("out_trade_no").toString());
                 pmOrderInfo.setBody(responseResult.get("body").toString());
-                pmOrderInfo.setTimeEnd(getParameter("r7_completeDate").toString());
-                pmOrderInfo.setTotalFee((int)(Double.parseDouble(getParameter("r3_amount").toString()) * 100));
+                pmOrderInfo.setTimeEnd(responseResult.get("time_end").toString());
+                pmOrderInfo.setTotalFee(Integer.parseInt(responseResult.get("total_fee").toString()));
                 if (PmOrderInfo.insertOrderInfo(pmOrderInfo)) {
                     notifyClientOrderInfo(responseResult);
                 }
@@ -55,9 +58,7 @@ public class CallbackAction extends AjaxActionSupport {
             String redirect_uri = responseResult.get("redirect_uri").toString();
             Map<String, String> map = new HashMap<>();
             map.put("body", responseResult.get("body").toString());
-            map.put("transaction_id",responseResult.get("transaction_id").toString());
             map.put("out_trade_no", responseResult.get("out_trade_no").toString());
-            map.put("bank_type", "*");
             map.put("total_fee", responseResult.get("total_fee").toString());
             map.put("time_end", responseResult.get("time_end").toString());
             map.put("data", responseResult.get("data").toString());
