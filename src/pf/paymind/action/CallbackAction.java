@@ -42,7 +42,7 @@ public class CallbackAction extends AjaxActionSupport {
                 pmOrderInfo.setOutTradeNo(getParameter("r2_orderNumber").toString());
                 pmOrderInfo.setBody(responseResult.get("body").toString());
                 pmOrderInfo.setTimeEnd(getParameter("r7_completeDate").toString());
-                pmOrderInfo.setTotalFee(Integer.parseInt(getParameter("r3_amount").toString()));
+                pmOrderInfo.setTotalFee((int)(Double.parseDouble(getParameter("r3_amount").toString()) * 100));
                 if (PmOrderInfo.insertOrderInfo(pmOrderInfo)) {
                     notifyClientOrderInfo(responseResult);
                 }
