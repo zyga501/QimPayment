@@ -34,10 +34,11 @@ public class CallbackAction extends AjaxActionSupport {
         if (responseResult.get("result_code").toString().compareTo("0") == 0 &&
                 responseResult.get("pay_result").toString().compareTo("0") == 0) {
             JSONObject jsonObject = null;
-            String sesseionData = SessionCache.getSessionData(responseResult.get("attach").toString()).toString();
+            String sessionId = responseResult.get("attach").toString();
+            String sesseionData = SessionCache.getSessionData(sessionId).toString();
             if (!sesseionData.isEmpty()) {
                 jsonObject = JSONObject.fromObject(Zip.unZip(sesseionData));
-                SessionCache.clearSessionData(sesseionData);
+                SessionCache.clearSessionData(sessionId);
             }
             responseResult.put("id", jsonObject.get("id").toString());
             responseResult.put("body", jsonObject.get("body").toString());
@@ -65,7 +66,6 @@ public class CallbackAction extends AjaxActionSupport {
     }
 
     private void notifyClientOrderInfo(Map<String, Object> responseResult) throws Exception {
-        ProjectLogger.info("nofityClientUrl:" + StringUtils.convertNullableString(responseResult.get("redirect_uri")));
         if (!StringUtils.convertNullableString(responseResult.get("redirect_uri")).isEmpty()) {
             String redirect_uri = responseResult.get("redirect_uri").toString();
             Map<String, String> map = new HashMap<>();
