@@ -8,6 +8,8 @@
         <id property="id" column="id" jdbcType="BIGINT" />
         <result property="mchId" column="mchId" jdbcType="VARCHAR"/>
         <result property="apiKey" column="apiKey" jdbcType="VARCHAR"/>
+        <result property="weixinAppId" column="weixinAppId" jdbcType="VARCHAR"/>
+        <result property="weixinAppSecret" column="weixinAppSecret" jdbcType="VARCHAR"/>
         <result property="aliAppId" column="aliAppId" jdbcType="VARCHAR"/>
         <result property="aliPrivateKey" column="aliPrivateKey" jdbcType="VARCHAR"/>
         <result property="aliPublicKey" column="aliPublicKey" jdbcType="VARCHAR"/>
