@@ -14,6 +14,7 @@ import java.util.Map;
 public class CommonAction extends AjaxActionSupport {
     private final static String WEIXINMODE = "weixin";
     private final static String SWIFTPASSMODE = "swiftpass";
+    private final static String HGESYMODE = "hgesy";
 
     public String MicroPay() throws Exception {
         parseRequestBuffer();
@@ -55,6 +56,8 @@ public class CommonAction extends AjaxActionSupport {
             case SWIFTPASSMODE:
                 baseMode = (BaseMode)Class.forName("pf.api.mode.SwiftPassMode").newInstance();
                 break;
+            case HGESYMODE:
+                baseMode = (BaseMode)Class.forName("pf.api.mode.HgesyMode").newInstance();
             case WEIXINMODE:
             default:
                 baseMode = (BaseMode)Class.forName("pf.api.mode.WeixinMode").newInstance();

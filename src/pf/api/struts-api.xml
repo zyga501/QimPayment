@@ -37,6 +37,10 @@
                 <param name="actionName">Pay!aliJsPay</param>
                 <param name="namespace">/swiftpass</param>
             </result>
+            <result name="HgesyJsPay" type="chain">
+                <param name="actionName">Pay!jsPay</param>
+                <param name="namespace">/hgesy</param>
+            </result>
         </action>
         <action name="OrderQuery" class="pf.api.action.CommonAction" method="OrderQuery">
             <result name="WeixinOrderQuery" type="chain">
