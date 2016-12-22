@@ -103,7 +103,10 @@ public class PayAction extends AjaxActionSupport {
                     StringUtils.convertNullableString(getParameter("redirect_uri")),
                     StringUtils.convertNullableString(getParameter("data")));
             unifiedOrderRequestData.total_fee = (int)Double.parseDouble(getParameter("total_fee").toString());
-            unifiedOrderRequestData.product_id = getParameter("product_id").toString();
+            if (getParameter("product_id") != null) {
+                unifiedOrderRequestData.product_id = getParameter("product_id").toString();
+            }
+
             unifiedOrderRequestData.trade_type = "NATIVE";
             String requestUrl = getRequest().getRequestURL().toString();
             requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/'));
