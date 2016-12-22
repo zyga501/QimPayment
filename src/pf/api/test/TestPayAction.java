@@ -1,6 +1,6 @@
 package pf.api.test;
 
-import pf.api.test.RequestData.JsPayData;
+import pf.api.test.RequestData.JsPayRequestData;
 import pf.api.test.RequestData.MicroPayRequestData;
 import pf.api.test.RequestData.ScanPayRequestData;
 import QimCommon.struts.AjaxActionSupport;
@@ -85,15 +85,15 @@ public class TestPayAction extends AjaxActionSupport {
     }
 
     public void jsPay() throws Exception {
-        JsPayData jsPayData = new JsPayData();
-        jsPayData.mode = "SwiftPass";
-        jsPayData.id = getParameter("id").toString();
-        jsPayData.body = getParameter("body").toString();
-        jsPayData.total_fee = getParameter("total_fee").toString();
-        jsPayData.method = "alipay.jspay";
-        jsPayData.sign = Signature.generateSign(jsPayData, jsPayData.id);
+        JsPayRequestData jsPayRequestData = new JsPayRequestData();
+        jsPayRequestData.mode = "SwiftPass";
+        jsPayRequestData.id = getParameter("id").toString();
+        jsPayRequestData.body = getParameter("body").toString();
+        jsPayRequestData.total_fee = getParameter("total_fee").toString();
+        jsPayRequestData.method = "alipay.jspay";
+        jsPayRequestData.sign = Signature.generateSign(jsPayRequestData, jsPayRequestData.id);
         XStream xStreamForRequestPostData = new XStream(new DomDriver("UTF-8", new XmlFriendlyNameCoder("-_", "_")));
-        String postDataXML = xStreamForRequestPostData.toXML(jsPayData);
+        String postDataXML = xStreamForRequestPostData.toXML(jsPayRequestData);
         HttpPost httpPost = new HttpPost("http://www.jeanhk.top/QimPayment/api/JsPay");
         StringEntity postEntity = new StringEntity(postDataXML, "UTF-8");
         httpPost.addHeader("Content-Type", "text/xml");

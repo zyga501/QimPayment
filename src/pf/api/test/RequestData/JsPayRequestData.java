@@ -1,6 +1,6 @@
 package pf.api.test.RequestData;
 
-public class JsPayData
+public class JsPayRequestData
 {
     public String mode;
     public String id;
