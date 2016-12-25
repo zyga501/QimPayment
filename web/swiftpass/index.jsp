@@ -37,7 +37,17 @@
           success: function (data) {
           }
         })
+      }
 
+      function aliNative() {
+        $.ajax({
+          type: 'post',
+          url: '<%=request.getContextPath()%>/swiftpass/Pay!aliNative?id=1596144387655680',
+          dataType:"json",
+          data:$("form").serialize(),
+          success: function (data) {
+          }
+        })
       }
     </script>
   </head>
@@ -66,6 +76,9 @@
           </td>
           <td>
             <input type="button" onclick="weixinNative()" value="微信扫码支付"/>
+          </td>
+          <td>
+            <input type="button" onclick="aliNative()" value="支付宝扫码支付"/>
           </td>
         </tr>
       </table>

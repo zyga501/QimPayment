@@ -1,14 +1,14 @@
 package pf.swiftpass.api;
 
-import pf.swiftpass.api.RequestBean.WeixinNativeRequestData;
+import pf.swiftpass.api.RequestBean.AliNativeRequestData;
 
 import java.util.Map;
 
-public class WeixinNative extends SwiftPassAPIWithSign {
+public class AliNative extends SwiftPassAPIWithSign {
     public final static String NATIVE_API = "https://pay.swiftpass.cn/pay/gateway";
 
-    public WeixinNative(WeixinNativeRequestData weixinNativeRequestData) {
-        requestData_ = weixinNativeRequestData;
+    public AliNative(AliNativeRequestData aliNativeRequestData) {
+        requestData_ = aliNativeRequestData;
     }
 
     public String getCodeUrl() {

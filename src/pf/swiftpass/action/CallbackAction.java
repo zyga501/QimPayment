@@ -17,6 +17,7 @@ public class CallbackAction extends AjaxActionSupport {
     public final static String WEIXINJSPAYCALLBACK = "Callback!weixinJsPay";
     public final static String ALIJSPAYCALLBACK = "Callback!aliJsPay";
     public final static String WEIXINNATIVECALLBACK = "Callback!weixinNative";
+    public final static String ALINATIVECALLBACK = "Callback!aliNative";
     public final static String SUCCESS = "success";
     public final static Object syncObject = new Object();
 

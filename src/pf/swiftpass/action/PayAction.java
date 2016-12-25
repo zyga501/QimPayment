@@ -13,7 +13,9 @@ import pf.ProjectLogger;
 import pf.database.merchant.SubMerchantUser;
 import pf.database.swiftpass.SwiftMerchantInfo;
 import pf.swiftpass.api.AliJsPay;
+import pf.swiftpass.api.AliNative;
 import pf.swiftpass.api.RequestBean.AliJsPayRequestData;
+import pf.swiftpass.api.RequestBean.AliNativeRequestData;
 import pf.swiftpass.api.RequestBean.WeixinJsPayRequestData;
 import pf.swiftpass.api.RequestBean.WeixinNativeRequestData;
 import pf.swiftpass.api.WeixinJsPay;
@@ -288,6 +290,53 @@ public class PayAction extends AjaxActionSupport {
             if (weixinNative.postRequest(swiftMerchantInfo.getApiKey())) {
                 Map<String, String> resultMap = new HashMap<>();
                 resultMap.put("code_url", weixinNative.getCodeUrl());
+                return AjaxActionComplete(resultMap);
+            }
+        } while (false);
+
+        return AjaxActionComplete(false);
+    }
+
+    public String aliNative() throws Exception {
+        do {
+            String subMerchantUserId = getParameter("id").toString();
+            SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(subMerchantUserId));
+            if (subMerchantUser == null) {
+                ProjectLogger.error("Fetch SwitfPass BuyerId Failed!");
+                break;
+            }
+
+            SwiftMerchantInfo swiftMerchantInfo = SwiftMerchantInfo.getMerchantInfoById(subMerchantUser.getSubMerchantId());
+            if (swiftMerchantInfo == null) {
+                ProjectLogger.error("Fetch SwitfPass BuyerId Failed!");
+                break;
+            }
+
+            String body = getParameter("body").toString();
+            int total_fee = (int)Double.parseDouble(getParameter("total_fee").toString());
+
+            AliNativeRequestData aliNativeRequestData = new AliNativeRequestData();
+            aliNativeRequestData.mch_id = swiftMerchantInfo.getMchId();
+            aliNativeRequestData.body = body;
+            aliNativeRequestData.total_fee = total_fee;
+            if (getParameter("out_trade_no") != null) {
+                aliNativeRequestData.out_trade_no = getParameter("out_trade_no").toString();
+            }
+            aliNativeRequestData.attach = aliNativeRequestData.out_trade_no;
+            SessionCache.setSessionData(aliNativeRequestData.out_trade_no, Zip.zip(String.format("{'id':'%s','body':'%s','url':'%s','data':'%s'}",
+                    subMerchantUserId,
+                    body,
+                    StringUtils.convertNullableString(getParameter("redirect_uri")),
+                    StringUtils.convertNullableString(getParameter("data")))));
+            String requestUrl = getRequest().getRequestURL().toString();
+            requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/'));
+            requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/') + 1) + "swiftpass/"
+                    + CallbackAction.ALINATIVECALLBACK;
+            aliNativeRequestData.notify_url = requestUrl;
+            AliNative aliNative = new AliNative(aliNativeRequestData);
+            if (aliNative.postRequest(swiftMerchantInfo.getApiKey())) {
+                Map<String, String> resultMap = new HashMap<>();
+                resultMap.put("code_url", aliNative.getCodeUrl());
                 return AjaxActionComplete(resultMap);
             }
         } while (false);
