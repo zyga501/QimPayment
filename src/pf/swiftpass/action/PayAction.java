@@ -15,10 +15,14 @@ import pf.database.swiftpass.SwiftMerchantInfo;
 import pf.swiftpass.api.AliJsPay;
 import pf.swiftpass.api.RequestBean.AliJsPayRequestData;
 import pf.swiftpass.api.RequestBean.WeixinJsPayRequestData;
+import pf.swiftpass.api.RequestBean.WeixinNativeRequestData;
 import pf.swiftpass.api.WeixinJsPay;
+import pf.swiftpass.api.WeixinNative;
 import pf.weixin.api.OpenId;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PayAction extends AjaxActionSupport {
     public String weixinJsPay() throws Exception {
@@ -242,5 +246,52 @@ public class PayAction extends AjaxActionSupport {
 
         ProjectLogger.error("Fetch SwitfPass BuyerId Failed!");
         return "";
+    }
+
+    public String weixinNative() throws Exception {
+        do {
+            String subMerchantUserId = getParameter("id").toString();
+            SubMerchantUser subMerchantUser = SubMerchantUser.getSubMerchantUserById(Long.parseLong(subMerchantUserId));
+            if (subMerchantUser == null) {
+                ProjectLogger.error("Fetch SwitfPass BuyerId Failed!");
+                break;
+            }
+
+            SwiftMerchantInfo swiftMerchantInfo = SwiftMerchantInfo.getMerchantInfoById(subMerchantUser.getSubMerchantId());
+            if (swiftMerchantInfo == null) {
+                ProjectLogger.error("Fetch SwitfPass BuyerId Failed!");
+                break;
+            }
+
+            String body = getParameter("body").toString();
+            int total_fee = (int)Double.parseDouble(getParameter("total_fee").toString());
+
+            WeixinNativeRequestData weixinNativeRequestData = new WeixinNativeRequestData();
+            weixinNativeRequestData.mch_id = swiftMerchantInfo.getMchId();
+            weixinNativeRequestData.body = body;
+            weixinNativeRequestData.total_fee = total_fee;
+            if (getParameter("out_trade_no") != null) {
+                weixinNativeRequestData.out_trade_no = getParameter("out_trade_no").toString();
+            }
+            weixinNativeRequestData.attach = weixinNativeRequestData.out_trade_no;
+            SessionCache.setSessionData(weixinNativeRequestData.out_trade_no, Zip.zip(String.format("{'id':'%s','body':'%s','url':'%s','data':'%s'}",
+                    subMerchantUserId,
+                    body,
+                    StringUtils.convertNullableString(getParameter("redirect_uri")),
+                    StringUtils.convertNullableString(getParameter("data")))));
+            String requestUrl = getRequest().getRequestURL().toString();
+            requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/'));
+            requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/') + 1) + "swiftpass/"
+                    + CallbackAction.WEIXINNATIVECALLBACK;
+            weixinNativeRequestData.notify_url = requestUrl;
+            WeixinNative weixinNative = new WeixinNative(weixinNativeRequestData);
+            if (weixinNative.postRequest(swiftMerchantInfo.getApiKey())) {
+                Map<String, String> resultMap = new HashMap<>();
+                resultMap.put("code_url", weixinNative.getCodeUrl());
+                return AjaxActionComplete(resultMap);
+            }
+        } while (false);
+
+        return AjaxActionComplete(false);
     }
 }

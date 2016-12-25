@@ -27,6 +27,18 @@
           }
         })
       }
+
+      function weixinNative() {
+        $.ajax({
+          type: 'post',
+          url: '<%=request.getContextPath()%>/swiftpass/Pay!weixinNative?id=1596144387655680',
+          dataType:"json",
+          data:$("form").serialize(),
+          success: function (data) {
+          }
+        })
+
+      }
     </script>
   </head>
   <body>
@@ -51,6 +63,9 @@
           </td>
           <td>
             <input type="button" onclick="aliJsPay()" value="支付宝统一下单"/>
+          </td>
+          <td>
+            <input type="button" onclick="weixinNative()" value="微信扫码支付"/>
           </td>
         </tr>
       </table>
