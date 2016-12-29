@@ -8,12 +8,14 @@ public class ToPayRequestData extends RequestData {
     public ToPayRequestData() {
         order_no = String.valueOf(new IdWorker(ProjectSettings.getIdWorkerSeed()).nextId());
         request_time = StringUtils.generateDate("yyyyMMddHHmmss", "GMT+8");
+        auth_code = "";
+        subject = "";
     }
 
     @Override
     public String buildRequestData() {
-        return String.format("account=%s&order_no=%s&product_code=%s&request_time=%s&sign=%s&total_fee=%s",
-                account, order_no, product_code, request_time, sign, total_fee);
+        return String.format("account=%s&auth_code=%s&order_no=%s&product_code=%s&request_time=%s&sign=%s&total_fee=%s&subject=%s",
+                account, auth_code, order_no, product_code, request_time, sign, total_fee, subject);
     }
 
     public boolean checkParameter() {
@@ -34,6 +36,7 @@ public class ToPayRequestData extends RequestData {
     }
 
     public String account; // 商户账号
+    public String auth_code; // 付款码
     public String order_no; // 商户订单号
     public String product_code; // 产品代码
     public String request_time; // 请求时间

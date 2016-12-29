@@ -78,8 +78,6 @@ public class PayAction extends AjaxActionSupport {
                 toPayRequestData.order_no = out_trade_no;
             }
             toPayRequestData.buildSign(hgesyMerchantInfo.getApiKey());
-            String redirectUrl = "http://www.hgesy.com:8080/PayMcc/gateway/to_pay?";
-            redirectUrl += toPayRequestData.buildRequestData();
             String data = String.format("{'id':'%s','body':'%s','url':'%s','data':'%s'}",
                     subMerchantUserId,
                     body,
@@ -88,7 +86,7 @@ public class PayAction extends AjaxActionSupport {
             String zipData = Zip.zip(data);
             getRequest().getSession().setAttribute("data", zipData);
             SessionCache.setSessionData(toPayRequestData.order_no, zipData);
-            ToPay toPay = new ToPay();
+            ToPay toPay = new ToPay(toPayRequestData);
             if (toPay.getRequest()) {
 
             }
