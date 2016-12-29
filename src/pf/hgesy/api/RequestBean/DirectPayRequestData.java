@@ -8,7 +8,6 @@ public class DirectPayRequestData extends RequestData {
     public DirectPayRequestData() {
         order_no = String.valueOf(new IdWorker(ProjectSettings.getIdWorkerSeed()).nextId());
         request_time = StringUtils.generateDate("yyyyMMddHHmmss", "GMT+8");
-        product_code = "C3T1";
     }
 
     @Override
@@ -34,10 +33,12 @@ public class DirectPayRequestData extends RequestData {
         return false;
     }
 
-    public String account;
-    public String order_no;
-    public String product_code;
-    public String request_time;
+    public String account; // 商户账号
+    public String order_no; // 商户订单号
+    public String product_code; // 产品代码
+    public String request_time; // 请求时间
+    public String total_fee; // 交易金额
+
+    // option
     public String subject;
-    public String total_fee;
 }
