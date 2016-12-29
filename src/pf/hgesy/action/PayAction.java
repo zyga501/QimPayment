@@ -11,6 +11,9 @@ import pf.hgesy.api.RequestBean.DirectPayRequestData;
 import pf.hgesy.api.RequestBean.ToPayRequestData;
 import pf.hgesy.api.ToPay;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class PayAction extends AjaxActionSupport {
     public void jsPay() throws Exception {
         String subMerchantUserId = getParameter("id").toString();
@@ -73,7 +76,6 @@ public class PayAction extends AjaxActionSupport {
             toPayRequestData.account = hgesyMerchantInfo.getAccount();
             toPayRequestData.total_fee = String.format("%.2f", total_fee);
             toPayRequestData.product_code = "C1T1";
-            toPayRequestData.subject = body;
             if (!out_trade_no.isEmpty()) {
                 toPayRequestData.order_no = out_trade_no;
             }
@@ -88,7 +90,9 @@ public class PayAction extends AjaxActionSupport {
             SessionCache.setSessionData(toPayRequestData.order_no, zipData);
             ToPay toPay = new ToPay(toPayRequestData);
             if (toPay.getRequest()) {
-
+                Map<String, String> resultMap = new HashMap<>();
+                resultMap.put("qr_code", toPay.getQrCode());
+                return AjaxActionComplete(resultMap);
             }
         } while (false);
 

@@ -9,13 +9,12 @@ public class ToPayRequestData extends RequestData {
         order_no = String.valueOf(new IdWorker(ProjectSettings.getIdWorkerSeed()).nextId());
         request_time = StringUtils.generateDate("yyyyMMddHHmmss", "GMT+8");
         auth_code = "";
-        subject = "";
     }
 
     @Override
     public String buildRequestData() {
-        return String.format("account=%s&auth_code=%s&order_no=%s&product_code=%s&request_time=%s&sign=%s&total_fee=%s&subject=%s",
-                account, auth_code, order_no, product_code, request_time, sign, total_fee, subject);
+        return String.format("account=%s&auth_code=%s&order_no=%s&product_code=%s&request_time=%s&sign=%s&total_fee=%s",
+                account, auth_code, order_no, product_code, request_time, sign, total_fee);
     }
 
     public boolean checkParameter() {
