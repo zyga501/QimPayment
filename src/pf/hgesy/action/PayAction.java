@@ -55,7 +55,15 @@ public class PayAction extends AjaxActionSupport {
         } while (false);
     }
 
-    public String weixinScanCode() throws Exception {
+    public String weixinToPay() throws Exception {
+        return toPay("C1T1");
+    }
+
+    public String aliToPay() throws Exception {
+        return toPay("B1T1");
+    }
+
+    String toPay(String projectCode) throws Exception {
         String subMerchantUserId = getParameter("id").toString();
         String body = StringUtils.convertNullableString(getParameter("body").toString());
         double total_fee = Double.parseDouble(getParameter("total_fee").toString()) / 100.0;
@@ -75,7 +83,7 @@ public class PayAction extends AjaxActionSupport {
             ToPayRequestData toPayRequestData = new ToPayRequestData();
             toPayRequestData.account = hgesyMerchantInfo.getAccount();
             toPayRequestData.total_fee = String.format("%.2f", total_fee);
-            toPayRequestData.product_code = "C1T1";
+            toPayRequestData.product_code = projectCode;
             if (!out_trade_no.isEmpty()) {
                 toPayRequestData.order_no = out_trade_no;
             }
