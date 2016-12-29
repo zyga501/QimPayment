@@ -57,6 +57,14 @@
                 <param name="actionName">Pay!jsPay</param>
                 <param name="namespace">/hgesy</param>
             </result>
+            <result name="PayMindWeixinScanCode" type="chain">
+                <param name="actionName">Pay!scanPay</param>
+                <param name="namespace">/paymind</param>
+            </result>
+            <result name="PayMindWeixinJsPay" type="chain">
+                <param name="actionName">Pay!jsPay</param>
+                <param name="namespace">/paymind</param>
+            </result>
         </action>
         <action name="OrderQuery" class="pf.api.action.CommonAction" method="OrderQuery">
             <result name="WeixinOrderQuery" type="chain">
