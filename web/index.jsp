@@ -19,7 +19,7 @@
     function scanPay() {
       $.ajax({
         type: 'post',
-        url: 'hgesy/Pay!weixinScanCode',
+        url: 'api/TestPay!scanPay',
         dataType:"json",
         data:$("form").serialize(),
         success: function (data) {

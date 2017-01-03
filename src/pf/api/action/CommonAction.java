@@ -15,6 +15,7 @@ public class CommonAction extends AjaxActionSupport {
     private final static String WEIXINMODE = "weixin";
     private final static String SWIFTPASSMODE = "swiftpass";
     private final static String HGESYMODE = "hgesy";
+    private final static String PAYMINDMODE = "paymind";
 
     public String MicroPay() throws Exception {
         parseRequestBuffer();
@@ -58,6 +59,10 @@ public class CommonAction extends AjaxActionSupport {
                 break;
             case HGESYMODE:
                 baseMode = (BaseMode)Class.forName("pf.api.mode.HgesyMode").newInstance();
+                break;
+            case PAYMINDMODE:
+                baseMode = (BaseMode)Class.forName("pf.api.mode.PayMindMode").newInstance();
+                break;
             case WEIXINMODE:
             default:
                 baseMode = (BaseMode)Class.forName("pf.api.mode.WeixinMode").newInstance();

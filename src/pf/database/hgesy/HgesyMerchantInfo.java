@@ -3,7 +3,7 @@ package pf.database.hgesy;
 public class HgesyMerchantInfo {
     public static HgesyMerchantInfo getMerchantInfoById(long id) {
         String statement = "pf.database.hgesy.mapping.merchantInfo.getMerchantInfoById";
-        return pf.database.swiftpass.Database.Instance().selectOne(statement, id);
+        return Database.Instance().selectOne(statement, id);
     }
 
     public long getId() {

@@ -8,7 +8,6 @@ import pf.database.merchant.SubMerchantUser;
 import pf.database.paymind.PmMerchantInfo;
 import pf.paymind.api.JsPay;
 import pf.paymind.api.RequestBean.JsPayRequestData;
-import pf.paymind.action.CallbackAction;
 import pf.paymind.api.RequestBean.ScanCodeRequestData;
 import pf.paymind.api.ScanCode;
 
@@ -56,7 +55,7 @@ public class PayAction extends AjaxActionSupport {
                 getRequest().getSession().setAttribute("data", zipData);
                 SessionCache.setSessionData(scanCodeRequestData.orderNum, zipData);
                 Map<String, String> resultMap = new HashMap<>();
-                resultMap.put("qr_code", scanCode.getPayUrl());
+                resultMap.put("code_url", scanCode.getPayUrl());
                 return AjaxActionComplete(resultMap);
             }
         } while (false);

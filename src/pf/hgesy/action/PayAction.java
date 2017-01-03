@@ -6,7 +6,6 @@ import QimCommon.utils.StringUtils;
 import QimCommon.utils.Zip;
 import pf.database.hgesy.HgesyMerchantInfo;
 import pf.database.merchant.SubMerchantUser;
-import pf.hgesy.api.HgesyAPI;
 import pf.hgesy.api.RequestBean.DirectPayRequestData;
 import pf.hgesy.api.RequestBean.ToPayRequestData;
 import pf.hgesy.api.ToPay;
@@ -99,7 +98,7 @@ public class PayAction extends AjaxActionSupport {
             ToPay toPay = new ToPay(toPayRequestData);
             if (toPay.getRequest()) {
                 Map<String, String> resultMap = new HashMap<>();
-                resultMap.put("qr_code", toPay.getQrCode());
+                resultMap.put("code_url", toPay.getQrCode());
                 return AjaxActionComplete(resultMap);
             }
         } while (false);
