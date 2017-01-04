@@ -7,7 +7,7 @@ import pf.database.merchant.SubMerchantUser;
 import pf.database.weixin.WxMerchantInfo;
 import pf.database.weixin.WxOrderInfo;
 import pf.database.weixin.WxSubMerchantInfo;
-import framework.utils.StringUtils;
+import QimCommon.utils.StringUtils;
 import pf.weixin.api.AccessToken;
 import pf.weixin.api.RequestBean.TemplateMessageRequestData;
 import pf.weixin.api.TemplateMessage;

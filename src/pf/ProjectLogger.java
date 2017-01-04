@@ -1,6 +1,6 @@
 package pf;
 
-import framework.utils.Logger;
+import QimCommon.utils.Logger;
 
 public class ProjectLogger extends Logger{
     public static void debug(String message) {

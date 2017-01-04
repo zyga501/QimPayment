@@ -1,6 +1,6 @@
 package pf.jdpay.api;
 
-import framework.utils.HttpClient;
+import QimCommon.utils.HttpClient;
 
 public abstract class JDAPI extends HttpClient {
 

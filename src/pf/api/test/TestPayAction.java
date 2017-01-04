@@ -1,10 +1,10 @@
 package pf.api.test;
 
-import pf.api.test.RequestData.JsPayData;
+import pf.api.test.RequestData.JsPayRequestData;
 import pf.api.test.RequestData.MicroPayRequestData;
 import pf.api.test.RequestData.ScanPayRequestData;
-import framework.action.AjaxActionSupport;
-import framework.utils.HttpUtils;
+import QimCommon.struts.AjaxActionSupport;
+import QimCommon.utils.HttpUtils;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.thoughtworks.xstream.io.xml.XmlFriendlyNameCoder;
@@ -49,17 +49,15 @@ public class TestPayAction extends AjaxActionSupport {
 
     public String scanPay() throws Exception {
         ScanPayRequestData scanPayRequestData = new ScanPayRequestData();
+        scanPayRequestData.mode = "Hgesy";
+        scanPayRequestData.method = "alipay.scanpay";
         scanPayRequestData.id = getParameter("id").toString();
-        scanPayRequestData.body = getParameter("body").toString();
+        scanPayRequestData.body = "123";
         scanPayRequestData.total_fee = Integer.parseInt(getParameter("total_fee").toString());
-        scanPayRequestData.product_id = getParameter("product_id").toString();
-        scanPayRequestData.out_trade_no = getParameter("out_trade_no").toString();
-        scanPayRequestData.mode = getParameter("mode").toString();
-        scanPayRequestData.redirect_uri = getParameter("redirect_uri").toString();
         scanPayRequestData.sign = Signature.generateSign(scanPayRequestData, scanPayRequestData.id);
         XStream xStreamForRequestPostData = new XStream(new DomDriver("UTF-8", new XmlFriendlyNameCoder("-_", "_")));
         String postDataXML = xStreamForRequestPostData.toXML(scanPayRequestData);
-        HttpPost httpPost = new HttpPost(getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + "ScanPay");
+        HttpPost httpPost = new HttpPost("http://localhost:8080/api/ScanPay");
         StringEntity postEntity = new StringEntity(postDataXML, "UTF-8");
         httpPost.addHeader("Content-Type", "text/xml");
         httpPost.setEntity(postEntity);
@@ -85,15 +83,16 @@ public class TestPayAction extends AjaxActionSupport {
     }
 
     public void jsPay() throws Exception {
-        JsPayData jsPayData = new JsPayData();
-        jsPayData.id = getParameter("id").toString();
-        jsPayData.body = getParameter("body").toString();
-        jsPayData.total_fee = getParameter("total_fee").toString();
-        jsPayData.redirect_uri = "";
-        jsPayData.sign = Signature.generateSign(jsPayData, jsPayData.id);
+        JsPayRequestData jsPayRequestData = new JsPayRequestData();
+        jsPayRequestData.mode = "SwiftPass";
+        jsPayRequestData.id = getParameter("id").toString();
+        jsPayRequestData.body = getParameter("body").toString();
+        jsPayRequestData.total_fee = getParameter("total_fee").toString();
+        jsPayRequestData.method = "alipay.jspay";
+        jsPayRequestData.sign = Signature.generateSign(jsPayRequestData, jsPayRequestData.id);
         XStream xStreamForRequestPostData = new XStream(new DomDriver("UTF-8", new XmlFriendlyNameCoder("-_", "_")));
-        String postDataXML = xStreamForRequestPostData.toXML(jsPayData);
-        HttpPost httpPost = new HttpPost(getRequest().getRequestURL().substring(0, getRequest().getRequestURL().lastIndexOf("/") + 1) + "JsPay");
+        String postDataXML = xStreamForRequestPostData.toXML(jsPayRequestData);
+        HttpPost httpPost = new HttpPost("http://www.qimpay.com/qlpay/api/JsPay");
         StringEntity postEntity = new StringEntity(postDataXML, "UTF-8");
         httpPost.addHeader("Content-Type", "text/xml");
         httpPost.setEntity(postEntity);

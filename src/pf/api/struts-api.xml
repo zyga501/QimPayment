@@ -23,11 +23,47 @@
                 <param name="actionName">Pay!scanPay</param>
                 <param name="namespace">/weixin</param>
             </result>
+            <result name="SwiftPassWeixinNative" type="chain">
+                <param name="actionName">Pay!weixinNative</param>
+                <param name="namespace">/swiftpass</param>
+            </result>
+            <result name="SwiftPassAliNative" type="chain">
+                <param name="actionName">Pay!aliNative</param>
+                <param name="namespace">/swiftpass</param>
+            </result>
+            <result name="HgesyWeixinToPay" type="chain">
+                <param name="actionName">Pay!weixinToPay</param>
+                <param name="namespace">/hgesy</param>
+            </result>
+            <result name="HgesyAliToPay" type="chain">
+                <param name="actionName">Pay!aliToPay</param>
+                <param name="namespace">/hgesy</param>
+            </result>
+            <result name="PayMindWeixinScanCode" type="chain">
+                <param name="actionName">Pay!scanPay</param>
+                <param name="namespace">/paymind</param>
+            </result>
         </action>
         <action name="JsPay" class="pf.api.action.CommonAction" method="JsPay">
             <result name="WeixinJsPay" type="chain">
                 <param name="actionName">Pay!jsPay</param>
                 <param name="namespace">/weixin</param>
+            </result>
+            <result name="SwiftPassWeixinJsPay" type="chain">
+                <param name="actionName">Pay!weixinJsPay</param>
+                <param name="namespace">/swiftpass</param>
+            </result>
+            <result name="SwiftPassAliJsPay" type="chain">
+                <param name="actionName">Pay!aliJsPay</param>
+                <param name="namespace">/swiftpass</param>
+            </result>
+            <result name="HgesyJsPay" type="chain">
+                <param name="actionName">Pay!jsPay</param>
+                <param name="namespace">/hgesy</param>
+            </result>
+            <result name="PayMindWeixinJsPay" type="chain">
+                <param name="actionName">Pay!jsPay</param>
+                <param name="namespace">/paymind</param>
             </result>
         </action>
         <action name="OrderQuery" class="pf.api.action.CommonAction" method="OrderQuery">

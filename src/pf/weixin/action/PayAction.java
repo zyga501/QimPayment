@@ -1,9 +1,9 @@
 package pf.weixin.action;
 
-import framework.action.AjaxActionSupport;
-import framework.utils.SessionCache;
-import framework.utils.StringUtils;
-import framework.utils.Zip;
+import QimCommon.struts.AjaxActionSupport;
+import QimCommon.utils.SessionCache;
+import QimCommon.utils.StringUtils;
+import QimCommon.utils.Zip;
 import net.sf.json.JSONObject;
 import pf.ProjectLogger;
 import pf.database.merchant.SubMerchantUser;
@@ -63,7 +63,7 @@ public class PayAction extends AjaxActionSupport {
 
             Map<String, String> resultMap = new HashMap<>();
             resultMap.put("body", microPayRequestData.body);
-            resultMap.put("transaction_id", microPay.getResponseResult().get("transaction_id").toString());
+            resultMap.put("transaction_id", StringUtils.convertNullableString(microPay.getResponseResult().get("transaction_id")));
             resultMap.put("out_trade_no", microPay.getResponseResult().get("out_trade_no").toString());
             resultMap.put("bank_type", microPay.getResponseResult().get("bank_type").toString());
             resultMap.put("total_fee", microPay.getResponseResult().get("total_fee").toString());
@@ -103,7 +103,10 @@ public class PayAction extends AjaxActionSupport {
                     StringUtils.convertNullableString(getParameter("redirect_uri")),
                     StringUtils.convertNullableString(getParameter("data")));
             unifiedOrderRequestData.total_fee = (int)Double.parseDouble(getParameter("total_fee").toString());
-            unifiedOrderRequestData.product_id = getParameter("product_id").toString();
+            if (getParameter("product_id") != null) {
+                unifiedOrderRequestData.product_id = getParameter("product_id").toString();
+            }
+
             unifiedOrderRequestData.trade_type = "NATIVE";
             String requestUrl = getRequest().getRequestURL().toString();
             requestUrl = requestUrl.substring(0, requestUrl.lastIndexOf('/'));
@@ -170,10 +173,6 @@ public class PayAction extends AjaxActionSupport {
     public String brandWCPay() throws Exception {
         // get session data and remove data
         JSONObject jsonObject = null;
-        if (!StringUtils.convertNullableString(getParameter("data")).isEmpty()) {
-            jsonObject = JSONObject.fromObject(Zip.unZip(getParameter("data").toString()));
-        }
-
         String sessionId = StringUtils.convertNullableString(getParameter("state"));
         if (jsonObject == null && !sessionId.isEmpty()) {
             String sesseionData = SessionCache.getSessionData(sessionId).toString();

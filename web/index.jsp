@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>QimPayment</title>
-  <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery/1.9.1/jquery.min.js"></script>
+  <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery/jquery.min.js"></script>
   <script type="text/javascript" src="<%=request.getContextPath()%>/js/qrcode.js"></script>
   <script type="text/javascript">
     function microPay() {

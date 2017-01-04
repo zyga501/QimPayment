@@ -1,7 +1,7 @@
 package pf.jdpay.utils;
 
-import framework.utils.ClassUtils;
-import framework.utils.MD5;
+import QimCommon.utils.ClassUtils;
+import QimCommon.utils.MD5;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 

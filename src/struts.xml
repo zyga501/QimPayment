@@ -82,5 +82,7 @@
     <include file="pf/alipay/struts-alipay.xml" />
     <include file="pf/jdpay/struts-jdpay.xml" />
     <include file="pf/bestpay/struts-bestpay.xml" />
-    <include file="pf/chanpay/struts-chanpay.xml" />
+    <include file="pf/swiftpass/struts-swiftpass.xml" />
+    <include file="pf/paymind/struts-paymind.xml" />
+    <include file="pf/hgesy/struts-hgesy.xml" />
 </struts>

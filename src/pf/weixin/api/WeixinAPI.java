@@ -1,6 +1,6 @@
 package pf.weixin.api;
 
-import framework.utils.HttpClient;
+import QimCommon.utils.HttpClient;
 
 public abstract class WeixinAPI extends HttpClient {
 

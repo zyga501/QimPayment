@@ -1,6 +1,6 @@
 package pf.alipay.api;
 
-import framework.utils.HttpClient;
+import QimCommon.utils.HttpClient;
 
 public abstract class AliPayAPI extends HttpClient {
 

@@ -17,7 +17,7 @@
 </form><center><h3 style="color: #06af3f">正在支付,请稍后...</h3>
 <img id="imgid" src="<%=request.getContextPath()%>/image/loading.gif"></center>
 </body >
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery/jquery.min.js"></script>
 <script>
     function onBridgeReady(){
         $.ajax({

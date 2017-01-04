@@ -1,6 +1,6 @@
 package pf.alipay.action;
 
-import framework.action.AjaxActionSupport;
+import QimCommon.struts.AjaxActionSupport;
 import net.sf.json.JSONObject;
 import pf.ProjectLogger;
 import pf.database.alipay.AliOrderInfo;

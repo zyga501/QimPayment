@@ -1,9 +1,9 @@
 package pf.bestpay.api.RequestBean;
 
 import pf.ProjectSettings;
-import framework.utils.IdWorker;
-import framework.utils.MD5;
-import framework.utils.StringUtils;
+import QimCommon.utils.IdWorker;
+import QimCommon.utils.MD5;
+import QimCommon.utils.StringUtils;
 
 public class BarcodePayRequestData extends RequestData {
     public BarcodePayRequestData() {

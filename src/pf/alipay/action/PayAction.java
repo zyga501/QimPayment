@@ -8,10 +8,10 @@ import pf.database.alipay.AliMerchantInfo;
 import pf.database.alipay.AliOrderInfo;
 import pf.database.merchant.SubMerchantInfo;
 import pf.database.merchant.SubMerchantUser;
-import framework.action.AjaxActionSupport;
+import QimCommon.struts.AjaxActionSupport;
 import pf.ProjectSettings;
-import framework.utils.IdWorker;
-import framework.utils.StringUtils;
+import QimCommon.utils.IdWorker;
+import QimCommon.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;

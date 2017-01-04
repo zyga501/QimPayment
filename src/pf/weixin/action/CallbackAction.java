@@ -1,9 +1,9 @@
 package pf.weixin.action;
 
-import framework.action.AjaxActionSupport;
-import framework.utils.HttpUtils;
-import framework.utils.StringUtils;
-import framework.utils.XMLParser;
+import QimCommon.struts.AjaxActionSupport;
+import QimCommon.utils.HttpUtils;
+import QimCommon.utils.StringUtils;
+import QimCommon.utils.XMLParser;
 import net.sf.json.JSONObject;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;

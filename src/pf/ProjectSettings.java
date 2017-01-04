@@ -1,8 +1,7 @@
 package pf;
 
-import framework.utils.Logger;
-import framework.utils.PathUtils;
-import framework.utils.XMLParser;
+import QimCommon.utils.PathUtils;
+import QimCommon.utils.XMLParser;
 
 import java.util.Map;
 
@@ -85,6 +84,10 @@ public class ProjectSettings {
         }
 
         return  null;
+    }
+
+    public static Map<String, Object> getMapData(String key) {
+        return (Map<String, Object>)getData(key);
     }
 
     private static Map<String, Object> projectSettings_;

@@ -9,7 +9,7 @@ import pf.database.merchant.SubMerchantUser;
 import pf.database.weixin.WxMerchantInfo;
 import pf.database.weixin.WxSubMerchantAct;
 import pf.database.weixin.WxSubMerchantInfo;
-import framework.action.AjaxActionSupport;
+import QimCommon.struts.AjaxActionSupport;
 import pf.weixin.api.OpenId;
 import net.sf.json.JSONObject;
 

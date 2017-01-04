@@ -1,6 +1,6 @@
 package pf.weixin.api.RequestBean;
 
-import framework.utils.StringUtils;
+import QimCommon.utils.StringUtils;
 import pf.weixin.utils.Signature;
 
 public class RequestData {

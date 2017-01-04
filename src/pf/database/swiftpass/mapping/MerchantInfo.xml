@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pf.database.swiftpass.mapping.merchantInfo">
+    <select id="getMerchantInfoById" parameterType="long" resultMap="merchantInfoResult">
+      SELECT * FROM MerchantInfo WHERE id=#{id}
+    </select>
+    <resultMap type="pf.database.swiftpass.SwiftMerchantInfo" id="merchantInfoResult">
+        <id property="id" column="id" jdbcType="BIGINT" />
+        <result property="mchId" column="mchId" jdbcType="VARCHAR"/>
+        <result property="apiKey" column="apiKey" jdbcType="VARCHAR"/>
+        <result property="weixinAppId" column="weixinAppId" jdbcType="VARCHAR"/>
+        <result property="weixinAppSecret" column="weixinAppSecret" jdbcType="VARCHAR"/>
+        <result property="aliAppId" column="aliAppId" jdbcType="VARCHAR"/>
+        <result property="aliPrivateKey" column="aliPrivateKey" jdbcType="VARCHAR"/>
+        <result property="aliPublicKey" column="aliPublicKey" jdbcType="VARCHAR"/>
+    </resultMap>
+</mapper>

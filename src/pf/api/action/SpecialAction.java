@@ -3,7 +3,7 @@ package pf.api.action;
 import pf.database.merchant.SubMerchantUser;
 import pf.database.weixin.WxOrderInfo;
 import pf.database.weixin.WxSubMerchantInfo;
-import framework.action.AjaxActionSupport;
+import QimCommon.struts.AjaxActionSupport;
 import net.sf.json.JSONObject;
 
 public class SpecialAction extends AjaxActionSupport {
