@@ -40,9 +40,10 @@ public class TemplateMessage extends WeixinAPI {
                     accessToken_ = AccessToken.updateAccessToken(appid, accessToken_);
                     return postRequest(postData_);
                 }
-                case "40003": // "errcode":40003,"errmsg":"invalid openid hint: [GgDwrA0975rsz6]"
-                case "43004": // "errcode":43004,"errmsg":"require subscribe hint: [_Mdu0a0124rsz4]"
-                {
+                // "errcode":40003,"errmsg":"invalid openid hint: [GgDwrA0975rsz6]"
+                case "40003":
+                // "errcode":43004,"errmsg":"require subscribe hint: [_Mdu0a0124rsz4]"
+                case "43004": {
                     return true;
                 }
                 default: {
