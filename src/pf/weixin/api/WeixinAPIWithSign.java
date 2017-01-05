@@ -75,5 +75,5 @@ public abstract class WeixinAPIWithSign extends WeixinAPI {
     }
 
     protected RequestData requestData_;
-    private Map<String, Object> responseResult_;
+    protected Map<String, Object> responseResult_;
 }

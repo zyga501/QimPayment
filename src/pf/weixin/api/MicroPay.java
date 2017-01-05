@@ -57,7 +57,7 @@ public class MicroPay extends WeixinAPIWithSign {
                             if (!orderQuery.postRequest(apiKey_)) {
                                 return false;
                             }
-                            saveOrderToDb(orderQuery.getResponseResult());
+                            saveOrderToDb(responseResult_ = orderQuery.getResponseResult());
                             return true;
                         }
                         default: {
