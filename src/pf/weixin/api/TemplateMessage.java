@@ -40,6 +40,12 @@ public class TemplateMessage extends WeixinAPI {
                     accessToken_ = AccessToken.updateAccessToken(appid, accessToken_);
                     return postRequest(postData_);
                 }
+                // "errcode":40003,"errmsg":"invalid openid hint: [GgDwrA0975rsz6]"
+                case "40003":
+                // "errcode":43004,"errmsg":"require subscribe hint: [_Mdu0a0124rsz4]"
+                case "43004": {
+                    return true;
+                }
                 default: {
                     ProjectLogger.error("UnHandler Exception!");
                     ProjectLogger.error("Request Url:\r\n" + getAPIUri() + "\r\nRequest Data:\r\n" + postData_ + "\r\nResponse Data:\r\n" + responseString);
